@@ -1,0 +1,84 @@
+<html>
+<head><title>Answers to Practice 7-9</title>
+</head>
+
+<script>
+function done() {
+	window.close();
+}
+</script>
+
+<body bgcolor=darkred>
+
+<h1><font color=white>Answers</font></h1>
+
+<p><font color=yellow><b>Practice 7.</b></font>
+<font color=white>&nbsp;Use the following query:</font></p>
+
+<p><font color=white>
+<pre>
+    select 
+        min(dec),max(dec)
+    from 
+        specObj
+</pre>        
+</p>
+
+<p>The northernmost object (maximum dec) is at dec = XXX; the southernmost object 
+(minimum dec) at dec = XXX</p>
+
+<p><font color=yellow><b>Practice 8.</b></font>
+<font color=white>To find the galaxy with the smallest redshift, use the 
+following query:</font></p>
+
+<p><font color=white>
+<pre>
+    select 
+        p.objID, s.z as redshift, p.u, p.r, p.g, p.i, p.z
+    from 
+        photoObj p, specObj s
+    where 
+        p.objID = s.bestObjID 
+        and s.class = 'galaxy'
+        and s.z > 0 
+        and p.objID <> 0 
+        and s.zWarning = 0
+    order by 
+        s.z
+</pre>
+</font></p>
+
+<p>The query returns ObjID XXX at z = XXX x 10<sup> -5</sup>. 
+Using the equation cz = H<sub>0</sub>d, the galaxy is at a distance 
+of about 800,000 light-years. Comparing the distance to this galaxy to 
+the Andromeda and Whirlpool Galaxies, the distance seems reasonable.</p> 
+
+<p><font color=yellow><b>Practice 9.</b></font>
+<font color=white>Use the following query:</font></p>
+
+<p><font color=white>
+<pre>
+    select 
+        p.run, p.camcol, p.field, count(s.z) as count, avg(s.z) as average
+    from 
+        photoObj p, specObj s
+    where 
+        s.bestObjID = p.objID 
+        and s.class = 'galaxy'
+        and p.run=5112 
+        and camcol=1 
+    group by 
+        p.run,p.camcol,p.field
+    order by 
+        avg(s.z) desc
+</pre>
+</font></p>
+
+<p>The field with the highest average redshift (among fields with more than 
+two measured galaxies) is field 5112-1-220. It includes 
+four spectrally measured galaxies with an average redshift of about 0.3</p>
+
+
+<p><a href="javascript:done()"><font color=gold>Done</font></a></p>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<html>
+<head><title>Answers to Practice 1-2</title>
+</head>
+
+<script>
+function done() {
+	window.close();
+}
+</script>
+
+<body bgcolor=darkred>
+
+<h1><font color=white>Answers</font></h1>
+
+<p><font color=yellow><b>Practice 1.</b></font></p>
+<p><font color=white>
+    select
+        ra, dec
+    from
+        specObj
+    where
+        ra BETWEEN 140.25 and 140.75 
+        AND dec BETWEEN 20.25 and 20.75
+</font></p>
+
+<p><font color=white>The query returns XXX results, compared to over XXX for the previous query.</font></p>
+
+<p><font color=yellow><b>Practice 2.</b></font></p>
+<p><font color=white>
+    select
+        ra, dec, bestobjID
+    from
+        specObj
+    where
+        ra BETWEEN 140.25 and 140.75 
+        AND dec BETWEEN 20.25 and 20.75 
+        AND class = 'galaxy'
+</font></p>
+
+<p><font color=white>The query returns XXX results, meaning XXX of the XXX spectrally-measured 
+objects in this region are galaxies.</font></p>
+
+<p><a href="javascript:done()"><font color=gold>Done</font></a></p>
+</body>
+</html>

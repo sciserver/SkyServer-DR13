@@ -1,0 +1,45 @@
+<html>
+<head><title>The Right Search</title>
+</head>
+
+<script>
+function done() {
+	window.close();
+}
+</script>
+
+<body bgcolor=lightblue>
+
+<h1><font color=black>The Right Search</font></h1>
+
+<p><font color=black>Here are the magic words that let you search for all bright blue galaxies:</font></p>
+
+<p><font color=black>select p.objid, p.ra, p.dec, p.g, p.r<br>
+from photoObj p, specObj s<br>
+where p.specobjid = s.specobjid<br>
+and p.g-p.r < 0<br>
+and p.g < 15<br>
+and p.r < 15<br>
+and s.specClass = 2</font></p>
+<p><font color=black>Don't worry, you'll learn what each of these terms means later in the tutorial.</font></p>
+
+<a name="tools"></a>
+<p><font color=black>If you enter these words in the <a href="#tools" onclick="window.open('../../../tools/search/sql.aspx','tools');">
+SQL search tool</a>, the tool will return 6 results, with the object ID below.
+Click on the links to see the galaxies in the Object Explorer. Do you think it is 
+really a bright blue galaxy?</p>
+
+<p>
+<a href="../../../tools/explore/obj.aspx?id=1237658204508192807" target="data">1237658204508192807</a><br>
+<a href="../../../tools/explore/obj.aspx?id=1237661068164399451" target="data">1237661068164399451</a><br>
+<a href="../../../tools/explore/obj.aspx?id=1237661358614577188" target="data">1237661358614577188</a><br>
+<a href="../../../tools/explore/obj.aspx?id=1237661355927994429" target="data">1237661355927994429</a><br>
+<a href="../../../tools/explore/obj.aspx?id=1237661001056845912" target="data">1237661001056845912</a><br>
+<a href="../../../tools/explore/obj.aspx?id=1237658313478242321" target="data">1237658313478242321</a><br>
+
+</p>
+
+
+<p><font color=black><a href="javascript:done()">Done</a></font></p>
+</body>
+</html>
