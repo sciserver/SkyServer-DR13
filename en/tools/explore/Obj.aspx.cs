@@ -79,7 +79,8 @@ namespace SkyServer.Tools.Explore
                     }
                     if (key == "sid")
                     {
-                        sidstring = Request.QueryString["sid"];
+                        string s = Request.QueryString["sid"];
+                        sidstring = (string.Equals(s,"")) ? s : Utilities.ParseId(s).ToString();
                         /*                      
                         try
                         {
