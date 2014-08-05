@@ -119,7 +119,7 @@ namespace SkyServer.Tools.Explore
                         "select p.ra, p.dec, s.specObjId," +
                         " p.clean, s.survey, cast(p.mode as int), dbo.fPhotoTypeN(p.type) as otype, p.mjd" +
                         " from PhotoObjAll p LEFT OUTER JOIN SpecObjAll s ON s.bestobjid=p.objid" + 
-                        " where p.objId=@id";
+                        " where p.objId=@id AND s.scienceprimary=1";
                     oCmd.Parameters.AddWithValue("@id", id);
 
                     using (SqlDataReader reader = oCmd.ExecuteReader())
