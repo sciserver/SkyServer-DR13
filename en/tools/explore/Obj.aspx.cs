@@ -253,6 +253,9 @@ namespace SkyServer.Tools.Explore
                     }
                 }
             }
+            
+            // This is required to get the primary specObjId (with sciprimary=1). PhotoTag.specObjId is not necessarily primary...
+            pmtsFromPhoto(oConn, Utilities.ParseId(objId));
 
                 // if we couldn't find that position in photoTag, then maybe it's an APOGEE object
                   using (SqlCommand oCmd = oConn.CreateCommand())
@@ -374,7 +377,7 @@ namespace SkyServer.Tools.Explore
                     " cast(s.specobjid as binary(8)) as specObjId," +
                     " cast(p.objId as binary(8)) as objId " +
                     " from PhotoTag p " +
-                    " left outer join SpecObjAll s ON s.bestobjid=p.objid " +
+                    " left outer join SpecObjAll s ON s.bestobjid=p.objid AND s.scienceprimary=1" +
                     " where p.objId=dbo.fObjId(@id)";
 
                 oCmd.Parameters.AddWithValue("@id", id);
