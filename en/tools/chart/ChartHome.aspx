@@ -44,20 +44,20 @@ for individual fields in each run, or get the FITS file from the
 <p>
 <ul>
 
-	<li><a href="javascript:launch('../chart/chart.aspx','NAVIGATE')">Finding Chart</a><br>
+	<li id="chart"><a href="javascript:launch('../chart/chart.aspx','NAVIGATE')">Finding Chart</a><br>
 		The page returns a JPEG image centered on (ra,dec), of size (height x width) where 
 		the image is scaled to an arbitrary scale (scale). Various drawing options can be 
 		specified (opt).  Please see <a href="#chart" onclick="window.open('../started/chart.aspx',
 		'popup','width=440,height=580,resizeable,scrollbars');">Getting Started with Finding Chart</a>. <br>
 
-	<li><a href="javascript:launch('../chart/navi.aspx','NAVIGATE')">Navigate</a><br>
+	<li id="navi"><a href="javascript:launch('../chart/navi.aspx','NAVIGATE')">Navigate</a><br>
 		This page provides easy navigation in the vicinity of a given point on the sky. One 
 		can move around by clicking on the frame of the image, or on individual objects. A short 
 		list of the basic properties and a magnified thumbnail image of the object nearest to 
 		the selected point is then displayed. Please see <a href="#navi" onclick="window.open('../started/navi.aspx',
 		'popup','width=440,height=580,resizeable,scrollbars');">Getting Started with Navigate</a>. <br>
 
-	<li><a href='javascript:launch("../chart/list.aspx","IMGLIST")'>Image List</a><br>
+	<li id="list"><a href='javascript:launch("../chart/list.aspx","IMGLIST")'>Image List</a><br>
 		This page can generate thumbnails of SDSS images based upon a user defined 
 		list of object positions. The images are linked to the other tools. The list can 
 		also be specified with a query. Please see <a href="#list" onclick="window.open('../started/list.aspx',
