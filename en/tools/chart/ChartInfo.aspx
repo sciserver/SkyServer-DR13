@@ -18,7 +18,7 @@
 						where the image is scaled to an arbitrary scale <i>(scale)</i>. In SDSS the 
 						default scale is 0.396127 arcsec/pix. Various drawing options can be specified <i>(opt)</i>.
 						Use mark query to select objects of special interest.
-						<p>
+						<p id="list">
 						If you're new to the Finding Chart, please see the <a href="<%= url%>/tools/chart/default.aspx" target="Visual">Visual Tools main page</a>
 						and <a href="#list" onclick="window.open('../started/chart.aspx','popup','width=440,height=580,resizeable,scrollbars');">
 						Getting Started with Finding Chart</a>.
