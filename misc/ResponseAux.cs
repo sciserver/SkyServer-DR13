@@ -678,7 +678,7 @@ namespace SkyServer
                                 if (dasFields == true)
                                 {
                                     runs[nRows] = Utilities.getSqlString(reader.GetSqlValue(runI));
-                                    reruns[nRows] = Utilities.getSqlString(reader.GetSqlValue(rerunI));
+                                    if (rerunI > -1) reruns[nRows] = Utilities.getSqlString(reader.GetSqlValue(rerunI));
                                     camcols[nRows] = Utilities.getSqlString(reader.GetSqlValue(camcolI));
                                     fields[nRows] = Utilities.getSqlString(reader.GetSqlValue(fieldI));
                                 }

@@ -243,7 +243,7 @@
             <%
                 cmd = "select mjd as 'Image MJD', dbo.fPhotoModeN(mode) as mode, (nDetect-1) as 'Other observations',";
                 cmd += " parentID, nChild, str(extinction_r,7,2) as extinction_r,";
-                cmd += " str(petroRad_r,9,2)+' &plusmn; '+str(petroRadErr_r,10,3) as 'PetroRad_r (arcmin)'";
+                cmd += " str(petroRad_r,9,2)+' &plusmn; '+str(petroRadErr_r,10,3) as 'PetroRad_r (arcsec)'";
                 cmd += " from photoObj";
                 cmd += " where objID=" + id;
 
