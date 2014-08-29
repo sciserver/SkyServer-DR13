@@ -31,7 +31,7 @@
 			        &nbsp;&nbsp;Privacy Policy</a>
 		        </td></tr>
 		        <tr><td><hr class="hrule"></td></tr>
-		        <tr><td class="hiddentext" align="center"><a class="hiddentext" href=""><!-- version.inc --></a></td></tr>
+		        <tr><td class="hiddentext" align="center"><a class="hiddentext" href=""><%= version %></a></td></tr>
             </table>
         </div>
 	</div>

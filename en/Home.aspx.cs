@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.IO;
 
 namespace SkyServer
 {
@@ -11,7 +12,8 @@ namespace SkyServer
     {
         protected int logoleftpos;
         protected string siteTitle;
-        
+        protected string version;
+
         protected Globals globals;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -31,6 +33,9 @@ namespace SkyServer
             {
                 logoleftpos = 690;
             }
+
+            string versionFile = Server.MapPath("~/version.txt");
+            version = File.Exists(versionFile) ? File.ReadAllText(versionFile) : "";
         }
     }
 }
