@@ -367,7 +367,7 @@
 <!--                      <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.apogeeVisit%>" onmouseover="this.T_WIDTH='140';return escape('I can has mouzeover?')">~~ApogeeVisit~~</a></td></tr>-->
 <!--                      <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.apogeePlate%>" onmouseover="this.T_WIDTH='140';return escape('I can has mouzeover?')">ApogeePlate</a></td></tr>-->
                       <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.apogeeStar%>' onmouseover="this.T_WIDTH='140';return escape('Display contents of ApogeeStar table')">ApogeeStar</a></td></tr>
-                      <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.aspcapStar%>" onmouseover="this.T_WIDTH='140';return escape(''Display contents of ASPCAPstar table')">ASPCAPstar</a></td></tr>
+                      <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.aspcapStar%>" onmouseover="this.T_WIDTH='140';return escape('Display contents of ASPCAPstar table')">ASPCAPstar</a></td></tr>
                       <tr><td align="right"><hr width="90"></td></tr>
 
                 <%} %>
