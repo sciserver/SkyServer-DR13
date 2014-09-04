@@ -1,2 +1,2 @@
 ﻿<%@ Page Language="C#" %>
-<% Response.Redirect("solarhome.aspx"); %>
+<% Response.Redirect("solarsystemhome.aspx"); %>

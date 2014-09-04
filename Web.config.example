@@ -10,6 +10,7 @@
         <compilation debug="true" targetFramework="4.0" />
     </system.web>
   <appSettings>
+    <add key="solarConnectionString" value="User ID=skyuser;Password=xxxxxxxx;Data Source=sdssdb002;Database=SDSS_EPO"/>
     <add key="connectionString" value="User ID=*****;Password=*****;Data Source=sdss3n;"/>
     <add key="releaseNumber" value="10"/>
     <add key="database" value="BESTDR10"/>
