@@ -62,6 +62,63 @@ namespace SkyServer
         private string apogeeSpectrumLink;
         private string apogeeFitsLink;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        private string skyserverRESTservice;
+        //private string skyServerWSsql;
+
+        public string SkyserverRESTservice {
+            get { return skyserverRESTservice; }
+        }
+
+        public string SQLSearchWS
+        {
+            get { return skyserverRESTservice + "SearchTools/SqlSearch"; }
+        }
+
+        public string RectangularSearchWS
+        {
+            get { return skyserverRESTservice + "SearchTools/RectangularSearch"; }
+        }
+
+        /// <summary>
+        /// These are IRSpectraQuery Search Tool services
+        /// </summary>
+        public string ConeIRWS 
+        {
+            get { return skyserverRESTservice + "IRSpectraQuery/ConeIR"; }
+        }
+        public string GalacticIRWS
+        {
+            get { return skyserverRESTservice + "IRSpectraQuery/GalacticIR"; }
+        }
+
+        public string NoPositionIRWS 
+        {
+            get { return skyserverRESTservice + "IRSpectraQuery/NoPositionIR"; }
+        }
+        /// <summary>
+        /// These are IRSpectraQuery Search Tool services
+        /// </summary>
+        public string ConeSpectroWS
+        {
+            get { return skyserverRESTservice + "SpectroQuery/ConeSpectro"; }
+        }
+        public string RectangularSpectroWS
+        {
+            get { return skyserverRESTservice + "SpectroQuery/RectangularSpectro"; }
+        }
+        public string NoPositionSpectroWS
+        {
+            get { return skyserverRESTservice + "SpectroQuery/NoPositionSpectro"; }
+        }
+        public string ProximitySpectroWS
+        {
+            get { return skyserverRESTservice + "SpectroQuery/ProximitySpectro"; }
+        }
+        /****/
+
         public string UrlProjRegister
         {
             get { return urlProjRegister; }
@@ -377,6 +434,7 @@ namespace SkyServer
             this.rowLimit = int.Parse(appSettings["rowLimit"] ?? "500000");
             this.emacsRowLimit = int.Parse(appSettings["emacsRowLimit"] ?? "500000");
             this.queriesPerMinute = int.Parse(appSettings["queriesPerMinute"] ?? "60");
+            this.skyserverRESTservice = appSettings["restwebservice"];
 
             if (releaseNumber == 8)
             {
