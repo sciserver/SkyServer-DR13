@@ -919,9 +919,6 @@
     <Content Include="en\proj\basic\solarsystem\Query.aspx" />
     <Content Include="en\proj\basic\solarsystem\Results.aspx" />
     <Content Include="en\proj\basic\solarsystem\SolarSystemHome.aspx" />
-    <Content Include="en\proj\basic\solarsystem\sql.aspx" />
-    <Content Include="en\proj\basic\solarsystem_old\Default.aspx" />
-    <Content Include="en\proj\basic\solarsystem_old\SolarHome.aspx" />
     <Content Include="en\proj\basic\spectraltypes\Absorption.aspx" />
     <Content Include="en\proj\basic\spectraltypes\Absorption2.aspx" />
     <Content Include="en\proj\basic\spectraltypes\Connection.aspx" />
@@ -1693,6 +1690,7 @@
     <Content Include="en\skyserver\sitemap\Default.aspx" />
     <Content Include="en\skyserver\sitemap\SiteMap.aspx" />
     <Content Include="en\skyserver\SkyServerHome.aspx" />
+    <Content Include="en\TextFile1.aspx" />
     <Content Include="en\tools.css" />
     <Content Include="en\tools\chart\blank.html" />
     <Content Include="en\tools\chart\Book.aspx" />
@@ -4047,20 +4045,6 @@
     </Compile>
     <Compile Include="en\proj\basic\solarsystem\SolarSystemMaster.Master.designer.cs">
       <DependentUpon>SolarSystemMaster.Master</DependentUpon>
-    </Compile>
-    <Compile Include="en\proj\basic\solarsystem\sql.aspx.cs">
-      <DependentUpon>sql.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="en\proj\basic\solarsystem\sql.aspx.designer.cs">
-      <DependentUpon>sql.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="en\proj\basic\solarsystem_old\SolarHome.aspx.cs">
-      <DependentUpon>SolarHome.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="en\proj\basic\solarsystem_old\SolarHome.aspx.designer.cs">
-      <DependentUpon>SolarHome.aspx</DependentUpon>
     </Compile>
     <Compile Include="en\proj\basic\spectraltypes\Absorption.aspx.cs">
       <DependentUpon>Absorption.aspx</DependentUpon>
