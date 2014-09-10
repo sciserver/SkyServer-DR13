@@ -1690,7 +1690,6 @@
     <Content Include="en\skyserver\sitemap\Default.aspx" />
     <Content Include="en\skyserver\sitemap\SiteMap.aspx" />
     <Content Include="en\skyserver\SkyServerHome.aspx" />
-    <Content Include="en\TextFile1.aspx" />
     <Content Include="en\tools.css" />
     <Content Include="en\tools\chart\blank.html" />
     <Content Include="en\tools\chart\Book.aspx" />
