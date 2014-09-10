@@ -10,7 +10,13 @@
 -->
 		<li><b>March 2012</b>: 
 			<ul>
-				<li>The visual tools (<a href="<%=url%>/tools/explore/obj.aspx">Explore</a>, <a href="<%=url%>/tools/chart/navi.aspx">Navigate</a>, <a href="<%=url%>/tools/chart/chart.aspx">Finding Chart</a>) sometimes fail to show an object that exists in an SDSS-III field because of the way the JPEG images are constructed.  For example, an asteroid is missing from its <a href="http://skyserver.sdss3.org/dr8/en/tools/explore/obj.aspx?id=1237652944786686032">DR8 Explore page</a> even though it showed up in the <a href="http://cas.sdss.org/dr7/en/tools/explore/obj.aspx?id=587727223561781338">DR7 Explore page</a>. We can verify that the object exists in the corresponding SDSS-III field by using the <a href="<%=url%>/tools/getimg/fields.aspx">Get Frame tool (Tools->Get images->Fields)</a> to look at the <a href="http://skyservice.pha.jhu.edu/DR8/ImgCutout/getjpegcodec.aspx?R=1739&C=6&F=314&Z=0">field that the asteroid belongs to (run 1739, camcol 6, field 314)</a> (the asteroid can be seen near the top right of the frame). </li>
+				<li>The visual tools (<a href="<%=url%>/tools/explore/obj.aspx">Explore</a>, <a href="<%=url%>/tools/chart/navi.aspx">Navigate</a>, <a href="<%=url%>/tools/chart/chart.aspx">Finding Chart</a>) 
+                    sometimes fail to show an object that exists in an SDSS-III field because of the way the JPEG images are constructed. For example, an asteroid is missing from its 
+                    <a href="http://skyserver.sdss3.org/dr8/en/tools/explore/obj.asp?id=1237652944786686032">DR8 Explore page</a> even though it showed up in the 
+                    <a href="http://cas.sdss.org/dr7/en/tools/explore/obj.asp?id=587727223561781338">DR7 Explore page</a>. We can verify that the object exists in the corresponding SDSS-III field by 
+                    using the <a href="<%=url%>/tools/getimg/fields.aspx">Get Frame tool (Tools->Get images->Fields)</a> to look at the 
+                    <a href="http://skyservice.pha.jhu.edu/DR8/ImgCutout/getjpegcodec.aspx?R=1739&C=6&F=314&Z=0">field that the asteroid belongs to (run 1739, camcol 6, field 314)</a> 
+                    (the asteroid can be seen near the top right of the frame). </li>
 			</ul>
 		<li><b>November 2011</b>: 
 			<ul>

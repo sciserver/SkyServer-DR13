@@ -308,10 +308,15 @@
 	                    <tr><td><a class="med" target="_top" href='<%=hrefs.Summary%>#crossidtop' onmouseover="this.T_WIDTH='140';return escape('Photometric cross-identifications with other surveys, if there are any available.')">Cross-ID</a><br>
 
                         <tr><td align="right"><hr width="90"></td></tr>
+
 	                    <tr><td><a class="med" target="_top" href='<%=hrefs.Summary%>#spectro' onmouseover="this.T_WIDTH='140';return escape('Summary of spectroscopic parameters (if a spectrum was observed).')">Spec Summary</a><br>
-	                    <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.SpecFITS%>" onmouseover="this.T_WIDTH='140';return escape('Go to the SAS for the spectrum FITS file.')">FITS</a></td></tr>
+                      <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.AllSpec%>" onmouseover="this.T_WIDTH='140';return escape('Find all the spectra observed for this object in the SpecObjAll table.')">All Spectra</a></td></tr>
+	                                            <%
+                      if (specId != null)
+                      { 
+                        %>
+                      <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.SpecFITS%>" onmouseover="this.T_WIDTH='140';return escape('Go to the SAS for the spectrum FITS file.')">FITS</a></td></tr>
 	                    <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.Plate%>' onmouseover="this.T_WIDTH='140';return escape('Browsable contents of the spectroscopic plate that this spectrum belongs to.')">Plate</a></td></tr>
-                        <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.AllSpec%>" onmouseover="this.T_WIDTH='140';return escape('Find all the spectra observed for this object in the SpecObjAll table.')">All Spectra</a></td></tr>
                         <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.SpecObj%>' onmouseover="this.T_WIDTH='140';return escape('Full Parameters for Spectroscopic Observations.')">SpecObj</a></td></tr>	
 	                    <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.sppLines%>' onmouseover="this.T_WIDTH='140';return escape('Stellar Parameter Pipeline indices for spectral lines observed for this spectrum.')">sppLines</a></td></tr>
 
@@ -328,8 +333,8 @@
     	                    <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.sppParams%>' onmouseover="this.T_WIDTH='140';return escape('Stellar Parameter Pipeline atmospheric parameters for this spectrum.')">sppParams</a></td></tr>                            
    
                             <%
-                            if (globals.ReleaseNumber >= 8)         // display Portsmouth galaxy spectra fits only for DR8 or newer
-                            { 
+                          if (globals.ReleaseNumber >= 8)         // display Portsmouth galaxy spectra fits only for DR8 or newer
+                          { 
                             %>
                                 <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.stellarMassStarformingPort%>' onmouseover="this.T_WIDTH='140';return escape('General information (for the Portsmouth spectroscopic re-analysis) for this spectrum, assuming a star forming model.')">StarformingPort</a></td></tr>
                                 <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.stellarMassPassivePort%>' onmouseover="this.T_WIDTH='140';return escape('General information (for the (for the Portsmouth spectroscopic re-analysis) for this spectrum, assuming a passive model.')">PassivePort</a></td></tr>
@@ -346,8 +351,10 @@
                                 <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.stellarMassFSPSGranWideDust%>' onmouseover="this.T_WIDTH='140';return escape('stellarMassFSPSGranWideDust')">FSPSGranWideDust</a></td></tr>
                                 <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.stellarMassFSPSGranWideNoDust%>' onmouseover="this.T_WIDTH='140';return escape('stellarMassFSPSGranWideNoDust')">FSPSGranWideNoDust</a></td></tr>
                             <% } %>
-                        <tr><td align="right"><hr width="90"></td></tr>
+                        
                     <% } %>
+                    <% } // if (specId != null) %>
+                    <tr><td align="right"><hr width="90"></td></tr>
                 <%} %>
 
                 <%  
@@ -360,7 +367,7 @@
 <!--                      <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.apogeeVisit%>" onmouseover="this.T_WIDTH='140';return escape('I can has mouzeover?')">~~ApogeeVisit~~</a></td></tr>-->
 <!--                      <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.apogeePlate%>" onmouseover="this.T_WIDTH='140';return escape('I can has mouzeover?')">ApogeePlate</a></td></tr>-->
                       <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.apogeeStar%>' onmouseover="this.T_WIDTH='140';return escape('Display contents of ApogeeStar table')">ApogeeStar</a></td></tr>
-                      <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.aspcapStar%>" onmouseover="this.T_WIDTH='140';return escape(''Display contents of ASPCAPstar table')">ASPCAPstar</a></td></tr>
+                      <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.aspcapStar%>" onmouseover="this.T_WIDTH='140';return escape('Display contents of ASPCAPstar table')">ASPCAPstar</a></td></tr>
                       <tr><td align="right"><hr width="90"></td></tr>
 
                 <%} %>

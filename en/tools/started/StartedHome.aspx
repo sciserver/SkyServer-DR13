@@ -66,7 +66,7 @@ you know already and what information you want to find out. Click on the name of
 a tool for more information on what it does and how to use it.</p>
 
 <a name="tools"></a>
-<table width=600 border=1 cellpadding=3 cellspacing=1>
+<table width=600 border=1 cellpadding=3 cellspacing=1 id="list">
  <tr>
    <td width="80"align=center><em>Tool</em></td>
    <td align=center><em>What it Does</em></td>
