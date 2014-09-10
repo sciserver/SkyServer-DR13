@@ -6258,7 +6258,11 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>git describe --all --long &gt; $(SolutionDir)\version.txt</PostBuildEvent>
+    <PostBuildEvent>if "$(ConfigurationName)" == "Release" (
+  git describe &gt; $(SolutionDir)\version.txt
+) else (
+  git describe --all --long &gt; $(SolutionDir)\version.txt
+)</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
