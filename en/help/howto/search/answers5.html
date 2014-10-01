@@ -31,27 +31,27 @@ query:</font></p>
 </pre>
 </p>
 
-<p>The query returns a count of 5.</p>
+<p>The query returns a count of 17.</p>
 
 <p>To find the total number of objects in the field, use the same query without 
 the flag:</p>
 
 <p><font color=white>
 <pre>
-    select 
+    SELECT 
         count(objID)
-    from 
+    FROM
         photoObj
-    where 
+    WHERE
         run=5112
         and camcol=6 
         and field=119
 </pre>
 
-<p>This query returns a count of 684.</p>
+<p>This query returns a count of 670.</p>
 
 <p>So the percentage of objects too close to the field edge to trust is 
-5 / 684, or about 0.7%.</p>
+17 / 670, or about 3%.</p>
 
 <p><font color=yellow><b>Practice 11.</b></font>
 <font color=white>First, select a galaxy cluster from the Famous Places 
@@ -71,21 +71,19 @@ magnitude of about 13. The faintest galaxy appears to be at about r = 18.</p>
 <p>Combining all these results into one query:</p>
 
 <p><font color=white>
-XXX will have to wait for full DB to test this
 <pre>
-    select 
+    SELECT 
         p.objID, p.ra, p.dec, p.u, p.g, p.r, p.i, p.z
-    from 
-        photoObj p, dbo.fGetNearbyObjEq(153.378,-0.85,9) n
-    where 
-        p.objID = n.objID 
-        and p.type = 3 
+    FROM photoObj p
+    JOIN dbo.fGetNearbyObjEq(153.378,-0.85,9) n ON n.objID = p.objID
+    WHERE
+        p.type = 3 
         and p.r BETWEEN 13 and 18 
         and p.g-p.r BETWEEN 0.6 and 1
 </pre>
 </font></p>
 
-<p>The query returns 44 objects. Not every galaxy is part of the cluster, but most are.</p> 
+<p>The query returns 46 objects. Not every galaxy is part of the cluster, but most are.</p> 
 
 <p>Your results will be different, depending on which cluster you chose, what 
 criteria you chose, and how big you thought the cluster was. The 
