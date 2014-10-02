@@ -82,6 +82,29 @@ namespace SkyServer
             get { return skyserverRESTservice + "SearchTools/RectangularSearch"; }
         }
 
+        public string RadialSearchWS
+        {
+            get { return skyserverRESTservice + "SearchTools/RadialSearch"; }
+        }
+        /// <summary>
+        /// These are Imaging Search Tool services
+        /// </summary>
+        public string ConeImaging
+        {
+            get { return skyserverRESTservice + "ImagingQuery/Cone"; }
+        }
+        public string RectangularImaging
+        {
+            get { return skyserverRESTservice + "ImagingQuery/Rectangular"; }
+        }
+        public string NoPositionImaging
+        {
+            get { return skyserverRESTservice + "ImagingQuery/NoPosition"; }
+        }
+        public string ProximityImaging
+        {
+            get { return skyserverRESTservice + "ImagingQuery/Proximity"; }
+        }
         /// <summary>
         /// These are IRSpectraQuery Search Tool services
         /// </summary>
@@ -93,13 +116,12 @@ namespace SkyServer
         {
             get { return skyserverRESTservice + "IRSpectraQuery/GalacticIR"; }
         }
-
         public string NoPositionIRWS 
         {
             get { return skyserverRESTservice + "IRSpectraQuery/NoPositionIR"; }
         }
         /// <summary>
-        /// These are IRSpectraQuery Search Tool services
+        /// These are SpectroQuery Search Tool services
         /// </summary>
         public string ConeSpectroWS
         {
@@ -280,7 +302,7 @@ namespace SkyServer
         {
             get { return "DR" + releaseNumber; }
         }
-
+       
         /*
         public string DBType
         {
@@ -307,17 +329,17 @@ namespace SkyServer
 
         public string WSGetJpegUrl
         {
-              get { return WSBaseUrl + "ImgCutout/getjpeg.aspx"; }
+            get { return skyserverRESTservice + "ImgCutout/getjpeg"; }
         }
 
         public string WSGetImage64
         {
-            get { return WSBaseUrl + "ImgCutout/getImage64.aspx"; }
+            get { return skyserverRESTservice + "ImgCutout/getImage64"; }
         }
 
         public string WSGetCodecUrl
         {
-            get { return WSBaseUrl + "ImgCutout/getjpegcodec.aspx"; }
+            get { return skyserverRESTservice + "ImgCutout/getJpegCodec"; }
         }
 
         public double EqSearchRadius

@@ -64,10 +64,12 @@ namespace SkyServer.Tools.Search
 
                 //requestString += "&searchtype=" + whichway + "&returntype=" + format + "&limit=" + limit;
 
-                string requestString = Request.QueryString.ToString();
-                string rectangularSear = globals.RectangularSearchWS;
-                ResponseREST.runQuery(rectangularSear, requestString, Response);
+                //string requestString = Request.QueryString.ToString();
+                //string rectangularSear = globals.RectangularSearchWS;
+                //ResponseREST.runQuery(rectangularSear, requestString, Response);
 
+                ResponseREST rs = new ResponseREST();
+                //rs.ProcessRequestREST(Request, Response,"Rectangular");
             }
             catch (Exception ex)
             {

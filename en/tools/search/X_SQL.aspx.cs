@@ -37,35 +37,35 @@ namespace SkyServer.Tools.Search
         protected void ProcessRequestREST()
         {
             Response.Buffer = true;
+            ResponseREST rs = new ResponseREST();
+            //rs.ProcessRequestREST(Request, Response, "SQL");
 
-            //	read in query     
-            string c = Request.Form["cmd"];
-            string format = Request.Form["format"];
-            string syntax = Request.Form["syntax"];
+            ////	read in query     
+            //string c = Request.Form["cmd"];
+            //string format = Request.Form["format"];
+            //string syntax = Request.Form["syntax"];
 
-            if (c == null)
-            { c = Request.QueryString["cmd"]; }
+            //if (c == null)
+            //{ c = Request.QueryString["cmd"]; }
 
-            if (format == null)
-            { format = Request.QueryString["format"]; }
+            //if (format == null)
+            //{ format = Request.QueryString["format"]; }
 
-            if (syntax == null)
-            { syntax = Request.QueryString["syntax"]; }
+            //if (syntax == null)
+            //{ syntax = Request.QueryString["syntax"]; }
 
-            string c2 = Regex.Replace(c, @"\/\*(.*\n)*\*\/", "");	// remove all multi-line comments
-            c2 = Regex.Replace(c2, @"^[ \t\f\v]*--.*\r\n", "", RegexOptions.Multiline);		// remove all isolated single-line comments
-            c2 = Regex.Replace(c2, @"--[^\r^\n]*", "");				// remove all embedded single-line comments
-            c2 = Regex.Replace(c2, @"[ \t\f\v]+", " ");				// replace multiple whitespace with single space
-            c2 = Regex.Replace(c2, @"^[ \t\f\v]*\r\n", "", RegexOptions.Multiline);			// remove empty lines
-            c = c2;								// make a copy of massaged query
-            c2 = c2.Replace("'", "''");		// 'c' is query version that's printed on output page
-            // 'c2' is the version that is sent to DB server
+            //string c2 = Regex.Replace(c, @"\/\*(.*\n)*\*\/", "");	// remove all multi-line comments
+            //c2 = Regex.Replace(c2, @"^[ \t\f\v]*--.*\r\n", "", RegexOptions.Multiline);		// remove all isolated single-line comments
+            //c2 = Regex.Replace(c2, @"--[^\r^\n]*", "");				// remove all embedded single-line comments
+            //c2 = Regex.Replace(c2, @"[ \t\f\v]+", " ");				// replace multiple whitespace with single space
+            //c2 = Regex.Replace(c2, @"^[ \t\f\v]*\r\n", "", RegexOptions.Multiline);			// remove empty lines
+            //c = c2;								// make a copy of massaged query
+            //c2 = c2.Replace("'", "''");		// 'c' is query version that's printed on output page
+            //// 'c2' is the version that is sent to DB server
 
+            //string requestString = "query=" + c2 + "&format=" + format; 
 
-            string requestString = "query=" + c2 + "&format=" + format; 
-
-            ResponseREST.runQuery(globals.SQLSearchWS,requestString,Response);            
-                       
+            ////ResponseREST.runQuery(globals.SQLSearchWS,requestString,Response);            
         }
 
         protected void ProcessRequest()

@@ -23,7 +23,8 @@
 <div id="title">Spectroscopic Query Form</div></a>
 
 <div id="transp">
-<form method="post" enctype="multipart/form-data" action="x_sqs.aspx" id=sqs name="sqs">
+<form method="post" enctype="multipart/form-data" action="x_results.aspx" id=sqs name="sqs">
+    <input type="hidden" name="searchtool" id="searchtool" value="Spectro" />
 <!------------------------------------------------------->
 <table border=0 cellspacing=3 cellpadding=3 bgcolor=#aaaaaa>
   <tr><td>
