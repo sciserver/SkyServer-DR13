@@ -1715,6 +1715,7 @@
     <Content Include="en\tools\crossid\X_CrossId.aspx" />
     <Content Include="en\tools\Default.aspx" />
     <Content Include="en\tools\explore\AllSpec.aspx" />
+    <Content Include="en\tools\explore\ApogeeTest.aspx" />
     <Content Include="en\tools\explore\Default.aspx" />
     <Content Include="en\tools\explore\Ex_SQL.aspx" />
     <Content Include="en\tools\explore\FitsImg.aspx" />
@@ -5415,6 +5416,15 @@
     <Compile Include="en\tools\crossid\X_CrossId.aspx.designer.cs">
       <DependentUpon>X_CrossId.aspx</DependentUpon>
     </Compile>
+    <Compile Include="en\tools\explore\ApogeeInfo.cs" />
+    <Compile Include="en\tools\explore\ApogeeTest.aspx.cs">
+      <DependentUpon>ApogeeTest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\tools\explore\ApogeeTest.aspx.designer.cs">
+      <DependentUpon>ApogeeTest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\tools\explore\ApogeeVisit.cs" />
     <Compile Include="en\tools\explore\galaxyzoo.aspx.cs">
       <DependentUpon>galaxyzoo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
