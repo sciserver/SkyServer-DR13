@@ -125,7 +125,7 @@ where
                 command.Parameters.AddWithValue("radius", radius);
 
                 try { ReadInfo(command); }
-                catch (Exception ex) { throw new Exception("ApogeeInfo ERROR (ra: " + ra + ", dec: " + dec + ", radius: " + radius, ex); }
+                catch (Exception ex) { throw new Exception("ApogeeInfo ERROR (ra: " + ra + ", dec: " + dec + ", radius: " + radius + ")", ex); }
             }
 
             ReadVisits(connection);
