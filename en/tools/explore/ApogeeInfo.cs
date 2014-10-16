@@ -169,40 +169,40 @@ where
             {
                 if (reader.Read()) // Only one row expected
                 {
-                    ra = reader.GetDouble(0);
-                    dec = reader.GetDouble(1);
-                    apstar_id = reader.GetString(2);
-                    apogee_id = reader.GetString(3);
-                    glon = reader.GetDouble(4);
-                    glat = reader.GetDouble(5);
-                    location_id = reader.GetInt64(6);
-                    commiss = reader.GetInt64(7);
-                    vhelio_avg = reader.GetFloat(8);
-                    vscatter = reader.GetFloat(9);
+                    ra = (double)reader["ra"];
+                    dec = (double)reader["dec"];
+                    apstar_id = (string)reader["apstar_id"];
+                    apogee_id = (string)reader["apogee_id"];
+                    glon = (double)reader["glon"];
+                    glat = (double)reader["glat"];
+                    location_id = (long)reader["location_id"];
+                    commiss = (long)reader["commiss"];
+                    vhelio_avg = (float)reader["vhelio_avg"];
+                    vscatter = (float)reader["vscatter"];
 
-                    teff = reader.GetFloat(10);
-                    teff_err = reader.GetFloat(11);
-                    logg = reader.GetFloat(12);
-                    logg_err = reader.GetFloat(13);
-                    metals = reader.GetFloat(14);
-                    metals_err = reader.GetFloat(15);
-                    alphafe = reader.GetFloat(16);
-                    alphafe_err = reader.GetFloat(17);
+                    teff = (float)reader["teff"];
+                    teff_err = (float)reader["teff_err"];
+                    logg = (float)reader["logg"];
+                    logg_err = (float)reader["logg_err"];
+                    metals = (float)reader["metals"];
+                    metals_err = (float)reader["metals_err"];
+                    alphafe = (float)reader["alphafe"];
+                    alphafe_err = (float)reader["alphafe_err"];
 
-                    j = reader.GetFloat(18);
-                    h = reader.GetFloat(19);
-                    k = reader.GetFloat(20);
-                    j_err = reader.GetFloat(21);
-                    h_err = reader.GetFloat(22);
-                    k_err = reader.GetFloat(23);
-                    mag_4_5 = (reader.IsDBNull(24) ? null : (float?)reader.GetFloat(24));
-                    mag_4_5_err = (reader.IsDBNull(25) ? null : (float?)reader.GetFloat(25));        
-                    src_4_5 = reader.GetString(26);
+                    j = (float)reader["j"];
+                    h = (float)reader["h"];
+                    k = (float)reader["k"];
+                    j_err = (float)reader["j_err"];
+                    h_err = (float)reader["h_err"];
+                    k_err = (float)reader["k_err"];
+                    mag_4_5 = reader["mag_4_5"] is DBNull ? null : (float?)reader["mag_4_5"];
+                    mag_4_5_err = reader["mag_4_5_err"] is DBNull ? null : (float?)reader["mag_4_5_err"];        
+                    src_4_5 = (string)reader["src_4_5"];
 
-                    apogeeTarget1N = reader.GetString(27);
-                    apogeeTarget2N = reader.GetString(28);
-                    apogeeStarFlagN = reader.GetString(29);
-                    apogeeAspcapFlagN = reader.GetString(30);
+                    apogeeTarget1N = (string)reader["apogeeTarget1N"];
+                    apogeeTarget2N = (string)reader["apogeeTarget2N"];
+                    apogeeStarFlagN = (string)reader["apogeeStarFlagN"];
+                    apogeeAspcapFlagN = (string)reader["apogeeAspcapFlagN"];
                 }
                 else throw new Exception("APOGEE data not found");
             }
@@ -220,12 +220,12 @@ where
                     {
                         ApogeeVisit v = new ApogeeVisit();
 
-                        v.visit_id = reader.GetString(0);
-                        v.plate = reader.GetInt64(1);
-                        v.mjd = reader.GetInt64(2);
-                        v.fiberid = reader.GetInt64(3);
-                        v.dateobs = reader.GetString(4);
-                        v.vrel = reader.GetFloat(5);
+                        v.visit_id = (string)reader["visit_id"];
+                        v.plate = (long)reader["plate"];
+                        v.mjd = (long)reader["mjd"];
+                        v.fiberid = (long)reader["fiberid"];
+                        v.dateobs = (string)reader["dateobs"];
+                        v.vrel = (float)reader["vrel"];
 
                         visits.Add(v);
                     }
