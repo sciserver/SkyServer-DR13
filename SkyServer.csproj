@@ -5417,6 +5417,7 @@
       <DependentUpon>X_CrossId.aspx</DependentUpon>
     </Compile>
     <Compile Include="en\tools\explore\ApogeeInfo.cs" />
+    <Compile Include="en\tools\explore\ApogeeInfoSQL.cs" />
     <Compile Include="en\tools\explore\ApogeeTest.aspx.cs">
       <DependentUpon>ApogeeTest.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -5425,6 +5426,7 @@
       <DependentUpon>ApogeeTest.aspx</DependentUpon>
     </Compile>
     <Compile Include="en\tools\explore\ApogeeVisit.cs" />
+    <Compile Include="en\tools\explore\ApogeeInfoREST.cs" />
     <Compile Include="en\tools\explore\galaxyzoo.aspx.cs">
       <DependentUpon>galaxyzoo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

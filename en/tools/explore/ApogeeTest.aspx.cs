@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace SkyServer.Tools.Explore
 {
@@ -20,6 +21,8 @@ namespace SkyServer.Tools.Explore
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            string requestUri = ConfigurationManager.AppSettings["TEST_CasJobsRequestUri"];
+
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             using (SqlConnection connection = new SqlConnection(globals.ConnectionString))
             {
@@ -27,7 +30,8 @@ namespace SkyServer.Tools.Explore
 
                 if (Request["id"] != null) 
                 {
-                    apogeeInfo = new ApogeeInfo(connection, Request["id"]);
+                    //apogeeInfo = new ApogeeInfoSQL(connection, Request["id"]);
+                    apogeeInfo = new ApogeeInfoREST(requestUri, Request["id"]);
                 }
                 else if (Request["plate"] != null && Request["mjd"] != null && Request["fiberid"] != null)
                 {
@@ -35,7 +39,8 @@ namespace SkyServer.Tools.Explore
                     long mjd = long.Parse(Request["mjd"]);
                     long fiberid = long.Parse(Request["fiberid"]);
 
-                    apogeeInfo = new ApogeeInfo(connection, plate, mjd, fiberid);
+                    //apogeeInfo = new ApogeeInfoSQL(connection, plate, mjd, fiberid);
+                    apogeeInfo = new ApogeeInfoREST(requestUri, plate, mjd, fiberid);
                 }
                 else if (Request["ra"] != null && Request["dec"] != null)
                 {
@@ -43,7 +48,8 @@ namespace SkyServer.Tools.Explore
                     double ra = double.Parse(Request["ra"]);
                     double dec = double.Parse(Request["dec"]);
 
-                    apogeeInfo = new ApogeeInfo(connection, ra, dec, radius);
+                    //apogeeInfo = new ApogeeInfoSQL(connection, ra, dec, radius);
+                    apogeeInfo = new ApogeeInfoREST(requestUri, ra, dec, radius);
                 }
                 else throw new Exception("Required parameters missing: id | (ra, dec, [radius]) | (plate, mjd, fiberid)");
             }

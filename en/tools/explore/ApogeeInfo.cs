@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.SqlClient;
+using System.Data.Common;
 
 namespace SkyServer.Tools.Explore
 {
-    public class ApogeeInfo
+    public abstract class ApogeeInfo
     {
         public const double DEFAULT_RADIUS = 0.5 / 60;
 
@@ -113,125 +114,65 @@ where
         /* Visits */
         public List<ApogeeVisit> visits = new List<ApogeeVisit>();
 
-        private ApogeeInfo() { }
+        protected ApogeeInfo() { }
 
-        public ApogeeInfo(SqlConnection connection, double ra, double dec, double radius)
+        protected void ReadInfoFromDbReader(DbDataReader reader)  
         {
-            using (SqlCommand command = connection.CreateCommand())
+            if (reader.Read()) // Only one row expected
             {
-                command.CommandText = BASE_QUERY + FIND_NEAREST;
-                command.Parameters.AddWithValue("ra", ra);
-                command.Parameters.AddWithValue("dec", dec);
-                command.Parameters.AddWithValue("radius", radius);
+                ra = (double)reader["ra"];
+                dec = (double)reader["dec"];
+                apstar_id = (string)reader["apstar_id"];
+                apogee_id = (string)reader["apogee_id"];
+                glon = (double)reader["glon"];
+                glat = (double)reader["glat"];
+                location_id = (long)reader["location_id"];
+                commiss = (long)reader["commiss"];
+                vhelio_avg = (float)reader["vhelio_avg"];
+                vscatter = (float)reader["vscatter"];
 
-                try { ReadInfo(command); }
-                catch (Exception ex) { throw new Exception("ApogeeInfo ERROR (ra: " + ra + ", dec: " + dec + ", radius: " + radius + ")", ex); }
+                teff = (float)reader["teff"];
+                teff_err = (float)reader["teff_err"];
+                logg = (float)reader["logg"];
+                logg_err = (float)reader["logg_err"];
+                metals = (float)reader["metals"];
+                metals_err = (float)reader["metals_err"];
+                alphafe = (float)reader["alphafe"];
+                alphafe_err = (float)reader["alphafe_err"];
+
+                j = (float)reader["j"];
+                h = (float)reader["h"];
+                k = (float)reader["k"];
+                j_err = (float)reader["j_err"];
+                h_err = (float)reader["h_err"];
+                k_err = (float)reader["k_err"];
+                mag_4_5 = reader["mag_4_5"] is DBNull ? null : (float?)reader["mag_4_5"];
+                mag_4_5_err = reader["mag_4_5_err"] is DBNull ? null : (float?)reader["mag_4_5_err"];
+                src_4_5 = (string)reader["src_4_5"];
+
+                apogeeTarget1N = (string)reader["apogeeTarget1N"];
+                apogeeTarget2N = (string)reader["apogeeTarget2N"];
+                apogeeStarFlagN = (string)reader["apogeeStarFlagN"];
+                apogeeAspcapFlagN = (string)reader["apogeeAspcapFlagN"];
             }
-
-            ReadVisits(connection);
+            else throw new Exception("APOGEE data not found");
         }
 
-        public ApogeeInfo(SqlConnection connection, string id)
+        protected void ReadVisitsFromDbReader(DbDataReader reader)
         {
-            using (SqlCommand command = connection.CreateCommand())
+            while (reader.Read()) // Multiple rows expected
             {
-                if (id.StartsWith("apogee")) { command.CommandText = BASE_QUERY + FIND_APSTAR_ID; }
-                else { command.CommandText = BASE_QUERY + FIND_APOGEE_ID; }
+                ApogeeVisit v = new ApogeeVisit();
 
-                command.Parameters.AddWithValue("id", id);
+                v.visit_id = (string)reader["visit_id"];
+                v.plate = (long)reader["plate"];
+                v.mjd = (long)reader["mjd"];
+                v.fiberid = (long)reader["fiberid"];
+                v.dateobs = (string)reader["dateobs"];
+                v.vrel = (float)reader["vrel"];
 
-                try { ReadInfo(command); }
-                catch (Exception ex) { throw new Exception("ApogeeInfo ERROR (id: " + id + ")", ex); }
-            }
-
-            ReadVisits(connection);
-        }
-
-        public ApogeeInfo(SqlConnection connection, long plate, long mjd, long fiberid)
-        {
-            using (SqlCommand command = connection.CreateCommand())
-            {
-                command.CommandText = BASE_QUERY + FIND_PLFIB;
-                command.Parameters.AddWithValue("plate", plate);
-                command.Parameters.AddWithValue("mjd", mjd);
-                command.Parameters.AddWithValue("fiberid", fiberid);
-
-                try { ReadInfo(command); }
-                catch (Exception ex) { throw new Exception("ApogeeInfo ERROR (plate: " + plate + ", mjd: " + mjd + ", fiberid: " + fiberid + ")", ex); }
-            }
-
-            ReadVisits(connection);
-        }
-
-        private void ReadInfo(SqlCommand command) 
-        {
-            using (SqlDataReader reader = command.ExecuteReader())
-            {
-                if (reader.Read()) // Only one row expected
-                {
-                    ra = (double)reader["ra"];
-                    dec = (double)reader["dec"];
-                    apstar_id = (string)reader["apstar_id"];
-                    apogee_id = (string)reader["apogee_id"];
-                    glon = (double)reader["glon"];
-                    glat = (double)reader["glat"];
-                    location_id = (long)reader["location_id"];
-                    commiss = (long)reader["commiss"];
-                    vhelio_avg = (float)reader["vhelio_avg"];
-                    vscatter = (float)reader["vscatter"];
-
-                    teff = (float)reader["teff"];
-                    teff_err = (float)reader["teff_err"];
-                    logg = (float)reader["logg"];
-                    logg_err = (float)reader["logg_err"];
-                    metals = (float)reader["metals"];
-                    metals_err = (float)reader["metals_err"];
-                    alphafe = (float)reader["alphafe"];
-                    alphafe_err = (float)reader["alphafe_err"];
-
-                    j = (float)reader["j"];
-                    h = (float)reader["h"];
-                    k = (float)reader["k"];
-                    j_err = (float)reader["j_err"];
-                    h_err = (float)reader["h_err"];
-                    k_err = (float)reader["k_err"];
-                    mag_4_5 = reader["mag_4_5"] is DBNull ? null : (float?)reader["mag_4_5"];
-                    mag_4_5_err = reader["mag_4_5_err"] is DBNull ? null : (float?)reader["mag_4_5_err"];        
-                    src_4_5 = (string)reader["src_4_5"];
-
-                    apogeeTarget1N = (string)reader["apogeeTarget1N"];
-                    apogeeTarget2N = (string)reader["apogeeTarget2N"];
-                    apogeeStarFlagN = (string)reader["apogeeStarFlagN"];
-                    apogeeAspcapFlagN = (string)reader["apogeeAspcapFlagN"];
-                }
-                else throw new Exception("APOGEE data not found");
+                visits.Add(v);
             }
         }
-
-        private void ReadVisits(SqlConnection connection)
-        {
-            using (SqlCommand command = connection.CreateCommand())
-            {
-                command.CommandText = ApogeeVisit.BASE_QUERY;
-                command.Parameters.AddWithValue("id", apogee_id);
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    while (reader.Read()) // Multiple rows expected
-                    {
-                        ApogeeVisit v = new ApogeeVisit();
-
-                        v.visit_id = (string)reader["visit_id"];
-                        v.plate = (long)reader["plate"];
-                        v.mjd = (long)reader["mjd"];
-                        v.fiberid = (long)reader["fiberid"];
-                        v.dateobs = (string)reader["dateobs"];
-                        v.vrel = (float)reader["vrel"];
-
-                        visits.Add(v);
-                    }
-                }
-            }
-        }
-
     }
 }
