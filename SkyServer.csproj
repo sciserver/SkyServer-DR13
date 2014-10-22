@@ -1737,6 +1737,19 @@
     <Content Include="en\tools\explore\images\square.gif" />
     <Content Include="en\tools\explore\Matches.aspx" />
     <Content Include="en\tools\explore\Neighbors.aspx" />
+    <Content Include="en\tools\explore\NewExplorer\Explorer.aspx" />
+    <Content Include="en\tools\explore\NewExplorer\images\cancel.gif" />
+    <Content Include="en\tools\explore\NewExplorer\images\circle.gif" />
+    <Content Include="en\tools\explore\NewExplorer\images\ok.gif" />
+    <Content Include="en\tools\explore\NewExplorer\images\sdss-background.jpg" />
+    <Content Include="en\tools\explore\NewExplorer\images\sdss-main-logo-2.jpg" />
+    <Content Include="en\tools\explore\NewExplorer\images\sdss-skyserver.gif" />
+    <Content Include="en\tools\explore\NewExplorer\images\sdss3_logo.gif" />
+    <Content Include="en\tools\explore\NewExplorer\images\sdsslogo-tiny.jpg" />
+    <Content Include="en\tools\explore\NewExplorer\images\sdss_logo_tiny.jpg" />
+    <Content Include="en\tools\explore\NewExplorer\images\square.gif" />
+    <Content Include="en\tools\explore\NewExplorer\javascript\explore.js" />
+    <Content Include="en\tools\explore\NewExplorer\Obj.aspx" />
     <Content Include="en\tools\explore\Obj.aspx" />
     <Content Include="en\tools\explore\PhotoZ.aspx" />
     <Content Include="en\tools\explore\PhotozRF.aspx" />
@@ -5428,6 +5441,32 @@
     <Compile Include="en\tools\explore\galaxyzoo.aspx.designer.cs">
       <DependentUpon>galaxyzoo.aspx</DependentUpon>
     </Compile>
+    <Compile Include="en\tools\explore\NewExplorer\Explorer.aspx.cs">
+      <DependentUpon>Explorer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\tools\explore\NewExplorer\Explorer.aspx.designer.cs">
+      <DependentUpon>Explorer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\tools\explore\NewExplorer\ExplorerLibrary\CrossIdParameters.cs" />
+    <Compile Include="en\tools\explore\NewExplorer\ExplorerLibrary\ExplorerQueries.cs" />
+    <Compile Include="en\tools\explore\NewExplorer\ExplorerLibrary\ImagingParameters.cs" />
+    <Compile Include="en\tools\explore\NewExplorer\ExplorerLibrary\RunQuery.cs" />
+    <Compile Include="en\tools\explore\NewExplorer\ExplorerLibrary\SpectralParameters.cs" />
+    <Compile Include="en\tools\explore\NewExplorer\Obj.aspx.cs">
+      <DependentUpon>Obj.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\tools\explore\NewExplorer\Obj.aspx.designer.cs">
+      <DependentUpon>Obj.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\tools\explore\NewExplorer\ObjectExplorer.Master.cs">
+      <DependentUpon>ObjectExplorer.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\tools\explore\NewExplorer\ObjectExplorer.Master.designer.cs">
+      <DependentUpon>ObjectExplorer.Master</DependentUpon>
+    </Compile>
     <Compile Include="en\tools\explore\parameters.aspx.cs">
       <DependentUpon>parameters.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -6219,6 +6258,7 @@
     <Content Include="en\skyserver\SkyServerMaster.master" />
     <Content Include="en\tools\Resolver.ashx" />
     <Content Include="en\skyserver\paper\SkyServer-ACM-SIGMOD-2002.pdf" />
+    <Content Include="en\tools\explore\NewExplorer\ObjectExplorer.Master" />
     <None Include="en\tools\STARTBall\FlashJavascriptGateway\FlashJavascriptGateway\.DS_Store" />
     <None Include="en\tools\STARTBall\FlashJavascriptGateway\FlashJavascriptGateway\installation\.DS_Store" />
     <None Include="en\tools\STARTBall\FlashJavascriptGateway\FlashJavascriptGateway\source\flash\actionscript\com\macromedia\javascript\JavaScriptProxy.as" />

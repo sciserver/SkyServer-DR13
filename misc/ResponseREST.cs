@@ -179,9 +179,7 @@ namespace SkyServer.Tools.Search
                 default: throw new Exception("Select proper tool");
 
             }
-
             
-
             if (temp)
             {
                 radecText = inputForm["radecTextArea"];
