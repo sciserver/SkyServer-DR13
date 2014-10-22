@@ -1,9 +1,8 @@
-﻿<%@ Page Language="C#"  MasterPageFile="ObjectExplorer.Master" AutoEventWireup="true" CodeBehind="Explorer.aspx.cs" Inherits="SkyServer.en.tools.explore.NewExplorer.Explorer1" %>
+﻿<%@ Page Language="C#"  MasterPageFile="ObjectExplorer.Master" AutoEventWireup="true" CodeBehind="Explorer.aspx.cs" Inherits="SkyServer.Tools.Explore.Explorer1" %>
 
 <%@ Import Namespace="System.Data.SqlClient" %>
-<%@ Import Namespace="SkyServer.en.tools.explore.NewExplorer" %>
 <%@ Import Namespace="SkyServer" %>
-<%@ Import Namespace="SkyServer.en.tools.explore.NewExplorer.ExplorerLibrary"%>
+<%@ Import Namespace="SkyServer.Tools.Explore"%>
 
 <asp:Content ID="Head1" ContentPlaceHolderID="OEHead" runat="server">  
     <script type="text/javascript" src="./javascript/explore.js"></script>
@@ -98,16 +97,13 @@
                 </td></tr></table>
             </div>
 
-                    <% } %>
+             <% } %>
     <table>
         <tr>
             <td>
                 <%                       
                     nvTemp.Add("Flags", im.flag);
-                    master.showVTable(nvTemp, 420);
-                    //master.startVTable(420);
-                    //master.showVTable("Flags", im.flag);
-                    //master.endVTable();                            
+                    master.showVTable(nvTemp, 420);                                    
                 %>
             </td>
         </tr>
@@ -206,12 +202,13 @@
                 </td>
                 <td width="40%">
                 <%                    
-                    string spectrumlink = globals.DasUrl + "spectrumDetail?plateid=" + sp.plate + "&mjd=" + sp.mjd + "&fiber=" + sp.fiberid;
+                    //string spectrumlink = globals.DasUrl + "spectrumDetail?plateid=" + sp.plate + "&mjd=" + sp.mjd + "&fiber=" + sp.fiberid;
+                    string spectrumlink = globals.DasUrl + "spectrumDetail?plateid=" + nvSpectral["plate"] + "&mjd=" + nvSpectral["mjd"] + "&fiber=" + nvSpectral["fiberid"];
                     Response.Write("<p><b>\n");
                     Response.Write("<a class='content' href='");
                     Response.Write(spectrumlink);
                     Response.Write("' target='_blank'>Interactive spectrum");
-                    Response.Write("<img src='../../../images/new_window_black.png' alt=' (new window)' />");
+                    Response.Write("<img src='../../images/new_window_black.png' alt=' (new window)' />");
                     Response.Write("</a></b></p>\n");
                 %>
                 </td>
@@ -221,22 +218,23 @@
    <table class="content">
         <tr>
             <%
-              
-                if (specObjId.HasValue && specObjId != 0)
-                {
+              if (specObjId.HasValue && specObjId != 0)
+               {
                     string instrumentLink = globals.SdssUrlBase + "instruments";            
             %>
-	   	            <td>             
-		            <a href="../../../get/SpecById.ashx?id=<%= specObjId %>">
-		            <img alt="" src="../../../get/SpecById.ashx?id=<%= specObjId %>" width="316" height="253" border="0" align="left" /></a>
-                    </td>
-                    <td>                     
-                  
+	   	      <td>             
+		            <a href="../../get/SpecById.ashx?id=<%= specObjId %>">
+		                <img alt="" src="../../get/SpecById.ashx?id=<%= specObjId %>" width="316" height="253" border="0" align="left" />
+		            </a>
+              </td>
+              <td>                     
                     <%                      
                         master.showVTable(nvSpectral, 300);                     
                     %>            
-	   	     </td>
-            <%} %>
+	   	       </td>
+            <%
+                } 
+            %>
         </tr>   
     </table> 
 </div>  <!-- end of spectro div -->

@@ -186,8 +186,6 @@
             {
                 oConn.Open();
 
-
-
                 cmd = "select dbo.fPhotoFlagsN(p.flags) as";
                 cmd += " '<a href=" + flagsLink + ">Flags <img src=../../images/offsite_black.png /></a>'";
                 cmd += " from PhotoTag p";

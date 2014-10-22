@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Collections.Specialized;
 using System.Data.SqlClient;
-namespace SkyServer.en.tools.explore.NewExplorer.ExplorerLibrary
+namespace SkyServer.Tools.Explore
 {
     public class CrossIdParameters
     {

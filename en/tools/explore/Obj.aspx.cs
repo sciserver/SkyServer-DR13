@@ -116,7 +116,7 @@ namespace SkyServer.Tools.Explore
                 
                 getObjPmts(oConn);
 
-                Response.Redirect("summary.aspx?id=" + ((objId == null) ? "" : objId)
+                Response.Redirect("Explorer.aspx?id=" + ((objId == null) ? "" : objId)
                     + "&spec=" + ((specObjId == null) ? "" : specObjId)
                     + "&apid=" + ((apid == null) ? "" : apid));
 
@@ -182,7 +182,6 @@ namespace SkyServer.Tools.Explore
                     } // using SqlDataReader
                 } // using SqlCommand
             }
-
         }
 
         private void apogeeFromEq(SqlConnection oConn, double? qra, double? qdec)

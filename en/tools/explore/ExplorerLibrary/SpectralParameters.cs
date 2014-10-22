@@ -5,7 +5,7 @@ using System.Web;
 using System.Data.SqlClient;
 using System.Collections.Specialized;
 
-namespace SkyServer.en.tools.explore.NewExplorer.ExplorerLibrary
+namespace SkyServer.Tools.Explore
 {
     public class SpectralParameters
     {
@@ -75,9 +75,9 @@ namespace SkyServer.en.tools.explore.NewExplorer.ExplorerLibrary
                         {
                             if (reader.HasRows)
                             {
-                                plate = reader.GetInt16(0);
-                                mjd = reader.GetInt32(1);
-                                fiberid = reader.GetInt16(2);
+                                //plate = reader.GetInt16(0);
+                                //mjd = reader.GetInt32(1);
+                                //fiberid = reader.GetInt16(2);
                                 //instrument = reader.GetValue(3).ToString();
                                 //objclass = reader.GetValue(4).ToString();
                                 //redshift_z = reader.GetValue(5).ToString();

@@ -7,6 +7,8 @@ using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using System.Globalization;
 using SkyServer;
+using SkyServer.Tools.Explore;
+using System.Collections.Specialized;
 
 namespace SkyServer.Tools.Explore
 {
@@ -343,145 +345,6 @@ namespace SkyServer.Tools.Explore
 
         // ***** Functions *****
 
-        public void showVTable(SqlConnection oConn, string cmd, int w)
-        {
-            using (SqlCommand oCmd = oConn.CreateCommand())
-            {
-                // show only one record, but vertically
-                oCmd.CommandText = cmd;
-
-                //    Response.Write(cmd);  return;
-
-                //oConn.CommandTimeout = sqlTimeout;
-                //oCmd.CommandTimeout = sqlTimeout;
-                //Server.ScriptTimeout = sqlTimeout;
-
-                using  (SqlDataReader reader = oCmd.ExecuteReader()) {
-                    //if (oRs.EOF) return;
-
-                    int i, j;
-                    char c;
-
-                    if (reader.Read())
-                    {
-                        //reader.Read();
-                        //Response.Write("<div id=\""+div+"\">\n");
-                        Response.Write("<table cellpadding=2 cellspacing=2 width=" + w + ">");
-                        c = 'b';
-                        for (i = 0; i < (reader.FieldCount); i++)
-                        {
-                            Response.Write("<tr align=left><td valign=top class='h'>");
-
-                            // this section works with setGlossaryKey(name,value) to print out linked glossary symbols for parameters that have glossary entries  -JR 6/6/07
-                            //				key = setGlossaryKey(oRs.fields(i).name,oRs.fields(i).value);
-                            //				if (key != "") {  // Check whether there is a glossary key. Display a link to the glossary only if there is a key.
-                            //					Response.Write("<span style='font-weight:bold'><a href='../../help/docs/glossary.aspx?key="+key+"' target='help'>"+oRs.fields(i).name+"</a></span>");
-                            //				} 
-                            //				else {
-                            Response.Write(reader.GetName(i));
-                            //				}
-                            Response.Write("</td><td valign=top class='" + c + "'>");
-
-                            string val = reader.GetValue(i).ToString();
-                            Response.Write((val == "" ? "&nbsp;" : val));
-                            Response.Write("</td></tr>\n");
-                            c = (c == 't' ? 'b' : 't');
-
-                            Response.Write("</td>");
-                            Response.Write("</tr>\n");
-                        }
-                        Response.Write("</table>\n");
-                        //Response.Write("</div>\n");
-                    }
-                    else 
-                    {
-                        Response.Write("<h2 class='nodatafound'>No data found for this object</h2>");
-                    }
-                }
-            }
-        }
-
-        public void showHTable(SqlConnection oConn, string cmd, int w, string tableName)
-        {
-            using (SqlCommand oCmd = oConn.CreateCommand())
-            {
-                oCmd.Parameters.Clear();
-                oCmd.CommandText = cmd;
-
-                string[] names = new string[0];
-
-                Response.Write("<table cellpadding=2 cellspacing=2 border=0");
-                if (w > 0)
-                    Response.Write(" width=" + w);
-                Response.Write(">\n");
-
-                Response.Write("<tr>");
-
-                using (SqlDataReader reader = oCmd.ExecuteReader())
-                {
-                    if (reader.HasRows)
-                    {
-                        names = new string[reader.FieldCount];
-                        for (int i = 0; i < reader.FieldCount; i++)
-                        {
-                            names[i] = reader.GetName(i);
-                        }
-                    }
-                    else    // if no data found, say so.
-                    {
-                        Response.Write("<td class='nodatafound'>No data found for this object</td>");
-                    }
-                }
-
-                for (int i=0; i<names.Length; i++) 
-                {
-                    string unit = getUnit(oConn, tableName, names[i]);
-
-                            Response.Write("<td align='middle' class='h'>");
-
-                            // this section works with setGlossaryKey(name,value) to print out linked glossary symbols for parameters that have glossary entries  -JR 6/6/07
-                            //		key = setGlossaryKey( oRs.fields(i).name, oRs.fields(i).value );
-                            //		link = "";
-                            //		if( key != "" )
-                            // Check whether there is a glossary key. Display a link to the glossary only if there is a key.
-                            //			link = "../../help/docs/glossary.aspx?key="+key;
-                            //		Response.Write("<span style='font-weight:bold'><a href='"+link+"' ");
-                            Response.Write("<span ");
-                            if (unit != "")
-                                Response.Write("ONMOUSEOVER=\"this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=" + unit + "')\" ");
-                            //		Response.Write( "target='help'>"+oRs.fields(i).name+"</a></span>" );
-                            Response.Write(">" + names[i] + "</span>");
-                            //		else {
-                            //			Response.Write(oRs.fields(i).name);
-                            //		}
-                            Response.Write("</td>");
-                        
-                }
-                Response.Write("</tr>\n");
-
-                using (SqlDataReader reader = oCmd.ExecuteReader()) {
-
-                        char c = 't';
-                        string val;
-
-                        while (reader.Read())
-                        {
-                            Response.Write("<tr>");
-                            for (int i = 0; i < (reader.FieldCount); i++)
-                            {
-                                val = reader.GetValue(i).ToString();
-                                Response.Write("<td nowrap align='middle' class='" + c + "'>" + (val == "" ? "&nbsp;" : val) + "</td>");
-                            }
-                            Response.Write("</tr>\n");
-                            c = (c == 't' ? 'b' : 't');
-
-                        }
-                        Response.Write("</table>\n");
-                }
-            }
-        }
-   
-
         public void showNTable(SqlConnection oConn, string cmd) {
             using (SqlCommand oCmd = oConn.CreateCommand())
             {
@@ -621,6 +484,78 @@ namespace SkyServer.Tools.Explore
             }
 
             return "";
+        }
+
+       
+        /// <summary>
+        /// Added new HTable with namevalue pair options
+        /// </summary>
+        /// <param name="namevalues"></param>
+        /// <param name="w"></param>
+        public void showHTable(NameValueCollection namevalues, int w)
+        {
+            char c = 't'; string unit = "test";
+            
+            Response.Write("<table cellpadding=2 cellspacing=2 border=0");
+            
+            if (w > 0)
+                Response.Write(" width=" + w);
+            Response.Write(">\n");
+            
+                Response.Write("<tr>");
+
+                foreach (String k in namevalues.AllKeys)
+                {
+                    Response.Write("<td align='middle' class='h'>");
+                    Response.Write("<span ");
+                    if (unit != "")
+                        Response.Write("ONMOUSEOVER=\"this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=" + unit + "')\" ");
+                    Response.Write("></span>");
+                    Response.Write(k+"</td>");                                      
+                }
+                Response.Write("</tr>");
+                
+                Response.Write("<tr>");
+
+                foreach (String k in namevalues.AllKeys)
+                {
+                    Response.Write("<td nowrap align='middle' class='" + c + "'>");
+                    Response.Write(namevalues[k]);
+                    Response.Write("</td>");
+                }
+                Response.Write("</tr>");
+            
+            Response.Write("</table>");
+        }
+        
+        /// <summary>
+        /// Vertical aligned table  With name value pair
+        /// </summary>
+        /// <param name="namevalues"></param>
+        /// <param name="w"></param>
+        public void showVTable(NameValueCollection namevalues, int w)
+        {
+            char c = 't'; string unit = "test";
+            Response.Write("<table cellpadding=2 cellspacing=2 border=0");
+            if (w > 0)
+                Response.Write(" width=" + w);
+            Response.Write(">\n");
+            foreach (String k in namevalues.AllKeys)
+            {
+                Response.Write("<tr align='left' >");
+                Response.Write("<td  valign='top' class='h'>");
+                Response.Write("<span ");
+                if (unit != "")
+                    Response.Write("ONMOUSEOVER=\"this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=" + unit + "')\" ");
+                Response.Write("></span>");
+                Response.Write(k + "</td>");
+            
+                Response.Write("<td valign='top' class='" + c + "'>");
+                Response.Write(namevalues[k]);
+                Response.Write("</td>");
+                Response.Write("</tr>");
+            }
+            Response.Write("</table>");
         }
     }
 }

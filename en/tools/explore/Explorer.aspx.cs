@@ -9,7 +9,7 @@ using System.Globalization;
 using SkyServer;
 
 
-namespace SkyServer.en.tools.explore.NewExplorer
+namespace SkyServer.Tools.Explore
 {
     public partial class Explorer1 : System.Web.UI.Page
     {

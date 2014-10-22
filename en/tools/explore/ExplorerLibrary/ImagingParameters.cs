@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Data.SqlClient;
 using System.Collections.Specialized;
-namespace SkyServer.en.tools.explore.NewExplorer.ExplorerLibrary
+namespace SkyServer.Tools.Explore
 {
     public class ImagingParameters
     {
@@ -92,28 +92,31 @@ namespace SkyServer.en.tools.explore.NewExplorer.ExplorerLibrary
                                 //photoObjall
                                 clean = reader.GetInt32(9);
                                 otype = reader.GetString(10);
+
                                 //magnitudes
-                                u = Convert.ToDouble(reader.GetValue(11)); 
+                                //u = Convert.ToDouble(reader.GetValue(11)); 
                                     magnitudes.Add(reader.GetName(11), reader.GetValue(11).ToString());
-                                g = Convert.ToDouble(reader.GetValue(12)); 
+                                //g = Convert.ToDouble(reader.GetValue(12)); 
                                     magnitudes.Add(reader.GetName(12), reader.GetValue(12).ToString());
-                                r = Convert.ToDouble(reader.GetValue(13)); 
+                                //r = Convert.ToDouble(reader.GetValue(13)); 
                                     magnitudes.Add(reader.GetName(13), reader.GetValue(13).ToString());
-                                i = Convert.ToDouble(reader.GetValue(14));
+                                //i = Convert.ToDouble(reader.GetValue(14));
                                     magnitudes.Add(reader.GetName(14), reader.GetValue(14).ToString());
-                                z = Convert.ToDouble(reader.GetValue(15)); 
+                                //z = Convert.ToDouble(reader.GetValue(15)); 
                                     magnitudes.Add(reader.GetName(15), reader.GetValue(15).ToString());
+
                                 //mag errors
-                                err_u = Convert.ToDouble(reader.GetValue(16)); 
+                                //err_u = Convert.ToDouble(reader.GetValue(16)); 
                                     magErrors.Add(reader.GetName(16), reader.GetValue(16).ToString());
-                                err_g = Convert.ToDouble(reader.GetValue(17)); 
+                                //err_g = Convert.ToDouble(reader.GetValue(17)); 
                                     magErrors.Add(reader.GetName(17), reader.GetValue(17).ToString());
-                                err_r = Convert.ToDouble(reader.GetValue(18)); 
+                                //err_r = Convert.ToDouble(reader.GetValue(18)); 
                                     magErrors.Add(reader.GetName(18), reader.GetValue(18).ToString());
-                                err_i = Convert.ToDouble(reader.GetValue(19)); 
+                                //err_i = Convert.ToDouble(reader.GetValue(19)); 
                                     magErrors.Add(reader.GetName(19), reader.GetValue(19).ToString());
-                                err_z = Convert.ToDouble(reader.GetValue(20)); 
+                                //err_z = Convert.ToDouble(reader.GetValue(20)); 
                                     magErrors.Add(reader.GetName(20), reader.GetValue(20).ToString());
+
                                 ////--- PhotoObj
                                 mode = reader.GetString(21);
                                 mjdNum = reader.GetInt32(22);
@@ -129,6 +132,7 @@ namespace SkyServer.en.tools.explore.NewExplorer.ExplorerLibrary
                                     restPhoto1.Add(reader.GetName(26), reader.GetValue(26).ToString());
                                 petrorad_r = reader.GetValue(27).ToString();
                                     restPhoto1.Add(reader.GetName(27), reader.GetValue(27).ToString());
+
                                 ////--- PhotoZ, photoZRF
                                 photoZ_KD = reader.GetValue(28).ToString();
                                     restPhoto2.Add(reader.GetName(28), reader.GetValue(28).ToString());

@@ -7,7 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SkyServer.en.tools.explore.NewExplorer {
+namespace SkyServer.Tools.Explore
+{
     
     
     public partial class Explorer1 {
