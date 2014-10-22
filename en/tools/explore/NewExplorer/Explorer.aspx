@@ -16,7 +16,10 @@
         ImagingParameters im = new ImagingParameters();
         im.connectionString = globals.ConnectionString;
         im.getImagingQuery(id.ToString(), globals.SdssUrl);
-        NameValueCollection nvImaging = im.runQueryDB();                
+        NameValueCollection nvImaging = im.runQueryDB();
+
+        //reusable nv to use for small collections
+        NameValueCollection nvTemp = new NameValueCollection();
         if (id.HasValue)
         {
     %>
@@ -100,9 +103,11 @@
         <tr>
             <td>
                 <%                       
-                    master.startVTable(420);
-                    master.showVTable("Flags", im.flag);
-                    master.endVTable();                            
+                    nvTemp.Add("Flags", im.flag);
+                    master.showVTable(nvTemp, 420);
+                    //master.startVTable(420);
+                    //master.showVTable("Flags", im.flag);
+                    //master.endVTable();                            
                 %>
             </td>
         </tr>
@@ -116,15 +121,15 @@
             </td>
             <td >
                 <%
-                   NameValueCollection nvIm = new NameValueCollection();
-                   nvIm.Add("", "<b>Magnitudes</b>");
-                   master.showHTable(nvIm, 420);
+                   nvTemp = new NameValueCollection();
+                   nvTemp.Add("", "<b>Magnitudes</b>");
+                   master.showHTable(nvTemp, 420);
                     
                    master.showHTable(im.magnitudes,420);
-                   
-                   nvIm = new NameValueCollection();
-                   nvIm.Add("", "<b>Magnitude uncertainties</b>");
-                   master.showHTable(nvIm, 420);
+
+                   nvTemp = new NameValueCollection();
+                   nvTemp.Add("", "<b>Magnitude uncertainties</b>");
+                   master.showHTable(nvTemp, 420);
 
                    master.showHTable(im.magErrors, 420);                   
                 %>       
