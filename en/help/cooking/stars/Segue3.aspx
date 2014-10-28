@@ -38,27 +38,28 @@ into the textbox:</p>
     </tr>    
     
     <tr>
-      <td>FROM plateX p, specObjAll s&nbsp;&nbsp;&nbsp;-- from plate and spectrum tables</td>
+      <td>FROM plateX p</td>
     </tr>
 
+    <tr>
+      <td></td>
+    </tr>    
+
+    <tr>
+      <td>JOIN specObjAll S ON p.plateID = S.plateID &nbsp;&nbsp;&nbsp;-- from plate and spectrum tables</td>
+    </tr>
     <tr>
       <td></td>
     </tr>
 
     <tr>
-      <td>WHERE p.plate = s.plate&nbsp;&nbsp;&nbsp;-- this is the same object</td>
-    </tr>
-    <tr>
-      <td>&nbsp;&nbsp;&nbsp;AND p.programtype > 0&nbsp;&nbsp;&nbsp;-- not part of main survey</td>
-    </tr>
-    <tr>
-      <td>&nbsp;&nbsp;&nbsp;AND p.programname like '%segue%'&nbsp;&nbsp;&nbsp;-- part of SEGUE survey</td>
+      <td>WHERE p.programname like '%segue%'&nbsp;&nbsp;&nbsp;-- part of SEGUE survey</td>
     </tr>
     <tr>
       <td>&nbsp;&nbsp;&nbsp;AND s.bestObjID > 0&nbsp;&nbsp;&nbsp;-- object also has photometric data </td>
     </tr>
     <tr>
-      <td>&nbsp;&nbsp;&nbsp;AND s.specClass = 1	&nbsp;&nbsp;&nbsp;-- object is a star    </td>
+      <td>&nbsp;&nbsp;&nbsp;AND s.class = 'STAR'	&nbsp;&nbsp;&nbsp;-- object is a star    </td>
     </tr>
     
   </table>

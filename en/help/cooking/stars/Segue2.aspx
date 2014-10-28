@@ -36,24 +36,26 @@
     </tr>    
     
     <tr>
-      <td>FROM plateX p, specObjAll s&nbsp;&nbsp;&nbsp;-- from plate and spectrum tables</td>
+      <td>FROM plateX p
     </tr>
-
+    <tr>
+      <td></td>
+    </tr>
+    <tr>
+      <td>JOIN specObjAll s ON s.plateID = p.plateID&nbsp;&nbsp;&nbsp;-- from plate and spectrum tables</td>
+    </tr>
     <tr>
       <td></td>
     </tr>
 
     <tr>
-      <td>WHERE p.plate = s.plate&nbsp;&nbsp;&nbsp;-- this is the same object</td>
-    </tr>
-    <tr>
-      <td>&nbsp;&nbsp;&nbsp;AND p.programname like '%segue%'&nbsp;&nbsp;&nbsp;-- part of SEGUE survey</td>
+      <td>WHERE p.programname like '%segue%'&nbsp;&nbsp;&nbsp;-- part of SEGUE survey</td>
     </tr>
     <tr>
       <td>&nbsp;&nbsp;&nbsp;AND s.bestObjID > 0&nbsp;&nbsp;&nbsp;-- object also has photometric data </td>
     </tr>
     <tr>
-      <td>&nbsp;&nbsp;&nbsp;AND s.specClass = 1	&nbsp;&nbsp;&nbsp;-- object is a star    </td>
+      <td>&nbsp;&nbsp;&nbsp;AND s.class = 'STAR'	&nbsp;&nbsp;&nbsp;-- object is a star    </td>
     </tr>
     
   </table>
@@ -80,12 +82,12 @@
         string query = "SELECT s.bestobjid, s.ra, s.dec,   -- select ID, ra, dec of star,\n";
         query += "s.plate, s.mjd, s.fiberID   -- plate, MJD, fiber ID of spectrum\n";
         query += "\n";
-        query += "FROM plateX p, specObjAll s   -- from plate and spectrum tables\n";
+        query += "FROM plateX p\n";
+        query += "JOIN specObjAll s ON s.plateID = p.plateID  -- from plate and spectrum tables\n";
         query += "\n";
-        query += "WHERE p.plate = s.plate   -- this is the same object\n";
-        query += "   AND p.programname like '%segue%'   -- part of SEGUE survey\n";
+        query += "WHERE p.programname like '%segue%'   -- part of SEGUE survey\n";
         query += "   AND s.bestObjID > 0   -- object also has photometric data\n";
-        query += "   AND s.specClass = 1    -- object is a star";
+        query += "   AND s.class = 'STAR'    -- object is a star";
 
 	   	ResponseAux.sqlform(0,query,url,Response); 	%>
 

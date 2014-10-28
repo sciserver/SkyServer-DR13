@@ -5,9 +5,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace SkyServer.en.proj.basic.solarsystem
+namespace SkyServer.Proj.SolarSystem.Coordinates
 {
-    public partial class SolarHome : System.Web.UI.Page
+    public partial class SkyCoordinates : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

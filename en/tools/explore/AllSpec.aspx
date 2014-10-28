@@ -53,7 +53,7 @@
         cmd += " s.class as specClass";
         cmd += " from SpecObjAll s, photoobjall t where t.objid=" + objId + " and s.fluxobjid=t.objid ";
         //cmd += " order by scienceprimary desc, distanceArcMin asc";
-        cmd += " order by plate, MJD, fiber ";   
+        cmd += " order by scienceprimary desc, plate, MJD, fiber ";   
         master.showSTable(oConn, cmd);
     }
 %>

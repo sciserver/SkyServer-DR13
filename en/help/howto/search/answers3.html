@@ -15,18 +15,17 @@ function done() {
 <p><font color=yellow><b>Practice 5.</b></font></p>
 	      <p><font color=white>
 <pre>
-    select
-        galaxy.objID, galaxy.u, galaxy.g,
-        galaxy.r, galaxy.i, galaxy.z, specObj.z,
-        plateX.plate, plateX.mjd, specObj.fiberID
-    from
-        galaxy, specObj, plateX
-    where
-        galaxy.objID=specObj.bestObjID 
-        AND specObj.plateID=plateX.plateID 
-        AND specObj.class='galaxy' 
-        AND galaxy.g BETWEEN 17 and 17.4 
-        AND specObj.z < 0.05
+    SELECT
+        gal.objID, gal.u, gal.g,
+        gal.r, gal.i, gal.z, s.z,
+        x.plate, x.mjd, s.fiberID
+    FROM galaxy gal
+    JOIN specObj s on s.bestObjID = gal.objID
+    JOIN plateX x on x.plateID = s.plateID
+    WHERE
+        s.class='galaxy' 
+        AND gal.g BETWEEN 17 and 17.4 
+        AND s.z < 0.05
 </pre>
 </font>
 </p>

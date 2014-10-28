@@ -30,7 +30,7 @@
         msg = "";
 
         if (option == 1) {
-            msg += "select z,ra,dec,bestObjID\n";
+            msg += "select top 10 z,ra,dec,bestObjID\n";
             msg += "from specObj\n";
             msg += "where class = 'galaxy' AND\n";
             msg += "z > 0.3 AND\n";
@@ -38,7 +38,7 @@
         }
 
         if (option == 2) {
-            msg += "select z,ra,dec,bestObjID\n";
+            msg += "select top 10 z,ra,dec,bestObjID\n";
             msg += "from specObj\n";
             msg += "where (class = 'galaxy' or class = 'qso') AND\n";
             msg += "z > 0.3 AND\n";
@@ -72,7 +72,7 @@
         <tr>
           <td>
             <pre>
-select
+select top 10
     z, ra, dec, bestObjID
 from
     specObj
@@ -144,7 +144,7 @@ the where block causes the query to return both.</p>
         <tr>
           <td>
             <pre>
-select
+select top 10 
     z, ra, dec, bestObjID
 from
     specObj

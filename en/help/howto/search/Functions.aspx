@@ -30,27 +30,28 @@
         msg = "";
 
         if (option == 1) {
-            msg += "select\n";
+            msg += "SELECT\n";
             msg += "p.objID, p.ra, p.dec, p.u, p.g, p.r, p.i, p.z\n";
-            msg += "from photoObj p, dbo.fGetNearbyObjEq(140,20,5) n\n";
-            msg += "where p.objID = n.objID";
+            msg += "FROM photoObj p\n";
+            msg += "JOIN dbo.fGetNearbyObjEq(140,20,5) n ON n.objID = p.objID\n";
+            msg += "where p.type = 3";
         }
 
 
         if (option == 2) {
-            msg += "select\n";
+            msg += "SELECT\n";
             msg += "p.objID, p.flags, dbo.fPhotoFlagsN(p.flags)\n";
-            msg += "from photoObj p, dbo.fGetNearbyObjEq(140,20,5) n\n";
-            msg += "where p.objID = n.objID AND ";
-            msg += "p.type = 6";
+            msg += "FROM photoObj p\n";
+            msg += "JOIN dbo.fGetNearbyObjEq(140,20,5) n ON n.objID = p.objID\n";
+            msg += "WHERE p.type = 6";
         }
 
         if (option == 3) {
-            msg += "select\n";
+            msg += "SELECT\n";
             msg += "p.objID, p.ra, p.dec, dbo.fPhotoFlagsN(p.flags)\n";
-            msg += "from photoObj p, dbo.fGetNearbyObjEq(140,20,5) n\n";
-            msg += "where p.objID = n.objID AND ";
-            msg += "(p.flags & dbo.fPhotoFlags('SATURATED')) = 0";
+            msg += "FROM photoObj p\n";
+            msg += "JOIN dbo.fGetNearbyObjEq(140,20,5) n ON n.objID = p.objID\n";
+            msg += "WHERE (p.flags & dbo.fPhotoFlags('SATURATED')) = 0";
         }
 
 
@@ -93,13 +94,12 @@
         <tr>
           <td>
 <pre>
-select
+SELECT
     p.ObjID, p.ra, p.dec, p.u, p.g, p.r, p.i, p.z
-from
-    photoObj p, dbo.fGetNearbyObjEq(140,20,5) n
-where
-    p.objID = n.objID 
-    AND p.type = 3
+FROM photoObj p
+JOIN dbo.fGetNearbyObjEq(140,20,5) n ON n.objID = p.objID
+WHERE
+    p.type = 3
 </pre>
           </td>
         </tr>
@@ -146,13 +146,12 @@ where
         <tr>
           <td>
 <pre>
-select
+SELECT
     p.objID, p.flags, dbo.fPhotoFlagsN(p.flags)
-from
-    photoObj p, dbo.fGetNearbyObjEq(140,20,5) n
-where
-    p.objID = n.objID 
-    AND p.type = 6
+FROM photoObj p
+JOIN dbo.fGetNearbyObjEq(140,20,5) n ON n.objID = p.objID
+WHERE
+    p.type = 6
 </pre>
           </td>
         </tr>
@@ -195,13 +194,12 @@ where
         <tr>
           <td>
 <pre>
-select
+SELECT
     p.objID, p.ra, p.dec, dbo.fPhotoFlagsN(p.flags)
-from
-    photoObj p, dbo.fGetNearbyObjEq(140,20,5) n
-where
-    p.objID = n.objID 
-    AND (p.flags & dbo.fPhotoFlags('SATURATED')) = 0
+FROM photoObj p
+JOIN dbo.fGetNearbyObjEq(140,20,5) n ON n.objID = p.objID
+WHERE
+    (p.flags & dbo.fPhotoFlags('SATURATED')) = 0
 </pre>
           </td>
         </tr>
