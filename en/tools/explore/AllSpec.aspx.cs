@@ -13,12 +13,15 @@ namespace SkyServer.Tools.Explore
         protected Globals globals;
         protected ObjectExplorer master;
         protected string objId;
-
+        //protected ExplorerQueries ex;
+        //protected RunQuery run;
         protected void Page_Load(object sender, EventArgs e)
         {
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             objId = Request.QueryString["id"];
             master = (ObjectExplorer)Page.Master;
+            //ex = new ExplorerQueries(objId, "", "", "", "");
+            //run = new RunQuery();
         }
     }
 }

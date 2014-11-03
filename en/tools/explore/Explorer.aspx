@@ -1,26 +1,47 @@
-﻿<%@ Page Language="C#"  MasterPageFile="ObjectExplorer.Master" AutoEventWireup="true" CodeBehind="Explorer.aspx.cs" Inherits="SkyServer.Tools.Explore.Explorer1" %>
+﻿<%@ Page Language="C#"   MasterPageFile="ObjectExplorer.Master" AutoEventWireup="true" CodeBehind="Explorer.aspx.cs" Inherits="SkyServer.Tools.Explore.Explorer1" %>
 
 <%@ Import Namespace="System.Data.SqlClient" %>
 <%@ Import Namespace="SkyServer" %>
 <%@ Import Namespace="SkyServer.Tools.Explore"%>
+<%@ Import Namespace="System.Data" %>
 
 <asp:Content ID="Head1" ContentPlaceHolderID="OEHead" runat="server">  
     <script type="text/javascript" src="./javascript/explore.js"></script>
 </asp:Content>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="OEContent" runat="server">
-    
-    <div class="content">
-    <%       
-        ImagingParameters im = new ImagingParameters();
-        im.connectionString = globals.ConnectionString;
-        im.getImagingQuery(id.ToString(), globals.SdssUrl);
-        NameValueCollection nvImaging = im.runQueryDB();
 
-        //reusable nv to use for small collections
-        NameValueCollection nvTemp = new NameValueCollection();
-        if (id.HasValue)
+
+<asp:Content ID="Content1" ContentPlaceHolderID="OEContent" runat="server">
+   
+
+   
+    <div class="content">
+    <%  
+        if (cmd != null && !cmd.Equals(""))
         {
+            RunQuery run = new RunQuery();
+            DataSet ds = run.RunCasjobs(cmd);            
+    %>
+        <div id="QueryResults">
+            <p />
+             <h2><a href="<%=url%>/help/browser/browser.aspx?cmd=description+<%=name%>+U" target="_top" class="content"><%=name%></a></h2>
+            <p />    <%
+            master.showVTable(ds, 300);   
+
+            // put the option for Plate Objects
+    %>
+        </div>    
+    <%
+        }
+        else  if (id.HasValue)
+        {
+            ImagingParameters im = new ImagingParameters();
+            im.connectionString = globals.ConnectionString;
+            im.getImagingQuery(id.ToString(), globals.SdssUrl);
+            NameValueCollection nvImaging = im.runQueryDB();
+            //reusable nv to use for small collections        
+            NameValueCollection nvTemp = new NameValueCollection();
+
     %>
     
     <div id="metadata">
@@ -77,7 +98,7 @@
                         </td>
                     </tr>
                  </table>
-                </td>
+              </td>
         </tr>
     </table>
        </div> <!-- end of metadata div -->
@@ -138,7 +159,7 @@
                    master.showHTable(im.restPhoto1, 625);
                    
                    master.showHTable(im.restPhoto2, 625);
-               }
+               //}
              %>                            
             </td>
         </tr>
@@ -234,10 +255,12 @@
 	   	       </td>
             <%
                 } 
+                }
             %>
         </tr>   
     </table> 
 </div>  <!-- end of spectro div -->
+
 </div> <!-- end of overall page div -->
 </asp:Content>
 

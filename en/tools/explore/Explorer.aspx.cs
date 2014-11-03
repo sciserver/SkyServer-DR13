@@ -57,6 +57,11 @@ namespace SkyServer.Tools.Explore
 
         protected ObjectExplorer master;
 
+        //trying the to remove Ex_SQL
+        protected string cmd  = null;
+        protected string name = null;
+        protected string url  = null;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             globals = (Globals)Application[Globals.PROPERTY_NAME];
@@ -69,6 +74,13 @@ namespace SkyServer.Tools.Explore
             id = Utilities.ParseId(qId);
             specId = Utilities.ParseId(qSpecId);
             apid = ("".Equals(qApogeeId)) ? null : qApogeeId;
+
+            //These parameters are used to run the  Left Panel SQL queries
+            cmd = Request.QueryString["cmd"];
+            name = Request.QueryString["name"];
+            url = Request.QueryString["url"];
+
+            //End of SQL Queries to run
             /*
             try
             {

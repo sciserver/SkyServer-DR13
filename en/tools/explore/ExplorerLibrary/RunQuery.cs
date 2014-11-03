@@ -7,6 +7,11 @@ using System.Net.Http.Headers;
 using System.Collections.Specialized;
 using System.IO;
 using System.Data.SqlClient;
+using System.Net;
+using Newtonsoft.Json;
+using System.Text;
+using System.Data;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace SkyServer.Tools.Explore
 {
@@ -32,8 +37,7 @@ namespace SkyServer.Tools.Explore
                 response = client.GetAsync(requestUri).Result;
             }
             else
-            {
-                /// Once the authenticated skyserver is ready, we ca update the code to retrieve token
+            {                
                 string token = "";
                 StringContent content = new StringContent(uploaded);
                 if (!(token == null || token == String.Empty))
@@ -80,5 +84,56 @@ namespace SkyServer.Tools.Explore
             }
             return nvc;
         }
+
+        string[] injection = new string[] { "--", ";", "/*", "*/", "'", "\"" };
+
+        string requestUri = "http://dev.sciserver.org/CasJobs/RestApi/contexts/dr10/query";
+
+        ///**
+        // * This is working but casjobs stopped working.
+        // **/ 
+        //public DataSet RunCasjobs(string command) 
+        //{
+        //    var request = (HttpWebRequest)WebRequest.Create(requestUri);
+        //    request.Method = "POST";
+        //    request.ContentType = "application/json";
+        //    StreamWriter streamWriter = new StreamWriter(request.GetRequestStream());
+        //    StringWriter sw = new StringWriter();
+        //    JsonWriter jsonWriter = new JsonTextWriter(sw);
+        //    jsonWriter.WriteStartObject();
+        //    jsonWriter.WritePropertyName("Query");
+        //    jsonWriter.WriteValue(command);
+        //    jsonWriter.WritePropertyName("ReturnDataSet");
+        //    jsonWriter.WriteValue(true);
+        //    jsonWriter.WriteEndObject();
+        //    jsonWriter.Close();
+        //    streamWriter.Write(sw.ToString());
+        //    streamWriter.Close();
+
+        //    DataSet ds = null;
+        //    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+        //    {
+        //        BinaryFormatter fmt = new BinaryFormatter();
+        //        ds = (DataSet)fmt.Deserialize(response.GetResponseStream());
+        //    }
+        //    return ds;
+        //}
+
+        public DataSet RunCasjobs(string command)
+        {
+            DataSet ds = new DataSet();
+            using (SqlConnection oConn = new SqlConnection(global.ConnectionString))
+            {
+                oConn.Open();
+                using (SqlCommand oCmd = oConn.CreateCommand())
+                {
+                    oCmd.CommandText = command;
+                    using (SqlDataAdapter da = new SqlDataAdapter(command, global.ConnectionString)) {
+                        da.Fill(ds);
+                    }
+                }
+            }
+            return ds;
+        }     
     }
 }

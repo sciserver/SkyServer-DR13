@@ -69,8 +69,7 @@ if( globals.Access == "public" ) {
             document.getElementById('dec').value = "64.05";
             document.getElementById('labelRaOrL').innerHTML = "RA";
             document.getElementById('labelDecOrB').innerHTML = "Dec";
-            document.getElementById('equitorial').checked = "checked";
-            
+            document.getElementById('equitorial').checked = "checked";            
         }
         
     } 

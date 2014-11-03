@@ -9,6 +9,7 @@ using System.Globalization;
 using SkyServer;
 using SkyServer.Tools.Explore;
 using System.Collections.Specialized;
+using System.Data;
 
 namespace SkyServer.Tools.Explore
 {
@@ -19,7 +20,7 @@ namespace SkyServer.Tools.Explore
         protected HRefs hrefs = new HRefs();
 
         protected long? id = null;
-        protected string apid;
+        public string apid;
         protected long? specId = null;
 
         protected int tabwidth = 128;
@@ -29,7 +30,7 @@ namespace SkyServer.Tools.Explore
 
         double? ra;
         double? dec;
-        string objId;
+        public string objId;
         string fieldId;
         string specObjId;
         string plateId;
@@ -42,7 +43,8 @@ namespace SkyServer.Tools.Explore
         protected int? plate = null;
 
         protected Globals globals;
-
+        public ExplorerQueries exploreQuery;
+        public RunQuery runQuery;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -59,171 +61,121 @@ namespace SkyServer.Tools.Explore
             specId = Utilities.ParseId(qSpecId);
             apid = ("".Equals(qApogeeId))?null:qApogeeId;
 
-            /*
-            try
+            objId = qId;
+
+            using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
             {
-                if (qId != null && !"".Equals(qId))
-                {
-                    // code changed by Jordan on 2013-3-28 to allow either decimal or hex input
-                    if (qId.StartsWith("0x")) id = Int64.Parse(qId.Substring(2), NumberStyles.AllowHexSpecifier);
-                    else id = Int64.Parse(qId);
-                }
-                if (qSpecId != null && !"".Equals(qSpecId))
-                {
-                    // code changed by Jordan on 2013-3-28 to allow either decimal or hex input
-                    if (qSpecId.StartsWith("0x")) specId = Int64.Parse(qSpecId.Substring(2), NumberStyles.AllowHexSpecifier);
-                    else specId = Int64.Parse(qSpecId);
-                }
-                if (qApogeeId != null && !"".Equals(qSpecId))
-                {
-                    apid = qApogeeId;
-                }
-            }
-            catch (Exception)
-            {
-                // Could not parse, so leave null
-            }
-            */
-                using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
-                {
                     oConn.Open();
                     if (id.HasValue) pmtsFromPhoto(oConn, id, specId);
-                }
+            }
 
-                // id is the decimal representation; objId is the hex representation.
+            
+            exploreQuery = new ExplorerQueries(id.ToString(), specId.ToString(), apid, fiberId.ToString(), plateId);
+            runQuery = new RunQuery();
+            
+            // id is the decimal representation; objId is the hex representation.
+            hrefs.Summary = "summary.aspx?id=" + id + "&spec=" + specId + "&apid=" + apid;
 
-//                if (id.HasValue) hrefs.Summary = "summary.aspx?id=" + id + "&spec=" + specId;
-//                if (!String.IsNullOrEmpty(apid)) hrefs.Summary = "summary.aspx?apid=" + apid;
-                hrefs.Summary = "summary.aspx?id=" + id + "&spec=" + specId + "&apid=" + apid;
-                hrefs.PhotoObj = "ex_sql.aspx?cmd=select+*+from+PhotoObjAll+where+objId=" + objId + "&name=PhotoObj&tab=V&id="+id + "&spec=" + specId + "&apid=" + apid;
-                hrefs.PhotoTag = "ex_sql.aspx?cmd=select+*+from+PhotoTag+where+objId=" + objId + "&name=PhotoTag&tab=V&id=" + id + "&spec=" + specId + "&apid=" + apid;
-                hrefs.Matches = "matches.aspx?id=" + id + "&spec=" + specId + "&apid=" + apid;
-                hrefs.Field = "ex_sql.aspx?cmd=select+*+from+Field+where+fieldId=" + fieldId + "&name=Field&tab=V&id=" + id + "&spec=" + specId + "&apid=" + apid;
-                if (globals.ReleaseNumber >= 8)
+            // common query to explorer
+            string explore = "Explorer.aspx?cmd=";
+            
+            hrefs.PhotoObj = explore + exploreQuery.PhotoObjQuery + "&name=PhotoObj&id=" + id;
+            hrefs.PhotoTag = explore + exploreQuery.PhotoTagQuery + "&name=PhotoTag&id=" + id;
+            hrefs.Field    = explore + exploreQuery.FieldQuery + "&name=Field&id=" + id ;
+            hrefs.Frame    = explore + exploreQuery.FrameQuery + "&name=Frame&id=" + id ;
+            
+
+            if (globals.ReleaseNumber >= 8)
                     hrefs.Galaxyzoo = "galaxyzoo.aspx?id=" + id + "&spec=" + specId + "&apid=" + apid;
-                if (globals.ReleaseNumber > 4)
-                {
-                    hrefs.PhotoZ = "photoz.aspx?id=" + id + "&spec=" + specId + "&apid=" + apid;
-                    hrefs.PhotozRF = "photozRF.aspx?id=" + id + "&spec=" + specId + "&apid=" + apid;
-                }
-                hrefs.Frame = "ex_sql.aspx?cmd=select+*+from+Frame+where+fieldId=" + fieldId + "&name=Frame&tab=V&id=" + id + "&spec=" + specId + "&apid=" + apid;
-                hrefs.Neighbors = "neighbors.aspx?id=" + id + "&spec=" + specId + "&apid=" + apid;
-                hrefs.Chart = "javascript:gotochart(" + ra + "," + dec + ");";
-                hrefs.Navigate = "javascript:gotonavi(" + ra + "," + dec + ");";
-                hrefs.SaveBook = "javascript:saveBook(\"" + objId + "\");";
-                hrefs.ShowBook = "javascript:showNotes();";
-                //if (globals.DBType == "STRIPE")
-                if (globals.Database.StartsWith("STRIPE"))
-                {
-                    if (run == 106)
-                        run = 100006;
-                    if (run == 206)
-                        run = 200006;
-                }
 
-                // if( dasUrlBase.length > 1 )
-                //	hrefs.FITS = dasUrlBase+"fields.html?search=runcamcolfield&run="+run+"&camcol="+camcol+"&field="+field+"&submit=Submit";
-                //	getImgFitsUrl( oCmd, fieldid );
-                // else
-                hrefs.FITS = "fitsimg.aspx?id=" + id + "&fieldId=" + fieldId + "&spec=" + specId + "&apid=" + apid;
-                //hrefs.FITS = globals.DasUrl + "fields/raDec?ra=" + ra + "&dec=" + dec + "&submit=Submit";
+            if (globals.ReleaseNumber > 4)
+            {
+                hrefs.PhotoZ =  explore+exploreQuery.PhotoZ+"&name=photoZ&id=" + id ;
+                hrefs.PhotozRF = explore + exploreQuery.PhotozRF + "&name=photozRF&id=" + id;
+            }
 
-                hrefs.NED = "http://nedwww.ipac.caltech.edu/cgi-bin/nph-objsearch?search_type=Near+Position+Search"
+            hrefs.Matches = "matches.aspx?id=" + id + "&spec=" + specId + "&apid=" + apid;
+            hrefs.Neighbors = "neighbors.aspx?id=" + id + "&spec=" + specId + "&apid=" + apid;
+            hrefs.Chart = "javascript:gotochart(" + ra + "," + dec + ");";
+            hrefs.Navigate = "javascript:gotonavi(" + ra + "," + dec + ");";
+            hrefs.SaveBook = "javascript:saveBook(\"" + objId + "\");";
+            hrefs.ShowBook = "javascript:showNotes();";
+            
+            if (globals.Database.StartsWith("STRIPE"))
+            {
+                    if (run == 106)  run = 100006;
+                    if (run == 206)  run = 200006;
+            }
+
+            hrefs.FITS = "fitsimg.aspx?id=" + id + "&fieldId=" + fieldId + "&spec=" + specId + "&apid=" + apid;
+            
+            hrefs.NED = "http://nedwww.ipac.caltech.edu/cgi-bin/nph-objsearch?search_type=Near+Position+Search"
                                 + "&in_csys=Equatorial&in_equinox=J2000.0&obj_sort=Distance+to+search+center"
                                 + "&lon=" + (ra.HasValue?(Math.Round((double)ra, 7).ToString()+"d"):"") + "&lat=" + (dec.HasValue?(Math.Round((double)dec, 7).ToString()+"d"):"") + "&radius=1.0";
-
-                string hmsRA;
+            string hmsRA;
                 hmsRA = Functions.hmsPad(ra ?? 0).Replace(" ", "+");
 
-                string dmsDec;
+            string dmsDec;
                 if (dec >= 0)
                     dmsDec = Functions.dmsPad(dec ?? 0).Replace("+", "%2B");
                 else
                     dmsDec = Functions.dmsPad(dec ?? 0);
 
                 dmsDec = dmsDec.Replace(" ", "+");
-                hrefs.SIMBAD = "http://simbad.u-strasbg.fr/sim-id.pl?protocol=html&Ident=" + hmsRA + "+" + dmsDec + "&NbIdent=1"
+
+            hrefs.SIMBAD = "http://simbad.u-strasbg.fr/sim-id.pl?protocol=html&Ident=" + hmsRA + "+" + dmsDec + "&NbIdent=1"
                                     + "&Radius=1.0&Radius.unit=arcmin&CooFrame=FK5&CooEpoch=2000&CooEqui=2000"
                                     + "&output.max=all&o.catall=on&output.mesdisp=N&Bibyear1=1983&Bibyear2=2005"
                                     + "&Frame1=FK5&Frame2=FK4&Frame3=G&Equi1=2000.0&Equi2=1950.0&Equi3=2000.0"
                                     + "&Epoch1=2000.0&Epoch2=1950.0&Epoch3=2000.0";
-                hrefs.ADS = "http://adsabs.harvard.edu/cgi-bin/nph-abs_connect?db_key=AST&sim_query=YES&aut_xct=NO&aut_logic=OR"
+            hrefs.ADS = "http://adsabs.harvard.edu/cgi-bin/nph-abs_connect?db_key=AST&sim_query=YES&aut_xct=NO&aut_logic=OR"
                                     + "&obj_logic=OR&author=&object=" + hmsRA + "+" + dmsDec + "&start_mon=&start_year=&end_mon="
                                     + "&end_year=&ttl_logic=OR&title=&txt_logic=OR&text=&nr_to_return=100&start_nr=1"
                                     + "&start_entry_day=&start_entry_mon=&start_entry_year=&min_score=&jou_pick=ALL"
                                     + "&ref_stems=&data_and=ALL&group_and=ALL&sort=SCORE&aut_syn=YES&ttl_syn=YES"
                                     + "&txt_syn=YES&aut_wt=1.0&obj_wt=1.0&ttl_wt=0.3&txt_wt=3.0&aut_wgt=YES&obj_wgt=YES"
                                     + "&ttl_wgt=YES&txt_wgt=YES&ttl_sco=YES&txt_sco=YES&version=1";
-                hrefs.Print = "framePrint();";
-                hrefs.AllSpec = "allSpec.aspx?id=" + id + "&spec=" + specId + "&apid=" + apid;
 
-//                if (specObjId != null && !ZERO_ID.Equals(specObjId))
-                if (specId != null)
-                {
-                    hrefs.SpecObj = "ex_sql.aspx?cmd=select+*+from+SpecObjAll+where+specObjId=" + specId + "&name=SpecObj&tab=V&id=" + id + "&spec=" + specId + "&apid=" + apid;
-                    hrefs.sppLines = "ex_sql.aspx?cmd=select+*+from+sppLines+where+specObjId=" + specId + "&name=sppLines&tab=V&id=" + id + "&spec=" + specId + "&apid=" + apid;
-                    hrefs.sppParams = "ex_sql.aspx?cmd=select+*+from+sppParams+where+specObjId=" + specId + "&name=sppParams&tab=V&id=" + id + "&spec=" + specId + "&apid=" + apid;
-                    hrefs.galSpecLine = "ex_sql.aspx?cmd=select+*+from+galSpecLine+where+specObjId=" + specId + "&name=galSpecLine&tab=V&id=" + id + "&spec=" + specId + "&apid=" + apid;
-                    hrefs.galSpecIndx = "ex_sql.aspx?cmd=select+*+from+galSpecIndx+where+specObjId=" + specId + "&name=galSpecIndx&tab=V&id=" + id + "&spec=" + specId + "&apid=" + apid;
-                    hrefs.galSpecInfo = "ex_sql.aspx?cmd=select+*+from+galSpecInfo+where+specObjId=" + specId + "&name=galSpecInfo&tab=V&id=" + id + "&spec=" + specId + "&apid=" + apid;
-                    hrefs.Spectrum = "../../get/SpecById.ashx?ID=" + specId;
-                    hrefs.Plate = "plate.aspx?id=" + id + "&plateId=" + plateId + "&spec=" + specId + "&apid=" + apid;
-                    //  if( dasUrlBase.length > 1 )
-                    //      hrefs.SpecFITS	= dasUrlBase+"getSpectra.html?plateid="+plate+"&mjd="+mjdNum+"&fiber="+fiberId+"&submit_form=Submit";
-                    //	getSpecFitsUrl( oCmd, specObjId );
-                    //  else
-                    hrefs.SpecFITS = "fitsspec.aspx?&sid=" + specObjId + "&id=" + id + "&spec=" + specId + "&apid=" + apid;
+            hrefs.Print = "framePrint();";
+            hrefs.AllSpec = "allSpec.aspx?id=" + id + "&spec=" + specId + "&apid=" + apid;
+
+            if (specId != null)
+            {
+                hrefs.SpecObj     = explore + exploreQuery.SpecObjQuery      + "&name=SpecObj&spec="     + specId;
+                hrefs.sppLines    = explore + exploreQuery.sppLinesQuery     + "&name=sppLines&spec="    + specId;
+                hrefs.sppParams   = explore + exploreQuery.sppParamsQuery    + "&name=sppParams&spec="   + specId;
+                hrefs.galSpecLine = explore + exploreQuery.galSpecLineQuery  + "&name=galSpecLine&spec=" + specId;
+                hrefs.galSpecIndx = explore + exploreQuery.galSpecIndexQuery + "&name=galSpecIndx&spec=" + specId;
+                hrefs.galSpecInfo = explore + exploreQuery.galSpecInfoQuery  + "&name=galSpecInfo&spec=" + specId;
+                hrefs.Plate       = explore + exploreQuery.Plate + "&name=Plate&plateId=" + plateId;
+
+                hrefs.Spectrum = "../../get/SpecById.ashx?ID=" + specId;
+
+                hrefs.SpecFITS = "fitsspec.aspx?&sid=" + specObjId + "&id=" + id + "&spec=" + specId + "&apid=" + apid;
                     
-                    if (globals.ReleaseNumber >= 8)
-                    {
-                        hrefs.theParameters = "parameters.aspx?id=" + id + "&spec=" + specId + "&apid=" + apid;
-                        hrefs.stellarMassStarformingPort = "ex_sql.aspx?cmd=select+*+from+stellarMassStarformingPort+where+specObjId=" + specId + "&name=stellarMassStarFormingPort&tab=V&id=" + id + "&spec=" + specId + "&apid=" + apid;
-                        hrefs.stellarMassPassivePort = "ex_sql.aspx?cmd=select+*+from+stellarMassPassivePort+where+specObjId=" + specId + "&name=stellarMassPassivePort&tab=V&id=" + id + "&spec=" + specId + "&apid=" + apid;
-                        hrefs.emissionLinesPort = "ex_sql.aspx?cmd=select+*+from+emissionLinesPort+where+specObjId=" + specId + "&name=emissionlinesPort&tab=V&id=" + id + "&spec=" + specId + "&apid=" + apid;
-                        hrefs.stellarMassPCAWiscBC03 = "ex_sql.aspx?cmd=select+*+from+stellarMassPCAWiscBC03+where+specObjId=" + specId + "&name=stellarMassPCAWiscBC03&tab=V&id=" + id + "&spec=" + specId + "&apid=" + apid;
-                        hrefs.stellarMassPCAWiscM11 = "ex_sql.aspx?cmd=select+*+from+stellarMassPCAWiscM11+where+specObjId=" + specId + "&name=stellarMassPCAWiscM11&tab=V&id=" + id + "&spec=" + specId + "&apid=" + apid;
-                    }
-                    if (globals.ReleaseNumber >= 10)
-                    {
-                        hrefs.stellarMassFSPSGranEarlyDust = "ex_sql.aspx?cmd=select+*+from+stellarMassFSPSGranEarlyDust+where+specObjId=" + specId + "&name=stellarMassFSPSGranEarlyDust&tab=V&id=" + id + "&spec=" + specId + "&apid=" + apid;
-                        hrefs.stellarMassFSPSGranEarlyNoDust = "ex_sql.aspx?cmd=select+*+from+stellarMassFSPSGranEarlyNoDust+where+specObjId=" + specId + "&name=stellarMassFSPSGranEarlyNoDust&tab=V&id=" + id + "&spec=" + specId + "&apid=" + apid;
-                        hrefs.stellarMassFSPSGranEarlyDust = "ex_sql.aspx?cmd=select+*+from+stellarMassFSPSGranWideDust+where+specObjId=" + specId + "&name=stellarMassFSPSGranWideDust&tab=V&id=" + id + "&spec=" + specId + "&apid=" + apid;
-                        hrefs.stellarMassFSPSGranWideNoDust = "ex_sql.aspx?cmd=select+*+from+stellarMassFSPSGranWideDust+where+specObjId=" + specId + "&name=stellarMassFSPSGranWideNoDust&tab=V&id=" + id + "&spec=" + specId + "&apid=" + apid;
-                    }
-                }
-                else
+                if (globals.ReleaseNumber >= 8)
                 {
-                    hrefs.SpecObj = "none.htm";
-                    hrefs.sppLines = "none.htm";
-                    hrefs.sppParams = "none.htm";
-                    hrefs.galSpecLine = "none.htm";
-                    hrefs.galSpecIndx = "none.htm";
-                    hrefs.galSpecInfo = "none.htm";
-                    hrefs.emissionLinesPort = "none.htm";
-                    hrefs.Spectrum = "none.htm";
-                    hrefs.Plate = "none.htm";
-                    hrefs.SpecFITS = "none.htm";
-                    hrefs.theParameters = "none.htm";
-                    hrefs.stellarMassStarformingPort = "none.htm";
-                    hrefs.stellarMassPassivePort = "none.htm";
-                    hrefs.stellarMassPCAWiscBC03 = "none.htm";
-                    hrefs.stellarMassPCAWiscM11 = "none.htm";
-                    hrefs.stellarMassFSPSGranEarlyDust = "none.htm";
-                    hrefs.stellarMassFSPSGranEarlyNoDust = "none.htm";
-                    hrefs.stellarMassFSPSGranEarlyDust = "none.htm";
-                    hrefs.stellarMassFSPSGranWideNoDust = "none.htm";
+                    hrefs.theParameters = "parameters.aspx?id=" + id + "&spec=" + specId + "&apid=" + apid;
+                    hrefs.stellarMassStarformingPort = explore + exploreQuery.stellarMassStarformingPortQuery+ "&name=stellarMassStarFormingPort&spec=" + specId;
+                    hrefs.stellarMassPassivePort     = explore + exploreQuery.stellarMassPassivePortQuery+ "&name=stellarMassPassivePort&spec=" + specId;
+                    hrefs.emissionLinesPort          = explore + exploreQuery.emissionLinesPortQuery + "&name=emissionlinesPort&spec=" + specId;
+                    hrefs.stellarMassPCAWiscBC03     = explore + exploreQuery.stellarMassPCAWiscBC03Query+"&name=stellarMassPCAWiscBC03&spec=" + specId ;
+                    hrefs.stellarMassPCAWiscM11      = explore + exploreQuery.stellarMassPCAWiscM11Query+ "&name=stellarMassPCAWiscM11&spec=" + specId ;
                 }
-
-                if (!String.IsNullOrEmpty(apid))
+                if (globals.ReleaseNumber >= 10)
                 {
-                    hrefs.apogeeStar = "ex_sql.aspx?cmd=select+*+from+apogeeStar+where+apstar_id=" + HttpUtility.UrlEncode("'" + apid + "'") + "&name=apogeeStar&tab=V&id=" + id + "&spec=" + specId + "&apid=" + apid;
-                    //                    hrefs.apogeeVisit = "ex_sql.aspx?cmd=select+v.*+from+apogeeVisit+v+join+apogeeStar+s+on+v.star=s.star+where+s.apstar_id=" + HttpUtility.UrlEncode("'" + apid + "'") + "&name=apogeeVisit&tab=V&id=" + HttpUtility.UrlEncode("'" + apid + "'");
-                    //                    hrefs.apogeePlate = "ex_sql.aspx?cmd=select+*+from+apogeePlate+where+apstar_id=" + HttpUtility.UrlEncode("'" + apid + "'") + "&name=apogeePlate&tab=V&id=" + HttpUtility.UrlEncode("'" + apid + "'");
-                    hrefs.aspcapStar = "ex_sql.aspx?cmd=select+*+from+aspcapStar+where+apstar_id=" + HttpUtility.UrlEncode("'" + apid + "'") + "&name=aspcapStar&tab=V&id=" + id + "&spec=" + specId + "&apid=" + apid;
-                }
+                    hrefs.stellarMassFSPSGranEarlyDust   = explore + exploreQuery.stellarMassFSPSGranEarlyDust + "&name=stellarMassFSPSGranEarlyDust&spec=" + specId;
+                    hrefs.stellarMassFSPSGranEarlyNoDust = explore + exploreQuery.stellarMassFSPSGranEarlyNoDust+"&name=stellarMassFSPSGranEarlyNoDust&spec=" + specId;
+                    hrefs.stellarMassFSPSGranEarlyDust   = explore + exploreQuery.stellarMassFSPSGranWideDust + "&name=stellarMassFSPSGranWideDust&spec=" + specId;
+                    hrefs.stellarMassFSPSGranWideNoDust  = explore + exploreQuery.stellarMassFSPSGranWideNoDust + "&name=stellarMassFSPSGranWideNoDust&spec=" + specId;
+                 }
+             }            
+             if (!String.IsNullOrEmpty(apid))
+             {
+                 hrefs.apogeeStar = explore + exploreQuery.apogeeStar + "&name=apogeeStar&apid=" + apid;
+                 hrefs.aspcapStar = explore + exploreQuery.aspcapStar + "&name=aspcapStar&apid=" + apid;
+             }
         }
-
-
 
         public void pmtsFromPhoto(SqlConnection oConn, long? id, long? specId) 
         {
@@ -254,16 +206,10 @@ namespace SkyServer.Tools.Explore
                         objId = Functions.BytesToHex(reader.GetSqlBytes(8).Buffer);
                     }
                 }
-                //Response.Write("<h1><font color='purple'>" + objId + "</font></h1>");
-
-                // get the plateId and fiberId from the specObj, if it exists
-
-//                if (specObjId != null && !ZERO_ID.Equals(specObjId))
+           
                 if (specId == null)
                 {
                     specId = Utilities.ParseId(specObjId);
-                    //if (specObjId.StartsWith("0x")) specId = Int64.Parse(specObjId.Substring(2), NumberStyles.AllowHexSpecifier);
-                    //else specId = Int64.Parse(specObjId);
                 } 
 
                 if (specId != null)
@@ -272,13 +218,11 @@ namespace SkyServer.Tools.Explore
                     oCmd.CommandText = 
                         " select cast(s.plateId as binary(8)) as plateId, s.mjd, s.fiberId, q.plate" +
                         " from SpecObjAll s JOIN PlateX q ON s.plateId=q.plateId where specObjId=@specId"; //specObjId";
-//                    oCmd.Parameters.AddWithValue("@specObjId", long.Parse(specObjId.Substring(2), NumberStyles.AllowHexSpecifier));
                     oCmd.Parameters.AddWithValue("@specId", specId);
                     using (SqlDataReader reader = oCmd.ExecuteReader())
                     {
                         if (reader.Read())
                         {
-
                                 plateId = Functions.BytesToHex(reader.GetSqlBytes(0).Buffer);
                                 mjdNum = reader.GetInt32(1);
                                 fiberId = reader.GetInt16(2);
@@ -386,85 +330,85 @@ namespace SkyServer.Tools.Explore
             } // using SqlCommand
         }
 
-        public void showSTable(SqlConnection oConn, string cmd) 
-        {
-            using (SqlCommand oCmd = oConn.CreateCommand())
-            {
-                oCmd.CommandText = cmd;
+        //public void showSTable(SqlConnection oConn, string cmd) 
+        //{
+        //    using (SqlCommand oCmd = oConn.CreateCommand())
+        //    {
+        //        oCmd.CommandText = cmd;
 
-                string u = "<a class='content' target='_top' href='obj.aspx?sid=";
-                string id, v;
-                char c;
+        //        string u = "<a class='content' target='_top' href='obj.aspx?sid=";
+        //        string id, v;
+        //        char c;
 
-                Response.Write("<table cellpadding=2 cellspacing=2 border=0>");
+        //        Response.Write("<table cellpadding=2 cellspacing=2 border=0>");
 
-                Response.Write("<tr>");
-                using (SqlDataReader reader = oCmd.ExecuteReader())
-                {
-                    if (reader.HasRows)
-                    {
-                        for (int i = 0; i < reader.FieldCount; i++)
-                            Response.Write("<td align='middle' class='h'>" + reader.GetName(i) + "</td>");
-                    }
-                    Response.Write("</tr>\n");
+        //        Response.Write("<tr>");
+        //        using (SqlDataReader reader = oCmd.ExecuteReader())
+        //        {
+        //            if (reader.HasRows)
+        //            {
+        //                for (int i = 0; i < reader.FieldCount; i++)
+        //                    Response.Write("<td align='middle' class='h'>" + reader.GetName(i) + "</td>");
+        //            }
+        //            Response.Write("</tr>\n");
 
-                    c = 't';
+        //            c = 't';
 
-                    while (reader.Read())
-                    {
-                        Response.Write("<tr>");
-                        id = reader.GetValue(0).ToString();
-                        for (int i = 0; i < reader.FieldCount; i++)
-                        {
-                            v = reader.GetValue(i).ToString();
-                            v = (v == "" ? "&nbsp;" : v);
-                            Response.Write("<td nowrap align='middle' class='" + c + "'>");
-                            if (i == 0) Response.Write(u + id + "'>" + id + "</a></td>");
-                            else Response.Write(v + "</td>");
-                        }
-                        Response.Write("</tr>\n");
-                        c = (c == 't' ? 'b' : 't');
-                    }
-                    Response.Write("</table>\n");
-                } //using SqlDataReader
-            } // using SqlCommand
-        }
+        //            while (reader.Read())
+        //            {
+        //                Response.Write("<tr>");
+        //                id = reader.GetValue(0).ToString();
+        //                for (int i = 0; i < reader.FieldCount; i++)
+        //                {
+        //                    v = reader.GetValue(i).ToString();
+        //                    v = (v == "" ? "&nbsp;" : v);
+        //                    Response.Write("<td nowrap align='middle' class='" + c + "'>");
+        //                    if (i == 0) Response.Write(u + id + "'>" + id + "</a></td>");
+        //                    else Response.Write(v + "</td>");
+        //                }
+        //                Response.Write("</tr>\n");
+        //                c = (c == 't' ? 'b' : 't');
+        //            }
+        //            Response.Write("</table>\n");
+        //        } //using SqlDataReader
+        //    } // using SqlCommand
+        //}
 
-        public void showFTable(SqlConnection oConn, long? plateId) {
-            using (SqlCommand oCmd = oConn.CreateCommand()) {
-	            string cmd = " select cast(specObjID as binary(8)) as specObjId," +
-	                " fiberId, class as name, str(z,5,3) as z" +
-	                " from SpecObjAll where plateID=@plateId order by fiberId";
+        //public void showFTable(SqlConnection oConn, long? plateId) {
+        //    using (SqlCommand oCmd = oConn.CreateCommand()) {
+        //        string cmd = " select cast(specObjID as binary(8)) as specObjId," +
+        //            " fiberId, class as name, str(z,5,3) as z" +
+        //            " from SpecObjAll where plateID=@plateId order by fiberId";
 
-	            oCmd.CommandText = cmd;
-                oCmd.Parameters.AddWithValue("@plateId", plateId);
+        //        oCmd.CommandText = cmd;
+        //        oCmd.Parameters.AddWithValue("@plateId", plateId);
 
-                using (SqlDataReader reader = oCmd.ExecuteReader()) {
+        //        using (SqlDataReader reader = oCmd.ExecuteReader()) {
 
-	                string u = "<a class='content' target='_top' href='obj.aspx?sid=";
-	                string sid;
+        //            string u = "<a class='content' target='_top' href='obj.aspx?sid=";
+        //            string sid;
 	
-	                int col=0;
-	                int row=0;
-	                string c = "st";
-	                Response.Write("<table>\n");
-	                Response.Write("<tr>");
-	                while(reader.Read()) {
-		                sid   = u+Functions.BytesToHex(reader.GetSqlBytes(0).Buffer)+"'>";
-		                string v = "["+reader.GetValue(1).ToString()+"]&nbsp;";
-		                v += reader.GetValue(2).ToString()+" z="+reader.GetValue(3).ToString();
-		                Response.Write("<td nowrap class='"+c+"'>"+sid+v+"</a></td>\n");
-		                if (++col>3) {
-			                col = 0;
-			                row++;
-			                Response.Write("</tr>\n<tr>\n");
-			                c = ("st".Equals(c)?"sb":"st");
-		                }
-	                }
-	                Response.Write("<td></td></tr>\n</table>\n");
-                } // using SqlDataReader
-            } // using SqlCommand
-        }
+        //            int col=0;
+        //            int row=0;
+        //            string c = "st";
+        //            Response.Write("<table>\n");
+        //            Response.Write("<tr>");
+        //            while(reader.Read()) {
+        //                sid   = u+Functions.BytesToHex(reader.GetSqlBytes(0).Buffer)+"'>";
+        //                string v = "["+reader.GetValue(1).ToString()+"]&nbsp;";
+        //                v += reader.GetValue(2).ToString()+" z="+reader.GetValue(3).ToString();
+        //                Response.Write("<td nowrap class='"+c+"'>"+sid+v+"</a></td>\n");
+        //                if (++col>3) {
+        //                    col = 0;
+        //                    row++;
+        //                    Response.Write("</tr>\n<tr>\n");
+        //                    c = ("st".Equals(c)?"sb":"st");
+        //                }
+        //            }
+        //            Response.Write("<td></td></tr>\n</table>\n");
+        //        } // using SqlDataReader
+        //    } // using SqlCommand
+        //}
 
         public string getUnit(SqlConnection oConn, string tableName, string name)
         {
@@ -557,5 +501,105 @@ namespace SkyServer.Tools.Explore
             }
             Response.Write("</table>");
         }
+
+
+        /// <summary>
+        /// Vertical aligned table  With DataSet
+        /// </summary>
+        /// <param name="namevalues"></param>
+        /// <param name="w"></param>
+        public void showVTable(DataSet ds, int w)
+        {
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            {
+                char c = 't'; string unit = "test";
+                Response.Write("<table cellpadding=2 cellspacing=2 border=0");
+                if (w > 0)
+                    Response.Write(" width=" + w);
+                Response.Write(">\n");
+                if (reader.Read())
+                {
+                    for(int k=0; k <reader.FieldCount; k++)
+                    {
+                        Response.Write("<tr align='left' >");
+                        Response.Write("<td  valign='top' class='h'>");
+                        Response.Write("<span ");
+                        if (unit != "")
+                            Response.Write("ONMOUSEOVER=\"this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=" + unit + "')\" ");
+                        Response.Write("></span>");
+                        Response.Write(reader.GetName(k) + "</td>");
+
+                        Response.Write("<td valign='top' class='" + c + "'>");
+                        Response.Write(reader.GetValue(k));
+                        Response.Write("</td>");
+                        Response.Write("</tr>");
+                    }
+                }
+                Response.Write("</table>");
+            }
+        }
+
+        /// <summary>
+        /// Added new HTable with namevalue pair options
+        /// </summary>
+        /// <param name="namevalues"></param>
+        /// <param name="w"></param>
+        public void showHTable(DataSet ds, int w, string target)
+        {
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            {
+                char c = 't'; string unit = "test";
+
+                Response.Write("<table cellpadding=2 cellspacing=2 border=0");
+
+                if (w > 0)
+                    Response.Write(" width=" + w);
+                Response.Write(">\n");
+
+                Response.Write("<tr>");
+
+                if (reader.Read())
+                {
+                    //foreach (String k in namevalues.AllKeys)
+                    for (int k = 0; k < reader.FieldCount;k++ )
+                    {
+                        Response.Write("<td align='middle' class='h'>");
+                        Response.Write("<span ");
+                        if (unit != "")
+                            Response.Write("ONMOUSEOVER=\"this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=" + unit + "')\" ");
+                        Response.Write("></span>");                        
+                        Response.Write(reader.GetName(k) + "</td>");
+                    }
+                    Response.Write("</tr>");
+
+                    Response.Write("<tr>");
+
+                    for (int k = 0; k < reader.FieldCount; k++)
+                    {
+                        Response.Write("<td nowrap align='middle' class='" + c + "'>");
+
+                        // think something else if possible for this
+                        if (target.Equals("AllSpectra") && k == 0)
+                        {
+                            string u = "<a class='content' target='_top' href='obj.aspx?sid=";
+
+                            Response.Write(u + reader.GetValue(k) + "'>" + reader.GetValue(k) + "</a></td>");
+                            
+                        }
+                        else
+                        {
+                            Response.Write(reader.GetValue(k));
+                        }
+                        Response.Write("</td>");
+                    }
+                }
+
+                Response.Write("</tr>");
+
+                Response.Write("</table>");
+            }
+        }
+        
+
     }
 }
