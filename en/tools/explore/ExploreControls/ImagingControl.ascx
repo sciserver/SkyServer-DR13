@@ -2,7 +2,7 @@
 <%@ Import Namespace="SkyServer.Tools.Explore" %>
 <%@ Import Namespace="System.Data" %>
 <%@ Import Namespace="SkyServer" %>
-
+<div id="imaging">
 <h3>Imaging</h3>            
 
 <%   
@@ -110,4 +110,5 @@
             </td>
         </tr>
     </table>
-  <%--  </div>  <!-- end of imaging div  -->--%>
+    </div>   
+  <%--  <!-- end of imaging div  -->--%>

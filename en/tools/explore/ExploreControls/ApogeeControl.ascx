@@ -1,5 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ApogeeControl.ascx.cs" Inherits="SkyServer.Tools.Explore.ApogeeControl" %>
 <%@ Import Namespace="SkyServer" %>
+<%@ Import Namespace="SkyServer.Tools.Explore" %>
  <div id="irspec">
         <h3>Infrared Spectra
           <span class="target">Targeted star: <%=apogee_id %></span>
@@ -171,9 +172,9 @@
               <td align="middle" class="h"><span>vrel</span></td>
             </tr>
 
-          <%--  <% string cellClass = "t";
-               foreach (ApogeeVisit v in visits)
-               { %>
+            <% string cellClass = "t";
+            foreach (ApogeeVisit v in visits)
+            { %>
             <tr>
               <td nowrap align="middle" class="<%=cellClass %>">
                 <a href="http://dr10.sdss3.org/irSpectrumDetail?plateid=<%=v.plate %>&mjd=<%=v.mjd %>&fiber=<%=v.fiberid %>" class="content" target="_blank">
@@ -188,7 +189,7 @@
               <td nowrap align="middle" class="<%=cellClass %>"><%=v.vrel %></td>
             </tr>
             <% cellClass = (cellClass == "t") ? "b" : "t"; // Alternating row colors 
-               } %>--%>
+            } %>
           </table>                          
         </div>  <!-- end of visits div -->
       </div>  <!-- end of irspec div -->

@@ -48,11 +48,14 @@ namespace SkyServer.Tools.Explore
         protected bool otherSpec = false;
 
         protected long? id = null;
-        protected long? specId = null;
+        protected long? specId;
 
         protected string link;
         protected string apid;
-        
+
+        protected string cmd = null;
+        protected string name = null;
+        protected string url = null;
 
         protected ObjectExplorer master;
 
@@ -65,9 +68,14 @@ namespace SkyServer.Tools.Explore
             string qSpecId = Request.QueryString["spec"];
             string qApogeeId = HttpUtility.UrlEncode(Request.QueryString["apid"]);
 
+            
             id = Utilities.ParseId(qId);
             specId = Utilities.ParseId(qSpecId);
             apid = ("".Equals(qApogeeId)) ? null : qApogeeId;
+
+            cmd  = Request.QueryString["cmd"];
+            name = Request.QueryString["name"];
+            url  = Request.QueryString["url"];
             /*
             try
             {
@@ -95,16 +103,16 @@ namespace SkyServer.Tools.Explore
             }
             */ 
 
-            using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
-            {
-                oConn.Open();
-                if (id.HasValue) getObjPmts(oConn, id, specId);
-                if (!String.IsNullOrEmpty(apid)) getAPOGEEparams(oConn, apid);
-                double? newra = ra;
-                double? newdec = dec;
-                L = Utilities.ra2glon(newra ?? 0, newdec ?? 0);
-                B = Utilities.dec2glat(newra ?? 0, newdec ?? 0);
-            }
+            //using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
+            //{
+            //    oConn.Open();
+            //    if (id.HasValue) getObjPmts(oConn, id, specId);
+            //    if (!String.IsNullOrEmpty(apid)) getAPOGEEparams(oConn, apid);
+            //    double? newra = ra;
+            //    double? newdec = dec;
+            //    L = Utilities.ra2glon(newra ?? 0, newdec ?? 0);
+            //    B = Utilities.dec2glat(newra ?? 0, newdec ?? 0);
+            //}
 
             // the value of 0.2 passes into the scale, so the navi tool will give 0.2 arcmin scale
             link = "javascript:showNavi(" + ra + "," + dec + "," + 0.2 + ");";

@@ -68,34 +68,34 @@ namespace SkyServer.Tools.Explore
                     oConn.Open();
                     if (id.HasValue) pmtsFromPhoto(oConn, id, specId);
             }
-
-            
-            exploreQuery = new ExplorerQueries(id.ToString(), specId.ToString(), apid, fiberId.ToString(), plateId);
+                        
+            ///This is new added 
+            exploreQuery = new ExplorerQueries(id.ToString(), specId.ToString(), apid, fieldId, plateId, fiberId.ToString());  
             runQuery = new RunQuery();
+            // common query to explorer
+            string allId ="id="+id + "&spec=" + specId + "&apid=" + apid;
+            string explore = "DisplayResults.aspx?" + allId + "&cmd=";
+            ///string explore = "Explorer.aspx?cmd=";
             
             // id is the decimal representation; objId is the hex representation.
-            hrefs.Summary = "summary.aspx?id=" + id + "&spec=" + specId + "&apid=" + apid;
-
-            // common query to explorer
-            string explore = "Explorer.aspx?cmd=";
-            
-            hrefs.PhotoObj = explore + exploreQuery.PhotoObjQuery + "&name=PhotoObj&id=" + id;
-            hrefs.PhotoTag = explore + exploreQuery.PhotoTagQuery + "&name=PhotoTag&id=" + id;
-            hrefs.Field    = explore + exploreQuery.FieldQuery + "&name=Field&id=" + id ;
-            hrefs.Frame    = explore + exploreQuery.FrameQuery + "&name=Frame&id=" + id ;
+            hrefs.Summary = "summary.aspx?"+allId;
+            hrefs.PhotoObj = explore + exploreQuery.PhotoObjQuery + "&name=PhotoObj";
+            hrefs.PhotoTag = explore + exploreQuery.PhotoTagQuery + "&name=PhotoTag";
+            hrefs.Field    = explore + exploreQuery.FieldQuery + "&name=Field";
+            hrefs.Frame    = explore + exploreQuery.FrameQuery + "&name=Frame";
             
 
             if (globals.ReleaseNumber >= 8)
-                    hrefs.Galaxyzoo = "galaxyzoo.aspx?id=" + id + "&spec=" + specId + "&apid=" + apid;
+                    hrefs.Galaxyzoo = "galaxyzoo.aspx?"+allId;
 
             if (globals.ReleaseNumber > 4)
             {
-                hrefs.PhotoZ =  explore+exploreQuery.PhotoZ+"&name=photoZ&id=" + id ;
-                hrefs.PhotozRF = explore + exploreQuery.PhotozRF + "&name=photozRF&id=" + id;
+                hrefs.PhotoZ =  explore+exploreQuery.PhotoZ+"&name=photoZ";
+                hrefs.PhotozRF = explore + exploreQuery.PhotozRF + "&name=photozRF";
             }
 
-            hrefs.Matches = "matches.aspx?id=" + id + "&spec=" + specId + "&apid=" + apid;
-            hrefs.Neighbors = "neighbors.aspx?id=" + id + "&spec=" + specId + "&apid=" + apid;
+            hrefs.Matches = "matches.aspx?"+allId;
+            hrefs.Neighbors = "neighbors.aspx?"+allId;
             hrefs.Chart = "javascript:gotochart(" + ra + "," + dec + ");";
             hrefs.Navigate = "javascript:gotonavi(" + ra + "," + dec + ");";
             hrefs.SaveBook = "javascript:saveBook(\"" + objId + "\");";
@@ -110,8 +110,10 @@ namespace SkyServer.Tools.Explore
             hrefs.FITS = "fitsimg.aspx?id=" + id + "&fieldId=" + fieldId + "&spec=" + specId + "&apid=" + apid;
             
             hrefs.NED = "http://nedwww.ipac.caltech.edu/cgi-bin/nph-objsearch?search_type=Near+Position+Search"
-                                + "&in_csys=Equatorial&in_equinox=J2000.0&obj_sort=Distance+to+search+center"
-                                + "&lon=" + (ra.HasValue?(Math.Round((double)ra, 7).ToString()+"d"):"") + "&lat=" + (dec.HasValue?(Math.Round((double)dec, 7).ToString()+"d"):"") + "&radius=1.0";
+                      + "&in_csys=Equatorial&in_equinox=J2000.0&obj_sort=Distance+to+search+center"
+                      + "&lon=" + (ra.HasValue?(Math.Round((double)ra, 7).ToString()+"d"):"") 
+                      + "&lat=" + (dec.HasValue?(Math.Round((double)dec, 7).ToString()+"d"):"") + "&radius=1.0";
+
             string hmsRA;
                 hmsRA = Functions.hmsPad(ra ?? 0).Replace(" ", "+");
 
@@ -120,7 +122,6 @@ namespace SkyServer.Tools.Explore
                     dmsDec = Functions.dmsPad(dec ?? 0).Replace("+", "%2B");
                 else
                     dmsDec = Functions.dmsPad(dec ?? 0);
-
                 dmsDec = dmsDec.Replace(" ", "+");
 
             hrefs.SIMBAD = "http://simbad.u-strasbg.fr/sim-id.pl?protocol=html&Ident=" + hmsRA + "+" + dmsDec + "&NbIdent=1"
@@ -128,6 +129,7 @@ namespace SkyServer.Tools.Explore
                                     + "&output.max=all&o.catall=on&output.mesdisp=N&Bibyear1=1983&Bibyear2=2005"
                                     + "&Frame1=FK5&Frame2=FK4&Frame3=G&Equi1=2000.0&Equi2=1950.0&Equi3=2000.0"
                                     + "&Epoch1=2000.0&Epoch2=1950.0&Epoch3=2000.0";
+
             hrefs.ADS = "http://adsabs.harvard.edu/cgi-bin/nph-abs_connect?db_key=AST&sim_query=YES&aut_xct=NO&aut_logic=OR"
                                     + "&obj_logic=OR&author=&object=" + hmsRA + "+" + dmsDec + "&start_mon=&start_year=&end_mon="
                                     + "&end_year=&ttl_logic=OR&title=&txt_logic=OR&text=&nr_to_return=100&start_nr=1"
@@ -137,16 +139,17 @@ namespace SkyServer.Tools.Explore
                                     + "&ttl_wgt=YES&txt_wgt=YES&ttl_sco=YES&txt_sco=YES&version=1";
 
             hrefs.Print = "framePrint();";
-            hrefs.AllSpec = "allSpec.aspx?id=" + id + "&spec=" + specId + "&apid=" + apid;
+            hrefs.AllSpec = "allSpec.aspx?"+allId;
 
             if (specId != null)
             {
-                hrefs.SpecObj     = explore + exploreQuery.SpecObjQuery      + "&name=SpecObj&spec="     + specId;
-                hrefs.sppLines    = explore + exploreQuery.sppLinesQuery     + "&name=sppLines&spec="    + specId;
-                hrefs.sppParams   = explore + exploreQuery.sppParamsQuery    + "&name=sppParams&spec="   + specId;
-                hrefs.galSpecLine = explore + exploreQuery.galSpecLineQuery  + "&name=galSpecLine&spec=" + specId;
-                hrefs.galSpecIndx = explore + exploreQuery.galSpecIndexQuery + "&name=galSpecIndx&spec=" + specId;
-                hrefs.galSpecInfo = explore + exploreQuery.galSpecInfoQuery  + "&name=galSpecInfo&spec=" + specId;
+                hrefs.SpecObj     = explore + exploreQuery.SpecObjQuery      + "&name=SpecObj";
+                hrefs.sppLines    = explore + exploreQuery.sppLinesQuery     + "&name=sppLines";
+                hrefs.sppParams   = explore + exploreQuery.sppParamsQuery    + "&name=sppParams";
+                hrefs.galSpecLine = explore + exploreQuery.galSpecLineQuery  + "&name=galSpecLine";
+                hrefs.galSpecIndx = explore + exploreQuery.galSpecIndexQuery + "&name=galSpecIndx";
+                hrefs.galSpecInfo = explore + exploreQuery.galSpecInfoQuery  + "&name=galSpecInfo";
+
                 hrefs.Plate       = explore + exploreQuery.Plate + "&name=Plate&plateId=" + plateId;
 
                 hrefs.Spectrum = "../../get/SpecById.ashx?ID=" + specId;
@@ -155,25 +158,25 @@ namespace SkyServer.Tools.Explore
                     
                 if (globals.ReleaseNumber >= 8)
                 {
-                    hrefs.theParameters = "parameters.aspx?id=" + id + "&spec=" + specId + "&apid=" + apid;
-                    hrefs.stellarMassStarformingPort = explore + exploreQuery.stellarMassStarformingPortQuery+ "&name=stellarMassStarFormingPort&spec=" + specId;
-                    hrefs.stellarMassPassivePort     = explore + exploreQuery.stellarMassPassivePortQuery+ "&name=stellarMassPassivePort&spec=" + specId;
-                    hrefs.emissionLinesPort          = explore + exploreQuery.emissionLinesPortQuery + "&name=emissionlinesPort&spec=" + specId;
-                    hrefs.stellarMassPCAWiscBC03     = explore + exploreQuery.stellarMassPCAWiscBC03Query+"&name=stellarMassPCAWiscBC03&spec=" + specId ;
-                    hrefs.stellarMassPCAWiscM11      = explore + exploreQuery.stellarMassPCAWiscM11Query+ "&name=stellarMassPCAWiscM11&spec=" + specId ;
+                    hrefs.theParameters = "parameters.aspx?"+allId;
+                    hrefs.stellarMassStarformingPort = explore + exploreQuery.stellarMassStarformingPortQuery+ "&name=stellarMassStarFormingPort";
+                    hrefs.stellarMassPassivePort     = explore + exploreQuery.stellarMassPassivePortQuery+ "&name=stellarMassPassivePort";
+                    hrefs.emissionLinesPort          = explore + exploreQuery.emissionLinesPortQuery + "&name=emissionlinesPort";
+                    hrefs.stellarMassPCAWiscBC03     = explore + exploreQuery.stellarMassPCAWiscBC03Query+"&name=stellarMassPCAWiscBC03";
+                    hrefs.stellarMassPCAWiscM11      = explore + exploreQuery.stellarMassPCAWiscM11Query+ "&name=stellarMassPCAWiscM11";
                 }
                 if (globals.ReleaseNumber >= 10)
                 {
-                    hrefs.stellarMassFSPSGranEarlyDust   = explore + exploreQuery.stellarMassFSPSGranEarlyDust + "&name=stellarMassFSPSGranEarlyDust&spec=" + specId;
-                    hrefs.stellarMassFSPSGranEarlyNoDust = explore + exploreQuery.stellarMassFSPSGranEarlyNoDust+"&name=stellarMassFSPSGranEarlyNoDust&spec=" + specId;
-                    hrefs.stellarMassFSPSGranEarlyDust   = explore + exploreQuery.stellarMassFSPSGranWideDust + "&name=stellarMassFSPSGranWideDust&spec=" + specId;
-                    hrefs.stellarMassFSPSGranWideNoDust  = explore + exploreQuery.stellarMassFSPSGranWideNoDust + "&name=stellarMassFSPSGranWideNoDust&spec=" + specId;
+                    hrefs.stellarMassFSPSGranEarlyDust   = explore + exploreQuery.stellarMassFSPSGranEarlyDust + "&name=stellarMassFSPSGranEarlyDust";
+                    hrefs.stellarMassFSPSGranEarlyNoDust = explore + exploreQuery.stellarMassFSPSGranEarlyNoDust+"&name=stellarMassFSPSGranEarlyNoDust";
+                    hrefs.stellarMassFSPSGranEarlyDust   = explore + exploreQuery.stellarMassFSPSGranWideDust + "&name=stellarMassFSPSGranWideDust";
+                    hrefs.stellarMassFSPSGranWideNoDust  = explore + exploreQuery.stellarMassFSPSGranWideNoDust + "&name=stellarMassFSPSGranWideNoDust";
                  }
              }            
              if (!String.IsNullOrEmpty(apid))
              {
-                 hrefs.apogeeStar = explore + exploreQuery.apogeeStar + "&name=apogeeStar&apid=" + apid;
-                 hrefs.aspcapStar = explore + exploreQuery.aspcapStar + "&name=aspcapStar&apid=" + apid;
+                 hrefs.apogeeStar = explore + exploreQuery.apogeeStar + "&name=apogeeStar";
+                 hrefs.aspcapStar = explore + exploreQuery.aspcapStar + "&name=aspcapStar";
              }
         }
 
@@ -330,86 +333,6 @@ namespace SkyServer.Tools.Explore
             } // using SqlCommand
         }
 
-        //public void showSTable(SqlConnection oConn, string cmd) 
-        //{
-        //    using (SqlCommand oCmd = oConn.CreateCommand())
-        //    {
-        //        oCmd.CommandText = cmd;
-
-        //        string u = "<a class='content' target='_top' href='obj.aspx?sid=";
-        //        string id, v;
-        //        char c;
-
-        //        Response.Write("<table cellpadding=2 cellspacing=2 border=0>");
-
-        //        Response.Write("<tr>");
-        //        using (SqlDataReader reader = oCmd.ExecuteReader())
-        //        {
-        //            if (reader.HasRows)
-        //            {
-        //                for (int i = 0; i < reader.FieldCount; i++)
-        //                    Response.Write("<td align='middle' class='h'>" + reader.GetName(i) + "</td>");
-        //            }
-        //            Response.Write("</tr>\n");
-
-        //            c = 't';
-
-        //            while (reader.Read())
-        //            {
-        //                Response.Write("<tr>");
-        //                id = reader.GetValue(0).ToString();
-        //                for (int i = 0; i < reader.FieldCount; i++)
-        //                {
-        //                    v = reader.GetValue(i).ToString();
-        //                    v = (v == "" ? "&nbsp;" : v);
-        //                    Response.Write("<td nowrap align='middle' class='" + c + "'>");
-        //                    if (i == 0) Response.Write(u + id + "'>" + id + "</a></td>");
-        //                    else Response.Write(v + "</td>");
-        //                }
-        //                Response.Write("</tr>\n");
-        //                c = (c == 't' ? 'b' : 't');
-        //            }
-        //            Response.Write("</table>\n");
-        //        } //using SqlDataReader
-        //    } // using SqlCommand
-        //}
-
-        //public void showFTable(SqlConnection oConn, long? plateId) {
-        //    using (SqlCommand oCmd = oConn.CreateCommand()) {
-        //        string cmd = " select cast(specObjID as binary(8)) as specObjId," +
-        //            " fiberId, class as name, str(z,5,3) as z" +
-        //            " from SpecObjAll where plateID=@plateId order by fiberId";
-
-        //        oCmd.CommandText = cmd;
-        //        oCmd.Parameters.AddWithValue("@plateId", plateId);
-
-        //        using (SqlDataReader reader = oCmd.ExecuteReader()) {
-
-        //            string u = "<a class='content' target='_top' href='obj.aspx?sid=";
-        //            string sid;
-	
-        //            int col=0;
-        //            int row=0;
-        //            string c = "st";
-        //            Response.Write("<table>\n");
-        //            Response.Write("<tr>");
-        //            while(reader.Read()) {
-        //                sid   = u+Functions.BytesToHex(reader.GetSqlBytes(0).Buffer)+"'>";
-        //                string v = "["+reader.GetValue(1).ToString()+"]&nbsp;";
-        //                v += reader.GetValue(2).ToString()+" z="+reader.GetValue(3).ToString();
-        //                Response.Write("<td nowrap class='"+c+"'>"+sid+v+"</a></td>\n");
-        //                if (++col>3) {
-        //                    col = 0;
-        //                    row++;
-        //                    Response.Write("</tr>\n<tr>\n");
-        //                    c = ("st".Equals(c)?"sb":"st");
-        //                }
-        //            }
-        //            Response.Write("<td></td></tr>\n</table>\n");
-        //        } // using SqlDataReader
-        //    } // using SqlCommand
-        //}
-
         public string getUnit(SqlConnection oConn, string tableName, string name)
         {
             using (SqlCommand oCmd = oConn.CreateCommand())
@@ -431,77 +354,7 @@ namespace SkyServer.Tools.Explore
         }
 
        
-        /// <summary>
-        /// Added new HTable with namevalue pair options
-        /// </summary>
-        /// <param name="namevalues"></param>
-        /// <param name="w"></param>
-        public void showHTable(NameValueCollection namevalues, int w)
-        {
-            char c = 't'; string unit = "test";
-            
-            Response.Write("<table cellpadding=2 cellspacing=2 border=0");
-            
-            if (w > 0)
-                Response.Write(" width=" + w);
-            Response.Write(">\n");
-            
-                Response.Write("<tr>");
-
-                foreach (String k in namevalues.AllKeys)
-                {
-                    Response.Write("<td align='middle' class='h'>");
-                    Response.Write("<span ");
-                    if (unit != "")
-                        Response.Write("ONMOUSEOVER=\"this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=" + unit + "')\" ");
-                    Response.Write("></span>");
-                    Response.Write(k+"</td>");                                      
-                }
-                Response.Write("</tr>");
-                
-                Response.Write("<tr>");
-
-                foreach (String k in namevalues.AllKeys)
-                {
-                    Response.Write("<td nowrap align='middle' class='" + c + "'>");
-                    Response.Write(namevalues[k]);
-                    Response.Write("</td>");
-                }
-                Response.Write("</tr>");
-            
-            Response.Write("</table>");
-        }
-        
-        /// <summary>
-        /// Vertical aligned table  With name value pair
-        /// </summary>
-        /// <param name="namevalues"></param>
-        /// <param name="w"></param>
-        public void showVTable(NameValueCollection namevalues, int w)
-        {
-            char c = 't'; string unit = "test";
-            Response.Write("<table cellpadding=2 cellspacing=2 border=0");
-            if (w > 0)
-                Response.Write(" width=" + w);
-            Response.Write(">\n");
-            foreach (String k in namevalues.AllKeys)
-            {
-                Response.Write("<tr align='left' >");
-                Response.Write("<td  valign='top' class='h'>");
-                Response.Write("<span ");
-                if (unit != "")
-                    Response.Write("ONMOUSEOVER=\"this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=" + unit + "')\" ");
-                Response.Write("></span>");
-                Response.Write(k + "</td>");
-            
-                Response.Write("<td valign='top' class='" + c + "'>");
-                Response.Write(namevalues[k]);
-                Response.Write("</td>");
-                Response.Write("</tr>");
-            }
-            Response.Write("</table>");
-        }
-
+      
 
         /// <summary>
         /// Vertical aligned table  With DataSet

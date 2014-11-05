@@ -7,10 +7,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SkyServer.Tools.Explore
-{
+namespace SkyServer.Tools.Explore {
     
     
-    public partial class Explorer1 {
+    public partial class DisplayResults {
     }
 }

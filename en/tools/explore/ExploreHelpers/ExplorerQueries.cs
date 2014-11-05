@@ -13,13 +13,15 @@ namespace SkyServer.Tools.Explore
         public string fieldId;
         public string apogeeId;
         public string plateId;
+        public string fiberId;
 
-        public ExplorerQueries(String objid, String specid, String apogeeid, String fieldid, String plateid) {
+        public ExplorerQueries(String objid, String specid, String apogeeid, String fieldid, String plateid, string fiberid) {
             this.objId = objid;
             this.specId = specid;
             this.apogeeId = apogeeid;
             this.fieldId = fieldid;
             this.plateId = plateid;
+            this.fiberId = fiberid;
         }        
         
         ///Left Side panel of the Explore Page
@@ -281,7 +283,7 @@ namespace SkyServer.Tools.Explore
             }
         }
 
-        public string galaxyzoo1 {
+        public string zooSpec1 {
             get {
                 string cmd = "select objid,nvote as 'Votes',str(p_el_debiased,5,3) 'Elliptical proabability (debiased)',";
                 cmd += " str(p_cs_debiased,5,3) 'Spiral probability (debiased)'";
@@ -290,7 +292,7 @@ namespace SkyServer.Tools.Explore
             }
         }
 
-        public string galaxyzoo2 {
+        public string zooSpec2 {
             get {
                 string cmd = "select str(p_cw,5,3) as 'Clockwise spiral probability', str(p_acw,5,3) as 'Anticlockwise spiral probability',";
                 cmd += " str(p_edge,5,3) as 'Edge-on spiral probablity', str(p_mg,5,3) as 'Merger system probability'";
@@ -605,56 +607,77 @@ namespace SkyServer.Tools.Explore
 
         //// Apogee Queries
         /* Queries */
-        public string APOGEE_BASE_QUERY = @"select
-  a.ra, 
-  a.dec,
-  a.apstar_id, 
-  a.apogee_id, 
-  a.glon, 
-  a.glat, 
-  a.location_id,
-  a.commiss,
-  a.vhelio_avg, 
-  a.vscatter, 
 
-  b.teff, 
-  b.teff_err,
-  b.logg, 
-  b.logg_err,
-  b.metals, 
-  b.metals_err,  
-  b.alphafe, 
-  b.alphafe_err,
+        public string APOGEE_BASE_QUERY{ 
+            get{
+            string cmd = "select   a.ra,    a.dec,   a.apstar_id,    a.apogee_id,    a.glon,    a.glat,    a.location_id,   a.commiss,   a.vhelio_avg,    a.vscatter,     b.teff,";   
+                   cmd +=" b.teff_err,   b.logg,    b.logg_err,   b.metals,    b.metals_err,     b.alphafe,    b.alphafe_err,    c.j,   c.h,   c.k,   c.j_err,   c.h_err,   c.k_err, ";  
+                   cmd +="case c.src_4_5      when 'none' then NULL      when 'WISE' then c.wise_4_5      when 'IRAC' then c.irac_4_5      end      as mag_4_5,   case c.src_4_5 ";     
+                   cmd +=" when 'none' then NULL      when 'WISE' then c.wise_4_5_err      when 'IRAC' then c.irac_4_5_err      end      as mag_4_5_err,   c.src_4_5,  ";
+                   cmd +=" dbo.fApogeeTarget1N(a.apogee_target1) as apogeeTarget1N,   dbo.fApogeeTarget2N(a.apogee_target2) as apogeeTarget2N, ";  
+                   cmd +=" dbo.fApogeeStarFlagN(a.starflag) as apogeeStarFlagN,   dbo.fApogeeAspcapFlagN(aspcapflag) as apogeeAspcapFlagN  ";
+                   cmd +=" from apogeeStar a join aspcapStar b on a.apstar_id = b.apstar_id join apogeeObject c on a.apogee_id = c.apogee_id ";
+                   
+                   return cmd;
+            }
+        }
 
-  c.j,
-  c.h,
-  c.k,
-  c.j_err,
-  c.h_err,
-  c.k_err,
-  case c.src_4_5 
-    when 'none' then NULL 
-    when 'WISE' then c.wise_4_5 
-    when 'IRAC' then c.irac_4_5 
-    end 
-    as mag_4_5,
-  case c.src_4_5 
-    when 'none' then NULL 
-    when 'WISE' then c.wise_4_5_err 
-    when 'IRAC' then c.irac_4_5_err 
-    end 
-    as mag_4_5_err,
-  c.src_4_5,
-
-  dbo.fApogeeTarget1N(a.apogee_target1) as apogeeTarget1N,
-  dbo.fApogeeTarget2N(a.apogee_target2) as apogeeTarget2N,
-  dbo.fApogeeStarFlagN(a.starflag) as apogeeStarFlagN,
-  dbo.fApogeeAspcapFlagN(aspcapflag) as apogeeAspcapFlagN
-
-from apogeeStar a
-join aspcapStar b on a.apstar_id = b.apstar_id
-join apogeeObject c on a.apogee_id = c.apogee_id
-";
+        public string APOGEEVISITS_BASE_QUERY {
+            get{
+                string cmd = "select visit_id, plate,  mjd, fiberid, dateobs, vrel from apogeeVisit where apogee_id = @id order by dateobs";
+                return cmd;
+            }
+        }
+//        public string APOGEE_BASE_QUERY = @"select
+//  a.ra, 
+//  a.dec,
+//  a.apstar_id, 
+//  a.apogee_id, 
+//  a.glon, 
+//  a.glat, 
+//  a.location_id,
+//  a.commiss,
+//  a.vhelio_avg, 
+//  a.vscatter, 
+//
+//  b.teff, 
+//  b.teff_err,
+//  b.logg, 
+//  b.logg_err,
+//  b.metals, 
+//  b.metals_err,  
+//  b.alphafe, 
+//  b.alphafe_err,
+//
+//  c.j,
+//  c.h,
+//  c.k,
+//  c.j_err,
+//  c.h_err,
+//  c.k_err,
+//  case c.src_4_5 
+//    when 'none' then NULL 
+//    when 'WISE' then c.wise_4_5 
+//    when 'IRAC' then c.irac_4_5 
+//    end 
+//    as mag_4_5,
+//  case c.src_4_5 
+//    when 'none' then NULL 
+//    when 'WISE' then c.wise_4_5_err 
+//    when 'IRAC' then c.irac_4_5_err 
+//    end 
+//    as mag_4_5_err,
+//  c.src_4_5,
+//
+//  dbo.fApogeeTarget1N(a.apogee_target1) as apogeeTarget1N,
+//  dbo.fApogeeTarget2N(a.apogee_target2) as apogeeTarget2N,
+//  dbo.fApogeeStarFlagN(a.starflag) as apogeeStarFlagN,
+//  dbo.fApogeeAspcapFlagN(aspcapflag) as apogeeAspcapFlagN
+//
+//from apogeeStar a
+//join aspcapStar b on a.apstar_id = b.apstar_id
+//join apogeeObject c on a.apogee_id = c.apogee_id
+//";
 
     }
 }

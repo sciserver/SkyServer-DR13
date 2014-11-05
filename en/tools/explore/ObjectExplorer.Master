@@ -160,11 +160,7 @@
         </div>
      
         <div id="content">
-            <asp:contentplaceholder id="OEContent0" runat="server" />
-            <asp:contentplaceholder id="OEContent1" runat="server" />            
-            <asp:contentplaceholder id="OEContent2" runat="server" />            
-            <asp:contentplaceholder id="OEContent3" runat="server" />            
-            <asp:contentplaceholder id="OEContent4" runat="server" />            
+            <asp:contentplaceholder id="OEContent" runat="server" />           
         </div>              
     </div>
     </form>

@@ -116,7 +116,7 @@ namespace SkyServer.Tools.Explore
                 
                 getObjPmts(oConn);
 
-                Response.Redirect("Explorer.aspx?id=" + ((objId == null) ? "" : objId)
+                Response.Redirect("Summary.aspx?id=" + ((objId == null) ? "" : objId)
                     + "&spec=" + ((specObjId == null) ? "" : specObjId)
                     + "&apid=" + ((apid == null) ? "" : apid));
 
@@ -194,8 +194,8 @@ namespace SkyServer.Tools.Explore
                     " where p.apstar_id=n.apstar_id";
                 oCmd.Parameters.AddWithValue("@qra", qra);
                 oCmd.Parameters.AddWithValue("@qdec", qdec);
-                oCmd.Parameters.AddWithValue("@eqSearchRadius", 0.5/60);
-
+                //oCmd.Parameters.AddWithValue("@eqSearchRadius", 0.5/60); //this is original code but does not work with this radius
+                oCmd.Parameters.AddWithValue("@eqSearchRadius", 0.5);
                 using (SqlDataReader reader = oCmd.ExecuteReader())
                 {
                     if (reader.Read())
@@ -265,8 +265,8 @@ namespace SkyServer.Tools.Explore
                             " where p.apstar_id=n.apstar_id";
                         oCmd.Parameters.AddWithValue("@qra", qra);
                         oCmd.Parameters.AddWithValue("@qdec", qdec);
-                        oCmd.Parameters.AddWithValue("@eqSearchRadius", 0.5/60);
-
+                        oCmd.Parameters.AddWithValue("@eqSearchRadius", 0.5);
+                        //oCmd.Parameters.AddWithValue("@eqSearchRadius", 0.5 / 60);
                         using (SqlDataReader reader = oCmd.ExecuteReader())
                         {
                             if (reader.Read())

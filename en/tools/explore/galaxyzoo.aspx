@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="ObjectExplorer.Master" AutoEventWireup="true" CodeBehind="galaxyzoo.aspx.cs" Inherits="SkyServer.Tools.Explore.GalaxyZoo" %>
 <%@ Import Namespace="System.Data.SqlClient" %>
+<%@ Import Namespace="System.Data" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="OEContent" runat="server">
 
@@ -33,123 +34,91 @@
     <tr><td>
         
     <h2>Galaxy Zoo 1</h2>
-
-        <h3><a href="ex_sql.aspx?cmd=select+*+from+zooSpec+where+objid=<%=objId%>&name=zooSpec&tab=V&id=<%=objId%>" class="content">zooSpec</a></h3>
+        <%
+            string explore = "DisplayResults.aspx?id=" + objId + "&cmd=";
+         %>
+        <h3><a href="<%=explore+master.exploreQuery.zooSpec%>&name=zooSpec&id=<%=objId%>" class="content">zooSpec</a></h3>
 
     <%  
-        using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
+        DataSet ds = null;
+
+        ds = master.runQuery.RunCasjobs(master.exploreQuery.zooSpec1);
+        master.showHTable(ds, 600, "PhotoObj");
+
+        ds = master.runQuery.RunCasjobs(master.exploreQuery.zooSpec2);
+        master.showHTable(ds, 600, "PhotoObj"); 
+    %>
+
+        <h3><a href="<%=explore+master.exploreQuery.zooNoSpec%>&name=zooNoSpec&id=<%=objId%>" class="content">zooNoSpec</a></h3>
+        
+     <%    
+         ds= master.runQuery.RunCasjobs(master.exploreQuery.zooNoSpec);
+         master.showHTable(ds, 600, "PhotoObj");
+     %>
+
+        <h3><a href="<%=explore+master.exploreQuery.zooConfidence%>&name=zooConfidence" class="content">zooConfidence</a></h3>
+        
+     <%
+         ds = master.runQuery.RunCasjobs(master.exploreQuery.zooConfidence2);
+         master.showHTable(ds, 600, "PhotoObj");                   
+     %>
+
+        <h3><a href="<%=explore+master.exploreQuery.zooMirrorBias%>&name=zooMirrorBias" class="content">zooMirrorBias</a></h3>
+        
+     <%
+         ds = master.runQuery.RunCasjobs(master.exploreQuery.zooMirrorBias2);  
+         master.showHTable(ds, 600, "PhotoObj");     
+     %>
+
+        <h3><a href="<%=explore+master.exploreQuery.zooMonochromeBias%>&name=zooMonochromeBias" class="content">zooMonochromeBias</a></h3>
+        
+     <%
+         ds=master.runQuery.RunCasjobs(master.exploreQuery.zooMonochromeBias2);
+         master.showHTable(ds, 600, "PhotoObj");
+            
+        // show the Galaxy Zoo 2 data only if this is DR10
+        if (globals.ReleaseNumber >= 10) 
         {
-            oConn.Open();
-
-            string cmd = "select objid,nvote as 'Votes',str(p_el_debiased,5,3) 'Elliptical proabability (debiased)',";
-            cmd += " str(p_cs_debiased,5,3) 'Spiral probability (debiased)'";
-            cmd += " from zooSpec where objid=" + objId;
-
-            master.showHTable(oConn, cmd, 600, "PhotoObj");
-
-            cmd = "select str(p_cw,5,3) as 'Clockwise spiral probability', str(p_acw,5,3) as 'Anticlockwise spiral probability',";
-            cmd += " str(p_edge,5,3) as 'Edge-on spiral probablity', str(p_mg,5,3) as 'Merger system probability'";
-            cmd += " from zooSpec where objid=" + objId;
-
-            master.showHTable(oConn, cmd, 600, "PhotoObj");            
-        
-            %>
-
-        <h3><a href="ex_sql.aspx?cmd=select+*+from+zooNoSpec+where+objid=<%=objId%>&name=zooNoSpec&tab=V&id=<%=objId%>" class="content">zooNoSpec</a></h3>
-        
-        <%
-            cmd = "select objid,nvote,p_el,p_cs";
-            cmd += " from zooNoSpec where objid=" + objId;
-
-            master.showHTable(oConn, cmd, 600, "PhotoObj");
-            
-        
-     %>
-
-        <h3><a href="ex_sql.aspx?cmd=select+*+from+zooConfidence+where+objid=<%=objId%>&name=zooConfidence&tab=V&id=<%=objId%>" class="content">zooConfidence</a></h3>
-        
-        <%
-            cmd = "select objid,f_unclass_clean,f_misclass_clean";
-            cmd += " from zooConfidence where objid=" + objId;
-
-            master.showHTable(oConn, cmd, 600, "PhotoObj");
-            
-        
-     %>
-
-        <h3><a href="ex_sql.aspx?cmd=select+*+from+zooMirrorBias+where+objid=<%=objId%>&name=zooMirrorBias&tab=V&id=<%=objId%>" class="content">zooMirrorBias</a></h3>
-        
-        <%
-            cmd = "select objid,nvote_mr1,nvote_mr2";
-            cmd += " from zooMirrorBias where objid=" + objId;
-
-            master.showHTable(oConn, cmd, 600, "PhotoObj");
-            
-        
-     %>
-
-        <h3><a href="ex_sql.aspx?cmd=select+*+from+zooMonochromeBias+where+objid=<%=objId%>&name=zooMonochromeBias&tab=V&id=<%=objId%>" class="content">zooMonochromeBias</a></h3>
-        
-        <%
-            cmd = "select objid,nvote_mon";
-            cmd += " from zooMonochromeBias where objid=" + objId;
-
-            master.showHTable(oConn, cmd, 600, "PhotoObj");
-            
-            // show the Galaxy Zoo 2 data only if this is DR10
-            
-            if (globals.ReleaseNumber >= 10) 
-            {
      %>
 
      <h2>Galaxy Zoo 2</h2>
 
-        <h3><a href="ex_sql.aspx?cmd=select+*+from+zoo2MainSpecz+where+dr8objid=<%=objId%>&name=zoo2MainSpecz&tab=V&id=<%=objId%>" class="content">zoo2MainSpecz</a></h3>
+        <h3><a href="<%=explore+master.exploreQuery.zoo2MainSpecz%>&name=zoo2MainSpecz" class="content">zoo2MainSpecz</a></h3>
         
-        <%
-            cmd = "select dr8objid, total_classifications, total_votes";
-            cmd += " from zoo2MainSpecz where dr8objid=" + objId;
-
-            master.showHTable(oConn, cmd, 600, "PhotoObj");
+     <%
+         ds = master.runQuery.RunCasjobs(master.exploreQuery.zoo2MainSpecz2);
+         master.showHTable(ds, 600, "PhotoObj");
      %>
 
-        <h3><a href="ex_sql.aspx?cmd=select+*+from+zoo2MainPhotoz+where+dr8objid=<%=objId%>&name=zoo2MainPhotoz&tab=V&id=<%=objId%>" class="content">zoo2MainPhotoz</a></h3>
+        <h3><a href="<%=explore+master.exploreQuery.zoo2MainPhotoz%>&name=zoo2MainPhotoz" class="content">zoo2MainPhotoz</a></h3>
         
-        <%
-            cmd = "select dr8objid, total_classifications, total_votes";
-            cmd += " from zoo2MainPhotoz where dr8objid=" + objId;
-
-            master.showHTable(oConn, cmd, 600, "PhotoObj");
+     <%
+         ds = master.runQuery.RunCasjobs(master.exploreQuery.zoo2MainPhotoz2);
+         master.showHTable(ds, 600, "PhotoObj");
      %>
 
-        <h3><a href="ex_sql.aspx?cmd=select+*+from+zoo2Stripe82Normal+where+dr8objid=<%=objId%>&name=zoo2Stripe82Normal&tab=V&id=<%=objId%>" class="content">zoo2Stripe82Normal</a></h3>
+        <h3><a href="<%=explore+master.exploreQuery.zoo2Stripe82Normal%>&name=zoo2Stripe82Normal" class="content">zoo2Stripe82Normal</a></h3>
         
-        <%
-            cmd = "select dr8objid, total_classifications, total_votes";
-            cmd += " from zoo2Stripe82Normal where dr8objid=" + objId;
-
-            master.showHTable(oConn, cmd, 600, "PhotoObj");
+     <%
+         ds = master.runQuery.RunCasjobs(master.exploreQuery.zoo2Stripe82Normal2);
+         master.showHTable(ds, 600, "PhotoObj");
      %>
 
-        <h3><a href="ex_sql.aspx?cmd=select+*+from+zoo2Stripe82Coadd1+where+dr8objid=<%=objId%>&name=zoo2Stripe82Coadd1&tab=V&id=<%=objId%>" class="content">zoo2Stripe82Coadd1</a></h3>
+        <h3><a href="<%=explore+master.exploreQuery.zoo2Stripe82Coadd1%>&name=zoo2Stripe82Coadd1" class="content">zoo2Stripe82Coadd1</a></h3>
         
-        <%
-            cmd = "select dr8objid, total_classifications, total_votes";
-            cmd += " from zoo2Stripe82Coadd1 where dr8objid=" + objId;
-
-            master.showHTable(oConn, cmd, 600, "PhotoObj");
+     <%
+         ds = master.runQuery.RunCasjobs(master.exploreQuery.zoo2Stripe82Coadd1_2);
+         master.showHTable(ds, 600, "PhotoObj");
      %>
 
-        <h3><a href="ex_sql.aspx?cmd=select+*+from+zoo2Stripe82Coadd2+where+dr8objid=<%=objId%>&name=zoo2Stripe82Coadd2&tab=V&id=<%=objId%>" class="content">zoo2Stripe82Coadd2</a></h3>
+        <h3><a href="<%=explore+master.exploreQuery.zoo2Stripe82Coadd2%>&name=zoo2Stripe82Coadd2" class="content">zoo2Stripe82Coadd2</a></h3>
         
-        <%
-            cmd = "select dr8objid, total_classifications, total_votes";
-            cmd += " from zoo2Stripe82Coadd2 where dr8objid=" + objId;
-
-            master.showHTable(oConn, cmd, 600, "PhotoObj");
+     <%
+         ds = master.runQuery.RunCasjobs(master.exploreQuery.zoo2Stripe82Coadd2_2);
+         master.showHTable(ds, 600, "PhotoObj");
      
             }  // end of if statement where we control whether Zoo 2 data get displayed
-        } // end of sqlConnection  %>
+     %>
 
     </td></tr></table>
     </div>

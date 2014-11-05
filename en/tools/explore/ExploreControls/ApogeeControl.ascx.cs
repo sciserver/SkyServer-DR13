@@ -54,7 +54,14 @@ namespace SkyServer.Tools.Explore
         public string apogeeStarFlagN;     // Star flags
         public string apogeeAspcapFlagN;   // Processing flags (ASPCAP)
 
-       
+
+        /* TABLE apogeeVisit */
+        public string visit_id;
+        public long plate;
+        public long mjd;
+        public long fiberid;
+        public string dateobs;
+        public float vrel;
 
         public const string FIND_NEAREST = @"join (select top 1 apstar_id from dbo.fGetNearestApogeeStarEq(@ra, @dec, @radius)) s on a.apstar_id = s.apstar_id";
         public const string FIND_APSTAR_ID = @"where a.apstar_id = @id";
@@ -71,64 +78,90 @@ namespace SkyServer.Tools.Explore
         protected string spectrumLink;
         protected string fitsLink;
 
+        string[] injection = new string[] { "--", ";", "/*", "*/", "'", "\"" };
+        string command;
+
+        protected bool isData = false;
       
         /* Visits */
-        //public List<ApogeeVisit> visits = new List<ApogeeVisit>();
+        public List<ApogeeVisit> visits = new List<ApogeeVisit>();
 
         protected void Page_Load(object sender, EventArgs e)
         {
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             master = (ObjectExplorer)Page.Master;
+
+            //if (Request["apid"] != null)
+            //{
+                apogeeID(master.apid);
+            //}
+            //else if (Request["plate"] != null && Request["mjd"] != null && Request["fiberid"] != null)
+            //{
+            //    long plate = long.Parse(Request["plate"]);
+            //    long mjd = long.Parse(Request["mjd"]);
+            //    long fiberid = long.Parse(Request["fiberid"]);
+            //    apogeePlate(plate, mjd, fiberid);
+            //}
+            //else if (Request["ra"] != null && Request["dec"] != null)
+            //{
+            //    double radius = (Request["radius"] == null) ? DEFAULT_RADIUS : double.Parse(Request["radius"]);
+            //    double ra = double.Parse(Request["ra"]);
+            //    double dec = double.Parse(Request["dec"]);
+            //    apogeeRaDec(ra, dec, radius);               
+            //}
             
             ReadInfoFromDbReader();
             ReadApogeeLinks();
+            ReadVisitsFromDbReader();
         } 
 
         protected void ReadInfoFromDbReader()  
         {
-            string temp = FIND_APOGEE_ID.Replace("@id",master.apid);
-            DataSet ds = master.runQuery.RunCasjobs(master.exploreQuery.APOGEE_BASE_QUERY + temp);
+            DataSet ds = master.runQuery.RunCasjobs(command);
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
              //BASE_QUERY + FIND_NEAREST;
-             if (reader.Read()) // Only one row expected
-             {
-                ra = (double)reader["ra"];
-                dec = (double)reader["dec"];
-                apstar_id = (string)reader["apstar_id"];
-                apogee_id = (string)reader["apogee_id"];
-                glon = (double)reader["glon"];
-                glat = (double)reader["glat"];
-                location_id = (long)reader["location_id"];
-                commiss = (long)reader["commiss"];
-                vhelio_avg = (float)reader["vhelio_avg"];
-                vscatter = (float)reader["vscatter"];
+                if (reader.Read()) // Only one row expected
+                {
+                    ra = (double)reader["ra"];
+                    dec = (double)reader["dec"];
+                    apstar_id = (string)reader["apstar_id"];
+                    apogee_id = (string)reader["apogee_id"];
+                    glon = (double)reader["glon"];
+                    glat = (double)reader["glat"];
+                    location_id = (long)reader["location_id"];
+                    commiss = (long)reader["commiss"];
+                    vhelio_avg = (float)reader["vhelio_avg"];
+                    vscatter = (float)reader["vscatter"];
 
-                teff = (float)reader["teff"];
-                teff_err = (float)reader["teff_err"];
-                logg = (float)reader["logg"];
-                logg_err = (float)reader["logg_err"];
-                metals = (float)reader["metals"];
-                metals_err = (float)reader["metals_err"];
-                alphafe = (float)reader["alphafe"];
-                alphafe_err = (float)reader["alphafe_err"];
+                    teff = (float)reader["teff"];
+                    teff_err = (float)reader["teff_err"];
+                    logg = (float)reader["logg"];
+                    logg_err = (float)reader["logg_err"];
+                    metals = (float)reader["metals"];
+                    metals_err = (float)reader["metals_err"];
+                    alphafe = (float)reader["alphafe"];
+                    alphafe_err = (float)reader["alphafe_err"];
 
-                j = (float)reader["j"];
-                h = (float)reader["h"];
-                k = (float)reader["k"];
-                j_err = (float)reader["j_err"];
-                h_err = (float)reader["h_err"];
-                k_err = (float)reader["k_err"];
-                mag_4_5 = reader["mag_4_5"] is DBNull ? null : (float?)reader["mag_4_5"];
-                mag_4_5_err = reader["mag_4_5_err"] is DBNull ? null : (float?)reader["mag_4_5_err"];
-                src_4_5 = (string)reader["src_4_5"];
+                    j = (float)reader["j"];
+                    h = (float)reader["h"];
+                    k = (float)reader["k"];
+                    j_err = (float)reader["j_err"];
+                    h_err = (float)reader["h_err"];
+                    k_err = (float)reader["k_err"];
+                    mag_4_5 = reader["mag_4_5"] is DBNull ? null : (float?)reader["mag_4_5"];
+                    mag_4_5_err = reader["mag_4_5_err"] is DBNull ? null : (float?)reader["mag_4_5_err"];
+                    src_4_5 = (string)reader["src_4_5"];
 
-                apogeeTarget1N = (string)reader["apogeeTarget1N"];
-                apogeeTarget2N = (string)reader["apogeeTarget2N"];
-                apogeeStarFlagN = (string)reader["apogeeStarFlagN"];
-                apogeeAspcapFlagN = (string)reader["apogeeAspcapFlagN"];
-            }
-            else throw new Exception("APOGEE data not found");
+                    apogeeTarget1N = (string)reader["apogeeTarget1N"];
+                    apogeeTarget2N = (string)reader["apogeeTarget2N"];
+                    apogeeStarFlagN = (string)reader["apogeeStarFlagN"];
+                    apogeeAspcapFlagN = (string)reader["apogeeAspcapFlagN"];
+                }
+                else {
+                    isData = true;
+                    //throw new Exception("APOGEE data not found"); 
+                }
             }        
         }
 
@@ -141,22 +174,67 @@ namespace SkyServer.Tools.Explore
             fitsLink = globals.ApogeeFitsLink + location_id + "/apStar" + doWeNeedC + "-s3-" + HttpUtility.UrlEncode(apogee_id) + ".fits";
         }
 
-        //protected void ReadVisitsFromDbReader()
-        //{
-        //    while (reader.Read()) // Multiple rows expected
-        //    {
-        //        ApogeeVisit v = new ApogeeVisit();
+        protected void ReadVisitsFromDbReader()
+        {
+           
+            string command = master.exploreQuery.APOGEEVISITS_BASE_QUERY;
+            foreach (string s in injection)
+            {
+                if (apogee_id.IndexOf(s) >= 0)
+                {
+                    throw new Exception("Invalid APOGEE ID: " + apogee_id);
+                }
+            }
+            command = command.Replace("@id", "'" + apogee_id + "'");
 
-        //        v.visit_id = (string)reader["visit_id"];
-        //        v.plate = (long)reader["plate"];
-        //        v.mjd = (long)reader["mjd"];
-        //        v.fiberid = (long)reader["fiberid"];
-        //        v.dateobs = (string)reader["dateobs"];
-        //        v.vrel = (float)reader["vrel"];
+            DataSet ds = master.runQuery.RunCasjobs(command);
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            {
+                while (reader.Read()) // Multiple rows expected
+                {
+                    ApogeeVisit v = new ApogeeVisit();
+                    v.visit_id = (string)reader["visit_id"];
+                    v.plate = (long)reader["plate"];
+                    v.mjd = (long)reader["mjd"];
+                    v.fiberid = (long)reader["fiberid"];
+                    v.dateobs = (string)reader["dateobs"];
+                    v.vrel = (float)reader["vrel"];
+                    visits.Add(v);
+                }
+            }
+        }
+        
+        public void apogeeRaDec( double ra, double dec, double radius)
+        {
+            command = master.exploreQuery.APOGEE_BASE_QUERY + FIND_NEAREST;
+            command = command.Replace("@radius", radius.ToString());
+            command = command.Replace("@ra", ra.ToString());
+            command = command.Replace("@dec", dec.ToString());           
+        }
 
-        //        visits.Add(v);
-        //    }
-        //}
+        public void apogeeID( string id)
+        {
+            
+            if (id.StartsWith("apogee")) { command = master.exploreQuery.APOGEE_BASE_QUERY  + FIND_APSTAR_ID; }
+            else { command = master.exploreQuery.APOGEE_BASE_QUERY  + FIND_APOGEE_ID; }
+
+            foreach (string s in injection)
+            {
+                if (id.IndexOf(s) >= 0)
+                {
+                    throw new Exception("Invalid APOGEE ID: " + id);
+                }
+            }
+            command = command.Replace("@id", "'"+id+"'");            
+        }
+
+        public void apogeePlate(long plate, long mjd, long fiberid)
+        {
+            command = master.exploreQuery.APOGEE_BASE_QUERY + FIND_PLFIB;
+            command = command.Replace("@plate", plate.ToString());
+            command = command.Replace("@mjd", mjd.ToString());
+            command = command.Replace("@fiberid", fiberid.ToString());            
+        }
       
     }
 }

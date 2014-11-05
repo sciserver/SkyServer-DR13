@@ -30,7 +30,9 @@
                 </tr>
             </table>
             <%}else{%>
-            <%--// No data found for this object in USNO.--%>
+             <table cellpadding=2 cellspacing=2 border=0 width=625>
+                  <tr><td class='nodatafound'>No data found for this object in USNO</td></tr>
+            </table>
              <%}if(isFIRST) { %>
             <table cellpadding=2 cellspacing=2 border=0 width=620>
                 <tr>
@@ -45,6 +47,10 @@
                     <td nowrap align='middle' class='t'><%=major %></td>
                     <td nowrap align='middle' class='t'><%=minor %></td>
                 </tr>
+            </table>
+            <%}else{%>
+             <table cellpadding=2 cellspacing=2 border=0 width=625>
+                  <tr><td class='nodatafound'>No data found for this object in FIRST</td></tr>
             </table>
             <%} if(isROSAT){ %>
             <table cellpadding=2 cellspacing=2 border=0 width=620>
@@ -63,6 +69,10 @@
                     <td nowrap align='middle' class='t'><%=ext %></td>
                 </tr>
             </table>
+            <%}else{%>
+             <table cellpadding=2 cellspacing=2 border=0 width=625>
+                  <tr><td class='nodatafound'>No data found for this object in ROSAT</td></tr>
+            </table>
             <%} if(isRC3) { %>
             <table cellpadding=2 cellspacing=2 border=0 width=620>
                 <tr>
@@ -77,6 +87,10 @@
                     <td nowrap align='middle' class='t'><%=magnitude %></td>
                     <td nowrap align='middle' class='t'><%=hydrogenIndex %></td>
                 </tr>
+            </table>
+            <%}else{%>
+             <table cellpadding=2 cellspacing=2 border=0 width=625>
+                  <tr><td class='nodatafound'>No data found for this object in RC3</td></tr>
             </table>
             <%} if(is2MASS){ %>
             <table cellpadding=2 cellspacing=2 border=0 width=620>
@@ -94,6 +108,10 @@
                     <td nowrap align='middle' class='t'><%=k %></td>
                     <td nowrap align='middle' class='t'><%=phQual%>/td>
                 </tr>
+            </table>
+            <%}else{%>
+             <table cellpadding=2 cellspacing=2 border=0 width=625>
+                  <tr><td class='nodatafound'>No data found for this object in 2MASS</td></tr>
             </table>
             <%} if(isWISE){ %>
             <table cellpadding=2 cellspacing=2 border=0 width=620>
@@ -114,7 +132,12 @@
                     <td nowrap align='middle' class='t'><%=wiselink %></td>                   
                 </tr>
             </table>
-            <%} %>
+            
+            <%}else{%>
+             <table cellpadding=2 cellspacing=2 border=0 width=625>
+                  <tr><td class='nodatafound'>No data found for this object in WISE</td></tr>
+            </table>
+            <%}%>
         </td>
     </tr>
 </table></div>  
