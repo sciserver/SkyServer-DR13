@@ -63,76 +63,84 @@ namespace SkyServer.Tools.CrossId
 
         protected void ProcessRequest()
         {
-            string searchType;
-
-            getUploadFormat(Request["paste"]);
-
-            if ("photo".Equals(Request["searchType"]))
+            try
             {
-                if ("ra-dec".Equals(Request["photoUpType"]))
-                    searchType = "photo RA and dec";
-                else
-                    searchType = "SDSS ID";
-            }
-            else if ("spectro".Equals(Request["searchType"]))
-            {
-                if ("ra-dec".Equals(Request["spectroUpType"]))
-                    searchType = "spectro RA and dec";
-                else
-                    searchType = "plate, MJD and fiberID";
-            }
-            else //if ("apogee".Equals(Request["searchType"]))
-            {
-                searchType = "APOGEE RA and dec";
-            }
+                string searchType;
 
-            if ("html".Equals(Request["format"]))
-            {
-                Response.Write("<html><body>\n");
-                Response.Write("<h2>Uploading " + searchType + " list for cross-identification</h2>\n");
-            }
-
-            using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
-            {
-                oConn.Open();
-
-                string cmd = UploadCmd();
-                sendSQL(oConn, cmd);
-
-                updateBatch(oConn);
+                getUploadFormat(Request["paste"]);
 
                 if ("photo".Equals(Request["searchType"]))
                 {
                     if ("ra-dec".Equals(Request["photoUpType"]))
-                    {
-                        if ("allPrim".Equals(Request["photoScope"]) || "allObj".Equals(Request["photoScope"]))
-                            getNearby(oConn, "");
-                        else // if(f.photoScope.value=="nearPrim" || f.photoScope.value=="nearObj") 
-                            getNearest(oConn, "");
-                    }
+                        searchType = "photo RA and dec";
                     else
-                        getObjID(oConn);
+                        searchType = "SDSS ID";
                 }
                 else if ("spectro".Equals(Request["searchType"]))
                 {
                     if ("ra-dec".Equals(Request["spectroUpType"]))
-                    {
-                        if ("allPrim".Equals(Request["spectroScope"]) || "allObj".Equals(Request["spectroScope"]))
-                            getNearby(oConn, "Spec");
-                        else // if(f.spectroScope.value=="nearPrim" || f.spectroScope.value=="nearObj") 
-                            getNearest(oConn, "Spec");
-                    }
+                        searchType = "spectro RA and dec";
                     else
-                        getPmf(oConn);
+                        searchType = "plate, MJD and fiberID";
                 }
                 else //if ("apogee".Equals(Request["searchType"]))
                 {
-                    getNearestApogee(oConn);
+                    searchType = "APOGEE RA and dec";
                 }
 
                 if ("html".Equals(Request["format"]))
-                    Response.Write("</body></html>\n");
+                {
+                    Response.Write("<html><body>\n");
+                    Response.Write("<h2>Uploading " + searchType + " list for cross-identification</h2>\n");
+                }
+
+                using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
+                {
+                    oConn.Open();
+
+                    string cmd = UploadCmd();
+                    sendSQL(oConn, cmd);
+
+                    updateBatch(oConn);
+
+                    if ("photo".Equals(Request["searchType"]))
+                    {
+                        if ("ra-dec".Equals(Request["photoUpType"]))
+                        {
+                            if ("allPrim".Equals(Request["photoScope"]) || "allObj".Equals(Request["photoScope"]))
+                                getNearby(oConn, "");
+                            else // if(f.photoScope.value=="nearPrim" || f.photoScope.value=="nearObj") 
+                                getNearest(oConn, "");
+                        }
+                        else
+                            getObjID(oConn);
+                    }
+                    else if ("spectro".Equals(Request["searchType"]))
+                    {
+                        if ("ra-dec".Equals(Request["spectroUpType"]))
+                        {
+                            if ("allPrim".Equals(Request["spectroScope"]) || "allObj".Equals(Request["spectroScope"]))
+                                getNearby(oConn, "Spec");
+                            else // if(f.spectroScope.value=="nearPrim" || f.spectroScope.value=="nearObj") 
+                                getNearest(oConn, "Spec");
+                        }
+                        else
+                            getPmf(oConn);
+                    }
+                    else //if ("apogee".Equals(Request["searchType"]))
+                    {
+                        getNearestApogee(oConn);
+                    }
+                }
             }
+            catch (Exception ex)
+            {
+                ResponseAux.writeError(ex, Response);
+                return;
+            }
+
+            if ("html".Equals(Request["format"]))
+                Response.Write("</body></html>\n");
         }
 
         private void updateBatch(SqlConnection oConn)
@@ -440,17 +448,9 @@ namespace SkyServer.Tools.CrossId
             }
             else
             {
-                try
-                {
-                    DataTable table = ResponseAux.getDataTable(oConn, cmd, globals.FormTimeout);
-                    dataSet.Tables.Add(table);
-                    ResponseAux.writeOutput(dataSet, format, Response);
-                }
-                catch (Exception ex)
-                {
-                    ResponseAux.writeError(ex, Response);
-                    return;
-                }
+                DataTable table = ResponseAux.getDataTable(oConn, cmd, globals.FormTimeout);
+                dataSet.Tables.Add(table);
+                ResponseAux.writeOutput(dataSet, format, Response);
             }
         }
 
@@ -499,17 +499,9 @@ namespace SkyServer.Tools.CrossId
             }
             else
             {
-                try
-                {
-                    DataTable table = ResponseAux.getDataTable(oConn, cmd, globals.FormTimeout);
-                    dataSet.Tables.Add(table);
-                    ResponseAux.writeOutput(dataSet, format, Response);
-                }
-                catch (Exception ex)
-                {
-                    ResponseAux.writeError(ex, Response);
-                    return;
-                }
+                DataTable table = ResponseAux.getDataTable(oConn, cmd, globals.FormTimeout);
+                dataSet.Tables.Add(table);
+                ResponseAux.writeOutput(dataSet, format, Response);
             }
         }
 
@@ -547,17 +539,9 @@ namespace SkyServer.Tools.CrossId
             }
             else
             {
-                try
-                {
-                    DataTable table = ResponseAux.getDataTable(oConn, cmd, globals.FormTimeout);
-                    dataSet.Tables.Add(table);
-                    ResponseAux.writeOutput(dataSet, format, Response);
-                }
-                catch (Exception ex)
-                {
-                    ResponseAux.writeError(ex, Response);
-                    return;
-                }
+                DataTable table = ResponseAux.getDataTable(oConn, cmd, globals.FormTimeout);
+                dataSet.Tables.Add(table);
+                ResponseAux.writeOutput(dataSet, format, Response);
             }
         }
 
@@ -579,17 +563,9 @@ namespace SkyServer.Tools.CrossId
             }
             else
             {
-                try
-                {
-                    DataTable table = ResponseAux.getDataTable(oConn, cmd, globals.FormTimeout);
-                    dataSet.Tables.Add(table);
-                    ResponseAux.writeOutput(dataSet, format, Response);
-                }
-                catch (Exception ex)
-                {
-                    ResponseAux.writeError(ex, Response);
-                    return;
-                }
+                DataTable table = ResponseAux.getDataTable(oConn, cmd, globals.FormTimeout);
+                dataSet.Tables.Add(table);
+                ResponseAux.writeOutput(dataSet, format, Response);
             }
         }
 
@@ -678,17 +654,9 @@ namespace SkyServer.Tools.CrossId
             }
             else
             {
-                try
-                {
-                    DataTable table = ResponseAux.getDataTable(oConn, cmd, globals.FormTimeout);
-                    dataSet.Tables.Add(table);
-                    ResponseAux.writeOutput(dataSet, format, Response);
-                }
-                catch (Exception ex)
-                {
-                    ResponseAux.writeError(ex, Response);
-                    return;
-                }
+                DataTable table = ResponseAux.getDataTable(oConn, cmd, globals.FormTimeout);
+                dataSet.Tables.Add(table);
+                ResponseAux.writeOutput(dataSet, format, Response);
             }
         }
 
