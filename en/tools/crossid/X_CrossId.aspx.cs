@@ -444,11 +444,11 @@ namespace SkyServer.Tools.CrossId
             string format = Request["format"];
             if (format == "html")
             {
-                ResponseAux.writeOutput(oConn, cmd, c, format, Response, globals, globals.FormTimeout);
+                ResponseAux.writeOutput(oConn, cmd, c, format, Response, globals, globals.CrossidTimeout);
             }
             else
             {
-                DataTable table = ResponseAux.getDataTable(oConn, cmd, globals.FormTimeout);
+                DataTable table = ResponseAux.getDataTable(oConn, cmd, globals.CrossidTimeout);
                 dataSet.Tables.Add(table);
                 ResponseAux.writeOutput(dataSet, format, Response);
             }
@@ -495,11 +495,11 @@ namespace SkyServer.Tools.CrossId
             string format = Request["format"];
             if (format == "html")
             {
-                ResponseAux.writeOutput(oConn, cmd, c, format, Response, globals, globals.FormTimeout);
+                ResponseAux.writeOutput(oConn, cmd, c, format, Response, globals, globals.CrossidTimeout);
             }
             else
             {
-                DataTable table = ResponseAux.getDataTable(oConn, cmd, globals.FormTimeout);
+                DataTable table = ResponseAux.getDataTable(oConn, cmd, globals.CrossidTimeout);
                 dataSet.Tables.Add(table);
                 ResponseAux.writeOutput(dataSet, format, Response);
             }
@@ -535,11 +535,11 @@ namespace SkyServer.Tools.CrossId
             string format = Request["format"];
             if (format == "html")
             {
-                ResponseAux.writeOutput(oConn, cmd, c, format, Response, globals, globals.FormTimeout);
+                ResponseAux.writeOutput(oConn, cmd, c, format, Response, globals, globals.CrossidTimeout);
             }
             else
             {
-                DataTable table = ResponseAux.getDataTable(oConn, cmd, globals.FormTimeout);
+                DataTable table = ResponseAux.getDataTable(oConn, cmd, globals.CrossidTimeout);
                 dataSet.Tables.Add(table);
                 ResponseAux.writeOutput(dataSet, format, Response);
             }
@@ -559,11 +559,11 @@ namespace SkyServer.Tools.CrossId
             string format = Request["format"];
             if (format == "html")
             {
-                ResponseAux.writeOutput(oConn, cmd, c, format, Response, globals, globals.FormTimeout);
+                ResponseAux.writeOutput(oConn, cmd, c, format, Response, globals, globals.CrossidTimeout);
             }
             else
             {
-                DataTable table = ResponseAux.getDataTable(oConn, cmd, globals.FormTimeout);
+                DataTable table = ResponseAux.getDataTable(oConn, cmd, globals.CrossidTimeout);
                 dataSet.Tables.Add(table);
                 ResponseAux.writeOutput(dataSet, format, Response);
             }
@@ -573,6 +573,7 @@ namespace SkyServer.Tools.CrossId
         {
             using (SqlCommand oCmd = oConn.CreateCommand())
             {
+                oCmd.CommandTimeout = globals.CrossidTimeout;
                 oCmd.CommandText = cmd;
                 oCmd.ExecuteNonQuery();
             }
@@ -650,11 +651,11 @@ namespace SkyServer.Tools.CrossId
             string format = Request["format"];
             if (format == "html")
             {
-                ResponseAux.writeOutput(oConn, cmd, c, format, Response, globals, globals.FormTimeout);
+                ResponseAux.writeOutput(oConn, cmd, c, format, Response, globals, globals.CrossidTimeout);
             }
             else
             {
-                DataTable table = ResponseAux.getDataTable(oConn, cmd, globals.FormTimeout);
+                DataTable table = ResponseAux.getDataTable(oConn, cmd, globals.CrossidTimeout);
                 dataSet.Tables.Add(table);
                 ResponseAux.writeOutput(dataSet, format, Response);
             }
