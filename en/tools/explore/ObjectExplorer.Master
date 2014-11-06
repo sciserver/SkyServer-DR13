@@ -140,7 +140,8 @@
                     { 
                 %>
                       <tr><td align="left"><a class="med" href='<%=hrefs.Summary%>#irspec' onmouseover="this.T_WIDTH='140';return escape('Summary of infrared spectroscopy')">IR Spec Summary</a></td></tr>
-                      <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.apogeeStar%>' onmouseover="this.T_WIDTH='140';return escape('Display contents of ApogeeStar table')">ApogeeStar</a></td></tr>
+                      <%--<tr><td class="s" align="right"><a target="_top" href='<%=exploreQuery.apoTest%>' onmouseover="this.T_WIDTH='140';return escape('Display contents of ApogeeStar table')">ApogeeStar</a></td></tr>--%>
+                       <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.apogeeStar%>" onmouseover="this.T_WIDTH='140';return escape(''Display contents of ApogeeStar table')">ApogeeStar</a></td></tr> 
                       <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.aspcapStar%>" onmouseover="this.T_WIDTH='140';return escape(''Display contents of ASPCAPstar table')">ASPCAPstar</a></td></tr>
                       <tr><td align="right"><hr width="90"></td></tr>
 

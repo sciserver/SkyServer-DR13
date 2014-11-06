@@ -90,29 +90,13 @@ namespace SkyServer.Tools.Explore
         {
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             master = (ObjectExplorer)Page.Master;
-
-            //if (Request["apid"] != null)
-            //{
+            if (master.apid != null && !master.apid.Equals(""))
+            {
                 apogeeID(master.apid);
-            //}
-            //else if (Request["plate"] != null && Request["mjd"] != null && Request["fiberid"] != null)
-            //{
-            //    long plate = long.Parse(Request["plate"]);
-            //    long mjd = long.Parse(Request["mjd"]);
-            //    long fiberid = long.Parse(Request["fiberid"]);
-            //    apogeePlate(plate, mjd, fiberid);
-            //}
-            //else if (Request["ra"] != null && Request["dec"] != null)
-            //{
-            //    double radius = (Request["radius"] == null) ? DEFAULT_RADIUS : double.Parse(Request["radius"]);
-            //    double ra = double.Parse(Request["ra"]);
-            //    double dec = double.Parse(Request["dec"]);
-            //    apogeeRaDec(ra, dec, radius);               
-            //}
-            
-            ReadInfoFromDbReader();
-            ReadApogeeLinks();
-            ReadVisitsFromDbReader();
+                ReadInfoFromDbReader();
+                ReadApogeeLinks();
+                ReadVisitsFromDbReader();
+            }
         } 
 
         protected void ReadInfoFromDbReader()  

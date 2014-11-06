@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="ObjectExplorer.Master" AutoEventWireup="true" CodeBehind="Matches.aspx.cs" Inherits="SkyServer.Tools.Explore.Matches" %>
 <%@ Import Namespace="System.Data.SqlClient" %>
+<%@ Import Namespace="System.Data" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="OEContent" runat="server">
 
@@ -24,37 +25,14 @@
     </td></tr>
     <tr><td>
     <%  
-        using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
-        {
-            oConn.Open();
-            
-/*            string cmd = "select '<h3>'+dbo.fIAUFromEq(p.ra,p.dec)+'<br />";
-            cmd += "(objid='+cast(p.objId as varchar(20))+')<br />";
-            cmd += "(thingid='+cast(p.thingId as varchar(20))+')</h3>' as ' ' ";
-            cmd += " from PhotoTag p where objid=" + objId; */
-
-            string cmd = "select dbo.fIAUFromEq(p.ra,p.dec) as 'IAU name', p.objid, p.thingid,";
-            cmd += " dbo.fPhotoModeN(p.mode) as mode";
-            cmd += " from Photoobjall p where p.objid=" + objId;
-              
-            master.showHTable(oConn, cmd, 400, "PhotoObj");
-
-     %>
-
-     <h3>Other Observations of this "Thing"</h3>
-
-     <%
-            cmd = "select t.objid, t.thingid,";
-            cmd += " p.mode, dbo.fPhotoModeN(p.mode) as '(mode description)'";
-            cmd += " from thingindex t ";
-            cmd += " join photoobjall p on t.objid = p.objid ";
-            cmd += " where t.objid=" + objId;
-            cmd += " and p.mode != 1";
-            cmd += " order by p.mode";
-           
-            master.showHTable(oConn, cmd, 400, "PhotoObj");
-        }
+        DataSet ds = master.runQuery.RunCasjobs(master.exploreQuery.matches1);
+        master.showHTable(ds, 400, "PhotoObj");
     %>
+    <h3>Other Observations of this "Thing"</h3>
+    <%
+        ds = master.runQuery.RunCasjobs(master.exploreQuery.matches2);           
+        master.showHTable(ds, 400, "PhotoObj");        
+     %>
     </td></tr></table>
     </div>
 </asp:Content>

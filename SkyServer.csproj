@@ -1746,6 +1746,7 @@
     <Content Include="en\tools\explore\Neighbors.aspx" />
     <Content Include="en\tools\explore\javascript\explore.js" />
     <Content Include="en\tools\explore\Obj.aspx" />
+    <Content Include="en\tools\explore\Plate.aspx" />
     <Content Include="en\tools\explore\Search.aspx" />
     <Content Include="en\tools\explore\SetEq.aspx" />
     <Content Include="en\tools\explore\SetId.aspx" />
@@ -5491,6 +5492,13 @@
     </Compile>
     <Compile Include="en\tools\explore\parameters.aspx.designer.cs">
       <DependentUpon>parameters.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\tools\explore\Plate.aspx.cs">
+      <DependentUpon>Plate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\tools\explore\Plate.aspx.designer.cs">
+      <DependentUpon>Plate.aspx</DependentUpon>
     </Compile>
     <Compile Include="en\tools\getimg\Fields.aspx.cs">
       <DependentUpon>Fields.aspx</DependentUpon>

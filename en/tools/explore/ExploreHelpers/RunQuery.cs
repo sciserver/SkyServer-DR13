@@ -19,16 +19,20 @@ namespace SkyServer.Tools.Explore
     public class RunQuery
     {
 
-        private Globals global = new Globals();
+        private Globals globals;
 
         string[] injection = new string[] { "--", ";", "/*", "*/", "'", "\"" };
 
-        string requestUri = "http://dev.sciserver.org/CasJobs/RestApi/contexts/dr10/query";
+        string requestUri;
 
+        public RunQuery() {
+            globals = new Globals();
+            requestUri = globals.CasjobsRESTapi;
+        }
         ///**
         // * This is working but casjobs stopped working.
-        // **/ 
-        //public DataSet RunCasjobs(string command) 
+        // **/
+        //public DataSet RunCasjobs(string command)
         //{
         //    var request = (HttpWebRequest)WebRequest.Create(requestUri);
         //    request.Method = "POST";
@@ -55,16 +59,22 @@ namespace SkyServer.Tools.Explore
         //    return ds;
         //}
 
+        /// <summary>
+        /// Directly connect to database
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         public DataSet RunCasjobs(string command)
         {
             DataSet ds = new DataSet();
-            using (SqlConnection oConn = new SqlConnection(global.ConnectionString))
+            using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
             {
                 oConn.Open();
                 using (SqlCommand oCmd = oConn.CreateCommand())
                 {
                     oCmd.CommandText = command;
-                    using (SqlDataAdapter da = new SqlDataAdapter(command, global.ConnectionString)) {
+                    using (SqlDataAdapter da = new SqlDataAdapter(command, globals.ConnectionString))
+                    {
                         da.Fill(ds);
                     }
                 }

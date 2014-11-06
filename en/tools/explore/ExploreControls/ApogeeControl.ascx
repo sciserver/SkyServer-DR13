@@ -1,6 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ApogeeControl.ascx.cs" Inherits="SkyServer.Tools.Explore.ApogeeControl" %>
 <%@ Import Namespace="SkyServer" %>
 <%@ Import Namespace="SkyServer.Tools.Explore" %>
+<% if(master.apid != null && !master.apid.Equals("")){ %>
  <div id="irspec">
         <h3>Infrared Spectra
           <span class="target">Targeted star: <%=apogee_id %></span>
@@ -193,3 +194,4 @@
           </table>                          
         </div>  <!-- end of visits div -->
       </div>  <!-- end of irspec div -->
+<%} %>

@@ -150,7 +150,7 @@ namespace SkyServer.Tools.Explore
                 hrefs.galSpecIndx = explore + exploreQuery.galSpecIndexQuery + "&name=galSpecIndx";
                 hrefs.galSpecInfo = explore + exploreQuery.galSpecInfoQuery  + "&name=galSpecInfo";
 
-                hrefs.Plate       = explore + exploreQuery.Plate + "&name=Plate&plateId=" + plateId;
+                hrefs.Plate       = "plate.aspx?" +allId + "&name=Plate&plateId=" + plateId;
 
                 hrefs.Spectrum = "../../get/SpecById.ashx?ID=" + specId;
 
@@ -169,7 +169,7 @@ namespace SkyServer.Tools.Explore
                 {
                     hrefs.stellarMassFSPSGranEarlyDust   = explore + exploreQuery.stellarMassFSPSGranEarlyDust + "&name=stellarMassFSPSGranEarlyDust";
                     hrefs.stellarMassFSPSGranEarlyNoDust = explore + exploreQuery.stellarMassFSPSGranEarlyNoDust+"&name=stellarMassFSPSGranEarlyNoDust";
-                    hrefs.stellarMassFSPSGranEarlyDust   = explore + exploreQuery.stellarMassFSPSGranWideDust + "&name=stellarMassFSPSGranWideDust";
+                    hrefs.stellarMassFSPSGranWideDust    = explore + exploreQuery.stellarMassFSPSGranWideDust + "&name=stellarMassFSPSGranWideDust";
                     hrefs.stellarMassFSPSGranWideNoDust  = explore + exploreQuery.stellarMassFSPSGranWideNoDust + "&name=stellarMassFSPSGranWideNoDust";
                  }
              }            
@@ -292,46 +292,7 @@ namespace SkyServer.Tools.Explore
 
         // ***** Functions *****
 
-        public void showNTable(SqlConnection oConn, string cmd) {
-            using (SqlCommand oCmd = oConn.CreateCommand())
-            {
-                oCmd.CommandText = cmd;
-                using (SqlDataReader reader = oCmd.ExecuteReader())
-                {
-                    string u = "<a class='content' target='_top' href='obj.aspx?id=";
-                    string id, v;
-                    char c;
-
-                    Response.Write("<table cellpadding=2 cellspacing=2 border=0>");
-
-                    if (reader.HasRows)
-                    {
-                        Response.Write("<tr>");
-                        for (int i = 0; i < reader.FieldCount; i++)
-                            Response.Write("<td align='middle' class='h'>" + reader.GetName(i) + "</td>");
-                        Response.Write("</tr>\n");
-                    }
-
-                    c = 't';
-                    while (reader.Read())
-                    {
-                        Response.Write("<tr>");
-                        id = reader.GetValue(0).ToString();
-                        for (int i = 0; i < reader.FieldCount; i++)
-                        {
-                            v = reader.GetValue(i).ToString();
-                            v = (v == "" ? "&nbsp;" : v);
-                            Response.Write("<td nowrap align='middle' class='" + c + "'>");
-                            if (i == 0) Response.Write(u + id + "'>" + id + "</a></td>");
-                            else Response.Write(v + "</td>");
-                        }
-                        Response.Write("</tr>\n");
-                        c = (c == 't' ? 'b' : 't');
-                    }
-                    Response.Write("</table>\n");
-                } // using SqlDataReader
-            } // using SqlCommand
-        }
+  
 
         public string getUnit(SqlConnection oConn, string tableName, string name)
         {
@@ -411,20 +372,21 @@ namespace SkyServer.Tools.Explore
 
                 Response.Write("<tr>");
 
-                if (reader.Read())
+                if (reader.HasRows)
                 {
-                    //foreach (String k in namevalues.AllKeys)
-                    for (int k = 0; k < reader.FieldCount;k++ )
-                    {
-                        Response.Write("<td align='middle' class='h'>");
-                        Response.Write("<span ");
-                        if (unit != "")
-                            Response.Write("ONMOUSEOVER=\"this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=" + unit + "')\" ");
-                        Response.Write("></span>");                        
-                        Response.Write(reader.GetName(k) + "</td>");
-                    }
-                    Response.Write("</tr>");
-
+                   for (int k = 0; k < reader.FieldCount; k++)
+                   {
+                            Response.Write("<td align='middle' class='h'>");
+                            Response.Write("<span ");
+                            if (unit != "")
+                                Response.Write("ONMOUSEOVER=\"this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=" + unit + "')\" ");
+                            Response.Write("></span>");
+                            Response.Write(reader.GetName(k) + "</td>");
+                   }
+                   Response.Write("</tr>");
+                    
+                } 
+                while(reader.Read()){
                     Response.Write("<tr>");
 
                     for (int k = 0; k < reader.FieldCount; k++)
@@ -435,10 +397,15 @@ namespace SkyServer.Tools.Explore
                         if (target.Equals("AllSpectra") && k == 0)
                         {
                             string u = "<a class='content' target='_top' href='obj.aspx?sid=";
-
                             Response.Write(u + reader.GetValue(k) + "'>" + reader.GetValue(k) + "</a></td>");
                             
                         }
+                        else if(target.Equals("Neighbors") && k==0)
+                        {
+                            string u = "<a class='content' target='_top' href='obj.aspx?id=";
+                            Response.Write(u + reader.GetValue(k) + "'>" + reader.GetValue(k) + "</a></td>");
+                        }
+                        
                         else
                         {
                             Response.Write(reader.GetValue(k));

@@ -66,8 +66,14 @@ namespace SkyServer
         /// 
         /// </summary>
         private string skyserverRESTservice;
+        private string casjobsRESTapi;
         //private string skyServerWSsql;
 
+        public string CasjobsRESTapi {
+            get {
+                return casjobsRESTapi;
+            }
+        }
         public string SkyserverRESTservice {
             get { return skyserverRESTservice; }
         }
@@ -457,6 +463,7 @@ namespace SkyServer
             this.emacsRowLimit = int.Parse(appSettings["emacsRowLimit"] ?? "500000");
             this.queriesPerMinute = int.Parse(appSettings["queriesPerMinute"] ?? "60");
             this.skyserverRESTservice = appSettings["restwebservice"];
+            this.casjobsRESTapi = appSettings["casjobsRESTapi"];
 
             if (releaseNumber == 8)
             {

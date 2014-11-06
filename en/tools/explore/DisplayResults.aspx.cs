@@ -18,9 +18,9 @@ namespace SkyServer.Tools.Explore
         protected void Page_Load(object sender, EventArgs e)
         {
             master = (ObjectExplorer)Page.Master;
-            cmd = Request.QueryString["cmd"];
+            cmd  = Request.QueryString["cmd"];
             name = Request.QueryString["name"];
-            url = Request.QueryString["url"];
+            url  = Request.QueryString["url"];
         }
     }
 }
