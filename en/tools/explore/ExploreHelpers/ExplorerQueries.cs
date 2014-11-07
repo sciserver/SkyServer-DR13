@@ -2,28 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Globalization;
 
 namespace SkyServer.Tools.Explore
 {
     public class ExplorerQueries
     {
-
         private string objId;
         private string specId;
         private string fieldId;
         private string apogeeId;
         private string plateId;
         private string fiberId;
-
-        private string mjd;
-        private string plate;
-        private string fiber;
-
-        public ExplorerQueries(string Mjd, string Plate, string Fiber) {
-            this.mjd = Mjd;
-            this.plate = Plate;
-            this.fiber = Fiber;
-        }
+     
+        public ExplorerQueries() { }
 
         public ExplorerQueries(String objid, String specid, String apogeeid, String fieldid, String plateid, string fiberid) {
             this.objId = objid;
@@ -611,17 +603,17 @@ namespace SkyServer.Tools.Explore
             }
         }
         #endregion
-
+        
         ///Metadata Queries
         ///
-        public String getObjParamaters {
-            get{
+        public String getObjParamaters(string objId) {
+           
                 string cmd = "select p.ra, p.dec, s.specObjId," +
                        " p.clean, s.survey, cast(p.mode as int), dbo.fPhotoTypeN(p.type) as otype, p.mjd" +
                        " from PhotoObjAll p LEFT OUTER JOIN SpecObjAll s ON s.bestobjid=p.objid AND s.scienceprimary=1" +
                        " where p.objId="+objId;
                 return cmd;
-            }
+           
         }
 
         /// <summary>
@@ -636,14 +628,14 @@ namespace SkyServer.Tools.Explore
             String iQuery = "";
             iQuery = " select";
             //-- phototag
-            iQuery += " dbo.fPhotoFlagsN(pt.flags) as '<a href=" + flagsLink + ">Flags <img src=./images/offsite_black.png /></a>',pt.ra, pt.dec, pt.run, pt.rerun, pt.camcol, pt.field, ";
+            iQuery += " dbo.fPhotoFlagsN(pt.flags) as 'flags',pt.ra, pt.dec, pt.run, pt.rerun, pt.camcol, pt.field, ";
             iQuery += " cast(pt.fieldId as binary(8)) as fieldId, cast(pt.objId as binary(8)) as objId, ";
             //--PhotoObjall
             iQuery += " pa.clean,  dbo.fPhotoTypeN(pa.type) as otype, ";
-            iQuery += " str(pa.u,7,2) as u, str(pa.g,7,2) as g, str(pa.r,7,2) as r, str(pa.i,7,2) as i, str(pa.z,7,2)as z, ";
-            iQuery += " str(pa.err_u,7,2) as err_u, str(pa.err_g,7,2) as err_g, str(pa.err_r,7,2) as err_r, str(pa.err_i,7,2) as err_i, str(pa.err_z,7,2) as err_z, ";
+            iQuery += " pa.u as u, pa.g  as g, pa.r as r, pa.i as i, pa.z as z, ";
+            iQuery += "  pa.err_u as err_u,  pa.err_g  as err_g,  pa.err_r  as err_r, pa.err_i  as err_i, pa.err_z as err_z, ";
             //-- photoObj
-            iQuery += " dbo.fPhotoModeN(po.mode) as mode,po.mjd as 'Image MJD',  (po.nDetect-1) as 'Other observations', po.parentID, po.nChild, str(po.extinction_r,7,2) as extinction_r,";
+            iQuery += " dbo.fPhotoModeN(po.mode) as mode,po.mjd as 'mjdNum',  (po.nDetect-1) as 'Other observations', po.parentID, po.nChild, str(po.extinction_r,7,2) as extinction_r,";
             iQuery += " str(po.petroRad_r,9,2)+' &plusmn; '+str(po.petroRadErr_r,10,3) as 'PetroRad_r (arcmin)',";
             //--- photz,photozRF,zoospec 
             iQuery += " (str(phz.z,7,3)+' &plusmn; '+str(phz.zerr,8,4))as 'photoZ (KD-tree method)', (str(phzrf.z,7,3)+' &plusmn; '+str(phzrf.zerr,8,4)) as 'photoZ (RF method)', ";
@@ -811,23 +803,118 @@ namespace SkyServer.Tools.Explore
         }
 
         #endregion
-        public string IdsFrom_PlateFiberMjd {
-            get
-            {
-                string cmd = " select cast(p.objId as binary(8)) as objId," +
-                        " cast(s.specObjId as binary(8)) as specObjId" +
-                        " from SpecObjAll s JOIN PhotoTag p ON s.bestobjid=p.objid JOIN PlateX q ON s.plateId=q.plateId" +
-                        " where s.mjd = "+mjd +
-                        " and s.fiberId = "+fiberId +
-                        " and q.plate = "+plate;
-                return cmd;
-            }
-        }
+        
 
         #region Obj.aspx
 
+        public string getObjIDFromPlfib(short? plate, int? mjd, short? fiber )
+        {
+            string cmd =" select cast(p.objId as binary(8)) as objId," +
+                        " cast(s.specObjId as binary(8)) as specObjId" +
+                        " from SpecObjAll s JOIN PhotoTag p ON s.bestobjid=p.objid JOIN PlateX q ON s.plateId=q.plateId" +
+                        " where s.mjd = " + mjd +
+                        " and s.fiberId = " + fiber +
+                        " and q.plate = " + plate;
+            return cmd;            
+        }
 
+        public string getAPOGEEId_PlateFiberMjd(short? plate, int? mjd, short? fiber) {
+    
+            string cmd =" select s.apstar_id" +
+                        " from apogeeVisit v JOIN apogeeStar s ON s.apogee_id=v.apogee_id" +
+                        " where v.plate = " + plate+
+                        " and v.mjd = " +mjd+
+                        " and v.fiberID = "+fiber;
+            return cmd;            
+        }
+
+        public string getApogeeFromEq(double? qra, double? qdec, double searchRadius)
+        {
+            string cmd = " select top 1 p.apstar_id" +
+                    " from apogeeStar p, dbo.fGetNearestApogeeStarEq("+qra+","+qdec+","+searchRadius+") n" +
+                    " where p.apstar_id=n.apstar_id";
+            return cmd;
+
+        }
+
+        public string getPhotoFromEq(double? qra, double? qdec, double searchRadius) { 
+             string cmd = " select top 1 cast(p.objId as binary(8)) as objId," +
+                    " cast(p.specObjId as binary(8)) as specObjId" +
+                    " from PhotoTag p, dbo.fGetNearbyObjAllEq("+qra+","+qdec+","+searchRadius+") n" +
+                    " where p.objId=n.objId order by n.mode asc, n.distance asc";
+             return cmd;
+        }
+
+        public string getpmtsFromEq(double? qra, double? qdec, double searchRadius)
+        { 
+            string cmd = " select top 1 cast(p.objId as binary(8)) as objId," +
+                    " cast(p.specObjId as binary(8)) as specObjId" +
+                    " from PhotoTag p, dbo.fGetNearbyObjAllEq(" + qra + "," + qdec + "," + searchRadius + ") n" +
+                    " where p.objId=n.objId order by n.mode asc, n.distance asc";
+            return cmd;
+        }
+
+        public string getpmtsFromSpecWithApogeeId(string whatdoiget, string sid)
+        {
+            string cmd = " select st.apstar_id, st.ra, st.dec" +
+                    " from apogeeStar st" +
+                    " where st." + whatdoiget + "="+sid;
+            return cmd;
+        }
+
+        public string getpmtsFromSpecWithSpecobjID(long? sid) {
+            string cmd = " select p.ra, p.dec," +
+                    " cast(p.fieldId as binary(8)) as fieldId," +
+                    " cast(s.specObjId as binary(8)) as specObjId," +
+                    " cast(p.objId as binary(8)) as objId," +
+                    " cast(s.plateId as binary(8)) as plateId, s.mjd, s.fiberId, q.plate" +
+                    " from SpecObjAll s JOIN PhotoTag p ON s.bestobjId=p.objid JOIN PlateX q ON s.plateId=q.plateId" +
+                    " where s.specObjId="+sid;
+            return cmd;
+        }
+
+        public string getpmtsFromPhoto(long? id)
+        {
+            string cmd = " select p.ra, p.dec, p.run, p.rerun, p.camcol, p.field," +
+                    " cast(p.fieldId as binary(8)) as fieldId," +
+                    " cast(s.specobjid as binary(8)) as specObjId," +
+                    " cast(p.objId as binary(8)) as objId " +
+                    " from PhotoTag p " +
+                    " left outer join SpecObjAll s ON s.bestobjid=p.objid AND s.scienceprimary=1" +
+                    " where p.objId=dbo.fObjId("+id+")";
+            return cmd;
+        }
+
+        public string getPlateFiberFromSpecObj(string specObjId) {
+
+            string cmd = " select cast(s.plateId as binary(8)) as plateId, s.mjd, s.fiberId, q.plate" +
+                        " from SpecObjAll s JOIN PlateX q ON s.plateId=q.plateId where specObjId="+ long.Parse(specObjId.Substring(2), NumberStyles.AllowHexSpecifier);
+            return cmd;            
+        }
+
+        public string getParseApogeeId(string id) {
+            string cmd = "select apstar_id from apogeeStar where apstar_id="+id;
+            return cmd;
+        }
+
+        public string getUnit(string tablename, string name) {
+            string cmd = "select unit from DBcolumns where tablename='"+tablename+"' and [name]='"+name+"'";
+            return cmd;
+        }
+
+        public string getSpec(long? specId) {
+            string cmd = "select specobjid,survey from specobjall where specobjid= " + specId;
+            return cmd;
+        }
+
+        public string getApogee(string apogeeId) {
+            string cmd = "select apstar_id, ra, dec, apogee_id, glon, glat,location_id,commiss" +
+                        " from apogeeStar" +
+                        " where apstar_id="+apogeeId;
+            return cmd;
+        }
         #endregion
+        
 
     }
 }

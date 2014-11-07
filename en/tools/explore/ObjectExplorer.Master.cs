@@ -48,7 +48,7 @@ namespace SkyServer.Tools.Explore
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            runQuery = new RunQuery();
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             url = getURL();
             enUrl = getEnURL();
@@ -62,16 +62,12 @@ namespace SkyServer.Tools.Explore
             apid = ("".Equals(qApogeeId))?null:qApogeeId;
 
             objId = qId;
-
-            using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
-            {
-                    oConn.Open();
-                    if (id.HasValue) pmtsFromPhoto(oConn, id, specId);
-            }
+            
+            if (id.HasValue) pmtsFromPhoto(id, specId);            
                         
             ///This is new added 
             exploreQuery = new ExplorerQueries(id.ToString(), specId.ToString(), apid, fieldId, plateId, fiberId.ToString());  
-            runQuery = new RunQuery();
+           
             // common query to explorer
             string allId ="id="+id + "&spec=" + specId + "&apid=" + apid;
             string explore = "DisplayResults.aspx?" + allId + "&cmd=";
@@ -180,60 +176,45 @@ namespace SkyServer.Tools.Explore
              }
         }
 
-        public void pmtsFromPhoto(SqlConnection oConn, long? id, long? specId) 
+        public void pmtsFromPhoto( long? id, long? specId) 
         {
-            using (SqlCommand oCmd = oConn.CreateCommand())
+            exploreQuery = new ExplorerQueries();
+            DataSet ds = runQuery.RunCasjobs(exploreQuery.getpmtsFromPhoto(id));
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
-                oCmd.CommandText =
-                    " select p.ra, p.dec, p.run, p.rerun, p.camcol, p.field," +
-                    " cast(p.fieldId as binary(8)) as fieldId," +
-                    " cast(s.specobjid as binary(8)) as specObjId," +
-                    " cast(p.objId as binary(8)) as objId " +
-                    " from PhotoTag p " +
-                    " left outer join SpecObjAll s ON s.bestobjid=p.objid " +
-                    " where p.objId=dbo.fObjId(@id) ";
-
-                oCmd.Parameters.AddWithValue("@id", id);
-                using (SqlDataReader reader = oCmd.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        ra = reader.GetDouble(0);
-                        dec = reader.GetDouble(1);
-                        run = reader.GetInt16(2);
-                        rerun = reader.GetInt16(3);
-                        camcol = reader.GetByte(4);
-                        field = reader.GetInt16(5);
-                        fieldId = Functions.BytesToHex(reader.GetSqlBytes(6).Buffer);
-                        specObjId = Functions.BytesToHex(reader.GetSqlBytes(7).Buffer);
-                        objId = Functions.BytesToHex(reader.GetSqlBytes(8).Buffer);
-                    }
-                }
-           
-                if (specId == null)
-                {
-                    specId = Utilities.ParseId(specObjId);
-                } 
-
-                if (specId != null)
-                {
-                    oCmd.Parameters.Clear();
-                    oCmd.CommandText = 
-                        " select cast(s.plateId as binary(8)) as plateId, s.mjd, s.fiberId, q.plate" +
-                        " from SpecObjAll s JOIN PlateX q ON s.plateId=q.plateId where specObjId=@specId"; //specObjId";
-                    oCmd.Parameters.AddWithValue("@specId", specId);
-                    using (SqlDataReader reader = oCmd.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                                plateId = Functions.BytesToHex(reader.GetSqlBytes(0).Buffer);
-                                mjdNum = reader.GetInt32(1);
-                                fiberId = reader.GetInt16(2);
-                                plate = reader.GetInt16(3);
-                        }
-                    }
-                }
+                 if (reader.Read())
+                 {
+                    ra = reader.GetDouble(0);
+                    dec = reader.GetDouble(1);
+                    run = reader.GetInt16(2);
+                    rerun = reader.GetInt16(3);
+                    camcol = reader.GetByte(4);
+                    field = reader.GetInt16(5);
+                    fieldId = RunQuery.checkNullorParse(reader.GetValue(6));
+                    specObjId = RunQuery.checkNullorParse(reader.GetValue(7));
+                    objId = RunQuery.checkNullorParse(reader.GetValue(8));
+                 }               
             }
+           
+            if (specId == null)
+            {
+                specId = Utilities.ParseId(specObjId);
+            } 
+            
+            if (specId != null)
+            {
+                ds = runQuery.RunCasjobs(exploreQuery.getPlateFiberFromSpecObj(specObjId.ToString()));
+                using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+                {
+                     if (reader.Read())
+                     {
+                         plateId = RunQuery.checkNullorParse(reader.GetValue(0));
+                         mjdNum = reader.GetInt32(1);
+                         fiberId = reader.GetInt16(2);
+                         plate = reader.GetInt16(3);
+                     }
+                 }
+             }            
         }
 
         public string getURL()
@@ -294,22 +275,17 @@ namespace SkyServer.Tools.Explore
 
   
 
-        public string getUnit(SqlConnection oConn, string tableName, string name)
+        public string getUnit(string tableName, string name)
         {
-            using (SqlCommand oCmd = oConn.CreateCommand())
+            exploreQuery = new ExplorerQueries();
+            DataSet ds = runQuery.RunCasjobs(exploreQuery.getUnit(tableName,name));
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
-                oCmd.CommandText = "select unit from DBcolumns where tablename=@tablename and [name]=@name";
-                oCmd.Parameters.AddWithValue("@tablename", tableName);
-                oCmd.Parameters.AddWithValue("@name", name);
-
-                using (SqlDataReader reader = oCmd.ExecuteReader())
-                {
-                    if (reader.Read())
+                if (reader.Read())
                     {
                         return reader.GetString(0);
                     }
-                }
-            }
+            }            
 
             return "";
         }

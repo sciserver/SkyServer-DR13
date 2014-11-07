@@ -38,9 +38,16 @@ namespace SkyServer.Tools.Explore
         {
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             master = (ObjectExplorer)Page.Master;
-            objId = Request.QueryString["id"];
-            specId = Request.QueryString["spec"];
-            specObjId = Utilities.ParseId(specId);
+            try
+            {
+                objId = Request.QueryString["id"];
+                specId = Request.QueryString["spec"];
+                specObjId = Utilities.ParseId(specId);
+            }
+            catch(Exception exp){
+                specId = null;
+            }
+            if(specId != null && !specId.Equals(""))
             runQuery();
         }
 

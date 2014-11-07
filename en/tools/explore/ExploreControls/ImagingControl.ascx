@@ -2,12 +2,11 @@
 <%@ Import Namespace="SkyServer.Tools.Explore" %>
 <%@ Import Namespace="System.Data" %>
 <%@ Import Namespace="SkyServer" %>
+<%if(objId != null && !objId.Equals("")) {%>
 <div id="imaging">
 <h3>Imaging</h3>            
 
-<%   
-    //ImagingControl im = new ImagingControl();
-    if (clean == 0)  { %>
+<%  if (clean == 0)  { %>
             <div class="warning">
                 <table><tr><td>
                     <b>WARNING:</b> 
@@ -16,9 +15,7 @@
                 </td></tr></table>
             </div>
 
-<% }
-   string unit = "this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=@unit')";
-%>
+<% } %>
 
 <table>
     <tr>
@@ -26,7 +23,7 @@
             <table cellpadding=2 cellspacing=2 border=0 width=420>
                 <tr align='left' >
                     <td  valign='top' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=test')" ></span>Flags</td>
-                    <td valign='top' class='t'><%=flag %> </td>
+                    <td valign='top' class='t'><a href='<%=flagsLink%>'>Flags <img src=../../images/offsite_black.png /><%=flag %></a></td>
                 </tr>
             </table>
          </td>
@@ -42,43 +39,43 @@
         <td >
             <table cellpadding=2 cellspacing=2 border=0 width=420>
                 <tr>
-                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=test')" ></span></td></tr>
+                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';" ></span></td></tr>
                 <tr><td nowrap align='middle' class='t'><b>Magnitudes</b></td></tr>
             </table>
             <table cellpadding=2 cellspacing=2 border=0 width=420>
-                <tr><td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=test')" ></span>u</td>
-                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=test')" ></span>g</td>
-                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=test')" ></span>r</td>
-                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=test')" ></span>i</td>
-                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=test')" ></span>z</td></tr>
-                <tr><td nowrap align='middle' class='t'> <%=u %></td>
-                    <td nowrap align='middle' class='t'> <%=g %></td>
-                    <td nowrap align='middle' class='t'> <%=r %></td>
-                    <td nowrap align='middle' class='t'> <%=i %></td>
-                    <td nowrap align='middle' class='t'> <%=z %></td></tr>
+                <tr><td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=<%=getUnit("PhotoObj","u") %>')" ></span>u</td>
+                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=<%=getUnit("PhotoObj","g") %>')" ></span>g</td>
+                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=<%=getUnit("PhotoObj","r") %>')" ></span>r</td>
+                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=<%=getUnit("PhotoObj","i") %>')" ></span>i</td>
+                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=<%=getUnit("PhotoObj","z") %>')" ></span>z</td></tr>
+                <tr><td nowrap align='middle' class='t'> <%=Math.Round(u,2) %></td>
+                    <td nowrap align='middle' class='t'> <%=Math.Round(g,2) %></td>
+                    <td nowrap align='middle' class='t'> <%=Math.Round(r,2) %></td>
+                    <td nowrap align='middle' class='t'> <%=Math.Round(i,2) %></td>
+                    <td nowrap align='middle' class='t'> <%=Math.Round(z,2)%></td></tr>
             </table>
             <table cellpadding=2 cellspacing=2 border=0 width=420>
-                <tr><td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=test')" ></span></td></tr>
+                <tr><td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';" ></span></td></tr>
                 <tr><td nowrap align='middle' class='t'><b>Magnitude uncertainties</b></td></tr>
             </table><table cellpadding=2 cellspacing=2 border=0 width=420>
-                <tr><td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=test')" ></span>err_u</td>
-                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=test')" ></span>err_g</td>
-                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=test')" ></span>err_r</td>
-                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=test')" ></span>err_i</td>
-                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=test')" ></span>err_z</td>
+                <tr><td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=<%=getUnit("PhotoObj","err_u") %>')" ></span>err_u</td>
+                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=<%=getUnit("PhotoObj","err_g") %>')" ></span>err_g</td>
+                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=<%=getUnit("PhotoObj","err_r") %>')" ></span>err_r</td>
+                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=<%=getUnit("PhotoObj","err_i") %>')" ></span>err_i</td>
+                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=<%=getUnit("PhotoObj","err_z") %>')" ></span>err_z</td>
                 </tr>
-                <tr><td nowrap align='middle' class='t'> <%=err_u %></td>
-                    <td nowrap align='middle' class='t'> <%=err_g %></td>
-                    <td nowrap align='middle' class='t'> <%=err_r %></td>
-                    <td nowrap align='middle' class='t'> <%=err_i %></td>
-                    <td nowrap align='middle' class='t'> <%=err_z %></td></tr>
+                <tr><td nowrap align='middle' class='t'> <%=Math.Round(err_u,2) %></td>
+                    <td nowrap align='middle' class='t'> <%=Math.Round(err_g,2) %></td>
+                    <td nowrap align='middle' class='t'> <%=Math.Round(err_r,2) %></td>
+                    <td nowrap align='middle' class='t'> <%=Math.Round(err_i,2) %></td>
+                    <td nowrap align='middle' class='t'> <%=Math.Round(err_z,2) %></td></tr>
               </table>       
           </td>
         </tr>
         <tr>
           <td colspan="2">
             <table cellpadding=2 cellspacing=2 border=0 width=625>
-               <tr><td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=test')" ></span>Image MJD</td>
+               <tr><td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='1000';return escape('<i>unit</i>=test')" ></span>Image MJD</td>
                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=test')" ></span>mode</td>
                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=test')" ></span>Other observations</td>
                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=test')" ></span>parentID</td>
@@ -111,4 +108,4 @@
         </tr>
     </table>
     </div>   
-  <%--  <!-- end of imaging div  -->--%>
+  <%--  <!-- end of imaging div  -->--%><%} %>

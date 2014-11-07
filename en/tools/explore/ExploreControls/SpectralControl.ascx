@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="SpectralControl.ascx.cs" Inherits="SkyServer.Tools.Explore.SpectralControl" %>
-
+<%if(specId !=null && !specId.Equals("")){  %>
  <div id="spectro">
 
    <h3>Optical Spectra</h3>
@@ -102,3 +102,4 @@
         </tr>   
     </table> 
 </div>  <!-- end of spectro div -->
+<%} %>

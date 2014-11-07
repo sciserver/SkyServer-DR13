@@ -54,12 +54,24 @@ namespace SkyServer.Tools.Explore
 
         protected string sdssUrl;
 
+        protected string flagsLink = "";
+
         public void Page_Load(object sender, EventArgs e)
         {
             globals = (Globals)Application[Globals.PROPERTY_NAME];            
             master  = (ObjectExplorer)Page.Master;
-            objId   = Request.QueryString["id"];
+            try
+            {
+                objId = Request.QueryString["id"];
+            }
+            catch (Exception exp) {
+                //If the querystring is empty and no objid key
+                objId = null;
+            }
             sdssUrl = globals.SdssUrl;
+            flagsLink = sdssUrl + "algorithms/photo_flags_recommend.php";
+
+            if(objId != null && !objId.Equals(""))
             runQuery();
         }
 
@@ -72,53 +84,46 @@ namespace SkyServer.Tools.Explore
                 {
                     if (reader.HasRows)
                     {
-                        flag = reader.GetString(0);
-                        ra = reader.GetDouble(1);
-                        dec = reader.GetDouble(2);
-                        run = reader.GetInt16(3);
-                        rerun = reader.GetInt16(4);
-                        camcol = reader.GetByte(5);
-                        field = reader.GetInt16(6);
-                        //fieldId = Functions.BytesToHex(reader.GetSqlBytes(7).Buffer);                            
-                        //objId = Functions.BytesToHex(reader.GetSqlBytes(8).Buffer);
+                        //// ---
+                        flag = (string) reader["flags"];
+                        ra =  (double) reader["ra"];
+                        dec = (double) reader["dec"];
+                        run = reader["run"] is DBNull ? -9 : (short)reader["run"];
+                        rerun = reader["rerun"] is DBNull ? -9 : (short)reader["rerun"];
+                        camcol = reader["camcol"] is DBNull ? -9 : (byte)reader["camcol"];
+                        field = reader["field"] is DBNull ? -9 : (short)reader["field"];
+                        fieldId =RunQuery.checkNullorParse(reader.GetValue(7));
+                        objId = RunQuery.checkNullorParse(reader.GetValue(8));
+
                         //photoObjall
-                        clean = reader.GetInt32(9);
-                        otype = reader.GetString(10);
+                        clean = reader["clean"] is DBNull ? -99999 : (int)reader["clean"]; ;
+                        otype = reader["clean"] is DBNull ? "" :(string)reader["otype"];
 
-                        //magnitudes
-                        u = Convert.ToDouble(reader.GetValue(11));
+                        ////--- magnitudes
+                        u = reader["u"] is DBNull ? -999.99 : (float)reader["u"];
+                        g = reader["u"] is DBNull ? -999.99 : (float)reader["g"];
+                        r = reader["u"] is DBNull ? -999.99 : (float)reader["r"];
+                        i = reader["u"] is DBNull ? -999.99 : (float)reader["i"];
+                        z = reader["u"] is DBNull ? -999.99 : (float)reader["z"];
 
-                        g = Convert.ToDouble(reader.GetValue(12));
-
-                        r = Convert.ToDouble(reader.GetValue(13));
-
-                        i = Convert.ToDouble(reader.GetValue(14));
-
-                        z = Convert.ToDouble(reader.GetValue(15));
-
-
-                        ////mag errors
-                        err_u = Convert.ToDouble(reader.GetValue(16));
-
-                        err_g = Convert.ToDouble(reader.GetValue(17));
-
-                        err_r = Convert.ToDouble(reader.GetValue(18));
-
-                        err_i = Convert.ToDouble(reader.GetValue(19));
-
-                        err_z = Convert.ToDouble(reader.GetValue(20));
+                        ////--- mag errors
+                        err_u = reader["err_u"] is DBNull ? -999.99 : (float)reader["err_u"];
+                        err_g = reader["err_g"] is DBNull ? -999.99 : (float)reader["err_g"];
+                        err_r = reader["err_r"] is DBNull ? -999.99 : (float)reader["err_r"];
+                        err_i = reader["err_i"] is DBNull ? -999.99 : (float)reader["err_i"];
+                        err_z = reader["err_z"] is DBNull ? -999.99 : (float)reader["err_z"];
 
 
                         ////--- PhotoObj
-                        mode = reader.GetString(21);
+                        mode = reader["mode"] is DBNull ? "" : (string)reader["mode"];
 
-                        mjdNum = reader.GetInt32(22);
+                        mjdNum = reader["mjdNum"] is DBNull ? -9 :(int) reader["mjdNum"];
 
-                        int otherObs = reader.GetInt32(23);
+                        otherObs = reader["Other observations"] is DBNull ? -99999 : (int)reader["Other observations"];
 
-                        parentId = reader.GetInt64(24);
+                        parentId = reader["parentID"] is DBNull ? -99999 : (long)reader["parentID"];
 
-                        nchild = reader.GetInt16(25);
+                        nchild = reader["nChild"] is DBNull ? -999: (short)reader["nChild"];
 
                         extinction_r = reader.GetValue(26).ToString();
 
@@ -133,6 +138,22 @@ namespace SkyServer.Tools.Explore
                     }
                 }
             }
+        }
+
+        protected string getUnit(string tablename, string columname) {
+            string unit = "";
+             DataSet ds = master.runQuery.RunCasjobs(master.exploreQuery.getUnit(tablename,columname));
+             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+             {
+                 if (reader.Read())
+                 {
+                     if (reader.HasRows)
+                     {
+                         unit = reader.GetString(0);
+                     }
+                 }
+             }
+             return unit;
         }
     }
 }

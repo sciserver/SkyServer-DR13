@@ -43,7 +43,7 @@ namespace SkyServer.Tools.Explore
                 Response.Write("<tr>");
                 while (reader.Read())
                 {
-                    sid = u + Functions.BytesToHex((byte[])reader.GetValue(0)) + "'>";
+                    sid = u + RunQuery.checkNullorParse(reader.GetValue(0)) + "'>";
                     string v = "[" + reader.GetValue(1).ToString() + "]&nbsp;";
                     v += reader.GetValue(2).ToString() + " z=" + reader.GetValue(3).ToString();
                     Response.Write("<td nowrap class='" + c + "'>" + sid + v + "</a></td>\n");

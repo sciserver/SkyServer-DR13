@@ -29,34 +29,43 @@ namespace SkyServer.Tools.Explore
             globals = new Globals();
             requestUri = globals.CasjobsRESTapi;
         }
-        ///**
-        // * This is working but casjobs stopped working.
-        // **/
+       
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         //public DataSet RunCasjobs(string command)
         //{
-        //    var request = (HttpWebRequest)WebRequest.Create(requestUri);
-        //    request.Method = "POST";
-        //    request.ContentType = "application/json";
-        //    StreamWriter streamWriter = new StreamWriter(request.GetRequestStream());
-        //    StringWriter sw = new StringWriter();
-        //    JsonWriter jsonWriter = new JsonTextWriter(sw);
-        //    jsonWriter.WriteStartObject();
-        //    jsonWriter.WritePropertyName("Query");
-        //    jsonWriter.WriteValue(command);
-        //    jsonWriter.WritePropertyName("ReturnDataSet");
-        //    jsonWriter.WriteValue(true);
-        //    jsonWriter.WriteEndObject();
-        //    jsonWriter.Close();
-        //    streamWriter.Write(sw.ToString());
-        //    streamWriter.Close();
-
-        //    DataSet ds = null;
-        //    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+        //    try
         //    {
-        //        BinaryFormatter fmt = new BinaryFormatter();
-        //        ds = (DataSet)fmt.Deserialize(response.GetResponseStream());
+        //        var request = (HttpWebRequest)WebRequest.Create(requestUri);
+        //        request.Method = "POST";
+        //        request.ContentType = "application/json";
+        //        StreamWriter streamWriter = new StreamWriter(request.GetRequestStream());
+        //        StringWriter sw = new StringWriter();
+        //        JsonWriter jsonWriter = new JsonTextWriter(sw);
+        //        jsonWriter.WriteStartObject();
+        //        jsonWriter.WritePropertyName("Query");
+        //        jsonWriter.WriteValue(command);
+        //        jsonWriter.WritePropertyName("ReturnDataSet");
+        //        jsonWriter.WriteValue(true);
+        //        jsonWriter.WriteEndObject();
+        //        jsonWriter.Close();
+        //        streamWriter.Write(sw.ToString());
+        //        streamWriter.Close();
+
+        //        DataSet ds = null;
+        //        using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+        //        {
+        //            BinaryFormatter fmt = new BinaryFormatter();
+        //            ds = (DataSet)fmt.Deserialize(response.GetResponseStream());
+        //        }
+        //        return ds;
         //    }
-        //    return ds;
+        //    catch (Exception e) {
+        //        throw new Exception("There is an error running this Query.\n"+command+" ");
+        //    }
         //}
 
         /// <summary>
@@ -114,6 +123,14 @@ namespace SkyServer.Tools.Explore
         //    }
         //    return nvc;
         //}
+        public static string checkNullorParse(object value)
+        {
+            string stringValue = "";
+            if (value.Equals(DBNull.Value)) return null;
+            else
+                stringValue = Functions.BytesToHex((byte[])value);
+            return stringValue;
+        }
 
     }
 }

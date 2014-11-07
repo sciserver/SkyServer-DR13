@@ -35,7 +35,7 @@ namespace SkyServer.Tools.Explore
 
         private void runQuery()
         {
-            DataSet ds = master.runQuery.RunCasjobs(master.exploreQuery.getObjParamaters);
+            DataSet ds = master.runQuery.RunCasjobs(master.exploreQuery.getObjParamaters(master.objId));
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
                 if (reader.Read())
