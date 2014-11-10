@@ -21,17 +21,17 @@ namespace SkyServer.Tools.Explore
         protected int fiberid;
         protected string instrument;
         protected string objclass;
-        protected string redshift_z;
-        protected string redshift_err;
+        protected double redshift_z;
+        protected double redshift_err;
         protected string redshift_flags;
         protected string survey;
         protected string programname;
         protected int primary;
-        protected int other_spec;
+        protected int otherspec;
         protected string sourcetype;
-        protected string vel_disp;
-        protected string veldisp_err;
-
+        protected double veldisp;
+        protected double veldisp_err;
+        protected string targeting_flags;
         protected long? specObjId;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -59,21 +59,37 @@ namespace SkyServer.Tools.Explore
                 {
                     if (reader.HasRows)
                     {
-                        plate = Convert.ToInt32(reader.GetValue(0));
-                        mjd = reader.GetInt32(1);
-                        fiberid = reader.GetInt16(2);
-                        instrument = reader.GetString(3);
-                        objclass = reader.GetString(4);
-                        redshift_z = reader.GetString(5);
-                        redshift_err = reader.GetString(6);
-                        redshift_flags = reader.GetString(7);
-                        survey = reader.GetString(8);
-                        programname = reader.GetString(9);
-                        primary = reader.GetInt16(10);
-                        other_spec = reader.GetInt32(11);
-                        sourcetype = reader.GetString(12);
-                        vel_disp = reader.GetString(13);
-                        veldisp_err = reader.GetString(14);
+                        plate = reader["plate"] is DBNull ? -99999 : (short)reader["plate"]; 
+
+                        mjd = reader["mjd"] is DBNull ? -99999 : (int)reader["mjd"];
+
+                        fiberid = reader["fiberid"] is DBNull ? -99999 : (short)reader["fiberid"];
+
+                        instrument = reader["instrument"] is DBNull ? "" : (string)reader["instrument"];
+
+                        objclass = reader["objclass"] is DBNull ? "" : (string)reader["objclass"];
+
+                        redshift_z = reader["redshift_z"] is DBNull ? -999.99 : (float)reader["redshift_z"];
+
+                        redshift_err = reader["redshift_err"] is DBNull ? -999.99 : (float)reader["redshift_err"];
+
+                        redshift_flags = reader["redshift_flags"] is DBNull ? "" : (string)reader["redshift_flags"];
+
+                        survey = reader["survey"] is DBNull ? "" : (string)reader["survey"];
+
+                        programname = reader["programname"] is DBNull ? "" : (string)reader["programname"];
+
+                        primary = reader["primary"] is DBNull ? -99999 : (short)reader["primary"];
+
+                        otherspec = reader["otherspec"] is DBNull ? -99999 : (int)reader["otherspec"];
+
+                        sourcetype = reader["sourcetype"] is DBNull ? "" : (string)reader["sourcetype"];
+
+                        veldisp = reader["veldisp"] is DBNull ? -999.99 : (float)reader["veldisp"];
+
+                        veldisp_err = reader["veldisp_err"] is DBNull ? -999.99 : (float)reader["veldisp_err"];
+
+                        targeting_flags = reader["targeting_flags"] is DBNull ? "" : (string)reader["targeting_flags"];
                     }
                 }
             }

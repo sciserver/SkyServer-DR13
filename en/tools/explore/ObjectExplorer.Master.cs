@@ -373,9 +373,9 @@ namespace SkyServer.Tools.Explore
                         if (target.Equals("AllSpectra") && k == 0)
                         {
                             string u = "<a class='content' target='_top' href='obj.aspx?sid=";
-                            Response.Write(u + reader.GetValue(k) + "'>" + reader.GetValue(k) + "</a></td>");
-                            
+                            Response.Write(u + reader.GetValue(k) + "'>" + reader.GetValue(k) + "</a></td>");                          
                         }
+
                         else if(target.Equals("Neighbors") && k==0)
                         {
                             string u = "<a class='content' target='_top' href='obj.aspx?id=";
@@ -395,7 +395,5 @@ namespace SkyServer.Tools.Explore
                 Response.Write("</table>");
             }
         }
-        
-
     }
 }

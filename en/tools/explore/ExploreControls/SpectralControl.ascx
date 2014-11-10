@@ -35,67 +35,67 @@
                  <table cellpadding=2 cellspacing=2 border=0 width=300>
                    <tr align='left' >
                        <td  valign='top' class='h'><span>plate</span></td>
-                       <td valign='top' class='t'>2618</td>
+                       <td valign='top' class='t'><%=plate %></td>
                    </tr>
                   <tr align='left' >
                       <td  valign='top' class='h'><span>mjd</span></td>
-                      <td valign='top' class='t'>54506</td>
+                      <td valign='top' class='t'><%=mjd %></td>
                   </tr>
                   <tr align='left' >
                       <td  valign='top' class='h'><span>fiberid</span></td>
-                      <td valign='top' class='t'>310</td>
+                      <td valign='top' class='t'><%=fiberid %></td>
                   </tr>
                    <tr align='left' >
                        <td  valign='top' class='h'><span>Spectrograph</span></td>
-                       <td valign='top' class='t'>SDSS</td>
+                       <td valign='top' class='t'><%=instrument %></td>
                    </tr>
                    <tr align='left' >
                        <td  valign='top' class='h'><span>class</span></td>
-                       <td valign='top' class='t'>GALAXY</td>
+                       <td valign='top' class='t'><%=objclass %></td>
                    </tr>
                    <tr align='left' >
                        <td  valign='top' class='h'><span>Redshift (z)</span></td>
-                       <td valign='top' class='t'>  0.012</td>
+                       <td valign='top' class='t'><%=redshift_z %></td>
                    </tr>
                    <tr align='left' >
                        <td  valign='top' class='h'><span>Redshift error</span></td>
-                       <td valign='top' class='t'>   0.00001</td>
+                       <td valign='top' class='t'><%=redshift_err %></td>
                    </tr>
                    <tr align='left' >
                        <td  valign='top' class='h'><span>Redshift flags</span></td>
-                       <td valign='top' class='t'>OK</td>
+                       <td valign='top' class='t'><%=redshift_flags %></td>
                    </tr>
                    <tr align='left' >
                        <td  valign='top' class='h'><span>survey</span></td>
-                       <td valign='top' class='t'>sdss</td>
+                       <td valign='top' class='t'><%=survey %></td>
                    </tr>
                    <tr align='left' >
                        <td  valign='top' class='h'><span>programname</span></td>
-                       <td valign='top' class='t'>legacy</td>
+                       <td valign='top' class='t'><%=programname %></td>
                    </tr>
                    <tr align='left' >
                        <td  valign='top' class='h'><span>primary</span></td>
-                       <td valign='top' class='t'>1</td>
+                       <td valign='top' class='t'><%=primary %></td>
                    </tr>
                    <tr align='left' >
                        <td  valign='top' class='h'><span>Other spec</span></td>
-                       <td valign='top' class='t'>0</td>
+                       <td valign='top' class='t'><%=otherspec %></td>
                    </tr>
                    <tr align='left' >
                        <td  valign='top' class='h'><span>sourcetype</span></td>
-                       <td valign='top' class='t'>GALAXY</td>
+                       <td valign='top' class='t'><%=sourcetype %></td>
                    </tr>
                    <tr align='left' >
                        <td  valign='top' class='h'><span>Velocity dispersion (km/s)</span></td>
-                       <td valign='top' class='t'> 69.11</td>
+                       <td valign='top' class='t'><%=veldisp %></td>
                    </tr>
                    <tr align='left' >
                        <td  valign='top' class='h'><span>veldisp_error</span></td>
-                       <td valign='top' class='t'>  6.176</td>
+                       <td valign='top' class='t'><%=veldisp_err %></td>
                    </tr>
                    <tr align='left' >
                        <td  valign='top' class='h'><span>targeting_flags</span></td>
-                       <td valign='top' class='t'>GALAXY GALAXY_RED   </td>
+                       <td valign='top' class='t'><%=targeting_flags %></td>
                    </tr>
                  </table>
 	   	      </td>            

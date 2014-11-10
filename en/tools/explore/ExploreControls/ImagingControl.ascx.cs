@@ -77,7 +77,7 @@ namespace SkyServer.Tools.Explore
 
         private void runQuery()
         {
-            DataSet ds = master.runQuery.RunCasjobs(master.exploreQuery.getImagingQuery(objId, sdssUrl));
+            DataSet ds = master.runQuery.RunCasjobs(master.exploreQuery.getImagingQuery(objId));
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
                 if (reader.Read())
@@ -113,7 +113,6 @@ namespace SkyServer.Tools.Explore
                         err_i = reader["err_i"] is DBNull ? -999.99 : (float)reader["err_i"];
                         err_z = reader["err_z"] is DBNull ? -999.99 : (float)reader["err_z"];
 
-
                         ////--- PhotoObj
                         mode = reader["mode"] is DBNull ? "" : (string)reader["mode"];
 
@@ -130,11 +129,11 @@ namespace SkyServer.Tools.Explore
                         petrorad_r = reader.GetValue(27).ToString();
 
                         ////--- PhotoZ, photoZRF
-                        photoZ_KD = reader.GetValue(28).ToString();
+                        photoZ_KD = (string)reader["photoZ_KD"];
 
-                        photoZ_RF = reader.GetValue(29).ToString();
+                        photoZ_RF = (string)reader["photoZ_RF"];
 
-                        galaxyZoo_Morph = reader.GetValue(30).ToString();
+                        galaxyZoo_Morph = (string)reader["galaxyZoo_Morph"];
                     }
                 }
             }

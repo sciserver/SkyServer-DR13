@@ -622,9 +622,9 @@ namespace SkyServer.Tools.Explore
         /// <param name="objid"></param>
         /// <param name="sdssurl"></param>
         /// <returns></returns>
-        public String getImagingQuery(string objid, string sdssurl)
+        public String getImagingQuery(string objid)
         {
-            string flagsLink = sdssurl + "algorithms/photo_flags_recommend.php";
+            //string flagsLink = sdssurl + "algorithms/photo_flags_recommend.php";
             String iQuery = "";
             iQuery = " select";
             //-- phototag
@@ -638,8 +638,8 @@ namespace SkyServer.Tools.Explore
             iQuery += " dbo.fPhotoModeN(po.mode) as mode,po.mjd as 'mjdNum',  (po.nDetect-1) as 'Other observations', po.parentID, po.nChild, str(po.extinction_r,7,2) as extinction_r,";
             iQuery += " str(po.petroRad_r,9,2)+' &plusmn; '+str(po.petroRadErr_r,10,3) as 'PetroRad_r (arcmin)',";
             //--- photz,photozRF,zoospec 
-            iQuery += " (str(phz.z,7,3)+' &plusmn; '+str(phz.zerr,8,4))as 'photoZ (KD-tree method)', (str(phzrf.z,7,3)+' &plusmn; '+str(phzrf.zerr,8,4)) as 'photoZ (RF method)', ";
-            iQuery += " case (1*zz.spiral+10*zz.elliptical+100*zz.uncertain) when 1 then 'Spiral' when 10 then 'Elliptical' when 100 then 'Uncertain' else '-' end as 'Galaxy Zoo 1 morphology' ";
+            iQuery += " (str(phz.z,7,3)+' &plusmn; '+str(phz.zerr,8,4))as 'photoZ_KD', (str(phzrf.z,7,3)+' &plusmn; '+str(phzrf.zerr,8,4)) as 'photoZ_RF', ";
+            iQuery += " case (1*zz.spiral+10*zz.elliptical+100*zz.uncertain) when 1 then 'Spiral' when 10 then 'Elliptical' when 100 then 'Uncertain' else '-' end as 'GalaxyZoo_Morph' ";
             //all joins
             iQuery += " from PhotoTag pt  ";
             iQuery += " left outer join PhotoObj po on po.objid = pt.objid";
@@ -660,10 +660,10 @@ namespace SkyServer.Tools.Explore
         /// <returns></returns>
         public string getSpectroQuery(string specid, string objid)
         {
-            string iQuery = " select s.plate,s.mjd,fiberid ,s.instrument as 'Spectrograph' ,class, str(z,7,3) as 'Redshift (z)', str(zerr,10,5) as 'Redshift error' ";
-            iQuery += " , dbo.fSpecZWarningN(zWarning) as 'Redshift flags'";
-            iQuery += " ,s.survey, s.programname, s.scienceprimary as 'primary', (x.nspec-1) as 'Other spec' ";
-            iQuery += " ,s.sourcetype, str(velDisp,6,2) as 'Velocity dispersion (km/s)', str(velDispErr,7,3) as 'veldisp_error' ";
+            string iQuery = " select s.plate,s.mjd,fiberid ,s.instrument ,class as 'objclass', z as 'redshift_z', zerr as 'redshift_err' ";
+            iQuery += " , dbo.fSpecZWarningN(zWarning) as 'redshift_flags'";
+            iQuery += " ,s.survey, s.programname, s.scienceprimary as 'primary', (x.nspec-1) as 'otherspec' ";
+            iQuery += " ,s.sourcetype, velDisp as 'veldisp', velDispErr as 'veldisp_err' ";
             iQuery += " ,case s.survey ";
             iQuery += " WHEN 'sdss' THEN (select(dbo.fPrimtargetN(s.legacy_target1)+' '+dbo.fPrimTargetN(s.legacy_target2)+' '+dbo.fSpecialTarget1N(s.special_target1)))";
             iQuery += " WHEN 'boss' THEN (select str(boss_target1)+','+str(ancillary_target1)+','+str(ancillary_target2))";
@@ -672,7 +672,7 @@ namespace SkyServer.Tools.Explore
             //iQuery += " --WHEN 'apogee' THEN (select apogee_target1,apogee_target2 ) ";
             iQuery += " ELSE ' No Data ' ";
             iQuery += " END ";
-            iQuery += " as targeting_flags ";
+            iQuery += " as 'targeting_flags' ";
             iQuery += " from  PlateX p ,SpecObjAll s ";
             iQuery += " join (select bestobjid, count(*) as nspec from specobjall where bestobjid=" + objid + " group by bestobjid) x on s.bestobjid=x.bestobjid ";
             iQuery += " where p.plateId=s.plateId and  s.specObjId=" + specid;
