@@ -40,12 +40,14 @@ namespace SkyServer.Tools.Explore
             master = (ObjectExplorer)Page.Master;
             try
             {
-                objId = Request.QueryString["id"];
-                specId = Request.QueryString["spec"];
+                //objId = Request.QueryString["id"];
+                //specId = Request.QueryString["spec"];
+                objId = master.objId;
+                specId = master.specObjId;
                 specObjId = Utilities.ParseId(specId);
             }
             catch(Exception exp){
-                specId = null;
+                specObjId = null;
             }
             if(specId != null && !specId.Equals(""))
             runQuery();

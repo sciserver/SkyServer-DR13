@@ -10,9 +10,6 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="OEContent" runat="server">
 
-<%  
-   if (id.HasValue){       
-%>
   <%--<%--This is for Metadata --%>
 <%@ Register TagPrefix="metadata" TagName="MetadataParameters" Src="./ExploreControls/MetaDataControl.ascx"  %>
 
@@ -34,6 +31,6 @@
    <spectral:SpectralControl ID="SpectralControl1" runat="server" /> 
    <apogee:ApogeeControl ID="ApogeeControl1" runat="server" />
    </div>  
-<%} %>
+
 </asp:Content>
 

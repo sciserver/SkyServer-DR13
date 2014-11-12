@@ -62,7 +62,8 @@ namespace SkyServer.Tools.Explore
             master  = (ObjectExplorer)Page.Master;
             try
             {
-                objId = Request.QueryString["id"];
+                //objId = Request.QueryString["id"];
+                objId = master.objId;
             }
             catch (Exception exp) {
                 //If the querystring is empty and no objid key
@@ -92,8 +93,9 @@ namespace SkyServer.Tools.Explore
                         rerun = reader["rerun"] is DBNull ? -9 : (short)reader["rerun"];
                         camcol = reader["camcol"] is DBNull ? -9 : (byte)reader["camcol"];
                         field = reader["field"] is DBNull ? -9 : (short)reader["field"];
-                        fieldId =RunQuery.checkNullorParse(reader.GetValue(7));
-                        objId = RunQuery.checkNullorParse(reader.GetValue(8));
+                        fieldId = reader["fieldId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["fieldId"]);
+                        objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
+                       
 
                         //photoObjall
                         clean = reader["clean"] is DBNull ? -99999 : (int)reader["clean"]; ;
@@ -124,16 +126,16 @@ namespace SkyServer.Tools.Explore
 
                         nchild = reader["nChild"] is DBNull ? -999: (short)reader["nChild"];
 
-                        extinction_r = reader.GetValue(26).ToString();
+                        extinction_r = reader["extinction_r"] is DBNull ? null : (string)reader["extinction_r"];
 
-                        petrorad_r = reader.GetValue(27).ToString();
+                        petrorad_r = reader["petrorad_r"] is DBNull ? null : (string)reader["petrorad_r"];
 
                         ////--- PhotoZ, photoZRF
-                        photoZ_KD = (string)reader["photoZ_KD"];
+                        photoZ_KD = reader["photoZ_KD"] is DBNull ? null : (string)reader["photoZ_KD"];
 
-                        photoZ_RF = (string)reader["photoZ_RF"];
+                        photoZ_RF = reader["photoZ_KD"] is DBNull ? null : (string)reader["photoZ_RF"];
 
-                        galaxyZoo_Morph = (string)reader["galaxyZoo_Morph"];
+                        galaxyZoo_Morph = reader["photoZ_KD"] is DBNull ? null : (string)reader["galaxyZoo_Morph"];
                     }
                 }
             }

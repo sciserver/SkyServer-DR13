@@ -8,8 +8,8 @@ namespace SkyServer.Tools.Explore
 {
     public class ExplorerQueries
     {
-        private string objId;
-        private string specId;
+        private long? objId;
+        private long? specId;
         private string fieldId;
         private string apogeeId;
         private string plateId;
@@ -17,7 +17,7 @@ namespace SkyServer.Tools.Explore
      
         public ExplorerQueries() { }
 
-        public ExplorerQueries(String objid, String specid, String apogeeid, String fieldid, String plateid, string fiberid) {
+        public ExplorerQueries(long? objid, long? specid, String apogeeid, String fieldid, String plateid, string fiberid) {
             this.objId = objid;
             this.specId = specid;
             this.apogeeId = apogeeid;
@@ -252,9 +252,8 @@ namespace SkyServer.Tools.Explore
 
         public string PlateShow {
             get {
-                string cmd = " select cast(specObjID as binary(8)) as specObjId," +
-                   " fiberId, class as name, str(z,5,3) as z" +
-                   " from SpecObjAll where plateID="+plateId+" order by fiberId";
+                string cmd = @" select cast(specObjID as binary(8)) as specObjId, fiberId, class as name, str(z,5,3) as z 
+                                from SpecObjAll where plateID="+plateId+" order by fiberId";
                 return cmd;
             }
         }
@@ -265,25 +264,23 @@ namespace SkyServer.Tools.Explore
         public string AllSpec1{
             get
             {
-               string cmd= "select s.specObjId, s.plate as plate, s.mjd as MJD, s.fiberID as fiber, str(t.ra,10,5) as ra, str(t.dec,10,5) as dec, ";
-                cmd += "  str(s.ra,10,5) as specRa, str(s.dec,10,5) as specDec, ";
-                cmd += " s.sciencePrimary, str(dbo.fDistanceArcMinEq(t.ra,t.dec,s.ra,s.dec),10,8) as distanceArcMin, ";
-                cmd += " s.class as specClass";
-                cmd += " from SpecObjAll s, photoobjall t where t.objid=" + objId + " and s.bestobjid=t.objid ";                
-                cmd += " order by scienceprimary desc, plate, MJD, fiber";
+               string cmd= @"select s.specObjId, s.plate as plate, s.mjd as MJD, s.fiberID as fiber, 
+                            str(t.ra,10,5) as ra, str(t.dec,10,5) as dec, str(s.ra,10,5) as specRa, str(s.dec,10,5) as specDec, s.sciencePrimary, 
+                            str(dbo.fDistanceArcMinEq(t.ra,t.dec,s.ra,s.dec),10,8) as distanceArcMin, s.class as specClass 
+                            from SpecObjAll s, photoobjall t
+                            where t.objid=" + objId + " and s.bestobjid=t.objid  order by scienceprimary desc, plate, MJD, fiber";
                 return cmd;
             }
         }
 
         public string AllSpec2 {
             get {
-                string cmd = "select s.specObjId, s.plate as plate, s.mjd as MJD, s.fiberID as fiber, str(t.ra,10,5) as ra, str(t.dec,10,5) as dec, ";
-                cmd += "  str(s.ra,10,5) as specRa, str(s.dec,10,5) as specDec, ";
-                cmd += " s.sciencePrimary, str(dbo.fDistanceArcMinEq(t.ra,t.dec,s.ra,s.dec),10,8) as distanceArcMin, ";
-                cmd += " s.class as specClass";
-                cmd += " from SpecObjAll s, photoobjall t where t.objid=" + objId + " and s.fluxobjid=t.objid ";
-                //cmd += " order by scienceprimary desc, distanceArcMin asc";
-                cmd += " order by plate, MJD, fiber ";
+                string cmd = @"select s.specObjId, s.plate as plate, s.mjd as MJD, s.fiberID as fiber, str(t.ra,10,5) as ra, str(t.dec,10,5) as dec, 
+                            str(s.ra,10,5) as specRa, str(s.dec,10,5) as specDec,  s.sciencePrimary, 
+                            str(dbo.fDistanceArcMinEq(t.ra,t.dec,s.ra,s.dec),10,8) as distanceArcMin, s.class as specClass 
+                            from SpecObjAll s, photoobjall t 
+                            where t.objid=" + objId + " and s.fluxobjid=t.objid order by plate, MJD, fiber "; 
+                //cmd += " order by scienceprimary desc, distanceArcMin asc";                
                 return cmd;
             }
         }
@@ -294,22 +291,17 @@ namespace SkyServer.Tools.Explore
         public string matches1 {
             get
             {
-                string cmd = "select dbo.fIAUFromEq(p.ra,p.dec) as 'IAU name', p.objid, p.thingid,";
-                cmd += " dbo.fPhotoModeN(p.mode) as mode";
-                cmd += " from Photoobjall p where p.objid=" + objId;
+                string cmd = @"select dbo.fIAUFromEq(p.ra,p.dec) as 'IAU name', p.objid, p.thingid, dbo.fPhotoModeN(p.mode) as mode
+                              from Photoobjall p where p.objid=" + objId;
                 return cmd;
             }
         }
 
         public string matches2 {
             get {
-                string cmd = "select t.objid, t.thingid,";
-                cmd += " p.mode, dbo.fPhotoModeN(p.mode) as '(mode description)'";
-                cmd += " from thingindex t ";
-                cmd += " join photoobjall p on t.objid = p.objid ";
-                cmd += " where t.objid=" + objId;
-                cmd += " and p.mode != 1";
-                cmd += " order by p.mode";
+                string cmd = @" select t.objid, t.thingid, p.mode, dbo.fPhotoModeN(p.mode) as '(mode description)'
+                             from thingindex t join photoobjall p on t.objid = p.objid 
+                             where t.objid=" + objId +" and p.mode != 1 order by p.mode";
                 return cmd;
             }
         }
@@ -319,20 +311,16 @@ namespace SkyServer.Tools.Explore
         ///Neighbors
         public string neighbors1 {
             get {
-                string cmd = "select dbo.fIAUFromEq(p.ra,p.dec) as 'IAU name', p.objid, p.thingid";
-                cmd += " from photoobjall p where p.objid=" + objId;
+                string cmd = @" select dbo.fIAUFromEq(p.ra,p.dec) as 'IAU name', p.objid, p.thingid from photoobjall p where p.objid=" + objId;
                 return cmd;
             }
         }
 
         public string neighbors2 {
             get {
-                string cmd = "select n.neighborObjId as objId,str(t.ra,10,5) as ra, str(t.dec,10,5) as dec, ";
-                cmd += " str(n.distance,5,3) as 'distance (arcmin)',";
-                cmd += " dbo.fPhotoTypeN(n.neighborType) as type, neighborMode as mode,";
-                cmd += " dbo.fPhotoModeN(n.neighborMode) as '(mode description)'";
-                cmd += " from Neighbors n, photoobjall t where n.neighborObjid=t.objid ";
-                cmd += " and n.objId=" + objId + " order by n.distance asc ";
+                string cmd = @" select n.neighborObjId as objId,str(t.ra,10,5) as ra, str(t.dec,10,5) as dec, str(n.distance,5,3) as 'distance (arcmin)',
+                                dbo.fPhotoTypeN(n.neighborType) as type, neighborMode as mode, dbo.fPhotoModeN(n.neighborMode) as '(mode description)'
+                                from Neighbors n, photoobjall t where n.neighborObjid=t.objid and n.objId=" + objId + " order by n.distance asc ";
                 return cmd;
             }
         }
@@ -342,21 +330,20 @@ namespace SkyServer.Tools.Explore
         /// Fits Parameters Queries
         public string fitsParametersSppParams {
             get {
-                string cmd = " select targetstring as 'Targeting criteria', flag as 'SEGUE flags',spectypehammer as 'HAMMER spectral type', SPECTYPESUBCLASS as 'Spectral subclass'," ;
-                       cmd +=" str(elodiervfinal,7,2) as 'Radial velocity (km/s)', str(elodiervfinalerr,8,3) as 'RV error', str(teffadop,6,0) as 'Effective temp (K)', ";
-                       cmd +=" str(teffadopunc,6,1) as 'Teff error' , str(fehadop,7,2) as '[Fe/H] (dex)', str(fehadopunc,8,3) as '[Fe/H] error', str(loggadop,7,2) as 'log<sub>10</sub>(g) (dex)', ";
-                       cmd +=" str(loggadopunc,8,3) as 'log<sub>10</sub>(g) error' ";                       
-                       cmd +=" from sppParams where specObjId=" + specId;
+                string cmd = @" select targetstring as 'Targeting criteria', flag as 'SEGUE flags',spectypehammer as 'HAMMER spectral type', SPECTYPESUBCLASS as 'Spectral subclass',
+                        str(elodiervfinal,7,2) as 'Radial velocity (km/s)', str(elodiervfinalerr,8,3) as 'RV error', str(teffadop,6,0) as 'Effective temp (K)', 
+                        str(teffadopunc,6,1) as 'Teff error' , str(fehadop,7,2) as '[Fe/H] (dex)', str(fehadopunc,8,3) as '[Fe/H] error', str(loggadop,7,2) as 'log<sub>10</sub>(g) (dex)', 
+                        str(loggadopunc,8,3) as 'log<sub>10</sub>(g) error' from sppParams where specObjId=" + specId;
                 return cmd;                        
             }
         }
 
         public string fitsParametersStellarMassStarformingPort { 
             get{
-                string cmd = "  select logMass as 'Best-fit log<sub>10</sub>(stellar mass)',minLogMass as '1-&sigma; min', maxLogMass as '1-&sigma; max',";
-                       cmd +=" age as 'Best-fit age (Gyr)', minAge as '1-&sigma; min', maxAge as '1-&sigma; max',";
-                       cmd +=" SFR as 'Best-fit SFR (M<sub>&#9737;</sub> / yr)', minSFR as '1-&sigma; min', maxSFR as '1-&sigma; max' ";
-                       cmd +=" from stellarMassStarformingPort where specObjId="+specId;
+                string cmd = @"  select logMass as 'Best-fit log<sub>10</sub>(stellar mass)',minLogMass as '1-&sigma; min', maxLogMass as '1-&sigma; max',
+                        age as 'Best-fit age (Gyr)', minAge as '1-&sigma; min Age', maxAge as '1-&sigma; max Age',
+                        SFR as 'Best-fit SFR (M<sub>&#9737;</sub> / yr)', minSFR as '1-&sigma; min SFR', maxSFR as '1-&sigma; max SFR' 
+                        from stellarMassStarformingPort where specObjId="+specId;
                 return cmd;
             }
         }
@@ -364,18 +351,18 @@ namespace SkyServer.Tools.Explore
         public string fitsParameterSstellarMassPassivePort
         {
             get { 
-                string cmd =" select logMass as 'Best-fit log<sub>10</sub>(stellar mass)', minLogMass as '1-&sigma; min', maxLogMass as '1-&sigma; max'";
-                      cmd +=" , age as 'Best-fit age (Gyr)', minAge as '1-&sigma; min', maxAge as '1-&sigma; max', SFR as 'Best-fit SFR (M<sub>&#9737;</sub> / yr)',";
-                      cmd +=" minSFR as '1-&sigma; min', maxSFR as '1-&sigma; max' ";
-                      cmd += " from stellarMassPassivePort where specObjId=" + specId;
+                string cmd =@" select logMass as 'Best-fit log<sub>10</sub>(stellar mass)', minLogMass as '1-&sigma; min', maxLogMass as '1-&sigma; max'
+                         , age as 'Best-fit age (Gyr)', minAge as '1-&sigma; min Age', maxAge as '1-&sigma; max Age', SFR as 'Best-fit SFR (M<sub>&#9737;</sub> / yr)',
+                         minSFR as '1-&sigma; min SFR', maxSFR as '1-&sigma; max SFR' 
+                         from stellarMassPassivePort where specObjId=" + specId;
                  return cmd;
             }
         }
 
         public string fitsParametersEmissionLinesPort {
             get {
-                string cmd = "  select velstars as 'Stellar velocity (km/s)',sigmaStars as 'Stellar velocity disperson (km/s)', sigmaStarsErr as 'Velocity dispersion error'";
-                       cmd += " ,chisq as 'Chi-squared fit of template', bpt as 'BPT classification' from emissionLinesPort where specObjId="+specId;
+                string cmd = @" select velstars as 'Stellar velocity (km/s)',sigmaStars as 'Stellar velocity disperson (km/s)', sigmaStarsErr as 'Velocity dispersion error'
+                             ,chisq as 'Chi-squared fit of template', bpt as 'BPT classification' from emissionLinesPort where specObjId="+specId;
                 return cmd;
             }
         }
@@ -383,8 +370,8 @@ namespace SkyServer.Tools.Explore
         public string fitsParametersStellarMassPCAWiscBC03
         {
             get {
-                string cmd = "select str(mstellar_median,7,2) as 'Best-fit log<sub>10</sub>(stellar mass)', str(mstellar_err,8,3) as 'Error', str(vdisp_median,8,2) as 'Median veldisp (km/s)', str(vdisp_err,9,3) as 'Error'";
-                cmd += " from stellarMassPCAWiscBC03 where specObjId=" + specId;
+                string cmd = @" select str(mstellar_median,7,2) as 'Best-fit log<sub>10</sub>(stellar mass)', str(mstellar_err,8,3) as 'Error', str(vdisp_median,8,2) as 'Median veldisp (km/s)', str(vdisp_err,9,3) as 'Error VelDisp'
+                             from stellarMassPCAWiscBC03 where specObjId=" + specId;
                 return cmd;
             }
         }
@@ -392,9 +379,9 @@ namespace SkyServer.Tools.Explore
         public string fitsParametersstellarMassPCAWiscM11
         {
             get {
-                string cmd = "";
-                cmd = "select str(mstellar_median,7,2) as 'Best-fit log<sub>10</sub>(stellar mass)', str(mstellar_err,8,3) as 'Error', str(vdisp_median,8,2) as 'Median veldisp (km/s)', str(vdisp_err,9,3) as 'Error'";
-                cmd += " from stellarMassPCAWiscM11 where specObjId=" + specId;
+                string cmd = @"select str(mstellar_median,7,2) as 'Best-fit log<sub>10</sub>(stellar mass)', str(mstellar_err,8,3) as 'Error',
+                            str(vdisp_median,8,2) as 'Median veldisp (km/s)', str(vdisp_err,9,3) as 'Error VelDisp'
+                            from stellarMassPCAWiscM11 where specObjId=" + specId;
                 return cmd;
             }
         }
@@ -402,8 +389,9 @@ namespace SkyServer.Tools.Explore
         public string fitsParametersStellarmassFSPSGranEarlyDust
         {
             get {
-                string cmd = "select str(logmass,7,2) as 'Best-fit log<sub>10</sub>(stellar mass)', str(logmass_err,8,3) as 'Error', str(age,8,2) as 'Age (Gyr)', str(ssfr,8,2) as 'SSFR', str(metallicity,8,2) as 'metallicity'";
-                cmd += " from stellarmassFSPSGranEarlyDust where specObjId=" + specId;
+                string cmd = @"select str(logmass,7,2) as 'Best-fit log<sub>10</sub>(stellar mass)', str(logmass_err,8,3) as 'Error', str(age,8,2) as 'Age (Gyr)', 
+                             str(ssfr,8,2) as 'SSFR', str(metallicity,8,2) as 'metallicity'
+                             from stellarmassFSPSGranEarlyDust where specObjId=" + specId;
                 return cmd;
             }
         }
@@ -411,8 +399,9 @@ namespace SkyServer.Tools.Explore
         public string fitsParametersStellarmassFSPSGranEarlyNoDust
         {
             get {
-                string cmd = "select str(logmass,7,2) as 'Best-fit log<sub>10</sub>(stellar mass)', str(logmass_err,8,3) as 'Error', str(age,8,2) as 'Age (Gyr)', str(ssfr,8,2) as 'SSFR', str(metallicity,8,2) as 'metallicity'";
-                cmd += " from stellarmassFSPSGranEarlyNoDust where specObjId=" + specId;
+                string cmd = @"select str(logmass,7,2) as 'Best-fit log<sub>10</sub>(stellar mass)', str(logmass_err,8,3) as 'Error', str(age,8,2) as 'Age (Gyr)', 
+                            str(ssfr,8,2) as 'SSFR', str(metallicity,8,2) as 'metallicity'
+                            from stellarmassFSPSGranEarlyNoDust where specObjId=" + specId;
                 return cmd;
             }
         }
@@ -420,8 +409,9 @@ namespace SkyServer.Tools.Explore
         public string fitsParametersStellarmassFSPSGranWideDust
         {
             get {
-                string cmd = "select str(logmass,7,2) as 'Best-fit log<sub>10</sub>(stellar mass)', str(logmass_err,8,3) as 'Error', str(age,8,2) as 'Age (Gyr)', str(ssfr,8,2) as 'SSFR', str(metallicity,8,2) as 'metallicity'";
-                cmd += " from stellarmassFSPSGranWideDust where specObjId=" + specId;
+                string cmd = @"select str(logmass,7,2) as 'Best-fit log<sub>10</sub>(stellar mass)', str(logmass_err,8,3) as 'Error', str(age,8,2) as 'Age (Gyr)', 
+                             str(ssfr,8,2) as 'SSFR', str(metallicity,8,2) as 'metallicity'
+                             from stellarmassFSPSGranWideDust where specObjId=" + specId;
                 return cmd;
             }
         }
@@ -429,8 +419,9 @@ namespace SkyServer.Tools.Explore
         public string fitsParametersStellarmassFSPSGranWideNoDust
         {
             get {
-                string cmd = "select str(logmass,7,2) as 'Best-fit log<sub>10</sub>(stellar mass)', str(logmass_err,8,3) as 'Error', str(age,8,2) as 'Age (Gyr)', str(ssfr,8,2) as 'SSFR', str(metallicity,8,2) as 'metallicity'";
-                cmd += " from stellarmassFSPSGranWideNoDust where specObjId=" + specId;
+                string cmd = @"select str(logmass,7,2) as 'Best-fit log<sub>10</sub>(stellar mass)', str(logmass_err,8,3) as 'Error', str(age,8,2) as 'Age (Gyr)', 
+                             str(ssfr,8,2) as 'SSFR', str(metallicity,8,2) as 'metallicity'
+                             from stellarmassFSPSGranWideNoDust where specObjId=" + specId;
                 return cmd;
             }
         }
@@ -446,18 +437,18 @@ namespace SkyServer.Tools.Explore
 
         public string zooSpec1 {
             get {
-                string cmd = "select objid,nvote as 'Votes',str(p_el_debiased,5,3) 'Elliptical proabability (debiased)',";
-                cmd += " str(p_cs_debiased,5,3) 'Spiral probability (debiased)'";
-                cmd += " from zooSpec where objid=" + objId;
+                string cmd = @"select objid,nvote as 'Votes',str(p_el_debiased,5,3) 'Elliptical proabability (debiased)',
+                             str(p_cs_debiased,5,3) 'Spiral probability (debiased)'
+                             from zooSpec where objid=" + objId;
                 return cmd;
             }
         }
 
         public string zooSpec2 {
             get {
-                string cmd = "select str(p_cw,5,3) as 'Clockwise spiral probability', str(p_acw,5,3) as 'Anticlockwise spiral probability',";
-                cmd += " str(p_edge,5,3) as 'Edge-on spiral probablity', str(p_mg,5,3) as 'Merger system probability'";
-                cmd += " from zooSpec where objid=" + objId;
+                string cmd = @" select str(p_cw,5,3) as 'Clockwise spiral probability', str(p_acw,5,3) as 'Anticlockwise spiral probability',
+                            str(p_edge,5,3) as 'Edge-on spiral probablity', str(p_mg,5,3) as 'Merger system probability'
+                            from zooSpec where objid=" + objId;
                 return cmd;
             }
         }
@@ -471,9 +462,7 @@ namespace SkyServer.Tools.Explore
 
         public string galaxyZoo3 {
             get {
-                string cmd = "select objid,nvote,p_el,p_cs";
-                cmd += " from zooNoSpec where objid=" + objId;
-                return galaxyZoo3;
+                 return  "select objid,nvote,p_el,p_cs  from zooNoSpec where objid=" + objId;            
             }
         }
 
@@ -486,9 +475,7 @@ namespace SkyServer.Tools.Explore
 
         public string zooConfidence2{
             get {
-                string cmd = "select objid,f_unclass_clean,f_misclass_clean";
-                cmd += " from zooConfidence where objid=" + objId;
-                return cmd;
+                return " select objid,f_unclass_clean,f_misclass_clean from zooConfidence where objid=" + objId;                
             }
         }
 
@@ -501,9 +488,8 @@ namespace SkyServer.Tools.Explore
 
         public string zooMirrorBias2 {
             get {
-                string cmd = "select objid,nvote_mr1,nvote_mr2";
-                cmd += " from zooMirrorBias where objid=" + objId;
-                return cmd;
+                 return " select objid,nvote_mr1,nvote_mr2 from zooMirrorBias where objid=" + objId;
+                
             }
         }
 
@@ -517,9 +503,7 @@ namespace SkyServer.Tools.Explore
         public string zooMonochromeBias2
         {
             get {
-                string cmd = "select objid,nvote_mon";
-                cmd += " from zooMonochromeBias where objid=" + objId;
-                return cmd;
+                return "select objid,nvote_mon from zooMonochromeBias where objid=" + objId;                
             }
         }
 
@@ -531,10 +515,8 @@ namespace SkyServer.Tools.Explore
 
         public string zoo2MainSpecz2 {
             get {
-                string cmd = "select dr8objid, total_classifications, total_votes";
-                cmd += " from zoo2MainSpecz where dr8objid=" + objId;
-                return cmd;
-
+                
+                return "select dr8objid, total_classifications, total_votes from zoo2MainSpecz where dr8objid=" + objId;
             }
         }
 
@@ -548,8 +530,8 @@ namespace SkyServer.Tools.Explore
         public string zoo2MainPhotoz2
         {
             get {
-               string  cmd = "select dr8objid, total_classifications, total_votes";
-                cmd += " from zoo2MainPhotoz where dr8objid=" + objId;
+               string  cmd = @"select dr8objid, total_classifications, total_votes
+                             from zoo2MainPhotoz where dr8objid=" + objId;
                 return cmd;
             }
         }
@@ -564,8 +546,8 @@ namespace SkyServer.Tools.Explore
         public string zoo2Stripe82Normal2
         {
             get {
-                string cmd = "select dr8objid, total_classifications, total_votes";
-                cmd += " from zoo2Stripe82Normal where dr8objid=" + objId;
+                string cmd = @"select dr8objid, total_classifications, total_votes
+                             from zoo2Stripe82Normal where dr8objid=" + objId;
                 return cmd;
             }
         }
@@ -580,8 +562,8 @@ namespace SkyServer.Tools.Explore
         public string zoo2Stripe82Coadd1_2
         {
             get {
-               string cmd = "select dr8objid, total_classifications, total_votes";
-                cmd += " from zoo2Stripe82Coadd1 where dr8objid=" + objId;
+               string cmd = @"select dr8objid, total_classifications, total_votes
+                            from zoo2Stripe82Coadd1 where dr8objid=" + objId;
                 return cmd;
             }
         }
@@ -597,8 +579,8 @@ namespace SkyServer.Tools.Explore
         public string zoo2Stripe82Coadd2_2
         {
             get {
-                string cmd = "select dr8objid, total_classifications, total_votes";
-                cmd += " from zoo2Stripe82Coadd2 where dr8objid=" + objId;
+                string cmd = @"select dr8objid, total_classifications, total_votes
+                             from zoo2Stripe82Coadd2 where dr8objid=" + objId;
                 return cmd;
             }
         }
@@ -608,10 +590,10 @@ namespace SkyServer.Tools.Explore
         ///
         public String getObjParamaters(string objId) {
            
-                string cmd = "select p.ra, p.dec, s.specObjId," +
-                       " p.clean, s.survey, cast(p.mode as int), dbo.fPhotoTypeN(p.type) as otype, p.mjd" +
-                       " from PhotoObjAll p LEFT OUTER JOIN SpecObjAll s ON s.bestobjid=p.objid AND s.scienceprimary=1" +
-                       " where p.objId="+objId;
+                string cmd = @"select p.ra, p.dec, s.specObjId, p.clean, s.survey, cast(p.mode as int) as mode, 
+                             dbo.fPhotoTypeN(p.type) as otype, p.mjd
+                             from PhotoObjAll p LEFT OUTER JOIN SpecObjAll s ON s.bestobjid=p.objid AND s.scienceprimary=1
+                             where p.objId="+objId;
                 return cmd;
            
         }
@@ -625,30 +607,29 @@ namespace SkyServer.Tools.Explore
         public String getImagingQuery(string objid)
         {
             //string flagsLink = sdssurl + "algorithms/photo_flags_recommend.php";
-            String iQuery = "";
-            iQuery = " select";
-            //-- phototag
-            iQuery += " dbo.fPhotoFlagsN(pt.flags) as 'flags',pt.ra, pt.dec, pt.run, pt.rerun, pt.camcol, pt.field, ";
-            iQuery += " cast(pt.fieldId as binary(8)) as fieldId, cast(pt.objId as binary(8)) as objId, ";
-            //--PhotoObjall
-            iQuery += " pa.clean,  dbo.fPhotoTypeN(pa.type) as otype, ";
-            iQuery += " pa.u as u, pa.g  as g, pa.r as r, pa.i as i, pa.z as z, ";
-            iQuery += "  pa.err_u as err_u,  pa.err_g  as err_g,  pa.err_r  as err_r, pa.err_i  as err_i, pa.err_z as err_z, ";
-            //-- photoObj
-            iQuery += " dbo.fPhotoModeN(po.mode) as mode,po.mjd as 'mjdNum',  (po.nDetect-1) as 'Other observations', po.parentID, po.nChild, str(po.extinction_r,7,2) as extinction_r,";
-            iQuery += " str(po.petroRad_r,9,2)+' &plusmn; '+str(po.petroRadErr_r,10,3) as 'PetroRad_r (arcmin)',";
-            //--- photz,photozRF,zoospec 
-            iQuery += " (str(phz.z,7,3)+' &plusmn; '+str(phz.zerr,8,4))as 'photoZ_KD', (str(phzrf.z,7,3)+' &plusmn; '+str(phzrf.zerr,8,4)) as 'photoZ_RF', ";
-            iQuery += " case (1*zz.spiral+10*zz.elliptical+100*zz.uncertain) when 1 then 'Spiral' when 10 then 'Elliptical' when 100 then 'Uncertain' else '-' end as 'GalaxyZoo_Morph' ";
-            //all joins
-            iQuery += " from PhotoTag pt  ";
-            iQuery += " left outer join PhotoObj po on po.objid = pt.objid";
-            iQuery += " left outer join Photoz phz on po.objid=phz.objid ";
-            iQuery += " left outer join PhotozRF phzrf on po.objid=phzrf.objid ";
-            iQuery += " left outer join zooSpec zz on po.objid=zz.objid ";
-            iQuery += " left outer join field f on f.fieldID=pt.fieldID ";
-            iQuery += " left outer join photoobjall pa with (nolock)on  pa.objid = po.objid ";
-            iQuery += " where pt.objId= " + objid;
+            String iQuery = @" select            
+            --phototag
+             dbo.fPhotoFlagsN(pt.flags) as 'flags',pt.ra, pt.dec, pt.run, pt.rerun, pt.camcol, pt.field, 
+             cast(pt.fieldId as binary(8)) as fieldId, cast(pt.objId as binary(8)) as objId, 
+            --PhotoObjall
+             pa.clean,  dbo.fPhotoTypeN(pa.type) as otype, 
+             pa.u as u, pa.g  as g, pa.r as r, pa.i as i, pa.z as z, 
+             pa.err_u as err_u,  pa.err_g  as err_g,  pa.err_r  as err_r, pa.err_i  as err_i, pa.err_z as err_z, 
+            -- photoObj
+            dbo.fPhotoModeN(po.mode) as mode,po.mjd as 'mjdNum',  (po.nDetect-1) as 'Other observations', po.parentID, po.nChild, str(po.extinction_r,7,2) as extinction_r,
+            str(po.petroRad_r,9,2)+' &plusmn; '+str(po.petroRadErr_r,10,3) as 'petrorad_r',
+            --- photz,photozRF,zoospec 
+            (str(phz.z,7,3)+' &plusmn; '+str(phz.zerr,8,4))as 'photoZ_KD', (str(phzrf.z,7,3)+' &plusmn; '+str(phzrf.zerr,8,4)) as 'photoZ_RF', 
+            case (1*zz.spiral+10*zz.elliptical+100*zz.uncertain) when 1 then 'Spiral' when 10 then 'Elliptical' when 100 then 'Uncertain' else '-' end as 'GalaxyZoo_Morph' 
+            --all joins
+             from PhotoTag pt  
+             left outer join PhotoObj po on po.objid = pt.objid
+             left outer join Photoz phz on po.objid=phz.objid 
+             left outer join PhotozRF phzrf on po.objid=phzrf.objid 
+             left outer join zooSpec zz on po.objid=zz.objid 
+             left outer join field f on f.fieldID=pt.fieldID 
+             left outer join photoobjall pa with (nolock)on  pa.objid = po.objid 
+             where pt.objId= " + objid;
             return iQuery;
         }
 
@@ -660,23 +641,22 @@ namespace SkyServer.Tools.Explore
         /// <returns></returns>
         public string getSpectroQuery(string specid, string objid)
         {
-            string iQuery = " select s.plate,s.mjd,fiberid ,s.instrument ,class as 'objclass', z as 'redshift_z', zerr as 'redshift_err' ";
-            iQuery += " , dbo.fSpecZWarningN(zWarning) as 'redshift_flags'";
-            iQuery += " ,s.survey, s.programname, s.scienceprimary as 'primary', (x.nspec-1) as 'otherspec' ";
-            iQuery += " ,s.sourcetype, velDisp as 'veldisp', velDispErr as 'veldisp_err' ";
-            iQuery += " ,case s.survey ";
-            iQuery += " WHEN 'sdss' THEN (select(dbo.fPrimtargetN(s.legacy_target1)+' '+dbo.fPrimTargetN(s.legacy_target2)+' '+dbo.fSpecialTarget1N(s.special_target1)))";
-            iQuery += " WHEN 'boss' THEN (select str(boss_target1)+','+str(ancillary_target1)+','+str(ancillary_target2))";
-            iQuery += " WHEN 'segue1' THEN (select dbo.fSEGUE1target1N(segue1_target1)+','+dbo.fSEGUE1target2N(segue1_target2)) ";
-            iQuery += " WHEN 'segue2' THEN (select dbo.fSEGUE2target1N(segue2_target1)+','+ dbo.fSEGUE2target2N(segue2_target2) ) ";
+            string iQuery = 
+            @" select s.plate,s.mjd,fiberid ,s.instrument ,class as 'objclass', z as 'redshift_z', zerr as 'redshift_err' 
+            , dbo.fSpecZWarningN(zWarning) as 'redshift_flags',s.survey, s.programname, s.scienceprimary as 'primary', 
+            (x.nspec-1) as 'otherspec',s.sourcetype, velDisp as 'veldisp', velDispErr as 'veldisp_err' 
+             ,case s.survey 
+             WHEN 'sdss' THEN (select(dbo.fPrimtargetN(s.legacy_target1)+' '+dbo.fPrimTargetN(s.legacy_target2)+' '+dbo.fSpecialTarget1N(s.special_target1)))
+             WHEN 'boss' THEN (select str(boss_target1)+','+str(ancillary_target1)+','+str(ancillary_target2))
+             WHEN 'segue1' THEN (select dbo.fSEGUE1target1N(segue1_target1)+','+dbo.fSEGUE1target2N(segue1_target2)) 
+             WHEN 'segue2' THEN (select dbo.fSEGUE2target1N(segue2_target1)+','+ dbo.fSEGUE2target2N(segue2_target2) )             
+             ELSE ' No Data ' 
+             END 
+             as 'targeting_flags' 
+             from  PlateX p ,SpecObjAll s 
+             join (select bestobjid, count(*) as nspec from specobjall where bestobjid="
+            + objid + " group by bestobjid) x on s.bestobjid=x.bestobjid  where p.plateId=s.plateId and  s.specObjId=" + specid;
             //iQuery += " --WHEN 'apogee' THEN (select apogee_target1,apogee_target2 ) ";
-            iQuery += " ELSE ' No Data ' ";
-            iQuery += " END ";
-            iQuery += " as 'targeting_flags' ";
-            iQuery += " from  PlateX p ,SpecObjAll s ";
-            iQuery += " join (select bestobjid, count(*) as nspec from specobjall where bestobjid=" + objid + " group by bestobjid) x on s.bestobjid=x.bestobjid ";
-            iQuery += " where p.plateId=s.plateId and  s.specObjId=" + specid;
-
             return iQuery;
         }
 
@@ -710,32 +690,31 @@ namespace SkyServer.Tools.Explore
         public string USNO {
             get
             {
-                string cmd = " select 'USNO' as Catalog, str(10*propermotion,6,2)+' &plusmn; '+str(sqrt(power(muraerr,2)+power(mudecerr,2)),8,3) as 'Proper motion (mas/yr)', ";
-                       cmd += " angle as 'PM angle (deg E)' from USNO where objId="+objId;
+                string cmd = @" select 'USNO' as Catalog, str(10*propermotion,6,2)+' &plusmn; '+str(sqrt(power(muraerr,2)+power(mudecerr,2)),8,3) as 'Proper motion (mas/yr)',
+                             angle as 'PM angle (deg E)' from USNO where objId="+objId;
                 return cmd;
             }
         }
 
         public string FIRST{
             get{
-                string cmd = " select 'FIRST' as Catalog, str(peak,8,2)+' &plusmn; '+str(rms,8,2) as 'Peak flux (mJy)', major as 'Major axis (arcsec)', ";
-                       cmd += " minor as 'Minor axis (arcsec)' from First where objId="+objId;
+                string cmd = @" select 'FIRST' as Catalog, str(peak,8,2)+' &plusmn; '+str(rms,8,2) as 'Peak flux (mJy)', major as 'Major axis (arcsec)', 
+                              minor as 'Minor axis (arcsec)' from First where objId="+objId;
                 return cmd;
             }
         }
 
         public string ROSAT {
             get{
-                string cmd = " select 'ROSAT' as Catalog, cps, hr1, hr2, ext from ROSAT where objId="+objId;
-                return cmd;
+                return " select 'ROSAT' as Catalog, cps, hr1, hr2, ext from ROSAT where objId="+objId;                
             }
         }
 
         public string RC3 {
             get
             {
-                string cmd = " select 'RC3' as Catalog, hubble as 'Hubble type', str(m21,5,2)+' &plusmn; '+str(m21err,6,3) as '21 cm magnitude', ";
-                       cmd += " hi as 'Neutral Hydrogen Index' from RC3 where objId="+objId;
+                string cmd = @" select 'RC3' as Catalog, hubble as 'Hubble type', str(m21,5,2)+' &plusmn; '+str(m21err,6,3) as '21 cm magnitude', 
+                               hi as 'Neutral Hydrogen Index' from RC3 where objId="+objId;
                 return cmd;
             }
         }
@@ -743,8 +722,8 @@ namespace SkyServer.Tools.Explore
         public string WISE {
             get
             {
-                string cmd = " select 'WISE' as Catalog,w.w1mag,w.w2mag,w.w3mag,w.w4mag,'<a href=''@wiseLink''>Link</a>' as 'Full WISE data' ";
-                       cmd += " from WISE_xmatch x join WISE_allsky w on x.wise_cntr=w.cntr where x.sdss_objid="+objId;
+                string cmd = @" select 'WISE' as Catalog,w.w1mag,w.w2mag,w.w3mag,w.w4mag,'<a href=''@wiseLink''>Link</a>' as 'Full WISE data' 
+                            from WISE_xmatch x join WISE_allsky w on x.wise_cntr=w.cntr where x.sdss_objid="+objId;
                        cmd = cmd.Replace("@wiselink", wiseLinkCrossId);
                       
                 return cmd;
@@ -755,15 +734,16 @@ namespace SkyServer.Tools.Explore
             get
             {
                 //string cmd = " select '2MASS' as Catalog, str(j,7,3) as 'J', h as 'H', k as 'K_s', phQual from TwoMASS where objId=" + objId;
-                string cmd = " select '2MASS' as Catalog, j as 'J', h as 'H', k as 'K_s', phQual from TwoMASS where objId=" + objId;
-                return cmd;
+               return " select '2MASS' as Catalog, j as 'J', h as 'H', k as 'K_s', phQual from TwoMASS where objId=" + objId;
+               
             }
         }
 
         public string wiseLinkCrossId {
             get {
-                string cmd = "select * from wise_xmatch x join wise_allsky a on x.wise_cntr=a.cntr where x.sdss_objid="+objId+"&name=WISE_allsky"+"id="+objId;
-                return cmd;
+                
+                return "select * from wise_xmatch x join wise_allsky a on x.wise_cntr=a.cntr where x.sdss_objid="+objId+"&name=WISE_allsky"+"id="+objId;
+                
             }
         }
         #endregion
@@ -783,22 +763,20 @@ namespace SkyServer.Tools.Explore
         
         public string APOGEE_BASE_QUERY{ 
             get{
-            string cmd = "select   a.ra,    a.dec,   a.apstar_id,    a.apogee_id,    a.glon,    a.glat,    a.location_id,   a.commiss,   a.vhelio_avg,    a.vscatter,     b.teff,";   
-                   cmd +=" b.teff_err,   b.logg,    b.logg_err,   b.metals,    b.metals_err,     b.alphafe,    b.alphafe_err,    c.j,   c.h,   c.k,   c.j_err,   c.h_err,   c.k_err, ";  
-                   cmd +="case c.src_4_5      when 'none' then NULL      when 'WISE' then c.wise_4_5      when 'IRAC' then c.irac_4_5      end      as mag_4_5,   case c.src_4_5 ";     
-                   cmd +=" when 'none' then NULL      when 'WISE' then c.wise_4_5_err      when 'IRAC' then c.irac_4_5_err      end      as mag_4_5_err,   c.src_4_5,  ";
-                   cmd +=" dbo.fApogeeTarget1N(a.apogee_target1) as apogeeTarget1N,   dbo.fApogeeTarget2N(a.apogee_target2) as apogeeTarget2N, ";  
-                   cmd +=" dbo.fApogeeStarFlagN(a.starflag) as apogeeStarFlagN,   dbo.fApogeeAspcapFlagN(aspcapflag) as apogeeAspcapFlagN  ";
-                   cmd +=" from apogeeStar a join aspcapStar b on a.apstar_id = b.apstar_id join apogeeObject c on a.apogee_id = c.apogee_id ";
-                   
+                string cmd = @" select   a.ra,    a.dec,   a.apstar_id,    a.apogee_id,    a.glon,    a.glat,    a.location_id,   a.commiss,   a.vhelio_avg,    a.vscatter,     b.teff,
+                    b.teff_err,   b.logg,    b.logg_err,   b.metals,    b.metals_err,     b.alphafe,    b.alphafe_err,    c.j,   c.h,   c.k,   c.j_err,   c.h_err,   c.k_err, 
+                    case c.src_4_5      when 'none' then NULL      when 'WISE' then c.wise_4_5      when 'IRAC' then c.irac_4_5      end      as mag_4_5,   case c.src_4_5     
+                    when 'none' then NULL      when 'WISE' then c.wise_4_5_err      when 'IRAC' then c.irac_4_5_err      end      as mag_4_5_err,   c.src_4_5,  
+                    dbo.fApogeeTarget1N(a.apogee_target1) as apogeeTarget1N,   dbo.fApogeeTarget2N(a.apogee_target2) as apogeeTarget2N, 
+                    dbo.fApogeeStarFlagN(a.starflag) as apogeeStarFlagN,   dbo.fApogeeAspcapFlagN(aspcapflag) as apogeeAspcapFlagN  
+                    from apogeeStar a join aspcapStar b on a.apstar_id = b.apstar_id join apogeeObject c on a.apogee_id = c.apogee_id ";                   
                    return cmd;
             }
         }
 
         public string APOGEEVISITS_BASE_QUERY {
             get{
-                string cmd = "select visit_id, plate,  mjd, fiberid, dateobs, vrel from apogeeVisit where apogee_id = @id order by dateobs";
-                return cmd;
+                return  "select visit_id, plate,  mjd, fiberid, dateobs, vrel from apogeeVisit where apogee_id = @id order by dateobs";                
             }
         }
 
@@ -809,110 +787,118 @@ namespace SkyServer.Tools.Explore
 
         public string getObjIDFromPlfib(short? plate, int? mjd, short? fiber )
         {
-            string cmd =" select cast(p.objId as binary(8)) as objId," +
-                        " cast(s.specObjId as binary(8)) as specObjId" +
-                        " from SpecObjAll s JOIN PhotoTag p ON s.bestobjid=p.objid JOIN PlateX q ON s.plateId=q.plateId" +
-                        " where s.mjd = " + mjd +
-                        " and s.fiberId = " + fiber +
-                        " and q.plate = " + plate;
+            string cmd =@" select cast(p.objId as binary(8)) as objId,cast(s.specObjId as binary(8)) as specObjId
+                         from SpecObjAll s JOIN PhotoTag p ON s.bestobjid=p.objid JOIN PlateX q ON s.plateId=q.plateId
+                         where s.mjd = " + mjd +" and s.fiberId = " + fiber +" and q.plate = " + plate;
             return cmd;            
         }
 
         public string getAPOGEEId_PlateFiberMjd(short? plate, int? mjd, short? fiber) {
     
-            string cmd =" select s.apstar_id" +
-                        " from apogeeVisit v JOIN apogeeStar s ON s.apogee_id=v.apogee_id" +
-                        " where v.plate = " + plate+
-                        " and v.mjd = " +mjd+
-                        " and v.fiberID = "+fiber;
+            string cmd =@" select s.apstar_id
+                         from apogeeVisit v JOIN apogeeStar s ON s.apogee_id=v.apogee_id
+                         where v.plate = " + plate+" and v.mjd = " +mjd+" and v.fiberID = "+fiber;
             return cmd;            
         }
+        
 
         public string getApogeeFromEq(double? qra, double? qdec, double searchRadius)
         {
-            string cmd = " select top 1 p.apstar_id" +
-                    " from apogeeStar p, dbo.fGetNearestApogeeStarEq("+qra+","+qdec+","+searchRadius+") n" +
-                    " where p.apstar_id=n.apstar_id";
+            string cmd = @" select top 1 p.apstar_id                     
+                   from apogeeStar p, dbo.fGetNearestApogeeStarEq(" + qra + "," + qdec + "," + searchRadius + ") n where p.apstar_id=n.apstar_id";
             return cmd;
 
         }
 
         public string getPhotoFromEq(double? qra, double? qdec, double searchRadius) { 
-             string cmd = " select top 1 cast(p.objId as binary(8)) as objId," +
-                    " cast(p.specObjId as binary(8)) as specObjId" +
-                    " from PhotoTag p, dbo.fGetNearbyObjAllEq("+qra+","+qdec+","+searchRadius+") n" +
-                    " where p.objId=n.objId order by n.mode asc, n.distance asc";
+             string cmd = @" select top 1 cast(p.objId as binary(8)) as objId, cast(p.specObjId as binary(8)) as specObjId
+                         from PhotoTag p, dbo.fGetNearbyObjAllEq("+qra+","+qdec+","+searchRadius+") n  where p.objId=n.objId order by n.mode asc, n.distance asc";
              return cmd;
         }
 
         public string getpmtsFromEq(double? qra, double? qdec, double searchRadius)
         { 
-            string cmd = " select top 1 cast(p.objId as binary(8)) as objId," +
-                    " cast(p.specObjId as binary(8)) as specObjId" +
-                    " from PhotoTag p, dbo.fGetNearbyObjAllEq(" + qra + "," + qdec + "," + searchRadius + ") n" +
-                    " where p.objId=n.objId order by n.mode asc, n.distance asc";
+            string cmd = @" select top 1 cast(p.objId as binary(8)) as objId, cast(p.specObjId as binary(8)) as specObjId 
+                        from PhotoTag p, dbo.fGetNearbyObjAllEq(" + qra + "," + qdec + "," + searchRadius + ") n where p.objId=n.objId order by n.mode asc, n.distance asc";
             return cmd;
         }
 
         public string getpmtsFromSpecWithApogeeId(string whatdoiget, string sid)
         {
-            string cmd = " select st.apstar_id, st.ra, st.dec" +
-                    " from apogeeStar st" +
-                    " where st." + whatdoiget + "="+sid;
+            string cmd = @" select st.apstar_id, st.ra, st.dec
+                         from apogeeStar st
+                         where st." + whatdoiget + "="+sid;
             return cmd;
         }
 
         public string getpmtsFromSpecWithSpecobjID(long? sid) {
-            string cmd = " select p.ra, p.dec," +
-                    " cast(p.fieldId as binary(8)) as fieldId," +
-                    " cast(s.specObjId as binary(8)) as specObjId," +
-                    " cast(p.objId as binary(8)) as objId," +
-                    " cast(s.plateId as binary(8)) as plateId, s.mjd, s.fiberId, q.plate" +
-                    " from SpecObjAll s JOIN PhotoTag p ON s.bestobjId=p.objid JOIN PlateX q ON s.plateId=q.plateId" +
-                    " where s.specObjId="+sid;
+            string cmd = @" select p.ra, p.dec,
+                    cast(p.fieldId as binary(8)) as fieldId,
+                    cast(s.specObjId as binary(8)) as specObjId,
+                    cast(p.objId as binary(8)) as objId,
+                    cast(s.plateId as binary(8)) as plateId, s.mjd, s.fiberId, q.plate
+                    from SpecObjAll s JOIN PhotoTag p ON s.bestobjId=p.objid JOIN PlateX q ON s.plateId=q.plateId
+                    where s.specObjId="+sid;
             return cmd;
         }
 
         public string getpmtsFromPhoto(long? id)
         {
-            string cmd = " select p.ra, p.dec, p.run, p.rerun, p.camcol, p.field," +
-                    " cast(p.fieldId as binary(8)) as fieldId," +
-                    " cast(s.specobjid as binary(8)) as specObjId," +
-                    " cast(p.objId as binary(8)) as objId " +
-                    " from PhotoTag p " +
-                    " left outer join SpecObjAll s ON s.bestobjid=p.objid AND s.scienceprimary=1" +
-                    " where p.objId=dbo.fObjId("+id+")";
+            string cmd = @" select p.ra, p.dec, p.run, p.rerun, p.camcol, p.field,
+                     cast(p.fieldId as binary(8)) as fieldId,
+                     cast(s.specobjid as binary(8)) as specObjId,
+                     cast(p.objId as binary(8)) as objId 
+                     from PhotoTag p 
+                     left outer join SpecObjAll s ON s.bestobjid=p.objid AND s.scienceprimary=1
+                     where p.objId=dbo.fObjId("+id+")";
             return cmd;
         }
 
         public string getPlateFiberFromSpecObj(string specObjId) {
 
-            string cmd = " select cast(s.plateId as binary(8)) as plateId, s.mjd, s.fiberId, q.plate" +
-                        " from SpecObjAll s JOIN PlateX q ON s.plateId=q.plateId where specObjId="+ long.Parse(specObjId.Substring(2), NumberStyles.AllowHexSpecifier);
+            string cmd = @"select cast(s.plateId as binary(8)) as plateId, s.mjd, s.fiberId, q.plate 
+                           from SpecObjAll s JOIN PlateX q ON s.plateId=q.plateId 
+                           where specObjId="+ long.Parse(specObjId.Substring(2), NumberStyles.AllowHexSpecifier);
             return cmd;            
         }
 
-        public string getParseApogeeId(string id) {
-            string cmd = "select apstar_id from apogeeStar where apstar_id="+id;
+        public string getPlateFiberFromSpecObj(long specObjId)
+        {
+
+            string cmd = @" select cast(s.plateId as binary(8)) as plateId, s.mjd, s.fiberId, q.plate
+                            from SpecObjAll s JOIN PlateX q ON s.plateId=q.plateId 
+                            where specObjId=" + specObjId;
             return cmd;
+        }
+
+        public string getParseApogeeId(string id) {
+            return  "select apstar_id from apogeeStar where apstar_id="+id;
+            
         }
 
         public string getUnit(string tablename, string name) {
-            string cmd = "select unit from DBcolumns where tablename='"+tablename+"' and [name]='"+name+"'";
-            return cmd;
+            return "select unit from DBcolumns where tablename='"+tablename+"' and [name]='"+name+"'";           
         }
 
         public string getSpec(long? specId) {
-            string cmd = "select specobjid,survey from specobjall where specobjid= " + specId;
-            return cmd;
+            return "select specobjid,survey from specobjall where specobjid= " + specId;           
         }
 
         public string getApogee(string apogeeId) {
-            string cmd = "select apstar_id, ra, dec, apogee_id, glon, glat,location_id,commiss" +
-                        " from apogeeStar" +
-                        " where apstar_id="+apogeeId;
+            string cmd = @" select apstar_id, ra, dec, apogee_id, glon, glat,location_id,commiss
+                            from apogeeStar
+                            where apstar_id="+apogeeId;
             return cmd;
         }
+
+        public string getPlateFromApogee(string apoggeId) { 
+           
+             string cmd = @"select  top 1   a.ra,    a.dec,   a.apstar_id,    a.apogee_id, v.plate,v.fiberId,v.mjd 
+                            from apogeeStar a join apogeeVisit v on a.apogee_id=v.apogee_id 
+                            where a.apstar_id = '"+apogeeId+"'";
+             return cmd;         
+        }
+
         #endregion
         
 

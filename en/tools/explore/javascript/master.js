@@ -155,16 +155,17 @@ function resolveCoords() {
 }
 
 function press_ok(kind) {
+    var windowPage = "summary.aspx";
     var f = (document.layers) ? document.ctrl.document.forms[0] : document.forms[0];
     switch (kind) {
         case 'name':
             //callNameResolver();
             break;
         case "objid":
-            window.location = 'obj.aspx?id=' + f.searchObjID.value;
+            window.location = windowPage+'?id=' + f.searchObjID.value;
             break;
         case "radec":
-            window.location = 'obj.aspx?ra=' + f.searchRA.value + '&dec=' + f.searchDec.value;
+            window.location = windowPage+'?ra=' + f.searchRA.value + '&dec=' + f.searchDec.value;
             break;
         case "sdss":
             var a = String(f.searchSDSS.value).split("-");
@@ -185,13 +186,13 @@ function press_ok(kind) {
             s += padHex(cf, 4);
             s += padHex(obj, 4);
 
-            window.location = 'obj.aspx?id=' + s;
+            window.location = windowPage+'?id=' + s;
             break;
         case "specid":
-            window.location = 'obj.aspx?sid=' + encodeURIComponent(f.searchSpecID.value);
+            window.location = windowPage+'?sid=' + encodeURIComponent(f.searchSpecID.value);
             break;
         case "plfib":
-            window.location = 'obj.aspx?plate=' + f.searchPlate.value + '&mjd=' + f.searchMJD.value + '&fiber=' + f.searchFiber.value;
+            window.location = windowPage+'?plate=' + f.searchPlate.value + '&mjd=' + f.searchMJD.value + '&fiber=' + f.searchFiber.value;
             break;
         default:
             alert('Not supported');

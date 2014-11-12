@@ -39,11 +39,13 @@ namespace SkyServer.Tools.Explore
                 int col = 0;
                 int row = 0;
                 string c = "st";
+                string specObjId;
                 Response.Write("<table>\n");
                 Response.Write("<tr>");
                 while (reader.Read())
                 {
-                    sid = u + RunQuery.checkNullorParse(reader.GetValue(0)) + "'>";
+                    specObjId = reader["specObjId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["specObjId"]);
+                    sid = u + specObjId + "'>";
                     string v = "[" + reader.GetValue(1).ToString() + "]&nbsp;";
                     v += reader.GetValue(2).ToString() + " z=" + reader.GetValue(3).ToString();
                     Response.Write("<td nowrap class='" + c + "'>" + sid + v + "</a></td>\n");

@@ -1,5 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="MetaDataControl.ascx.cs" Inherits="SkyServer.Tools.Explore.MetaDataControl" %>
 <%@ Import Namespace="SkyServer" %>
+<%if(master.objId != null && !master.objId.Equals("")) {%>
  <div id="metadata">
     <table class="content">
         <tr>
@@ -58,3 +59,9 @@
         </tr>
     </table>
        </div> <!-- end of metadata div -->
+
+<%}else{%>
+             <table cellpadding=2 cellspacing=2 border=0 width=625>
+                  <tr><td class='nodatafound'>Object is out of SDSS footprint</td></tr>
+            </table>
+<%}%>

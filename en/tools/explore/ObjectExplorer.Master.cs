@@ -16,57 +16,149 @@ namespace SkyServer.Tools.Explore
     public partial class ObjectExplorer : System.Web.UI.MasterPage
     {
         protected const string ZERO_ID = "0x0000000000000000";
-
+        
+        protected Globals globals;
+        public ExplorerQueries exploreQuery;
+        public RunQuery runQuery;
+        
         protected HRefs hrefs = new HRefs();
 
         protected long? id = null;
         public string apid;
         protected long? specId = null;
 
-        protected int tabwidth = 128;
-        
-        protected string url;
+        protected int tabwidth = 128;        
+       
         protected string enUrl;
+        
+      
 
-        double? ra;
-        double? dec;
-        public string objId;
-        string fieldId;
-        string specObjId;
-        string plateId;
-        int? mjdNum;
-        short? fiberId;
-        int? run;
-        short? rerun;
-        short? camcol;
-        short? field;
-        protected int? plate = null;
+        protected double? ra = null;
+        protected double? dec = null;
 
-        protected Globals globals;
-        public ExplorerQueries exploreQuery;
-        public RunQuery runQuery;
+        protected double L = 0;
+        protected double B = 0; // galactic coordinates, which we will convert into from ra, dec
 
+        protected double? ApogeeRa = null;
+        protected double? ApogeeDec = null;
+
+        protected double? glon = null;
+        protected double? glat = null;
+
+        public string specObjId = null;
+        protected string apStar;
+        protected string starName;
+        protected long? apLocationID;
+        protected long? commissioningFlag;
+
+        protected string plateId = null;
+        protected string otype = null;
+
+        protected int? clean = null;
+        protected int? mode = null;
+
+        protected string survey;
+
+        protected int? imageMJD = null;
+
+        protected long origSpecId;
+        protected bool otherSpec = false;
+     
+        protected string link;
+  
+        protected string cmd = null;
+        protected string name = null;
+        protected string url = null;
+
+        string sidstring = null;
+        long? sid = null;
+
+
+        double? qra = null;
+        double? qdec = null;
+
+        int? mjd = null;
+        short? plate = null;
+        short? fiber = null;
+
+        protected short? fiberId = null;
+        protected int? mjdNum = null;
+        public string objId = null;
+        string fieldId = null;
+        string idstring = null; // if it's an APOGEE object, we need to store the value as a string instead.
+
+        int? run = null;
+        int? rerun = null;
+        short? camcol = null;
+        short? field = null;
+
+
+        
         protected void Page_Load(object sender, EventArgs e)
         {
-            runQuery = new RunQuery();
+            
             globals = (Globals)Application[Globals.PROPERTY_NAME];
+            runQuery = new RunQuery();
+            exploreQuery = new ExplorerQueries();
+            
+
+            if (Request.QueryString.Keys.Count == 0)
+            {
+                id = globals.ExploreDefault;
+            }
+
+            foreach (string key in Request.QueryString.Keys)
+            {
+                if (key == "id")
+                {
+                    string s = Request.QueryString["id"];
+                    id = Utilities.ParseId(s);
+                    objId = id.ToString();
+                }
+                if (key == "sid")
+                {
+                    string s = Request.QueryString["sid"];
+                    sidstring = (string.Equals(s, "")) ? s : Utilities.ParseId(s).ToString();
+                    specId = Utilities.ParseId(sidstring);
+                }
+                if (key == "spec")
+                {
+                    string s = Request.QueryString["spec"];
+                    sidstring = (string.Equals(s, "")) ? s : Utilities.ParseId(s).ToString();
+                    specId = Utilities.ParseId(sidstring);
+                }
+                if (key == "apid")
+                {
+                    string s = HttpUtility.UrlEncode( Request.QueryString["apid"] );
+                    try
+                    {
+                        if (s != null & !"".Equals(s))
+                        {
+                            apid = s;
+                        }
+                    }
+                    catch (Exception) { }
+                }
+                if (key == "ra") qra = Utilities.parseRA(Request.QueryString["ra"]); // need to parse J2000
+                if (key == "dec") qdec = Utilities.parseDec(Request.QueryString["dec"]); // need to parse J2000
+                if (key == "plate") plate = short.Parse(Request.QueryString["plate"]);
+                if (key == "mjd") mjd = int.Parse(Request.QueryString["mjd"]);
+                if (key == "fiber") fiber = short.Parse(Request.QueryString["fiber"]);
+            }
+
+            //This is imp function to get all different ids.
+            getObjPmts();
+
+            //if these are updated before
+            if (id == null && objId != null) id = Utilities.ParseId(objId);
+            if(specId == null && specObjId != null)specId = Utilities.ParseId(specObjId);            
+
             url = getURL();
             enUrl = getEnURL();
-
-            string qId = HttpUtility.UrlEncode(Request.QueryString["id"]);
-            string qSpecId = Request.QueryString["spec"];
-            string qApogeeId = HttpUtility.UrlEncode(Request.QueryString["apid"]);
-
-            id = Utilities.ParseId(qId);
-            specId = Utilities.ParseId(qSpecId);
-            apid = ("".Equals(qApogeeId))?null:qApogeeId;
-
-            objId = qId;
+        
             
-            if (id.HasValue) pmtsFromPhoto(id, specId);            
-                        
-            ///This is new added 
-            exploreQuery = new ExplorerQueries(id.ToString(), specId.ToString(), apid, fieldId, plateId, fiberId.ToString());  
+            ///This is new addition (will try to remove this by making queries static)            
+            exploreQuery = new ExplorerQueries(id, specId, apid, fieldId, plateId, fiberId.ToString());  
            
             // common query to explorer
             string allId ="id="+id + "&spec=" + specId + "&apid=" + apid;
@@ -79,10 +171,12 @@ namespace SkyServer.Tools.Explore
             hrefs.PhotoTag = explore + exploreQuery.PhotoTagQuery + "&name=PhotoTag";
             hrefs.Field    = explore + exploreQuery.FieldQuery + "&name=Field";
             hrefs.Frame    = explore + exploreQuery.FrameQuery + "&name=Frame";
-            
 
-            if (globals.ReleaseNumber >= 8)
-                    hrefs.Galaxyzoo = "galaxyzoo.aspx?"+allId;
+
+            if (globals.ReleaseNumber >= 8) 
+            {
+                hrefs.Galaxyzoo = "galaxyzoo.aspx?" + allId;
+            }            
 
             if (globals.ReleaseNumber > 4)
             {
@@ -155,7 +249,7 @@ namespace SkyServer.Tools.Explore
                 if (globals.ReleaseNumber >= 8)
                 {
                     hrefs.theParameters = "parameters.aspx?"+allId;
-                    hrefs.stellarMassStarformingPort = explore + exploreQuery.stellarMassStarformingPortQuery+ "&name=stellarMassStarFormingPort";
+                    hrefs.stellarMassStarformingPort = explore + exploreQuery.stellarMassStarformingPortQuery + "&name=stellarMassStarFormingPort";
                     hrefs.stellarMassPassivePort     = explore + exploreQuery.stellarMassPassivePortQuery+ "&name=stellarMassPassivePort";
                     hrefs.emissionLinesPort          = explore + exploreQuery.emissionLinesPortQuery + "&name=emissionlinesPort";
                     hrefs.stellarMassPCAWiscBC03     = explore + exploreQuery.stellarMassPCAWiscBC03Query+"&name=stellarMassPCAWiscBC03";
@@ -176,46 +270,46 @@ namespace SkyServer.Tools.Explore
              }
         }
 
-        public void pmtsFromPhoto( long? id, long? specId) 
-        {
-            exploreQuery = new ExplorerQueries();
-            DataSet ds = runQuery.RunCasjobs(exploreQuery.getpmtsFromPhoto(id));
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
-            {
-                 if (reader.Read())
-                 {
-                    ra = reader.GetDouble(0);
-                    dec = reader.GetDouble(1);
-                    run = reader.GetInt16(2);
-                    rerun = reader.GetInt16(3);
-                    camcol = reader.GetByte(4);
-                    field = reader.GetInt16(5);
-                    fieldId = RunQuery.checkNullorParse(reader.GetValue(6));
-                    specObjId = RunQuery.checkNullorParse(reader.GetValue(7));
-                    objId = RunQuery.checkNullorParse(reader.GetValue(8));
-                 }               
-            }
+        //public void pmtsFromPhoto( long? id, long? specId) 
+        //{
+        //    exploreQuery = new ExplorerQueries();
+        //    DataSet ds = runQuery.RunCasjobs(exploreQuery.getpmtsFromPhoto(id));
+        //    using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+        //    {
+        //         if (reader.Read())
+        //         {
+        //            ra = reader.GetDouble(0);
+        //            dec = reader.GetDouble(1);
+        //            run = reader.GetInt16(2);
+        //            rerun = reader.GetInt16(3);
+        //            camcol = reader.GetByte(4);
+        //            field = reader.GetInt16(5);
+        //            fieldId = RunQuery.checkNullorParse(reader.GetValue(6));
+        //            specObjId = RunQuery.checkNullorParse(reader.GetValue(7));
+        //            objId = RunQuery.checkNullorParse(reader.GetValue(8));
+        //         }               
+        //    }
            
-            if (specId == null)
-            {
-                specId = Utilities.ParseId(specObjId);
-            } 
+        //    if (specId == null)
+        //    {
+        //        specId = Utilities.ParseId(specObjId);
+        //    } 
             
-            if (specId != null)
-            {
-                ds = runQuery.RunCasjobs(exploreQuery.getPlateFiberFromSpecObj(specObjId.ToString()));
-                using (DataTableReader reader = ds.Tables[0].CreateDataReader())
-                {
-                     if (reader.Read())
-                     {
-                         plateId = RunQuery.checkNullorParse(reader.GetValue(0));
-                         mjdNum = reader.GetInt32(1);
-                         fiberId = reader.GetInt16(2);
-                         plate = reader.GetInt16(3);
-                     }
-                 }
-             }            
-        }
+        //    if (specId != null)
+        //    {
+        //        ds = runQuery.RunCasjobs(exploreQuery.getPlateFiberFromSpecObj(specObjId.ToString()));
+        //        using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+        //        {
+        //             if (reader.Read())
+        //             {
+        //                 plateId = RunQuery.checkNullorParse(reader.GetValue(0));
+        //                 mjdNum = reader.GetInt32(1);
+        //                 fiberId = reader.GetInt16(2);
+        //                 plate = reader.GetInt16(3);
+        //             }
+        //         }
+        //     }            
+        //}
 
         public string getURL()
         {
@@ -276,8 +370,7 @@ namespace SkyServer.Tools.Explore
   
 
         public string getUnit(string tableName, string name)
-        {
-            exploreQuery = new ExplorerQueries();
+        {            
             DataSet ds = runQuery.RunCasjobs(exploreQuery.getUnit(tableName,name));
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
@@ -395,5 +488,238 @@ namespace SkyServer.Tools.Explore
                 Response.Write("</table>");
             }
         }
+
+
+        private void getObjPmts()
+        {
+            if (fiber.HasValue && plate.HasValue) ObjIDFromPlfib(plate, mjd, fiber);
+            else if (qra.HasValue && qdec.HasValue) pmtsFromEq(qra, qdec);
+            else if (sid.HasValue || !String.IsNullOrEmpty(sidstring)) pmtsFromSpec(sidstring);
+            else if (id.HasValue && !sid.HasValue) pmtsFromPhoto(id);
+            else if (!String.IsNullOrEmpty(apid)) parseApogeeID(apid);
+        }
+
+        private void ObjIDFromPlfib(short? plate, int? mjd, short? fiber)
+        {
+            DataSet ds = runQuery.RunCasjobs(exploreQuery.getObjIDFromPlfib(plate, mjd, fiber));
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            {
+                if (reader.Read())
+                {
+                    objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
+                    specObjId = reader["specObjId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["specObjId"]);
+                }
+            } // using DataReader
+
+            // if we couldn't find that plate/mjd/fiber, maybe it's an APOGEE object
+            if (String.IsNullOrEmpty(objId))
+            {
+                ds = runQuery.RunCasjobs(exploreQuery.getAPOGEEId_PlateFiberMjd(plate, mjd, fiber));
+                using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+                {
+                    if (reader.Read())
+                    {
+                        apid = reader.GetString(0);
+                    }
+                } // using DataReader                
+            }
+
+        }
+
+        private void apogeeFromEq(double? qra, double? qdec)
+        {
+            DataSet ds = runQuery.RunCasjobs(exploreQuery.getApogeeFromEq(qra, qdec, 0.5 / 60));
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            {
+                if (reader.Read())
+                {
+                    apid = reader.GetString(0);
+                }
+            }
+        }
+
+        private void photoFromEq(double? qra, double? qdec)
+        {
+            DataSet ds = runQuery.RunCasjobs(exploreQuery.getPhotoFromEq(qra, qdec, globals.EqSearchRadius));
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            {
+                if (reader.Read())
+                {
+                    objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
+                    specObjId = reader["specObjId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["specObjId"]);
+                }
+            }
+        }
+
+        private void pmtsFromEq(double? qra, double? qdec)
+        {
+            DataSet ds = runQuery.RunCasjobs(exploreQuery.getpmtsFromEq(qra, qdec, globals.EqSearchRadius));
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            {
+                if (reader.Read())
+                {
+                    objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
+                    specObjId = reader["specObjId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["specObjId"]);
+                }
+            }
+            if (objId != null && !objId.Equals("") )
+            {
+                // This is required to get the primary specObjId (with sciprimary=1). PhotoTag.specObjId is not necessarily primary...
+                pmtsFromPhoto(Utilities.ParseId(objId));
+                apogeeFromEq(qra, qdec);
+            }
+        }
+
+
+        private void pmtsFromSpec(string sid)
+        {
+            long? sidnumber = 0;
+            try
+            {
+                pmtsFromSpecWithApogeeID(sidstring);
+                if (apid != null && apid != string.Empty)
+                {
+                    photoFromEq(ra, dec);
+                }
+            }
+            catch (Exception e)
+            {
+            }
+
+            try
+            {
+                sidnumber = Convert.ToInt64(sidstring);
+                pmtsFromSpecWithSpecobjID(sidnumber);
+                if (specObjId != null && specObjId != ZERO_ID)
+                {
+                    apogeeFromEq(ra, dec);
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        private void pmtsFromSpecWithApogeeID(string sid)
+        {
+            string whatdoiget = null;
+            if (sid.StartsWith("apogee")) { whatdoiget = "apstar_id"; } else { whatdoiget = "apogee_id"; }
+
+            DataSet ds = runQuery.RunCasjobs(exploreQuery.getpmtsFromSpecWithApogeeId(whatdoiget, sid));
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            {
+                if (reader.Read())
+                {
+                    apid = reader.GetString(0);
+                    ra = reader.GetDouble(1);
+                    dec = reader.GetDouble(2);
+                }
+            } // using DataReader        
+        }
+      
+        private void pmtsFromSpecWithSpecobjID(long? sid)
+        {
+            DataSet ds = runQuery.RunCasjobs(exploreQuery.getpmtsFromSpecWithSpecobjID(sid));
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            {
+                if (reader.Read())
+                {
+                    ra = (double)reader["ra"];
+                    dec = (double)reader["dec"];
+                    fieldId = reader["fieldId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["fieldId"]);
+                    objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
+                    specObjId = reader["specObjId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["specObjId"]);
+                    plateId = reader["plateId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["plateId"]);
+                    mjd = (int)reader["mjd"];
+                    fiber = (short)reader["fiberId"];
+                    plate = (short)reader["plate"];
+                }
+            } // using DataReader
+
+        }
+
+    
+        private void pmtsFromPhoto(long? id)
+        {
+            DataSet ds = runQuery.RunCasjobs(exploreQuery.getpmtsFromPhoto(id));
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            {
+                if (reader.Read())
+                {
+                    ra = (double)reader["ra"];
+                    dec = (double)reader["dec"];
+                    run = (short)reader["run"];
+                    rerun = (short)reader["rerun"];
+                    camcol = (byte)reader["camcol"];
+                    field = (short)reader["field"];
+
+                    fieldId = reader["fieldId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["fieldId"]);
+                    objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
+                    specObjId = reader["specObjId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["specObjId"]);
+                    
+                }
+            }
+
+            // get the plateId and fiberId from the specObj, if it exists
+            if (specObjId != null && !ZERO_ID.Equals(specObjId))
+            {
+                ds = runQuery.RunCasjobs(exploreQuery.getPlateFiberFromSpecObj(specObjId));
+                using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+                {
+                    if (reader.Read())
+                    {
+                        plateId = reader["plateId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["plateId"]);
+                      
+                        mjd = reader.GetInt32(1);
+                        fiber = reader.GetInt16(2);
+                        plate = reader.GetInt16(3);
+                    }
+                } // using DataReader
+            }
+
+            try
+            {
+                apogeeFromEq(ra, dec);
+            }
+            catch { }
+        }
+
+        private void parseApogeeID(string idstring)
+        {
+            // ds = runQuery.RunCasjobs(exploreQuery.getParseApogeeId(idstring));
+            //using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            //{
+            //    if (reader.Read())
+            //    {
+            //        apid = reader.GetString(0);
+            //    }
+            //}
+            long amjd = 0;
+            long afiber =0;
+            long aplate =0;
+            DataSet ds = runQuery.RunCasjobs(exploreQuery.getPlateFromApogee(apid));
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            {
+                if (reader.Read())
+                {
+                    amjd = (long)reader["mjd"];
+                    afiber = (long)reader["fiberId"];
+                    aplate = (long)reader["plate"];
+                }
+            }
+
+            ds = runQuery.RunCasjobs(exploreQuery.getObjIDFromPlfib((short)aplate, (int)amjd, (short)afiber));
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            {
+                if (reader.Read())
+                {
+                    objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
+                    specObjId = reader["specObjId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["specObjId"]);
+                }
+            }
+
+        }
+
+        
     }
 }

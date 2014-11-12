@@ -29,10 +29,10 @@ namespace SkyServer.Tools.Explore
         {
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             master = (ObjectExplorer)Page.Master;
-            runQuery();
-      
+            if (master.objId != null && !master.objId.Equals(""))
+            runQuery();      
         }
-
+     
         private void runQuery()
         {
             DataSet ds = master.runQuery.RunCasjobs(master.exploreQuery.getObjParamaters(master.objId));
@@ -42,22 +42,14 @@ namespace SkyServer.Tools.Explore
                 {
                     if (reader.HasRows)
                     {
-                        ra = reader.GetDouble(0);
-                        dec = reader.GetDouble(1);
-
-                        if (!reader.IsDBNull(2))
-                            specObjId = reader.GetInt64(2);
-
-                        clean = reader.GetInt32(3);
-
-                        if (!reader.IsDBNull(4))
-                            survey = reader.GetString(4);
-
-                        mode = reader.GetInt32(5);
-
-                        otype = reader.GetString(6);
-
-                        imageMJD = reader.GetInt32(7);
+                        ra = (double)reader["ra"];
+                        dec = (double)reader["dec"];
+                        specObjId = reader["specObjId"] is DBNull ? -999999 : (long)(reader["specObjId"]);                       
+                        clean = (int)reader["clean"];
+                        survey = reader["survey"] is DBNull ? null:(string)reader["survey"];
+                        mode = (int)reader["mode"];
+                        otype = reader["otype"] is DBNull ? null : (string)reader["otype"];
+                        imageMJD = (int)reader["mjd"];
                     }
                 }
             }
