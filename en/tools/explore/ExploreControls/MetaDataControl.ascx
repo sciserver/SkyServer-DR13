@@ -18,7 +18,7 @@
                     </tr>
                     <tr>
                         <td class="t" align="center" colspan="2"><b><%=otype%></b></td>
-                        <td class="t" align="center" colspan="2"><%=master.ID%></td>
+                        <td class="t" align="center" colspan="2"><%=master.id%></td>
                     </tr>
                     <tr>
                         <td class="h" align="center" colspan="2">RA, Dec</td>

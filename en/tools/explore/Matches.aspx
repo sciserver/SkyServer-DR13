@@ -25,13 +25,12 @@
     </td></tr>
     <tr><td>
     <%  
-        DataSet ds = master.runQuery.RunCasjobs(master.exploreQuery.matches1);
-        master.showHTable(ds, 400, "PhotoObj");
+       
+        master.showHTable(ds_match1, 400, "PhotoObj");
     %>
     <h3>Other Observations of this "Thing"</h3>
-    <%
-        ds = master.runQuery.RunCasjobs(master.exploreQuery.matches2);           
-        master.showHTable(ds, 400, "PhotoObj");        
+    <%        
+        master.showHTable(ds_match2, 400, "PhotoObj");        
      %>
     </td></tr></table>
     </div>

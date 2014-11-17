@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="ObjectExplorer.Master" AutoEventWireup="true" CodeBehind="Plate.aspx.cs" Inherits="SkyServer.Tools.Explore.Plate" %>
 <%@ Import Namespace="System.Data" %>
+<%@ Import Namespace="SkyServer" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="OEHead" runat="server">
     <style type="text/css">
         div.content       
@@ -46,8 +47,7 @@
     <tr>
     <td valign="top">
         <div id="plate">
-        <%   
-            DataSet ds =master.runQuery.RunCasjobs(master.exploreQuery.Plate);
+        <%           
             master.showVTable(ds, 200);
         %>
         </div>

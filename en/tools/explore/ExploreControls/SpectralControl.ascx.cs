@@ -34,10 +34,12 @@ namespace SkyServer.Tools.Explore
         protected string targeting_flags;
         protected long? specObjId;
 
+        protected RunQuery runQuery;
         protected void Page_Load(object sender, EventArgs e)
         {
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             master = (ObjectExplorer)Page.Master;
+            runQuery = new RunQuery();
             try
             {
                 //objId = Request.QueryString["id"];
@@ -50,11 +52,15 @@ namespace SkyServer.Tools.Explore
                 specObjId = null;
             }
             if(specId != null && !specId.Equals(""))
-            runQuery();
+            executeQuery();
         }
 
-        private void runQuery() {
-            DataSet ds = master.runQuery.RunCasjobs(master.exploreQuery.getSpectroQuery(specId,objId));
+        private void executeQuery()
+        {
+
+            string cmd = ExplorerQueries.getSpectroQuery.Replace("@objId", objId).Replace("@specId", master.specId.ToString());
+            DataSet ds = runQuery.RunCasjobs(cmd);
+
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
                 if (reader.Read())

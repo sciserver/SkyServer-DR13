@@ -55,11 +55,11 @@
                    </tr>
                    <tr align='left' >
                        <td  valign='top' class='h'><span>Redshift (z)</span></td>
-                       <td valign='top' class='t'><%=redshift_z %></td>
+                       <td valign='top' class='t'><%=redshift_z.ToString("F3") %></td>
                    </tr>
                    <tr align='left' >
                        <td  valign='top' class='h'><span>Redshift error</span></td>
-                       <td valign='top' class='t'><%=redshift_err %></td>
+                       <td valign='top' class='t'><%=redshift_err.ToString("F5") %></td>
                    </tr>
                    <tr align='left' >
                        <td  valign='top' class='h'><span>Redshift flags</span></td>
@@ -87,11 +87,11 @@
                    </tr>
                    <tr align='left' >
                        <td  valign='top' class='h'><span>Velocity dispersion (km/s)</span></td>
-                       <td valign='top' class='t'><%=veldisp %></td>
+                       <td valign='top' class='t'><%=veldisp.ToString("F2") %></td>
                    </tr>
                    <tr align='left' >
                        <td  valign='top' class='h'><span>veldisp_error</span></td>
-                       <td valign='top' class='t'><%=veldisp_err %></td>
+                       <td valign='top' class='t'><%=veldisp_err.ToString("F3") %></td>
                    </tr>
                    <tr align='left' >
                        <td  valign='top' class='h'><span>targeting_flags</span></td>

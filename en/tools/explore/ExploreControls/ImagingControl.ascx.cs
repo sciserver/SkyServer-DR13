@@ -56,10 +56,13 @@ namespace SkyServer.Tools.Explore
 
         protected string flagsLink = "";
 
+        protected RunQuery runQuery;
         public void Page_Load(object sender, EventArgs e)
         {
             globals = (Globals)Application[Globals.PROPERTY_NAME];            
             master  = (ObjectExplorer)Page.Master;
+            runQuery = new RunQuery();
+
             try
             {
                 //objId = Request.QueryString["id"];
@@ -73,31 +76,29 @@ namespace SkyServer.Tools.Explore
             flagsLink = sdssUrl + "algorithms/photo_flags_recommend.php";
 
             if(objId != null && !objId.Equals(""))
-            runQuery();
+            execQuery();
         }
 
-        private void runQuery()
+        private void execQuery()
         {
-            DataSet ds = master.runQuery.RunCasjobs(master.exploreQuery.getImagingQuery(objId));
+            string cmd = ExplorerQueries.getImagingQuery.Replace("@objId", objId);
+            DataSet ds = runQuery.RunCasjobs(cmd);
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
                 if (reader.Read())
                 {
                     if (reader.HasRows)
                     {
-                        //// ---
+                        //photoObjall
                         flag = (string) reader["flags"];
                         ra =  (double) reader["ra"];
                         dec = (double) reader["dec"];
-                        run = reader["run"] is DBNull ? -9 : (short)reader["run"];
-                        rerun = reader["rerun"] is DBNull ? -9 : (short)reader["rerun"];
-                        camcol = reader["camcol"] is DBNull ? -9 : (byte)reader["camcol"];
-                        field = reader["field"] is DBNull ? -9 : (short)reader["field"];
-                        fieldId = reader["fieldId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["fieldId"]);
+                        run = reader["run"] is DBNull ? -9999 : (short)reader["run"];
+                        rerun = reader["rerun"] is DBNull ? -9999 : (short)reader["rerun"];
+                        camcol = reader["camcol"] is DBNull ? -9999 : (byte)reader["camcol"];
+                        field = reader["field"] is DBNull ? -9999 : (short)reader["field"];
+                        fieldId = reader["fieldId"] is DBNull ? " " : Functions.BytesToHex((byte[])reader["fieldId"]);
                         objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
-                       
-
-                        //photoObjall
                         clean = reader["clean"] is DBNull ? -99999 : (int)reader["clean"]; ;
                         otype = reader["clean"] is DBNull ? "" :(string)reader["otype"];
 
@@ -116,26 +117,26 @@ namespace SkyServer.Tools.Explore
                         err_z = reader["err_z"] is DBNull ? -999.99 : (float)reader["err_z"];
 
                         ////--- PhotoObj
-                        mode = reader["mode"] is DBNull ? "" : (string)reader["mode"];
+                        mode = reader["mode"] is DBNull ? " - " : (string)reader["mode"];
 
-                        mjdNum = reader["mjdNum"] is DBNull ? -9 :(int) reader["mjdNum"];
+                        mjdNum = reader["mjdNum"] is DBNull ? -99999 :(int) reader["mjdNum"];
 
                         otherObs = reader["Other observations"] is DBNull ? -99999 : (int)reader["Other observations"];
 
                         parentId = reader["parentID"] is DBNull ? -99999 : (long)reader["parentID"];
 
-                        nchild = reader["nChild"] is DBNull ? -999: (short)reader["nChild"];
+                        nchild = reader["nChild"] is DBNull ? -99999 : (short)reader["nChild"];
 
-                        extinction_r = reader["extinction_r"] is DBNull ? null : (string)reader["extinction_r"];
+                        extinction_r = reader["extinction_r"] is DBNull ? " - " : (string)reader["extinction_r"];
 
-                        petrorad_r = reader["petrorad_r"] is DBNull ? null : (string)reader["petrorad_r"];
+                        petrorad_r = reader["petrorad_r"] is DBNull ? " - " : (string)reader["petrorad_r"];
 
                         ////--- PhotoZ, photoZRF
-                        photoZ_KD = reader["photoZ_KD"] is DBNull ? null : (string)reader["photoZ_KD"];
+                        photoZ_KD = reader["photoZ_KD"] is DBNull ? " - " : (string)reader["photoZ_KD"];
 
-                        photoZ_RF = reader["photoZ_KD"] is DBNull ? null : (string)reader["photoZ_RF"];
+                        photoZ_RF = reader["photoZ_KD"] is DBNull ? " - " : (string)reader["photoZ_RF"];
 
-                        galaxyZoo_Morph = reader["photoZ_KD"] is DBNull ? null : (string)reader["galaxyZoo_Morph"];
+                        galaxyZoo_Morph = reader["photoZ_KD"] is DBNull ? " - " : (string)reader["galaxyZoo_Morph"];
                     }
                 }
             }
@@ -143,7 +144,10 @@ namespace SkyServer.Tools.Explore
 
         protected string getUnit(string tablename, string columname) {
             string unit = "";
-             DataSet ds = master.runQuery.RunCasjobs(master.exploreQuery.getUnit(tablename,columname));
+            string cmd = ExplorerQueries.getUnit;
+            cmd.Replace("@tablename", tablename);
+            cmd.Replace("@name", columname);
+            DataSet ds = runQuery.RunCasjobs(cmd);
              using (DataTableReader reader = ds.Tables[0].CreateDataReader())
              {
                  if (reader.Read())

@@ -22,15 +22,15 @@
        <h3>All Spectra of this Object</h3>
 
 <%     
-    DataSet ds = master.runQuery.RunCasjobs(master.exploreQuery.AllSpec1);
-    master.showHTable(ds, 720,"AllSpectra");
+   
+    master.showHTable(ds_spec1, 720,"AllSpectra");
 %>
 
     <h3>Flux-Matched Spectra of this Object</h3>
 
 <%     
-    ds = master.runQuery.RunCasjobs(master.exploreQuery.AllSpec2);
-    master.showHTable(ds, 720, "AllSpectra");    
+    
+    master.showHTable(ds_spec2, 720, "AllSpectra");    
 %>
 </td></tr>
 </table>

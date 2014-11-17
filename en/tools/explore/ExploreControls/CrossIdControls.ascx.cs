@@ -55,19 +55,23 @@ namespace SkyServer.Tools.Explore
         protected bool isWISE = false;
         protected bool is2MASS = false;
 
+        protected RunQuery runQuery;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             master = (ObjectExplorer)Page.Master;
             objId = master.objId;
+            runQuery = new RunQuery();
             if (master.objId != null && !master.objId.Equals(""))
-            runQuery();
+            execQuery();
         }
 
-        private void runQuery() { 
+        private void execQuery() { 
             
             //USNO Query
-             DataSet ds = master.runQuery.RunCasjobs(master.exploreQuery.USNO);
+            string cmd = ExplorerQueries.USNO.Replace("@objId",objId);
+             DataSet ds = runQuery.RunCasjobs(cmd);
              using (DataTableReader reader = ds.Tables[0].CreateDataReader())
              {
                  if (reader.Read())
@@ -82,7 +86,8 @@ namespace SkyServer.Tools.Explore
                  }
              }
              //FIRST Query   
-             ds = master.runQuery.RunCasjobs(master.exploreQuery.FIRST);
+             cmd = ExplorerQueries.FIRST.Replace("@objId", objId);
+             ds  = runQuery.RunCasjobs(cmd);
              using (DataTableReader reader = ds.Tables[0].CreateDataReader())
              {
                  if (reader.Read())
@@ -99,7 +104,8 @@ namespace SkyServer.Tools.Explore
              }
 
              //ROSAT Query
-             ds = master.runQuery.RunCasjobs(master.exploreQuery.ROSAT);
+             cmd = ExplorerQueries.ROSAT.Replace("@objId", objId);
+             ds  = runQuery.RunCasjobs(cmd);
              using (DataTableReader reader = ds.Tables[0].CreateDataReader())
              {
                  if (reader.Read())
@@ -117,7 +123,8 @@ namespace SkyServer.Tools.Explore
              }
 
              //RC3
-             ds = master.runQuery.RunCasjobs(master.exploreQuery.RC3);
+             cmd = ExplorerQueries.RC3.Replace("@objId", objId);
+             ds  = runQuery.RunCasjobs(cmd);
              using (DataTableReader reader = ds.Tables[0].CreateDataReader())
              {
                  if (reader.Read())
@@ -134,7 +141,8 @@ namespace SkyServer.Tools.Explore
              }
 
              //WISE
-             ds = master.runQuery.RunCasjobs(master.exploreQuery.WISE);
+             cmd = ExplorerQueries.WISE.Replace("@objId", objId);
+             ds  = runQuery.RunCasjobs(cmd);
              using (DataTableReader reader = ds.Tables[0].CreateDataReader())
              {
                  if (reader.Read())
@@ -153,7 +161,8 @@ namespace SkyServer.Tools.Explore
              }
 
              //TWOMASS
-             ds = master.runQuery.RunCasjobs(master.exploreQuery.TWOMASS);
+             cmd = ExplorerQueries.TWOMASS.Replace("@objId", objId);
+             ds = runQuery.RunCasjobs(cmd);
              using (DataTableReader reader = ds.Tables[0].CreateDataReader())
              {
                  if (reader.Read())

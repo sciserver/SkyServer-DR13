@@ -24,18 +24,22 @@ namespace SkyServer.Tools.Explore
         protected int? imageMJD = null;
 
         protected ObjectExplorer master;
+        protected RunQuery runQuery;
       
         protected void Page_Load(object sender, EventArgs e)
         {
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             master = (ObjectExplorer)Page.Master;
+            runQuery = new RunQuery();
+
             if (master.objId != null && !master.objId.Equals(""))
-            runQuery();      
+            executeQuery();      
         }
      
-        private void runQuery()
+        private void executeQuery()
         {
-            DataSet ds = master.runQuery.RunCasjobs(master.exploreQuery.getObjParamaters(master.objId));
+            string cmd = ExplorerQueries.getObjParamaters.Replace("@objId", master.objId);
+            DataSet ds = runQuery.RunCasjobs(cmd);
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
                 if (reader.Read())

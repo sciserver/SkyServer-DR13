@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="ObjectExplorer.Master" AutoEventWireup="true" CodeBehind="galaxyzoo.aspx.cs" Inherits="SkyServer.Tools.Explore.GalaxyZoo" %>
 <%@ Import Namespace="System.Data.SqlClient" %>
 <%@ Import Namespace="System.Data" %>
+<%@ Import Namespace="SkyServer" %>
+<%@ Import Namespace="SkyServer.Tools.Explore" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="OEContent" runat="server">
 
@@ -36,88 +38,130 @@
     <h2>Galaxy Zoo 1</h2>
         <%
             string explore = "DisplayResults.aspx?id=" + objId + "&cmd=";
+            string cmd =ExplorerQueries.zooSpec.Replace("@objId",objId);
          %>
-        <h3><a href="<%=explore+master.exploreQuery.zooSpec%>&name=zooSpec&id=<%=objId%>" class="content">zooSpec</a></h3>
+        <h3><a href="<%=explore+cmd%>&name=zooSpec&id=<%=objId%>" class="content">zooSpec</a></h3>
 
     <%  
+        RunQuery runQuery = new RunQuery();
+        
         DataSet ds = null;
 
-        ds = master.runQuery.RunCasjobs(master.exploreQuery.zooSpec1);
+        cmd = ExplorerQueries.zooSpec1.Replace("@objId", objId);
+        ds =runQuery.RunCasjobs(cmd);
         master.showHTable(ds, 600, "PhotoObj");
 
-        ds = master.runQuery.RunCasjobs(master.exploreQuery.zooSpec2);
-        master.showHTable(ds, 600, "PhotoObj"); 
+        cmd = ExplorerQueries.zooSpec2.Replace("@objId", objId);
+        ds =runQuery.RunCasjobs(cmd);
+        master.showHTable(ds, 600, "PhotoObj");
+        
+        // No spec
+        cmd = ExplorerQueries.zooNoSpec.Replace("@objId", objId);
     %>
 
-        <h3><a href="<%=explore+master.exploreQuery.zooNoSpec%>&name=zooNoSpec&id=<%=objId%>" class="content">zooNoSpec</a></h3>
+        <h3><a href="<%=explore+cmd%>&name=zooNoSpec&id=<%=objId%>" class="content">zooNoSpec</a></h3>
         
      <%    
-         ds= master.runQuery.RunCasjobs(master.exploreQuery.zooNoSpec);
+        
+         ds=runQuery.RunCasjobs(cmd);
          master.showHTable(ds, 600, "PhotoObj");
+         
+         // confidence
+         cmd = ExplorerQueries.zooConfidence.Replace("@objId", objId);
      %>
 
-        <h3><a href="<%=explore+master.exploreQuery.zooConfidence%>&name=zooConfidence" class="content">zooConfidence</a></h3>
+        <h3><a href="<%=explore+cmd%>&name=zooConfidence" class="content">zooConfidence</a></h3>
         
      <%
-         ds = master.runQuery.RunCasjobs(master.exploreQuery.zooConfidence2);
+         cmd = ExplorerQueries.zooConfidence2.Replace("@objId", objId);
+         ds =runQuery.RunCasjobs(cmd);
          master.showHTable(ds, 600, "PhotoObj");                   
+         
+         //zooMirrorBias
+         cmd = ExplorerQueries.zooMirrorBias.Replace("@objId", objId);
      %>
 
-        <h3><a href="<%=explore+master.exploreQuery.zooMirrorBias%>&name=zooMirrorBias" class="content">zooMirrorBias</a></h3>
+        <h3><a href="<%=explore+cmd%>&name=zooMirrorBias" class="content">zooMirrorBias</a></h3>
         
      <%
-         ds = master.runQuery.RunCasjobs(master.exploreQuery.zooMirrorBias2);  
-         master.showHTable(ds, 600, "PhotoObj");     
+         cmd = ExplorerQueries.zooMirrorBias2.Replace("@objId", objId);
+         ds =runQuery.RunCasjobs(cmd);  
+         master.showHTable(ds, 600, "PhotoObj");
+
+         //zooMonochromeBias
+         cmd = ExplorerQueries.zooMonochromeBias.Replace("@objId", objId);
      %>
 
-        <h3><a href="<%=explore+master.exploreQuery.zooMonochromeBias%>&name=zooMonochromeBias" class="content">zooMonochromeBias</a></h3>
+        <h3><a href="<%=explore+cmd%>&name=zooMonochromeBias" class="content">zooMonochromeBias</a></h3>
         
      <%
-         ds=master.runQuery.RunCasjobs(master.exploreQuery.zooMonochromeBias2);
+         cmd = ExplorerQueries.zooMonochromeBias2.Replace("@objId", objId);
+         //ds=master.runQuery.RunCasjobs(cmd);
          master.showHTable(ds, 600, "PhotoObj");
             
         // show the Galaxy Zoo 2 data only if this is DR10
         if (globals.ReleaseNumber >= 10) 
         {
+            
+            //zoo2MainSpecz
+
+            cmd = ExplorerQueries.zoo2MainSpecz.Replace("@objId", objId);
      %>
 
      <h2>Galaxy Zoo 2</h2>
 
-        <h3><a href="<%=explore+master.exploreQuery.zoo2MainSpecz%>&name=zoo2MainSpecz" class="content">zoo2MainSpecz</a></h3>
+        <h3><a href="<%=explore+cmd%>&name=zoo2MainSpecz" class="content">zoo2MainSpecz</a></h3>
         
      <%
-         ds = master.runQuery.RunCasjobs(master.exploreQuery.zoo2MainSpecz2);
-         master.showHTable(ds, 600, "PhotoObj");
+            cmd = ExplorerQueries.zoo2MainSpecz2.Replace("@objId", objId);
+            ds =runQuery.RunCasjobs(cmd);
+            master.showHTable(ds, 600, "PhotoObj");
+
+            //zoo2MainPhotoz
+            cmd = ExplorerQueries.zoo2MainPhotoz.Replace("@objId", objId);
      %>
 
-        <h3><a href="<%=explore+master.exploreQuery.zoo2MainPhotoz%>&name=zoo2MainPhotoz" class="content">zoo2MainPhotoz</a></h3>
+        <h3><a href="<%=explore+cmd%>&name=zoo2MainPhotoz" class="content">zoo2MainPhotoz</a></h3>
         
      <%
-         ds = master.runQuery.RunCasjobs(master.exploreQuery.zoo2MainPhotoz2);
-         master.showHTable(ds, 600, "PhotoObj");
+            cmd = ExplorerQueries.zoo2MainPhotoz2.Replace("@objId", objId);
+            ds =runQuery.RunCasjobs(cmd);
+            master.showHTable(ds, 600, "PhotoObj");
+
+            //zoo2Stripe82Normal
+            cmd = ExplorerQueries.zoo2Stripe82Normal.Replace("@objId", objId);
      %>
 
-        <h3><a href="<%=explore+master.exploreQuery.zoo2Stripe82Normal%>&name=zoo2Stripe82Normal" class="content">zoo2Stripe82Normal</a></h3>
+        <h3><a href="<%=explore+cmd%>&name=zoo2Stripe82Normal" class="content">zoo2Stripe82Normal</a></h3>
         
      <%
-         ds = master.runQuery.RunCasjobs(master.exploreQuery.zoo2Stripe82Normal2);
-         master.showHTable(ds, 600, "PhotoObj");
+            cmd = ExplorerQueries.zoo2Stripe82Normal2.Replace("@objId", objId);
+            ds =runQuery.RunCasjobs(cmd);
+            master.showHTable(ds, 600, "PhotoObj");
+
+            //zoo2Stripe82Coadd1
+            cmd = ExplorerQueries.zoo2Stripe82Coadd1.Replace("@objId", objId);
      %>
 
-        <h3><a href="<%=explore+master.exploreQuery.zoo2Stripe82Coadd1%>&name=zoo2Stripe82Coadd1" class="content">zoo2Stripe82Coadd1</a></h3>
+        <h3><a href="<%=explore+cmd%>&name=zoo2Stripe82Coadd1" class="content">zoo2Stripe82Coadd1</a></h3>
         
      <%
-         ds = master.runQuery.RunCasjobs(master.exploreQuery.zoo2Stripe82Coadd1_2);
-         master.showHTable(ds, 600, "PhotoObj");
+            cmd = ExplorerQueries.zoo2Stripe82Coadd1_2.Replace("@objId", objId);
+            ds =runQuery.RunCasjobs(cmd);
+            master.showHTable(ds, 600, "PhotoObj");
+
+            //zoo2Stripe82Coadd2
+            cmd = ExplorerQueries.zoo2Stripe82Coadd2.Replace("@objId", objId);
      %>
 
-        <h3><a href="<%=explore+master.exploreQuery.zoo2Stripe82Coadd2%>&name=zoo2Stripe82Coadd2" class="content">zoo2Stripe82Coadd2</a></h3>
+        <h3><a href="<%=explore+cmd%>&name=zoo2Stripe82Coadd2" class="content">zoo2Stripe82Coadd2</a></h3>
         
      <%
-         ds = master.runQuery.RunCasjobs(master.exploreQuery.zoo2Stripe82Coadd2_2);
-         master.showHTable(ds, 600, "PhotoObj");
+            cmd = ExplorerQueries.zoo2Stripe82Coadd2_2.Replace("@objId", objId);
+            ds =runQuery.RunCasjobs(cmd);
+            master.showHTable(ds, 600, "PhotoObj");
      
-            }  // end of if statement where we control whether Zoo 2 data get displayed
+         }  // end of if statement where we control whether Zoo 2 data get displayed
      %>
 
     </td></tr></table>

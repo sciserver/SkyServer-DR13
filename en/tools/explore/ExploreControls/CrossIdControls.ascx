@@ -106,7 +106,7 @@
                     <td nowrap align='middle' class='t'><%=j %></td>
                     <td nowrap align='middle' class='t'><%=h %></td>
                     <td nowrap align='middle' class='t'><%=k %></td>
-                    <td nowrap align='middle' class='t'><%=phQual%>/td>
+                    <td nowrap align='middle' class='t'><%=phQual%></td>
                 </tr>
             </table>
             <%}else{%>

@@ -22,8 +22,12 @@
         <td>
             <table cellpadding=2 cellspacing=2 border=0 width=420>
                 <tr align='left' >
-                    <td  valign='top' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=test')" ></span>Flags</td>
-                    <td valign='top' class='t'><a href='<%=flagsLink%>'>Flags <img src=../../images/offsite_black.png /><%=flag %></a></td>
+                    <td  valign='top' class='h'>
+                        <span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=<%=getUnit("PhotoObj","flags") %>')" >
+                            <a href='<%=flagsLink%>'>Flags <img src=../../images/offsite_black.png /></a>
+                        </span>
+                    </td>
+                    <td valign='top' class='t'><%=flag %></td>
                 </tr>
             </table>
          </td>
@@ -48,11 +52,11 @@
                     <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=<%=getUnit("PhotoObj","r") %>')" ></span>r</td>
                     <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=<%=getUnit("PhotoObj","i") %>')" ></span>i</td>
                     <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=<%=getUnit("PhotoObj","z") %>')" ></span>z</td></tr>
-                <tr><td nowrap align='middle' class='t'> <%=Math.Round(u,2) %></td>
-                    <td nowrap align='middle' class='t'> <%=Math.Round(g,2) %></td>
-                    <td nowrap align='middle' class='t'> <%=Math.Round(r,2) %></td>
-                    <td nowrap align='middle' class='t'> <%=Math.Round(i,2) %></td>
-                    <td nowrap align='middle' class='t'> <%=Math.Round(z,2)%></td></tr>
+                <tr><td nowrap align='middle' class='t'> <%=u.ToString("F2") %></td>
+                    <td nowrap align='middle' class='t'> <%=g.ToString("F2") %></td>
+                    <td nowrap align='middle' class='t'> <%=r.ToString("F2") %></td>
+                    <td nowrap align='middle' class='t'> <%=i.ToString("F2") %></td>
+                    <td nowrap align='middle' class='t'> <%=z.ToString("F2") %></td></tr>
             </table>
             <table cellpadding=2 cellspacing=2 border=0 width=420>
                 <tr><td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';" ></span></td></tr>
@@ -64,11 +68,11 @@
                     <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=<%=getUnit("PhotoObj","err_i") %>')" ></span>err_i</td>
                     <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=<%=getUnit("PhotoObj","err_z") %>')" ></span>err_z</td>
                 </tr>
-                <tr><td nowrap align='middle' class='t'> <%=Math.Round(err_u,2) %></td>
-                    <td nowrap align='middle' class='t'> <%=Math.Round(err_g,2) %></td>
-                    <td nowrap align='middle' class='t'> <%=Math.Round(err_r,2) %></td>
-                    <td nowrap align='middle' class='t'> <%=Math.Round(err_i,2) %></td>
-                    <td nowrap align='middle' class='t'> <%=Math.Round(err_z,2) %></td></tr>
+                <tr><td nowrap align='middle' class='t'> <%=err_u.ToString("F2") %></td>
+                    <td nowrap align='middle' class='t'> <%=err_g.ToString("F2") %></td>
+                    <td nowrap align='middle' class='t'> <%=err_r.ToString("F2") %></td>
+                    <td nowrap align='middle' class='t'> <%=err_i.ToString("F2") %></td>
+                    <td nowrap align='middle' class='t'> <%=err_z.ToString("F2") %></td></tr>
               </table>       
           </td>
         </tr>

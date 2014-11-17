@@ -82,6 +82,8 @@ namespace SkyServer.Tools.Explore
         string command;
 
         protected bool isData = false;
+
+        protected RunQuery runQuery;
       
         /* Visits */
         public List<ApogeeVisit> visits = new List<ApogeeVisit>();
@@ -90,6 +92,7 @@ namespace SkyServer.Tools.Explore
         {
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             master = (ObjectExplorer)Page.Master;
+            runQuery = new RunQuery();
             if (master.apid != null && !master.apid.Equals(""))
             {
                 apogeeID(master.apid);
@@ -101,7 +104,7 @@ namespace SkyServer.Tools.Explore
 
         protected void ReadInfoFromDbReader()  
         {
-            DataSet ds = master.runQuery.RunCasjobs(command);
+            DataSet ds = runQuery.RunCasjobs(command);
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
              //BASE_QUERY + FIND_NEAREST;
@@ -160,8 +163,8 @@ namespace SkyServer.Tools.Explore
 
         protected void ReadVisitsFromDbReader()
         {
-           
-            string command = master.exploreQuery.APOGEEVISITS_BASE_QUERY;
+
+            string command = ExplorerQueries.APOGEEVISITS_BASE_QUERY;
             foreach (string s in injection)
             {
                 if (apogee_id.IndexOf(s) >= 0)
@@ -171,7 +174,7 @@ namespace SkyServer.Tools.Explore
             }
             command = command.Replace("@id", "'" + apogee_id + "'");
 
-            DataSet ds = master.runQuery.RunCasjobs(command);
+            DataSet ds = runQuery.RunCasjobs(command);
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
                 while (reader.Read()) // Multiple rows expected
@@ -190,7 +193,7 @@ namespace SkyServer.Tools.Explore
         
         public void apogeeRaDec( double ra, double dec, double radius)
         {
-            command = master.exploreQuery.APOGEE_BASE_QUERY + FIND_NEAREST;
+            command = ExplorerQueries.APOGEE_BASE_QUERY + FIND_NEAREST;
             command = command.Replace("@radius", radius.ToString());
             command = command.Replace("@ra", ra.ToString());
             command = command.Replace("@dec", dec.ToString());           
@@ -198,9 +201,9 @@ namespace SkyServer.Tools.Explore
 
         public void apogeeID( string id)
         {
-            
-            if (id.StartsWith("apogee")) { command = master.exploreQuery.APOGEE_BASE_QUERY  + FIND_APSTAR_ID; }
-            else { command = master.exploreQuery.APOGEE_BASE_QUERY  + FIND_APOGEE_ID; }
+
+            if (id.StartsWith("apogee")) { command = ExplorerQueries.APOGEE_BASE_QUERY + FIND_APSTAR_ID; }
+            else { command = ExplorerQueries.APOGEE_BASE_QUERY + FIND_APOGEE_ID; }
 
             foreach (string s in injection)
             {
@@ -212,9 +215,10 @@ namespace SkyServer.Tools.Explore
             command = command.Replace("@id", "'"+id+"'");            
         }
 
+
         public void apogeePlate(long plate, long mjd, long fiberid)
         {
-            command = master.exploreQuery.APOGEE_BASE_QUERY + FIND_PLFIB;
+            command = ExplorerQueries.APOGEE_BASE_QUERY + FIND_PLFIB;
             command = command.Replace("@plate", plate.ToString());
             command = command.Replace("@mjd", mjd.ToString());
             command = command.Replace("@fiberid", fiberid.ToString());            

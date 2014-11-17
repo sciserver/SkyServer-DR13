@@ -19,7 +19,9 @@
                 <h2>Stellar Parameters</h2>
                 <h3><a href="<%=globals.SdssUrl%>spectro/sspp.php" target='_blank'>SEGUE Stellar Parameters Pipeline (SSPP) <img src='../../images/new_window_black.png' alt=' (new window)' /></a></h3>
                 <%
-                    DataSet ds = master.runQuery.RunCasjobs(master.exploreQuery.fitsParametersSppParams);
+                    RunQuery runQuery = new RunQuery();
+                    
+                    DataSet ds = runQuery.RunCasjobs(fitsParametersSppParams);
                     master.showVTable(ds, 300);
                 %>
                  <h3><a href="<%=globals.SdssUrl%>irspec/aspcap.php" target='_blank'>APOGEE Stellar Parameters and Chemical Abundances Pipeline (ASPCAP) <img src='../../images/new_window_black.png' alt=' (new window)' /></a></h3>
@@ -29,52 +31,52 @@
                  <table><tr><td>
                  <h4>Star Forming Model</h4>
                 <%
-                     ds = master.runQuery.RunCasjobs(master.exploreQuery.fitsParametersStellarMassStarformingPort);
+                     ds = runQuery.RunCasjobs(fitsParametersStellarMassStarformingPort);
                      master.showVTable(ds, 250);
                 %>     
                   </td><td></td><td>
                   <h4>Passive Model</h4>
                 <%
-                     ds = master.runQuery.RunCasjobs(master.exploreQuery.fitsParameterSstellarMassPassivePort);
+                     ds = runQuery.RunCasjobs(fitsParameterSstellarMassPassivePort);
                      master.showVTable(ds, 250);
                 %>     
                   </td></tr>
                  </table>             
                 <h3><a href="<%=globals.SdssUrl%>spectro/galaxy_portsmouth.php#kinematics" target='_blank'>Stellar Kinematics: Portsmouth group (Emission Line Fluxes) <img src='../../images/new_window_black.png' alt=' (new window)' /></a></h3>
                 <%
-                    ds = master.runQuery.RunCasjobs(master.exploreQuery.fitsParametersEmissionLinesPort);
+                    ds = runQuery.RunCasjobs(fitsParametersEmissionLinesPort);
                     master.showHTable(ds,600,"");
                 %>
                 <h3><a href="<%=globals.SdssUrl%>spectro/galaxy_wisconsin.php" target='_blank'>Wisconsin group (Principal Component Analysis) <img src='../../images/new_window_black.png' alt=' (new window)' /></a></h3>
                 <h4>Assuming model spectra from Bruzal &amp; Charlot (2003)</h4>
                 <%
-                    ds = master.runQuery.RunCasjobs(master.exploreQuery.fitsParametersStellarMassPCAWiscBC03);
+                    ds = runQuery.RunCasjobs(fitsParametersStellarMassPCAWiscBC03);
                     master.showHTable(ds, 600, "SpecObjAll");
                 %>
                 <h4>Assuming model spectra from Maraston &amp; Str&ouml;mback (2011)</h4>
                 <%
-                    ds = master.runQuery.RunCasjobs(master.exploreQuery.fitsParametersstellarMassPCAWiscM11);
+                    ds = runQuery.RunCasjobs(fitsParametersstellarMassPCAWiscM11);
                     master.showHTable(ds,600,"SpecObjAll");
                  %>
                 <h3><a href="<%=globals.SdssUrl%>spectro/galaxy_granada.php" target='_blank'>Granada group (Flexible Stellar Population Synthesis) <img src='../../images/new_window_black.png' alt=' (new window)' /></a></h3>
                 <h4>Early Galaxy Formation,Dust Attenuation</h4>
                 <%
-                     ds = master.runQuery.RunCasjobs(master.exploreQuery.fitsParametersStellarmassFSPSGranEarlyDust);
+                     ds = runQuery.RunCasjobs(fitsParametersStellarmassFSPSGranEarlyDust);
                      master.showHTable(ds,600,"DUST");
                  %>
                  <h4>Early Galaxy Formation,No Dust Attenuation</h4>
                  <%
-                     ds = master.runQuery.RunCasjobs(master.exploreQuery.fitsParametersStellarmassFSPSGranEarlyNoDust);
+                     ds = runQuery.RunCasjobs(fitsParametersStellarmassFSPSGranEarlyNoDust);
                      master.showHTable(ds, 600, "DUST");
                  %>
                  <h4>Wide Range of Formation Times, Dust Attenuation</h4>
                  <%
-                      ds = master.runQuery.RunCasjobs(master.exploreQuery.fitsParametersStellarmassFSPSGranWideDust);
+                      ds = runQuery.RunCasjobs(fitsParametersStellarmassFSPSGranWideDust);
                       master.showHTable(ds, 600,"DUST");
                  %>
                  <h4>Wide Range of Formation Times,No Dust Attenuation</h4>
                  <%
-                      ds = master.runQuery.RunCasjobs(master.exploreQuery.fitsParametersStellarmassFSPSGranWideNoDust);
+                      ds = runQuery.RunCasjobs(fitsParametersStellarmassFSPSGranWideNoDust);
                       master.showHTable(ds, 600, "DUST");
                  %>                            
             </td>

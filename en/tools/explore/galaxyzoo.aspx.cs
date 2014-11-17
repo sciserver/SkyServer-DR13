@@ -19,6 +19,9 @@ namespace SkyServer.Tools.Explore
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             objId = Request.QueryString["id"];
             master = (ObjectExplorer)Page.Master;
+       
         }
+
+       
     }
 }

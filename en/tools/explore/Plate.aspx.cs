@@ -16,26 +16,32 @@ namespace SkyServer.Tools.Explore
         protected long? plateId = null;
         protected Globals globals;
         protected ObjectExplorer master;
+        protected RunQuery runQuery;
+        protected DataSet ds;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             globals = (Globals)Application[Globals.PROPERTY_NAME];
-            master = (ObjectExplorer)Page.Master;
-            
-            string s = Request.QueryString["plateId"];
-            plateId = Utilities.ParseId(s);          
+            master = (ObjectExplorer)Page.Master;            
+            string s = Request.QueryString["plateId"];            
+            plateId = Utilities.ParseId(s);                      
+            runQuery = new RunQuery();
+            executeQuery();
+        }
+
+        private void executeQuery() {
+            string cmd = ExplorerQueries.Plate.Replace("@plateId",plateId.ToString());
+            ds = runQuery.RunCasjobs(cmd);
         }
 
         public void showFTable()
         {
-
-            DataSet ds = master.runQuery.RunCasjobs(master.exploreQuery.PlateShow);
+            string cmd = ExplorerQueries.PlateShow.Replace("@plateId", plateId.ToString());
+            DataSet ds = runQuery.RunCasjobs(cmd);
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
-
-                string u = "<a class='content' target='_top' href='obj.aspx?sid=";
+                string u = "<a class='content' target='_top' href='summary.aspx?sid=";
                 string sid;
-
                 int col = 0;
                 int row = 0;
                 string c = "st";

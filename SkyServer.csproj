@@ -46,9 +46,19 @@
     <Reference Include="CSharpFITS_v1.1">
       <HintPath>lib\CSharpFITS_v1.1.dll</HintPath>
     </Reference>
+    <Reference Include="DotNetOpenAuth">
+      <HintPath>lib\DotNetOpenAuth.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>lib\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Newtonsoft.Json.5.0.6\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="openstacknet">
+      <HintPath>lib\openstacknet.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleRESTServices">
+      <HintPath>packages\SimpleRESTServices.1.3.0.1\lib\net40\SimpleRESTServices.dll</HintPath>
     </Reference>
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -1727,6 +1737,7 @@
     <Content Include="en\tools\explore\ExploreControls\ImagingControl.ascx" />
     <Content Include="en\tools\explore\ExploreControls\MetaDataControl.ascx" />
     <Content Include="en\tools\explore\ExploreControls\SpectralControl.ascx" />
+    <Content Include="en\tools\explore\ExploreError.aspx" />
     <Content Include="en\tools\explore\FitsImg.aspx" />
     <Content Include="en\tools\explore\FitsSpec.aspx" />
     <Content Include="en\tools\explore\galaxyzoo.aspx" />
@@ -5468,7 +5479,15 @@
     <Compile Include="en\tools\explore\ExploreControls\SpectralControl.ascx.designer.cs">
       <DependentUpon>SpectralControl.ascx</DependentUpon>
     </Compile>
+    <Compile Include="en\tools\explore\ExploreError.aspx.cs">
+      <DependentUpon>ExploreError.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\tools\explore\ExploreError.aspx.designer.cs">
+      <DependentUpon>ExploreError.aspx</DependentUpon>
+    </Compile>
     <Compile Include="en\tools\explore\ExploreHelpers\ApogeeVisit.cs" />
+    <Compile Include="en\tools\explore\ExploreHelpers\ObjectInfo.cs" />
     <Compile Include="en\tools\explore\galaxyzoo.aspx.cs">
       <DependentUpon>galaxyzoo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -5915,6 +5934,7 @@
     <Compile Include="en\tools\explore\FitsSpec.aspx.designer.cs">
       <DependentUpon>FitsSpec.aspx</DependentUpon>
     </Compile>
+    <Compile Include="misc\KeyStone.cs" />
     <Compile Include="misc\net.ivoa.data\DataSetWrapper.cs" />
     <Compile Include="misc\net.ivoa.data\DataWrapper.cs" />
     <Compile Include="misc\Functions.cs" />
@@ -6253,6 +6273,7 @@
     <None Include="en\tools\STARTBall\images\crosshairs.psd" />
     <None Include="en\tools\STARTBall\images\crosshairsLayers.psd" />
     <None Include="en\tools\STARTBall\STARTBall.dcr" />
+    <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="en\tools\chart\ChartBase.Master" />

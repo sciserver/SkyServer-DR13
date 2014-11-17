@@ -1,9 +1,9 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="HomeMaster.master" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="SkyServer.Home" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+<%--<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
         #logos  {position:absolute;top:0px;left:0px;visibility:visible}
     </style>
-</asp:Content>
+</asp:Content>--%>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 	<div id="logos">
 		<div style="position:absolute;left:<%= logoleftpos%>px;top:108px;z-index:5;">
@@ -96,7 +96,7 @@
 							<td nowrap class="menulink">
 							  <a class="menulink" href="tools/quicklook/quickobj.aspx">
 							    &nbsp;&nbsp;Quick Look</a>&nbsp;&nbsp;|
-							    <a class="menulink" href="tools/explore/obj.aspx">&nbsp;Explore&nbsp;&nbsp;&nbsp;</a>
+							    <a class="menulink" href="tools/explore/Summary.aspx">&nbsp;Explore&nbsp;&nbsp;&nbsp;</a>
 							</td>
 						</tr>
 						<tr height="20">
