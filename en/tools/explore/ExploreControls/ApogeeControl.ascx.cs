@@ -144,9 +144,11 @@ namespace SkyServer.Tools.Explore
                     apogeeTarget2N = (string)reader["apogeeTarget2N"];
                     apogeeStarFlagN = (string)reader["apogeeStarFlagN"];
                     apogeeAspcapFlagN = (string)reader["apogeeAspcapFlagN"];
+
+                    isData = true;
                 }
                 else {
-                    isData = true;
+                    isData = false;
                     //throw new Exception("APOGEE data not found"); 
                 }
             }        
@@ -166,8 +168,8 @@ namespace SkyServer.Tools.Explore
 
             string command = ExplorerQueries.APOGEEVISITS_BASE_QUERY;
             foreach (string s in injection)
-            {
-                if (apogee_id.IndexOf(s) >= 0)
+            {  
+                if (apogee_id != null && apogee_id.IndexOf(s) >= 0)
                 {
                     throw new Exception("Invalid APOGEE ID: " + apogee_id);
                 }

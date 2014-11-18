@@ -4,7 +4,7 @@
 <% if(master.apid != null && !master.apid.Equals("")){ %>
  <div id="irspec">
         <h3>Infrared Spectra
-          <span class="target">Targeted star: <%=apogee_id %></span>
+          <span class="target">Targeted star: <%=master.apid%></span>
         </h3>
 
         <table width="800">
@@ -54,7 +54,7 @@
         </table>
                     
         <h3>Targeting Information</h3>
-             
+         <%if(isData){ %>    
         <table cellpadding="2" cellspacing="2" border="0" width="800">
           <tr>
             <td align="middle" class="h"><span>2MASS j</span></td>
@@ -100,9 +100,14 @@
             <td valign="top" class="b"><%=apogeeTarget2N %></td>
           </tr>
         </table>
+        <%} else { %>
 
+            <table cellpadding=2 cellspacing=2 border=0 width=625>
+                  <tr><td class='nodatafound'>No data found for this object</td></tr>
+            </table>
+         <%} %>
         <h3>Stellar Parameters</h3>
-                
+          <%if(isData){ %>    
         <table cellpadding="2" cellspacing="2" border="0" width="800">
           <tr>
             <td align="middle" class="h"><span>Avg v<sub>helio</sub> (km/s)</span></td>
@@ -150,6 +155,12 @@
             <td valign="top" class="b"><%=apogeeAspcapFlagN %></td>
           </tr>
         </table>
+      <%} else { %>
+
+            <table cellpadding=2 cellspacing=2 border=0 width=625>
+                  <tr><td class='nodatafound'>No data found for this object</td></tr>
+            </table>
+         <%} %>
 
         <h3 class="sectionlabel">
           Visits (click to see visit spectrum)
@@ -169,7 +180,7 @@
               <td align="middle" class="h"><span>mjd</span></td>
               <td align="middle" class="h"><span>fiberid</span></td>
               <td align="middle" class="h"><span>date</span></td>
-              <td align="middle" class="h"><span>time (UTC)</span></td>
+              <%--<td align="middle" class="h"><span>time (UTC)</span></td>--%>
               <td align="middle" class="h"><span>vrel</span></td>
             </tr>
 
