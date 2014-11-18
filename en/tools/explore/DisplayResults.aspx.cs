@@ -14,19 +14,37 @@ namespace SkyServer.Tools.Explore
         protected string cmd = null;
         protected string name = null;
         protected string url = null;
+        protected string objId = null;
+        protected string specId = null;
+        protected string apid = null;
+        protected string fieldId = null;
+
+
         protected ObjectExplorer master;
         protected RunQuery runQuery = new RunQuery();
         protected DataSet ds;
-        ObjectInfo o;
+       
         protected void Page_Load(object sender, EventArgs e)
         {
             master = (ObjectExplorer)Page.Master;
-            cmd  = Request.QueryString["cmd"];
-            name = Request.QueryString["name"];
-            url  = Request.QueryString["url"];
-            o = (ObjectInfo)Session["objectInfo"];
+            
+
+            foreach (string key in Request.QueryString.Keys)
+            {
+                if(key == "apid")
+                    apid= HttpUtility.UrlEncode(Request.QueryString["apid"]);
+                objId = Request.QueryString["id"];
+                specId = Request.QueryString["spec"];
+                
+                fieldId = Request.QueryString["field"];
+
+                cmd = Request.QueryString["cmd"];
+                name = Request.QueryString["name"];
+                url = Request.QueryString["url"];
+            }
+           
             if(cmd == null || cmd.Equals(""))
-            getQuery();
+                getQuery();
 
             executeQuery();
         }
@@ -46,54 +64,54 @@ namespace SkyServer.Tools.Explore
 
             switch (name) {
                 case "PhotoObj": 
-                        cmd = ExplorerQueries.PhotoObjQuery.Replace("@objId", o.objId); break;
+                        cmd = ExplorerQueries.PhotoObjQuery.Replace("@objId", objId); break;
                 case "PhotoTag":
-                        cmd = ExplorerQueries.PhotoTagQuery.Replace("@objId", o.id.ToString()); break;
+                        cmd = ExplorerQueries.PhotoTagQuery.Replace("@objId", objId); break;
                 case "photoZ":
-                        cmd = ExplorerQueries.PhotoZ.Replace("@objId", o.objId); break;
+                        cmd = ExplorerQueries.PhotoZ.Replace("@objId", objId); break;
                 case "photozRF":
-                        cmd = ExplorerQueries.PhotozRF.Replace("@objId", o.objId); break;
+                        cmd = ExplorerQueries.PhotozRF.Replace("@objId", objId); break;
 
                 case "Field":
-                        cmd = ExplorerQueries.FieldQuery.Replace("@fieldId", o.fieldId); break;
+                        cmd = ExplorerQueries.FieldQuery.Replace("@fieldId", fieldId); break;
                 case "Frame":
-                        cmd = ExplorerQueries.FrameQuery.Replace("@fieldId", o.fieldId); break;
+                        cmd = ExplorerQueries.FrameQuery.Replace("@fieldId", fieldId); break;
                 
                 case "SpecObj":
-                        cmd = ExplorerQueries.SpecObjQuery.Replace("@specId", o.specId.ToString()); break;
+                        cmd = ExplorerQueries.SpecObjQuery.Replace("@specId", specId); break;
                 case "sppLines":
-                        cmd = ExplorerQueries.sppLinesQuery.Replace("@specId", o.specId.ToString()); break;
+                        cmd = ExplorerQueries.sppLinesQuery.Replace("@specId", specId); break;
                 case "sppParams":
-                        cmd = ExplorerQueries.sppParamsQuery.Replace("@specId", o.specId.ToString()); break;
+                        cmd = ExplorerQueries.sppParamsQuery.Replace("@specId", specId); break;
                 case "galSpecLine":
-                        cmd = ExplorerQueries.galSpecLineQuery.Replace("@specId", o.specId.ToString()); break;
+                        cmd = ExplorerQueries.galSpecLineQuery.Replace("@specId", specId); break;
                 case "galSpecIndx":
-                        cmd = ExplorerQueries.galSpecIndexQuery.Replace("@specId", o.specId.ToString()); break;
+                        cmd = ExplorerQueries.galSpecIndexQuery.Replace("@specId", specId); break;
                 case "galSpecInfo":
-                        cmd = ExplorerQueries.galSpecInfoQuery.Replace("@specId", o.specId.ToString()); break;
+                        cmd = ExplorerQueries.galSpecInfoQuery.Replace("@specId", specId); break;
                 case "stellarMassStarFormingPort":
-                        cmd = ExplorerQueries.stellarMassStarformingPortQuery.Replace("@specId", o.specId.ToString()); break;  
+                        cmd = ExplorerQueries.stellarMassStarformingPortQuery.Replace("@specId", specId); break;  
                 case "stellarMassPassivePort":
-                        cmd = ExplorerQueries.stellarMassPassivePortQuery.Replace("@specId", o.specId.ToString()); break;
+                        cmd = ExplorerQueries.stellarMassPassivePortQuery.Replace("@specId", specId); break;
                 case "emissionlinesPort":
-                        cmd = ExplorerQueries.emissionLinesPortQuery.Replace("@specId", o.specId.ToString()); break;
+                        cmd = ExplorerQueries.emissionLinesPortQuery.Replace("@specId", specId); break;
                 case "stellarMassPCAWiscBC03":
-                        cmd = ExplorerQueries.stellarMassPCAWiscBC03Query.Replace("@specId", o.specId.ToString()); break;
+                        cmd = ExplorerQueries.stellarMassPCAWiscBC03Query.Replace("@specId",specId); break;
                 case "stellarMassPCAWiscM11":
-                        cmd = ExplorerQueries.stellarMassPCAWiscM11Query.Replace("@specId", o.specId.ToString()); break;
+                        cmd = ExplorerQueries.stellarMassPCAWiscM11Query.Replace("@specId", specId); break;
                 case "stellarMassFSPSGranEarlyDust":
-                        cmd = ExplorerQueries.stellarMassFSPSGranEarlyDust.Replace("@specId", o.specId.ToString()); break;
+                        cmd = ExplorerQueries.stellarMassFSPSGranEarlyDust.Replace("@specId", specId); break;
                 case "stellarMassFSPSGranEarlyNoDust":
-                        cmd = ExplorerQueries.stellarMassFSPSGranEarlyNoDust.Replace("@specId", o.specId.ToString()); break;
+                        cmd = ExplorerQueries.stellarMassFSPSGranEarlyNoDust.Replace("@specId", specId); break;
                 case "stellarMassFSPSGranWideDust":
-                        cmd = ExplorerQueries.stellarMassFSPSGranWideDust.Replace("@specId", o.specId.ToString()); break;
+                        cmd = ExplorerQueries.stellarMassFSPSGranWideDust.Replace("@specId", specId); break;
                 case "stellarMassFSPSGranWideNoDust":
-                        cmd = ExplorerQueries.stellarMassFSPSGranWideNoDust.Replace("@specId", o.specId.ToString()); break;
+                        cmd = ExplorerQueries.stellarMassFSPSGranWideNoDust.Replace("@specId", specId); break;
                 
                 case "apogeeStar":
-                        cmd= ExplorerQueries.apogeeStar.Replace("@apid", o.apid.ToString()); break;
+                        cmd= ExplorerQueries.apogeeStar.Replace("@apid", apid); break;
                 case "aspcapStar":
-                        cmd= ExplorerQueries.aspcapStar.Replace("@apid", o.apid.ToString()); break;
+                        cmd= ExplorerQueries.aspcapStar.Replace("@apid", apid); break;
 
                 default: cmd = ""; break;
 

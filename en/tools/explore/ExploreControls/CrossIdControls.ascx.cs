@@ -13,7 +13,7 @@ namespace SkyServer.Tools.Explore
         protected Globals globals;
         protected ObjectExplorer master;
 
-        string objId;
+        protected string objId;
 
         protected string usno;
         protected string properMotion;

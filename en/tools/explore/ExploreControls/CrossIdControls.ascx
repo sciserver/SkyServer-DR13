@@ -3,6 +3,7 @@
 <%@ Import Namespace="System.Data" %>
 <%@ Import Namespace="SkyServer" %>
 
+<%if (objId != null && !objId.Equals("")){ %>
 <h3 class="sectionlabel" id="crossidtop">Cross-identifications
     <a id="crossid_is_shown" href="javascript:showSection('crossid');javascript:showLink('crossid_is_hidden');javascript:hideLink('crossid_is_shown');" class="showinglink">
       Show
@@ -16,7 +17,9 @@
 <table class="content">
     <tr>
         <td>     
-            <%if(isUSNO){ %>
+            <%
+                  if (isUSNO)
+                  { %>
             <table cellpadding=2 cellspacing=2 border=0 width=620>
                 <tr>
                     <td align='middle' class='h'><span>Catalog</span></td>
@@ -25,15 +28,18 @@
                 </tr>
                 <tr>
                     <td nowrap align='middle' class='t'><%=usno%></td>
-                    <td nowrap align='middle' class='t'><%=properMotion %></td>
-                    <td nowrap align='middle' class='t'><%=angle %></td>
+                    <td nowrap align='middle' class='t'><%=properMotion%></td>
+                    <td nowrap align='middle' class='t'><%=angle%></td>
                 </tr>
             </table>
-            <%}else{%>
+            <%}
+                  else
+                  {%>
              <table cellpadding=2 cellspacing=2 border=0 width=625>
                   <tr><td class='nodatafound'>No data found for this object in USNO</td></tr>
             </table>
-             <%}if(isFIRST) { %>
+             <%} if (isFIRST)
+                  { %>
             <table cellpadding=2 cellspacing=2 border=0 width=620>
                 <tr>
                     <td align='middle' class='h'><span>Catalog</span></td>
@@ -42,17 +48,20 @@
                     <td align='middle' class='h'><span>Minor axis (arcsec)</span></td>
                 </tr>
                 <tr>
-                    <td nowrap align='middle' class='t'><%=first %></td>
-                    <td nowrap align='middle' class='t'><%=peakflux %></td>
-                    <td nowrap align='middle' class='t'><%=major %></td>
-                    <td nowrap align='middle' class='t'><%=minor %></td>
+                    <td nowrap align='middle' class='t'><%=first%></td>
+                    <td nowrap align='middle' class='t'><%=peakflux%></td>
+                    <td nowrap align='middle' class='t'><%=major%></td>
+                    <td nowrap align='middle' class='t'><%=minor%></td>
                 </tr>
             </table>
-            <%}else{%>
+            <%}
+                  else
+                  {%>
              <table cellpadding=2 cellspacing=2 border=0 width=625>
                   <tr><td class='nodatafound'>No data found for this object in FIRST</td></tr>
             </table>
-            <%} if(isROSAT){ %>
+            <%} if (isROSAT)
+                  { %>
             <table cellpadding=2 cellspacing=2 border=0 width=620>
                 <tr>
                     <td align='middle' class='h'><span>Catalog</span></td>
@@ -62,18 +71,21 @@
                     <td align='middle' class='h'><span>ext</span></td>
                 </tr>
                 <tr>
-                     <td nowrap align='middle' class='t'><%=rosat %></td>
-                    <td nowrap align='middle' class='t'><%=cps %></td>
-                    <td nowrap align='middle' class='t'><%=hr1 %></td>
-                    <td nowrap align='middle' class='t'><%=hr2 %></td>
-                    <td nowrap align='middle' class='t'><%=ext %></td>
+                     <td nowrap align='middle' class='t'><%=rosat%></td>
+                    <td nowrap align='middle' class='t'><%=cps%></td>
+                    <td nowrap align='middle' class='t'><%=hr1%></td>
+                    <td nowrap align='middle' class='t'><%=hr2%></td>
+                    <td nowrap align='middle' class='t'><%=ext%></td>
                 </tr>
             </table>
-            <%}else{%>
+            <%}
+                  else
+                  {%>
              <table cellpadding=2 cellspacing=2 border=0 width=625>
                   <tr><td class='nodatafound'>No data found for this object in ROSAT</td></tr>
             </table>
-            <%} if(isRC3) { %>
+            <%} if (isRC3)
+                  { %>
             <table cellpadding=2 cellspacing=2 border=0 width=620>
                 <tr>
                     <td align='middle' class='h'><span>Catalog</span></td>
@@ -82,17 +94,20 @@
                     <td align='middle' class='h'><span>Neutral Hydrogen Index</span></td>
                 </tr>
                 <tr>
-                    <td nowrap align='middle' class='t'><%=rc3 %></td>
-                    <td nowrap align='middle' class='t'><%=hubletype %></td>
-                    <td nowrap align='middle' class='t'><%=magnitude %></td>
-                    <td nowrap align='middle' class='t'><%=hydrogenIndex %></td>
+                    <td nowrap align='middle' class='t'><%=rc3%></td>
+                    <td nowrap align='middle' class='t'><%=hubletype%></td>
+                    <td nowrap align='middle' class='t'><%=magnitude%></td>
+                    <td nowrap align='middle' class='t'><%=hydrogenIndex%></td>
                 </tr>
             </table>
-            <%}else{%>
+            <%}
+                  else
+                  {%>
              <table cellpadding=2 cellspacing=2 border=0 width=625>
                   <tr><td class='nodatafound'>No data found for this object in RC3</td></tr>
             </table>
-            <%} if(is2MASS){ %>
+            <%} if (is2MASS)
+                  { %>
             <table cellpadding=2 cellspacing=2 border=0 width=620>
                 <tr>
                     <td align='middle' class='h'><span>Catalog</span></td>
@@ -102,18 +117,21 @@
                     <td align='middle' class='h'><span>phQual</span></td>
                 </tr>
                 <tr>
-                    <td nowrap align='middle' class='t'><%=twomass %></td>
-                    <td nowrap align='middle' class='t'><%=j %></td>
-                    <td nowrap align='middle' class='t'><%=h %></td>
-                    <td nowrap align='middle' class='t'><%=k %></td>
+                    <td nowrap align='middle' class='t'><%=twomass%></td>
+                    <td nowrap align='middle' class='t'><%=j%></td>
+                    <td nowrap align='middle' class='t'><%=h%></td>
+                    <td nowrap align='middle' class='t'><%=k%></td>
                     <td nowrap align='middle' class='t'><%=phQual%></td>
                 </tr>
             </table>
-            <%}else{%>
+            <%}
+                  else
+                  {%>
              <table cellpadding=2 cellspacing=2 border=0 width=625>
                   <tr><td class='nodatafound'>No data found for this object in 2MASS</td></tr>
             </table>
-            <%} if(isWISE){ %>
+            <%} if (isWISE)
+                  { %>
             <table cellpadding=2 cellspacing=2 border=0 width=620>
                 <tr>
                     <td align='middle' class='h'><span>Catalog</span></td>
@@ -124,20 +142,23 @@
                     <td align='middle' class='h'><span>Full WISE data</span></td>
                 </tr>
                 <tr>
-                    <td nowrap align='middle' class='t'><%=wise %></td>
-                    <td nowrap align='middle' class='t'><%=wmag1 %>></td>
-                    <td nowrap align='middle' class='t'><%=wmag2 %></td>
-                    <td nowrap align='middle' class='t'><%=wmag3 %></td>
-                    <td nowrap align='middle' class='t'><%=wmag4 %></td>
-                    <td nowrap align='middle' class='t'><%=wiselink %></td>                   
+                    <td nowrap align='middle' class='t'><%=wise%></td>
+                    <td nowrap align='middle' class='t'><%=wmag1%></td>
+                    <td nowrap align='middle' class='t'><%=wmag2%></td>
+                    <td nowrap align='middle' class='t'><%=wmag3%></td>
+                    <td nowrap align='middle' class='t'><%=wmag4%></td>
+                    <td nowrap align='middle' class='t'><%=wiselink%></td>                   
                 </tr>
             </table>
             
-            <%}else{%>
+            <%}
+                  else
+                  {%>
              <table cellpadding=2 cellspacing=2 border=0 width=625>
                   <tr><td class='nodatafound'>No data found for this object in WISE</td></tr>
             </table>
             <%}%>
+             
         </td>
     </tr>
-</table></div>  
+</table></div>  <%} %>

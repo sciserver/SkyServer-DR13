@@ -119,16 +119,18 @@ namespace SkyServer.Tools.Explore
                 {
                    objectInfo.objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
                    objectInfo.specObjId = reader["specObjId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["specObjId"]);
+                   objectInfo.ra = (double)reader["ra"];
+                   objectInfo.dec = (double)reader["dec"];
                 }
             } // using DataTableReader
 
 
-            cmd = ExplorerQueries.getAPOGEEId_PlateFiberMjd;
-            cmd = cmd.Replace("@mjd", mjd.ToString());
-            cmd = cmd.Replace("@plate", plate.ToString());
-            cmd = cmd.Replace("@fiberId", fiber.ToString());
+            cmd = ExplorerQueries.getApogeeFromEq;
+            cmd = cmd.Replace("@qra", objectInfo.ra.ToString());
+            cmd = cmd.Replace("@qdec", objectInfo.dec.ToString());
+            cmd = cmd.Replace("@searchRadius", (0.5 / 60).ToString());
             // if we couldn't find that plate/mjd/fiber, maybe it's an APOGEE object
-            if (String.IsNullOrEmpty(objectInfo.objId))
+            if (!String.IsNullOrEmpty(objectInfo.objId))
             {
                 ds = runQuery.RunCasjobs(cmd);
                 using (DataTableReader reader = ds.Tables[0].CreateDataReader())

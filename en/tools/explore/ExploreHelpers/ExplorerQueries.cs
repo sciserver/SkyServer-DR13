@@ -8,32 +8,7 @@ namespace SkyServer.Tools.Explore
 {
     public class ExplorerQueries
     {
-        private long? objId;
-        private long? specId;
-        private string fieldId;
-        private string apogeeId;
-        private string plateId;
-        private string fiberId;
-        private int? mjd;
-        private short? plate;
-     
-        public ExplorerQueries() { }
 
-        //public ExplorerQueries(short? plate, int? mjd, short? fiber) {
-        //    this.plate = plate;
-        //    this.mjd = mjd;
-        //    this.fiberId = fiber.ToString();
-        //}
-
-        //public ExplorerQueries(long? objid, long? specid, String apogeeid, String fieldid, String plateid, string fiberid) {
-        //    this.objId = objid;
-        //    this.specId = specid;
-        //    this.apogeeId = apogeeid;
-        //    this.fieldId = fieldid;
-        //    this.plateId = plateid;
-        //    this.fiberId = fiberid;
-        //}
-        
         ///Left Side panel of the Explore Page
         //photoObj
         public static string PhotoObjQuery = "select * from PhotoObjAll where objId=@objId";
@@ -116,30 +91,18 @@ namespace SkyServer.Tools.Explore
         //apogeeStar
         public static string apogeeStar = "select * from apogeeStar where apstar_id='@apid'";
             // HttpUtility.UrlEncode("'" + apogeeId + "'");
-            
-
+ 
         //aspcapStar
         public static string aspcapStar = "select * from aspcapStar where apstar_id='@apid'";
-            //+HttpUtility.UrlEncode("'" + apogeeId + "'");
-          
-
-        //public string apoTest {
-        //    get {
-        //        return "select * from aspcapStar where apstar_id='" + apogeeId + "'";
-        //    }
-        //}
+            //+HttpUtility.UrlEncode("'" + apogeeId + "'");      
 
         //PhotoZ
         public static string PhotoZ = "select * from Photoz where objid=@objId";
-                //string c1 = "select * from Photoz2 where objid=" + objid;
-                
-         
+                //string c1 = "select * from Photoz2 where objid=" + objid;       
 
         //PhotzRF
         public static string PhotozRF= "select * from PhotozRF where objid=@objId";
                 //string c2 = "select * from Photoz2 where objid=" + objid;
-          
-
 
         #region plate
         //Plate
@@ -164,7 +127,7 @@ namespace SkyServer.Tools.Explore
                             str(dbo.fDistanceArcMinEq(t.ra,t.dec,s.ra,s.dec),10,8) as distanceArcMin, s.class as specClass 
                             from SpecObjAll s, photoobjall t 
                             where t.objid=@objId  and s.fluxobjid=t.objid order by plate, MJD, fiber "; 
-                //cmd += " order by scienceprimary desc, distanceArcMin asc";                
+                // order by scienceprimary desc, distanceArcMin asc";                
                 
         #endregion
 
@@ -306,12 +269,7 @@ namespace SkyServer.Tools.Explore
                                                 where p.objId= @objId";
                 
 
-        /// <summary>
-        /// Imaing Query
-        /// </summary>
-        /// <param name="objid"></param>
-        /// <param name="sdssurl"></param>
-        /// <returns></returns>
+         /// Imaing Query
         public static  String getImagingQuery= @" select            
             --phototag
              dbo.fPhotoFlagsN(pt.flags) as 'flags',pt.ra, pt.dec, pt.run, pt.rerun, pt.camcol, pt.field, 
@@ -337,12 +295,7 @@ namespace SkyServer.Tools.Explore
              where pt.objId= @objId";
                 
 
-        /// <summary>
         /// Spectral parameters
-        /// </summary>
-        /// <param name="specid"></param>
-        /// <param name="objid"></param>
-        /// <returns></returns>
         public static string getSpectroQuery=
                 @" select s.plate,s.mjd,fiberid ,s.instrument ,class as 'objclass', z as 'redshift_z', zerr as 'redshift_err' 
             , dbo.fSpecZWarningN(zWarning) as 'redshift_flags',s.survey, s.programname, s.scienceprimary as 'primary', 
@@ -361,32 +314,7 @@ namespace SkyServer.Tools.Explore
                 //iQuery += " --WHEN 'apogee' THEN (select apogee_target1,apogee_target2 ) ";
              
         #region cross_id
-        /// <summary>
-        /// Cross mataches
-        /// </summary>
-        /// <param name="whichQuery"></param>
-        /// <param name="objId"></param>
-        /// <returns></returns>
-        //public String getCrossIdQuery(string whichQuery, string objId)
-        //{
-        //    String query = "";
-        //    String wiseLink = "";
-        //    switch (whichQuery)
-        //    {
-        //        case "USNO": query = " select 'USNO' as Catalog, str(10*propermotion,6,2)+' &plusmn; '+str(sqrt(power(muraerr,2)+power(mudecerr,2)),8,3) as 'Proper motion (mas/yr)', str(angle,6,3) as 'PM angle (deg E)' from USNO where objId="; break;
-        //        case "FIRST": query = " select 'FIRST' as Catalog, str(peak,8,2)+' &plusmn; '+str(rms,8,2) as 'Peak flux (mJy)', major as 'Major axis (arcsec)', minor as 'Minor axis (arcsec)' from First where objId="; break;
-        //        case "ROSAT": query = " select 'ROSAT' as Catalog, cps, hr1, hr2, ext from ROSAT where objId="; break;
-        //        case "RC3": query = " select 'RC3' as Catalog, hubble as 'Hubble type', str(m21,5,2)+' &plusmn; '+str(m21err,6,3) as '21 cm magnitude', hi as 'Neutral Hydrogen Index' from RC3 where objId="; break;
-        //        case "WISE": query = " select 'WISE' as Catalog,w.w1mag,w.w2mag,w.w3mag,w.w4mag,'<a href=''" + wiseLink + "''>Link</a>' as 'Full WISE data' from WISE_xmatch x join WISE_allsky w on x.wise_cntr=w.cntr where x.sdss_objid="; break;
-        //        case "2MASS": query = " select '2MASS' as Catalog, str(j,7,3) as 'J', h as 'H', k as 'K_s', phQual from TwoMASS where objId="; break;
-        //        default: break;
-        //    }
-        //    query += objId;
-
-        //    return query;
-        //}
-
-
+       
         public static string USNO = @" select 'USNO' as Catalog, str(10*propermotion,6,2)+' &plusmn; '+str(sqrt(power(muraerr,2)+power(mudecerr,2)),8,3) as 'Proper motion (mas/yr)',
                              angle as 'PM angle (deg E)' from USNO where objId=@objId";
                 
@@ -412,17 +340,6 @@ namespace SkyServer.Tools.Explore
 
         #endregion
 
-        //public enum queryType
-        //{
-        //    PhotObj, PhotoTag, PhotoZ, PhotozRF,Field, Frame,
-        //    SpecObj, sppLines, sppParams,
-        //    galSpec, galSpecLine,galSpecIndex,galSpecInfo,
-        //    stellarMassStarformingPort, stellarMassPassivePort,
-        //    emissionLines, stellarMassPCAWiscBC03, stellarMassPCAWiscM11,
-        //    stellarMassFSPSGranEarlyDust, stellarMassFSPSGranEarlyNoDust,
-        //    stellarMassFSPSGranWideDust, apogeeStar, aspcapStar
-        //};
-
         #region Apogee_Queries
         
         public static string APOGEE_BASE_QUERY= @" select   a.ra,    a.dec,   a.apstar_id,    a.apogee_id,    a.glon,    a.glat,    a.location_id,   a.commiss,   a.vhelio_avg,    a.vscatter,     b.teff,
@@ -443,8 +360,9 @@ namespace SkyServer.Tools.Explore
         #region Summary.aspx
 
         public static string getObjIDFromPlatefiberMjd= @" select cast(p.objId as binary(8)) as objId,cast(s.specObjId as binary(8)) as specObjId
-                         from SpecObjAll s JOIN PhotoTag p ON s.bestobjid=p.objid JOIN PlateX q ON s.plateId=q.plateId
-                         where s.mjd = @mjd and s.fiberId = @fiberId  and q.plate = @plate";
+                            ,p.ra,p.dec
+                            from SpecObjAll s JOIN PhotoTag p ON s.bestobjid=p.objid JOIN PlateX q ON s.plateId=q.plateId
+                            where s.mjd = @mjd and s.fiberId = @fiberId  and q.plate = @plate";
                 
 
         public static string getAPOGEEId_PlateFiberMjd = @" select s.apstar_id
@@ -515,10 +433,29 @@ namespace SkyServer.Tools.Explore
                             from apogeeStar a join apogeeVisit v on a.apogee_id=v.apogee_id 
                             where a.apstar_id = '@apogeeId'";
                
-
         #endregion
-        
 
+        public static string fitsimg = @"select
+                 dbo.fGetUrlFitsCFrame(@fieldId,'u'),
+                 dbo.fGetUrlFitsCFrame(@fieldId,'g'),
+                 dbo.fGetUrlFitsCFrame(@fieldId,'r'),
+                 dbo.fGetUrlFitsCFrame(@fieldId,'i'),
+                 dbo.fGetUrlFitsCFrame(@fieldId,'z'),
+
+                 dbo.fGetUrlFitsBin(@fieldId,'u'),
+                 dbo.fGetUrlFitsBin(@fieldId,'g'),
+                 dbo.fGetUrlFitsBin(@fieldId,'r'),
+                 dbo.fGetUrlFitsBin(@fieldId,'i'),
+                 dbo.fGetUrlFitsBin(@fieldId,'z'),
+
+                 dbo.fGetUrlFitsMask(@fieldId,'u'),
+                 dbo.fGetUrlFitsMask(@fieldId,'g'),
+                 dbo.fGetUrlFitsMask(@fieldId,'r'),
+                 dbo.fGetUrlFitsMask(@fieldId,'i'),
+                 dbo.fGetUrlFitsMask(@fieldId,'z'),
+
+                 dbo.fGetUrlFitsAtlas(@fieldId),
+                 dbo.fGetUrlFitsField(@fieldId)";
     }
 }
 

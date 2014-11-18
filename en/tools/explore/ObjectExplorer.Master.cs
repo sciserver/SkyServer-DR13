@@ -58,14 +58,15 @@ namespace SkyServer.Tools.Explore
             enUrl = getEnURL();
            
             // common query to explorer
-            string allId ="id="+id + "&spec=" + specId + "&apid=" + apid;           
+            string allId ="id="+id + "&spec=" + specId + "&apid=" + apid+"&field="+fieldId;
+
             
             // id is the decimal representation; objId is the hex representation.
             hrefs.Summary  = "summary.aspx?"+allId;
-            hrefs.PhotoObj = "DisplayResults.aspx?name=PhotoObj";
-            hrefs.PhotoTag = "DisplayResults.aspx?name=PhotoTag";
-            hrefs.Field    = "DisplayResults.aspx?name=Field";
-            hrefs.Frame    = "DisplayResults.aspx?name=Frame";
+            hrefs.PhotoObj = "DisplayResults.aspx?name=PhotoObj&"+allId;
+            hrefs.PhotoTag = "DisplayResults.aspx?name=PhotoTag&" + allId;
+            hrefs.Field    = "DisplayResults.aspx?name=Field&" + allId;
+            hrefs.Frame    = "DisplayResults.aspx?name=Frame&" + allId;
 
 
             if (globals.ReleaseNumber >= 8) 
@@ -75,8 +76,8 @@ namespace SkyServer.Tools.Explore
 
             if (globals.ReleaseNumber > 4)
             {
-                hrefs.PhotoZ   = "DisplayResults.aspx?&name=photoZ";
-                hrefs.PhotozRF = "DisplayResults.aspx?&name=photozRF";
+                hrefs.PhotoZ = "DisplayResults.aspx?&name=photoZ&" + allId;
+                hrefs.PhotozRF = "DisplayResults.aspx?&name=photozRF&" + allId;
             }
 
             hrefs.Matches = "matches.aspx?"+allId;
@@ -92,7 +93,7 @@ namespace SkyServer.Tools.Explore
                     if (run == 206)  run = 200006;
             }
 
-            hrefs.FITS = "fitsimg.aspx?id=" + id + "&fieldId=" + fieldId + "&spec=" + specId + "&apid=" + apid;
+            hrefs.FITS = "fitsimg.aspx?"+allId;//id=" + id + "&fieldId=" + fieldId + "&spec=" + specId + "&apid=" + apid;
             
             hrefs.NED = "http://nedwww.ipac.caltech.edu/cgi-bin/nph-objsearch?search_type=Near+Position+Search"
                       + "&in_csys=Equatorial&in_equinox=J2000.0&obj_sort=Distance+to+search+center"
@@ -128,12 +129,12 @@ namespace SkyServer.Tools.Explore
 
             if (specId != null)
             {
-                hrefs.SpecObj     = "DisplayResults.aspx?name=SpecObj";
-                hrefs.sppLines    = "DisplayResults.aspx?name=sppLines";
-                hrefs.sppParams   = "DisplayResults.aspx?name=sppParams";
-                hrefs.galSpecLine = "DisplayResults.aspx?name=galSpecLine";
-                hrefs.galSpecIndx = "DisplayResults.aspx?name=galSpecIndx";
-                hrefs.galSpecInfo = "DisplayResults.aspx?name=galSpecInfo";
+                hrefs.SpecObj = "DisplayResults.aspx?name=SpecObj&" + allId;
+                hrefs.sppLines = "DisplayResults.aspx?name=sppLines&" + allId;
+                hrefs.sppParams = "DisplayResults.aspx?name=sppParams&" + allId;
+                hrefs.galSpecLine = "DisplayResults.aspx?name=galSpecLine&" + allId;
+                hrefs.galSpecIndx = "DisplayResults.aspx?name=galSpecIndx&" + allId;
+                hrefs.galSpecInfo = "DisplayResults.aspx?name=galSpecInfo&" + allId;
 
                 hrefs.Plate = "plate.aspx?&name=Plate&plateId=" + plateId;
 
@@ -144,24 +145,24 @@ namespace SkyServer.Tools.Explore
                 if (globals.ReleaseNumber >= 8)
                 {
                     hrefs.theParameters = "parameters.aspx?"+allId;
-                    hrefs.stellarMassStarformingPort = "DisplayResults.aspx?name=stellarMassStarFormingPort";
-                    hrefs.stellarMassPassivePort     = "DisplayResults.aspx?name=stellarMassPassivePort";
-                    hrefs.emissionLinesPort          = "DisplayResults.aspx?name=emissionlinesPort";
-                    hrefs.stellarMassPCAWiscBC03     = "DisplayResults.aspx?name=stellarMassPCAWiscBC03";
-                    hrefs.stellarMassPCAWiscM11      = "DisplayResults.aspx?name=stellarMassPCAWiscM11";
+                    hrefs.stellarMassStarformingPort = "DisplayResults.aspx?name=stellarMassStarFormingPort&" + allId;
+                    hrefs.stellarMassPassivePort = "DisplayResults.aspx?name=stellarMassPassivePort&" + allId;
+                    hrefs.emissionLinesPort = "DisplayResults.aspx?name=emissionlinesPort&" + allId;
+                    hrefs.stellarMassPCAWiscBC03 = "DisplayResults.aspx?name=stellarMassPCAWiscBC03&" + allId;
+                    hrefs.stellarMassPCAWiscM11 = "DisplayResults.aspx?name=stellarMassPCAWiscM11&" + allId;
                 }
                 if (globals.ReleaseNumber >= 10)
                 {
-                    hrefs.stellarMassFSPSGranEarlyDust   = "DisplayResults.aspx?name=stellarMassFSPSGranEarlyDust";
-                    hrefs.stellarMassFSPSGranEarlyNoDust = "DisplayResults.aspx?name=stellarMassFSPSGranEarlyNoDust";
-                    hrefs.stellarMassFSPSGranWideDust    = "DisplayResults.aspx?name=stellarMassFSPSGranWideDust";
-                    hrefs.stellarMassFSPSGranWideNoDust  = "DisplayResults.aspx?name=stellarMassFSPSGranWideNoDust";
+                    hrefs.stellarMassFSPSGranEarlyDust = "DisplayResults.aspx?name=stellarMassFSPSGranEarlyDust&" + allId;
+                    hrefs.stellarMassFSPSGranEarlyNoDust = "DisplayResults.aspx?name=stellarMassFSPSGranEarlyNoDust&" + allId;
+                    hrefs.stellarMassFSPSGranWideDust = "DisplayResults.aspx?name=stellarMassFSPSGranWideDust&" + allId;
+                    hrefs.stellarMassFSPSGranWideNoDust = "DisplayResults.aspx?name=stellarMassFSPSGranWideNoDust&" + allId;
                  }
              }            
              if (!String.IsNullOrEmpty(apid))
              {
-                 hrefs.apogeeStar = "DisplayResults.aspx?name=apogeeStar";
-                 hrefs.aspcapStar = "DisplayResults.aspx?name=aspcapStar";
+                 hrefs.apogeeStar = "DisplayResults.aspx?name=apogeeStar&" + allId;
+                 hrefs.aspcapStar = "DisplayResults.aspx?name=aspcapStar&" + allId;
              }
         }
 
@@ -280,23 +281,29 @@ namespace SkyServer.Tools.Explore
                 if (w > 0)
                     Response.Write(" width=" + w);
                 Response.Write(">\n");
-                if (reader.Read())
+                if (reader.HasRows)
                 {
-                    for(int k=0; k <reader.FieldCount; k++)
+                    if (reader.Read())
                     {
-                        Response.Write("<tr align='left' >");
-                        Response.Write("<td  valign='top' class='h'>");
-                        Response.Write("<span ");
-                        if (unit != "")
-                            Response.Write("ONMOUSEOVER=\"this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=" + unit + "')\" ");
-                        Response.Write("></span>");
-                        Response.Write(reader.GetName(k) + "</td>");
+                        for (int k = 0; k < reader.FieldCount; k++)
+                        {
+                            Response.Write("<tr align='left' >");
+                            Response.Write("<td  valign='top' class='h'>");
+                            Response.Write("<span ");
+                            if (unit != "")
+                                Response.Write("ONMOUSEOVER=\"this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=" + unit + "')\" ");
+                            Response.Write("></span>");
+                            Response.Write(reader.GetName(k) + "</td>");
 
-                        Response.Write("<td valign='top' class='" + c + "'>");
-                        Response.Write(reader.GetValue(k));
-                        Response.Write("</td>");
-                        Response.Write("</tr>");
+                            Response.Write("<td valign='top' class='" + c + "'>");
+                            Response.Write(reader.GetValue(k));
+                            Response.Write("</td>");
+                            Response.Write("</tr>");
+                        }
                     }
+                }
+                else {
+                    Response.Write("<tr> <td class='nodatafound'>No data found for this object </td></tr>");
                 }
                 Response.Write("</table>");
             }
@@ -323,44 +330,49 @@ namespace SkyServer.Tools.Explore
 
                 if (reader.HasRows)
                 {
-                   for (int k = 0; k < reader.FieldCount; k++)
-                   {
-                            Response.Write("<td align='middle' class='h'>");
-                            Response.Write("<span ");
-                            if (unit != "")
-                                Response.Write("ONMOUSEOVER=\"this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=" + unit + "')\" ");
-                            Response.Write("></span>");
-                            Response.Write(reader.GetName(k) + "</td>");
-                   }
-                   Response.Write("</tr>");
-                    
-                } 
-                while(reader.Read()){
-                    Response.Write("<tr>");
-
                     for (int k = 0; k < reader.FieldCount; k++)
                     {
-                        Response.Write("<td nowrap align='middle' class='" + c + "'>");
-
-                        // think something else if possible for this
-                        if (target.Equals("AllSpectra") && k == 0)
-                        {
-                            string u = "<a class='content' target='_top' href='Summary.aspx?sid=";
-                            Response.Write(u + reader.GetValue(k) + "'>" + reader.GetValue(k) + "</a></td>");                          
-                        }
-
-                        else if(target.Equals("Neighbors") && k==0)
-                        {
-                            string u = "<a class='content' target='_top' href='Summary.aspx?id=";
-                            Response.Write(u + reader.GetValue(k) + "'>" + reader.GetValue(k) + "</a></td>");
-                        }
-                        
-                        else
-                        {
-                            Response.Write(reader.GetValue(k));
-                        }
-                        Response.Write("</td>");
+                        Response.Write("<td align='middle' class='h'>");
+                        Response.Write("<span ");
+                        if (unit != "")
+                            Response.Write("ONMOUSEOVER=\"this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=" + unit + "')\" ");
+                        Response.Write("></span>");
+                        Response.Write(reader.GetName(k) + "</td>");
                     }
+                    Response.Write("</tr>");
+
+
+                    while (reader.Read())
+                    {
+                        Response.Write("<tr>");
+
+                        for (int k = 0; k < reader.FieldCount; k++)
+                        {
+                            Response.Write("<td nowrap align='middle' class='" + c + "'>");
+
+                            // think something else if possible for this
+                            if (target.Equals("AllSpectra") && k == 0)
+                            {
+                                string u = "<a class='content' target='_top' href='Summary.aspx?sid=";
+                                Response.Write(u + reader.GetValue(k) + "'>" + reader.GetValue(k) + "</a></td>");
+                            }
+
+                            else if (target.Equals("Neighbors") && k == 0)
+                            {
+                                string u = "<a class='content' target='_top' href='Summary.aspx?id=";
+                                Response.Write(u + reader.GetValue(k) + "'>" + reader.GetValue(k) + "</a></td>");
+                            }
+
+                            else
+                            {
+                                Response.Write(reader.GetValue(k));
+                            }
+                            Response.Write("</td>");
+                        }
+                    }
+                }
+                else {
+                    Response.Write(" <td class='nodatafound'>No data found for this object </td>");
                 }
 
                 Response.Write("</tr>");

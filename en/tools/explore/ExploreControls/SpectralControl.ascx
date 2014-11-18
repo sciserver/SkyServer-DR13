@@ -33,18 +33,7 @@
               </td>
               <td>                     
                  <table cellpadding=2 cellspacing=2 border=0 width=300>
-                   <tr align='left' >
-                       <td  valign='top' class='h'><span>plate</span></td>
-                       <td valign='top' class='t'><%=plate %></td>
-                   </tr>
-                  <tr align='left' >
-                      <td  valign='top' class='h'><span>mjd</span></td>
-                      <td valign='top' class='t'><%=mjd %></td>
-                  </tr>
-                  <tr align='left' >
-                      <td  valign='top' class='h'><span>fiberid</span></td>
-                      <td valign='top' class='t'><%=fiberid %></td>
-                  </tr>
+                   
                    <tr align='left' >
                        <td  valign='top' class='h'><span>Spectrograph</span></td>
                        <td valign='top' class='t'><%=instrument %></td>
@@ -97,6 +86,18 @@
                        <td  valign='top' class='h'><span>targeting_flags</span></td>
                        <td valign='top' class='t'><%=targeting_flags %></td>
                    </tr>
+                     <tr align='left' >
+                       <td  valign='top' class='h'><span>plate</span></td>
+                       <td valign='top' class='t'><%=plate %></td>
+                   </tr>
+                  <tr align='left' >
+                      <td  valign='top' class='h'><span>mjd</span></td>
+                      <td valign='top' class='t'><%=mjd %></td>
+                  </tr>
+                  <tr align='left' >
+                      <td  valign='top' class='h'><span>fiberid</span></td>
+                      <td valign='top' class='t'><%=fiberid %></td>
+                  </tr>
                  </table>
 	   	      </td>            
         </tr>   

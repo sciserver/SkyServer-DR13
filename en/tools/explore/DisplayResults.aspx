@@ -9,6 +9,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="OEContent" runat="server">
    <div class="content">
    <div id="QueryResults">
+       <%url = master.getURL(); %>
     <p />
      <h2><a href="<%=url%>/help/browser/browser.aspx?cmd=description+<%=name%>+U" target="_top" class="content"><%=name%></a></h2>
     <p />   
