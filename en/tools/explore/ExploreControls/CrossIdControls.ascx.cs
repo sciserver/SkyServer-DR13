@@ -41,6 +41,7 @@ namespace SkyServer.Tools.Explore
         protected float wmag3;
         protected float wmag4;
         protected string wiselink;
+        protected string linkQuery;
 
         protected string twomass;
         protected float j;
@@ -141,6 +142,9 @@ namespace SkyServer.Tools.Explore
              }
 
              //WISE
+             linkQuery = ExplorerQueries.wiseLinkCrossId.Replace("@objId", objId);
+            
+             
              cmd = ExplorerQueries.WISE.Replace("@objId", objId);
              ds  = runQuery.RunCasjobs(cmd);
              using (DataTableReader reader = ds.Tables[0].CreateDataReader())

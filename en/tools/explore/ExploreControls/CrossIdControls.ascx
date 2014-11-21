@@ -147,7 +147,7 @@
                     <td nowrap align='middle' class='t'><%=wmag2%></td>
                     <td nowrap align='middle' class='t'><%=wmag3%></td>
                     <td nowrap align='middle' class='t'><%=wmag4%></td>
-                    <td nowrap align='middle' class='t'><%=wiselink%></td>                   
+                    <td nowrap align='middle' class='t'><a href=".\DisplayResults.aspx?cmd=<%=linkQuery%>&name=wise">Link</a></td>                   
                 </tr>
             </table>
             

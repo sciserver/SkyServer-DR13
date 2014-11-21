@@ -6,7 +6,7 @@
         <h3>Infrared Spectra
           <span class="target">Targeted star: <%=master.apid%></span>
         </h3>
-
+        <%if(isData != false){ %>
         <table width="800">
           <tr>
             <td class="h">Instrument</td>
@@ -52,7 +52,11 @@
             </td>
           </tr>
         </table>
-                    
+        <%}else{ %>               
+            <table cellpadding=2 cellspacing=2 border=0 width=625>
+                  <tr><td class='nodatafound'>No Spectrum data found for this object</td></tr>
+            </table>     
+        <%} %>
         <h3>Targeting Information</h3>
          <%if(isData){ %>    
         <table cellpadding="2" cellspacing="2" border="0" width="800">
@@ -103,7 +107,7 @@
         <%} else { %>
 
             <table cellpadding=2 cellspacing=2 border=0 width=625>
-                  <tr><td class='nodatafound'>No data found for this object</td></tr>
+                  <tr><td class='nodatafound'>No Targeting data found for this object</td></tr>
             </table>
          <%} %>
         <h3>Stellar Parameters</h3>
@@ -158,7 +162,7 @@
       <%} else { %>
 
             <table cellpadding=2 cellspacing=2 border=0 width=625>
-                  <tr><td class='nodatafound'>No data found for this object</td></tr>
+                  <tr><td class='nodatafound'>No Stellar Parameters found for this object</td></tr>
             </table>
          <%} %>
 
@@ -180,7 +184,7 @@
               <td align="middle" class="h"><span>mjd</span></td>
               <td align="middle" class="h"><span>fiberid</span></td>
               <td align="middle" class="h"><span>date</span></td>
-              <%--<td align="middle" class="h"><span>time (UTC)</span></td>--%>
+              <td align="middle" class="h"><span>time (UTC)</span></td>
               <td align="middle" class="h"><span>vrel</span></td>
             </tr>
 

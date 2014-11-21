@@ -52,6 +52,8 @@ namespace SkyServer.Tools.Explore
         protected string photoZ_RF;//34
         protected string galaxyZoo_Morph;//35
 
+        protected string mjdDate = "";
+
         protected string sdssUrl;
 
         protected string flagsLink = "";
@@ -120,6 +122,8 @@ namespace SkyServer.Tools.Explore
                         mode = reader["mode"] is DBNull ? " - " : (string)reader["mode"];
 
                         mjdNum = reader["mjdNum"] is DBNull ? -99999 :(int) reader["mjdNum"];
+                        if(mjdNum != -99999)
+                            mjdDate = HelperFunctions.ConvertFromJulian(mjdNum).ToString("MM/dd/yyyy");
 
                         otherObs = reader["Other observations"] is DBNull ? -99999 : (int)reader["Other observations"];
 
@@ -145,17 +149,18 @@ namespace SkyServer.Tools.Explore
         protected string getUnit(string tablename, string columname) {
             string unit = "";
             string cmd = ExplorerQueries.getUnit;
-            cmd.Replace("@tablename", tablename);
-            cmd.Replace("@name", columname);
+            cmd = cmd.Replace("@tablename", tablename);
+            cmd = cmd.Replace("@name", columname);
             DataSet ds = runQuery.RunCasjobs(cmd);
              using (DataTableReader reader = ds.Tables[0].CreateDataReader())
              {
-                 if (reader.Read())
+                 if (reader.HasRows)
                  {
-                     if (reader.HasRows)
-                     {
+                    if (reader.Read())
+                    {
                          unit = reader.GetString(0);
-                     }
+                     
+                    }
                  }
              }
              return unit;

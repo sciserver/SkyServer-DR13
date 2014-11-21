@@ -93,13 +93,15 @@ namespace SkyServer.Tools.Explore
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             master = (ObjectExplorer)Page.Master;
             runQuery = new RunQuery();
-            if (master.apid != null && !master.apid.Equals(""))
-            {
-                apogeeID(master.apid);
-                ReadInfoFromDbReader();
-                ReadApogeeLinks();
-                ReadVisitsFromDbReader();
-            }
+            
+                if (master.apid != null && !master.apid.Equals(""))
+                {
+                    apogeeID(master.apid);
+                    ReadInfoFromDbReader();
+                    ReadApogeeLinks();
+                    ReadVisitsFromDbReader();
+                }
+            
         } 
 
         protected void ReadInfoFromDbReader()  

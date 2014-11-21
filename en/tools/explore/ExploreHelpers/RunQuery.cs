@@ -13,10 +13,11 @@ using System.Text;
 using System.Data;
 using System.Runtime.Serialization.Formatters.Binary;
 
+
 namespace SkyServer.Tools.Explore
 {
     // use casjobs to run
-    public class RunQuery
+    public class RunQuery 
     {
 
         private Globals globals;
@@ -37,6 +38,8 @@ namespace SkyServer.Tools.Explore
         /// <returns></returns>
         public DataSet RunCasjobs(string command)
         {
+           // throw new IndexOutOfRangeException("There is an invalid argument");
+            
             try
             {
                 var request = (HttpWebRequest)WebRequest.Create(requestUri);
@@ -65,7 +68,8 @@ namespace SkyServer.Tools.Explore
             }
             catch (Exception e)
             {
-                throw new Exception("There is an error running this Query.\n" + command + " ");
+                throw new Exception("There is an error running this Query.\n Query:" + command + " ");
+                
             }
         }
 

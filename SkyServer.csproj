@@ -1756,6 +1756,7 @@
     <Content Include="en\tools\explore\Matches.aspx" />
     <Content Include="en\tools\explore\Neighbors.aspx" />
     <Content Include="en\tools\explore\javascript\explore.js" />
+    <Content Include="en\tools\explore\Obj.aspx" />
     <Content Include="en\tools\explore\Plate.aspx" />
     <Content Include="en\tools\explore\Search.aspx" />
     <Content Include="en\tools\explore\SetEq.aspx" />
@@ -5487,6 +5488,8 @@
       <DependentUpon>ExploreError.aspx</DependentUpon>
     </Compile>
     <Compile Include="en\tools\explore\ExploreHelpers\ApogeeVisit.cs" />
+    <Compile Include="en\tools\explore\ExploreHelpers\ExceptionUtility.cs" />
+    <Compile Include="en\tools\explore\ExploreHelpers\HelperFunctions.cs" />
     <Compile Include="en\tools\explore\ExploreHelpers\ObjectInfo.cs" />
     <Compile Include="en\tools\explore\galaxyzoo.aspx.cs">
       <DependentUpon>galaxyzoo.aspx</DependentUpon>
@@ -5497,6 +5500,13 @@
     </Compile>
     <Compile Include="en\tools\explore\ExploreHelpers\ExplorerQueries.cs" />
     <Compile Include="en\tools\explore\ExploreHelpers\RunQuery.cs" />
+    <Compile Include="en\tools\explore\Obj.aspx.cs">
+      <DependentUpon>Obj.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\tools\explore\Obj.aspx.designer.cs">
+      <DependentUpon>Obj.aspx</DependentUpon>
+    </Compile>
     <Compile Include="en\tools\explore\ObjectExplorer.Master.cs">
       <DependentUpon>ObjectExplorer.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

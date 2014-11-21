@@ -23,11 +23,13 @@
             <table cellpadding=2 cellspacing=2 border=0 width=420>
                 <tr align='left' >
                     <td  valign='top' class='h'>
-                        <span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=<%=getUnit("PhotoObj","flags") %>')" >
+                        <span title="unit=<%=getUnit("PhotoObj","flags") %>')" >
                             <a href='<%=flagsLink%>'>Flags <img src=../../images/offsite_black.png /></a>
                         </span>
                     </td>
-                    <td valign='top' class='t'><%=flag %></td>
+                    <td valign='top' class='t'>
+                        <%=flag %>
+                    </td>
                 </tr>
             </table>
          </td>
@@ -38,20 +40,21 @@
     <tr>
         <td style="vertical-align:top">
              <% string link = "javascript:showNavi(" + ra + "," + dec + "," + 0.2 + ");"; %>
-             <a href="<%= link%>"><img alt="" src="<%= globals.WSGetJpegUrl + "?ra=" + ra + "&dec=" + dec + "&scale=0.2&width=200&height=200&opt=G"%>" border="0" width="200" height="200" /></a>
+             <a href="<%= link%>">
+                 <img alt="" src="<%= globals.WSGetJpegUrl + "?ra=" + ra + "&dec=" + dec + "&scale=0.2&width=200&height=200&opt=G"%>" border="0" width="200" height="200" />
+             </a>
          </td>
         <td >
             <table cellpadding=2 cellspacing=2 border=0 width=420>
-                <tr>
-                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';" ></span></td></tr>
+                <tr><td align='middle' class='h'><span></span></td></tr>
                 <tr><td nowrap align='middle' class='t'><b>Magnitudes</b></td></tr>
             </table>
             <table cellpadding=2 cellspacing=2 border=0 width=420>
-                <tr><td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=<%=getUnit("PhotoObj","u") %>')" ></span>u</td>
-                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=<%=getUnit("PhotoObj","g") %>')" ></span>g</td>
-                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=<%=getUnit("PhotoObj","r") %>')" ></span>r</td>
-                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=<%=getUnit("PhotoObj","i") %>')" ></span>i</td>
-                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=<%=getUnit("PhotoObj","z") %>')" ></span>z</td></tr>
+                <tr><td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","u") %>">u</span></td>
+                    <td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","g") %>">g</span></td>
+                    <td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","r") %>" >r</span></td>
+                    <td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","i") %>" >i</span></td>
+                    <td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","z") %>" >z</span></td></tr>
                 <tr><td nowrap align='middle' class='t'> <%=u.ToString("F2") %></td>
                     <td nowrap align='middle' class='t'> <%=g.ToString("F2") %></td>
                     <td nowrap align='middle' class='t'> <%=r.ToString("F2") %></td>
@@ -59,15 +62,15 @@
                     <td nowrap align='middle' class='t'> <%=z.ToString("F2") %></td></tr>
             </table>
             <table cellpadding=2 cellspacing=2 border=0 width=420>
-                <tr><td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';" ></span></td></tr>
+                <tr><td align='middle' class='h'><span></span></td></tr>
                 <tr><td nowrap align='middle' class='t'><b>Magnitude uncertainties</b></td></tr>
-            </table><table cellpadding=2 cellspacing=2 border=0 width=420>
-                <tr><td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=<%=getUnit("PhotoObj","err_u") %>')" ></span>err_u</td>
-                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=<%=getUnit("PhotoObj","err_g") %>')" ></span>err_g</td>
-                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=<%=getUnit("PhotoObj","err_r") %>')" ></span>err_r</td>
-                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=<%=getUnit("PhotoObj","err_i") %>')" ></span>err_i</td>
-                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=<%=getUnit("PhotoObj","err_z") %>')" ></span>err_z</td>
-                </tr>
+            </table>
+            <table cellpadding=2 cellspacing=2 border=0 width=420>
+                <tr><td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","err_u") %>" >err_u</span></td>
+                    <td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","err_g") %>" >err_g</span></td>
+                    <td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","err_r") %>" >err_r</span></td>
+                    <td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","err_i") %>" >err_i</span></td>
+                    <td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","err_z") %>" >err_z</span></td></tr>
                 <tr><td nowrap align='middle' class='t'> <%=err_u.ToString("F2") %></td>
                     <td nowrap align='middle' class='t'> <%=err_g.ToString("F2") %></td>
                     <td nowrap align='middle' class='t'> <%=err_r.ToString("F2") %></td>
@@ -79,13 +82,13 @@
         <tr>
           <td colspan="2">
             <table cellpadding=2 cellspacing=2 border=0 width=625>
-               <tr><td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='1000';return escape('<i>unit</i>=test')" ></span>Image MJD</td>
-                   <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=test')" ></span>mode</td>
-                   <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=test')" ></span>Other observations</td>
-                   <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=test')" ></span>parentID</td>
-                   <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=test')" ></span>nChild</td>
-                   <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=test')" ></span>extinction_r</td>
-                   <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=test')" ></span>PetroRad_r (arcmin)</td>
+               <tr><td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","mjd") %>" >Image MJD</span></td>
+                   <td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","mode")%>" >mode</span></td>
+                   <td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","nDetect")%>" >Other observations</span></td>
+                   <td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","parentID")%>" >parentID</span></td>
+                   <td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","nChild")%>" >nChild</span></td>
+                   <td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","extinction_r")%>" >extinction_r</span></td>
+                   <td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","petroRadErr")%>" >PetroRad_r (arcmin)</span></td>
                </tr>
                <tr><td nowrap align='middle' class='t'><%=mjdNum %></td>
                    <td nowrap align='middle' class='t'><%=mode %></td>
@@ -98,18 +101,20 @@
             </table>
             <table cellpadding=2 cellspacing=2 border=0 width=625>
                 <tr>
-                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=test')" ></span>photoZ (KD-tree method)</td>
-                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=test')" ></span>photoZ (RF method)</td>
-                    <td align='middle' class='h'><span ONMOUSEOVER="this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=test')" ></span>Galaxy Zoo 1 morphology</td>
+                    <td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","mjd") %>" >Mjd-Date</span></td>
+                    <td align='middle' class='h'><span title="unit=<%=getUnit("PhotoZ","z") %>" >photoZ (KD-tree method)</span></td>
+                    <td align='middle' class='h'><span title="unit=<%=getUnit("PhotozRF","z") %>" >photoZ (RF method)</span></td>
+                    <td align='middle' class='h'><span title="unit=<%=getUnit("zooSpec","") %>" >Galaxy Zoo 1 morphology</span></td>
                 </tr>
                 <tr>
+                    <td nowrap align='middle' class='t'><%=mjdDate %></td>
                     <td nowrap align='middle' class='t'><%=photoZ_KD %></td>
                     <td nowrap align='middle' class='t'><%=photoZ_RF %></td>
                     <td nowrap align='middle' class='t'><%=galaxyZoo_Morph %></td>
                 </tr>
             </table>                            
-            </td>
+          </td>
         </tr>
-    </table>
-    </div>   
+     </table>
+   </div>   
   <%--  <!-- end of imaging div  -->--%><%} %>

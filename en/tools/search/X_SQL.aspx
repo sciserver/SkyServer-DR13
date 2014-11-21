@@ -3,5 +3,5 @@
 <%  
    ProcessRequestREST();
    SkyServer.Tools.Search.ResponseREST rs = new SkyServer.Tools.Search.ResponseREST();
-   //rs.ProcessRequestREST(this.Request, this.Response, "SQL");
+   rs.ProcessRequestREST(this.Request, this.Response, "SQL");
    %>

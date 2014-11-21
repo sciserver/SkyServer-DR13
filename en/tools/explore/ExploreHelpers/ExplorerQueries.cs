@@ -126,7 +126,7 @@ namespace SkyServer.Tools.Explore
                             str(s.ra,10,5) as specRa, str(s.dec,10,5) as specDec,  s.sciencePrimary, 
                             str(dbo.fDistanceArcMinEq(t.ra,t.dec,s.ra,s.dec),10,8) as distanceArcMin, s.class as specClass 
                             from SpecObjAll s, photoobjall t 
-                            where t.objid=@objId  and s.fluxobjid=t.objid order by plate, MJD, fiber "; 
+                            where t.objid=@objId  and s.fluxobjid=t.objid order by desc, plate, MJD, fiber "; 
                 // order by scienceprimary desc, distanceArcMin asc";                
                 
         #endregion
@@ -327,8 +327,7 @@ namespace SkyServer.Tools.Explore
         public static string RC3 = @" select 'RC3' as Catalog, hubble as 'Hubble type', str(m21,5,2)+' &plusmn; '+str(m21err,6,3) as '21 cm magnitude', 
                                hi as 'Neutral Hydrogen Index' from RC3 where objId=@objId";
 
-        public static string WISE = @" select 'WISE' as Catalog,w.w1mag,w.w2mag,w.w3mag,w.w4mag,'<a href=''select * from wise_xmatch x join wise_allsky a on x.wise_cntr=a.cntr 
-                                                where x.sdss_objid=@objId&name=WISE_allsky&id=@objId''>Link</a>' as 'Full WISE data' 
+        public static string WISE = @" select 'WISE' as Catalog,w.w1mag,w.w2mag,w.w3mag,w.w4mag,'link' as 'Full WISE data' 
                             from WISE_xmatch x join WISE_allsky w on x.wise_cntr=w.cntr where x.sdss_objid=@objId";
                        //cmd = cmd.Replace("@wiselink", wiseLinkCrossId);
                
@@ -336,7 +335,7 @@ namespace SkyServer.Tools.Explore
         public static string TWOMASS =" select '2MASS' as Catalog, j as 'J', h as 'H', k as 'K_s', phQual from TwoMASS where objId=@objId";
 
         public static string wiseLinkCrossId = @"select * from wise_xmatch x join wise_allsky a on x.wise_cntr=a.cntr 
-                                                where x.sdss_objid=@objId&name=WISE_allsky"+"id=@objId";
+                                                where x.sdss_objid=@objId";
 
         #endregion
 

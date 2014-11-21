@@ -40,6 +40,7 @@ namespace SkyServer.Tools.Explore
             runQuery = new RunQuery();
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             master = (ObjectExplorer)Page.Master;
+            Session["objectInfo"] = objectInfo;
 
             if (Request.QueryString.Keys.Count == 0)
             {
@@ -77,12 +78,13 @@ namespace SkyServer.Tools.Explore
                 if (key == "mjd") mjd = int.Parse(Request.QueryString["mjd"]);
                 if (key == "fiber") fiber = short.Parse(Request.QueryString["fiber"]);
             }
-
+           
             //This is imp function to get all different ids.
-            getObjPmts();            
+            getObjPmts();
 
             //parseId and store ObjectInfo in session
             parseIds();
+            
         }
 
         private void parseIds() {
@@ -207,30 +209,18 @@ namespace SkyServer.Tools.Explore
         private void pmtsFromSpec(string sid)
         {
             long? sidnumber = 0;
-            try
-            {
                 pmtsFromSpecWithApogeeID(sidstring);
                 if (apid != null && apid != string.Empty)
                 {
                     photoFromEq(objectInfo.ra, objectInfo.dec);
                 }
-            }
-            catch (Exception e)
-            {
-            }
-
-            try
-            {
+          
                 sidnumber = Convert.ToInt64(sidstring);
                 pmtsFromSpecWithSpecobjID(sidnumber);
                 if (objectInfo.specObjId != null && objectInfo.specObjId != ZERO_ID)
                 {
                     apogeeFromEq(objectInfo.ra, objectInfo.dec);
-                }
-            }
-            catch
-            {
-            }
+                }          
         }
 
         private void pmtsFromSpecWithApogeeID(string sid)

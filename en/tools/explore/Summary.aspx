@@ -10,20 +10,21 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="OEContent" runat="server">
 
-  <%--<%--This is for Metadata --%>
-<%@ Register TagPrefix="metadata" TagName="MetadataParameters" Src="./ExploreControls/MetaDataControl.ascx"  %>
+    <%--<%--This is for Metadata --%>
+    <%@ Register TagPrefix="metadata" TagName="MetadataParameters" Src="./ExploreControls/MetaDataControl.ascx"  %>
 
-<%--This section for Imaging Parameters--%>
-<%@ Register TagPrefix="imaging" TagName="ImagingParameters" Src="./ExploreControls/ImagingControl.ascx" %>
+    <%--This section for Imaging Parameters--%>
+    <%@ Register TagPrefix="imaging" TagName="ImagingParameters" Src="./ExploreControls/ImagingControl.ascx" %>
 
-<%--This section for CrossId table Results--%>
-<%@ Register TagPrefix="crossid" TagName="CrossId" Src="./ExploreControls/CrossIdControls.ascx" %>
+    <%--This section for CrossId table Results--%>
+    <%@ Register TagPrefix="crossid" TagName="CrossId" Src="./ExploreControls/CrossIdControls.ascx" %>
 
-<%--This section for Spectral Parameters--%>
-<%@ Register TagPrefix="spectral" TagName="SpectralControl" Src="./ExploreControls/SpectralControl.ascx" %>
+    <%--This section for Spectral Parameters--%>
+    <%@ Register TagPrefix="spectral" TagName="SpectralControl" Src="./ExploreControls/SpectralControl.ascx" %>
 
-<%--This Section for APOGEE parameters--%>
-<%@ Register TagPrefix="apogee" TagName="ApogeeControl" Src="./ExploreControls/ApogeeControl.ascx" %>
+    <%--This Section for APOGEE parameters--%>
+    <%@ Register TagPrefix="apogee" TagName="ApogeeControl" Src="./ExploreControls/ApogeeControl.ascx" %>
+
    <div class="content">
    <metadata:MetadataParameters ID="MetadataParameters1" runat="server"/>
    <imaging:ImagingParameters ID="ImagingParameters1" runat="server" /> 

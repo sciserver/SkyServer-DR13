@@ -159,7 +159,7 @@ namespace SkyServer.Tools.Explore
                     hrefs.stellarMassFSPSGranWideNoDust = "DisplayResults.aspx?name=stellarMassFSPSGranWideNoDust&" + allId;
                  }
              }            
-             if (!String.IsNullOrEmpty(apid))
+             if (apid != null && !String.IsNullOrEmpty(apid))
              {
                  hrefs.apogeeStar = "DisplayResults.aspx?name=apogeeStar&" + allId;
                  hrefs.aspcapStar = "DisplayResults.aspx?name=aspcapStar&" + allId;
