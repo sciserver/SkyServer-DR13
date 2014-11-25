@@ -5944,7 +5944,6 @@
     <Compile Include="en\tools\explore\FitsSpec.aspx.designer.cs">
       <DependentUpon>FitsSpec.aspx</DependentUpon>
     </Compile>
-    <Compile Include="misc\KeyStone.cs" />
     <Compile Include="misc\net.ivoa.data\DataSetWrapper.cs" />
     <Compile Include="misc\net.ivoa.data\DataWrapper.cs" />
     <Compile Include="misc\Functions.cs" />
@@ -6309,7 +6308,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>6679</DevelopmentServerPort>
+          <DevelopmentServerPort>41032</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

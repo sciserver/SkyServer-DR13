@@ -8,8 +8,6 @@
         ToolsGutter.makeGutter(gselect, gutter);
     %>
 
-
-
     <asp:ContentPlaceHolder ID="ToolsContent" runat="server">
     
     </asp:ContentPlaceHolder>

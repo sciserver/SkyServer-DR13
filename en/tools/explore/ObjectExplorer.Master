@@ -50,112 +50,108 @@
         </div>
         <div id="toc" >
             <table width="110" cellspacing=0 cellpadding=0>
-	            <tr><td><a class="med" target="_top" href='default.aspx' onmouseover="this.T_WIDTH='140';return escape('Return to the Explore tool default page')">Explore Home</a><br>
-                <tr><td class="s" align="right"><hr width="90"></td></tr>
+	            <tr><td><a class="med" target="_top" href='default.aspx' title="Return to the Explore tool default page">Explore Home</a><br/></td></tr>
+                <tr><td class="s" align="right"><hr width="90"/></td></tr>
                 
                 <tr><td class="med"><a id="searchLabel" href="#" onclick="toggleSearch();">Search</a></td></tr>
-                <tr><td class="s" align="right"><hr width="90"></td></tr>
+                <tr><td class="s" align="right"><hr width="90" /></td></tr>
                 <% 
                     // If this object has a numerical id -- i.e. if it is a SDSS-I/SEGUE/BOSS object...
                     if (id.HasValue)
                     {
                 %>
-                        <tr><td align="left"><a class="med" href='<%=hrefs.Summary%>#imaging' onmouseover="this.T_WIDTH='140';return escape('Parameters for Imaging Observations.')">Imaging Summary</a></td></tr>	
-        	            <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.FITS%>" onmouseover="this.T_WIDTH='140';return escape('Get FITS images of the SDSS fields containing this object.')">FITS</a></td></tr>
-                        <tr><td class="s" align="right"><a href='<%=hrefs.Chart%>' onmouseover="this.T_WIDTH='140';return escape('Link to Finding Chart for this object.')">Finding chart<img src="../../images/new_window_black.png" alt=" (new window)" /></a></td></tr>
-	                    <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.Matches%>" onmouseover="this.T_WIDTH='140';return escape('Find other imaging observations for this object in the Match table.')">Other Observations</a></td></tr>
-	                    <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.Neighbors%>" onmouseover="this.T_WIDTH='140';return escape('The nearest neighbors of this object within a predetermined radius.')">Neighbors</a></td></tr>
-                        <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.Galaxyzoo%>" onmouseover="this.T_WIDTH='140';return escape('Morphological classifications from Galaxy Zoo users')">Galaxy Zoo</a></td></tr>
+                        <tr><td align="left"><a class="med" href='<%=hrefs.Summary%>#imaging' title="Parameters for Imaging Observations.">Imaging Summary</a></td></tr>	
+        	            <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.FITS%>" title="Get FITS images of the SDSS fields containing this object.">FITS</a></td></tr>
+                        <tr><td class="s" align="right"><a href='<%=hrefs.Chart%>' title="Link to Finding Chart for this object.">Finding chart<img src="../../images/new_window_black.png" alt=" (new window)" /></a></td></tr>
+	                    <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.Matches%>" title="Find other imaging observations for this object in the Match table.">Other Observations</a></td></tr>
+	                    <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.Neighbors%>" title="The nearest neighbors of this object within a predetermined radius.">Neighbors</a></td></tr>
+                        <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.Galaxyzoo%>" title="Morphological classifications from Galaxy Zoo users">Galaxy Zoo</a></td></tr>
                         <tr><td>&nbsp;</td></tr>
-	                    <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.PhotoTag%>" onmouseover="this.T_WIDTH='140';return escape('Find the most popular parameters for this image.')">PhotoTag</a></td></tr>
-	                    <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.Field%>" onmouseover="this.T_WIDTH='140';return escape('Field table entry for the field that this object was observed in.')">Field</a></td></tr>
-	                    <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.Frame%>" onmouseover="this.T_WIDTH='140';return escape('Frame table entry corresponding to this Field.')">Frame</a></td></tr>
-                        <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.PhotoObj%>' onmouseover="this.T_WIDTH='140';return escape('Full Parameters for Imaging Observations.')"> PhotoObj</a></td></tr>	
+	                    <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.PhotoTag%>" title="Find the most popular parameters for this image.">PhotoTag</a></td></tr>
+	                    <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.Field%>" title="Field table entry for the field that this object was observed in.">Field</a></td></tr>
+	                    <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.Frame%>" title="Frame table entry corresponding to this Field.">Frame</a></td></tr>
+                        <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.PhotoObj%>' title="Full Parameters for Imaging Observations."> PhotoObj</a></td></tr>	
                         <%
                         if (globals.ReleaseNumber > 4)
                         { 
                         %>
-		                        <tr><td class="s" align="right"><a target="_top" href="<%= hrefs.PhotoZ %>" onmouseover="this.T_WIDTH='140';return escape('Photometric redshift for this object (from the Photoz table), if it exists.')">PhotoZ</a></td></tr>
-                                <tr><td class="s" align="right"><a target="_top" href="<%= hrefs.PhotozRF %>" onmouseover="this.T_WIDTH='140';return escape('Random forest calculated phhotometric redshift for this object (from the PhotozRF table), if it exists.')">PhotozRF</a></td></tr>
+		                        <tr><td class="s" align="right"><a target="_top" href="<%= hrefs.PhotoZ %>" title="Photometric redshift for this object (from the Photoz table), if it exists.">PhotoZ</a></td></tr>
+                                <tr><td class="s" align="right"><a target="_top" href="<%= hrefs.PhotozRF %>" title="Random forest calculated phhotometric redshift for this object (from the PhotozRF table), if it exists.">PhotozRF</a></td></tr>
                         <% 
                         }
                         %>
 
-                        <tr><td align="right"><hr width="90"></td></tr>
-	                    <tr><td><a class="med" target="_top" href='<%=hrefs.Summary%>#crossidtop' onmouseover="this.T_WIDTH='140';return escape('Photometric cross-identifications with other surveys, if there are any available.')">Cross-ID</a><br>
+                        <tr><td align="right"><hr width="90"/></td></tr>
+	                    <tr><td><a class="med" target="_top" href='<%=hrefs.Summary%>#crossidtop' title="Photometric cross-identifications with other surveys, if there are any available.">Cross-ID</a><br></td></tr>
 
-                        <tr><td align="right"><hr width="90"></td></tr>
+                        <tr><td align="right"><hr width="90"/></td></tr>
 
-	                    <tr><td><a class="med" target="_top" href='<%=hrefs.Summary%>#spectro' onmouseover="this.T_WIDTH='140';return escape('Summary of spectroscopic parameters (if a spectrum was observed).')">Spec Summary</a><br>
-                      <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.AllSpec%>" onmouseover="this.T_WIDTH='140';return escape('Find all the spectra observed for this object in the SpecObjAll table.')">All Spectra</a></td></tr>
+	                    <tr><td><a class="med" target="_top" href='<%=hrefs.Summary%>#spectro' title="Summary of spectroscopic parameters (if a spectrum was observed).">Spec Summary</a><br></td></tr>
+                      <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.AllSpec%>" title="Find all the spectra observed for this object in the SpecObjAll table.">All Spectra</a></td></tr>
 	                                            <%
                       if (specId != null)
                       { 
                         %>
-                      <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.SpecFITS%>" onmouseover="this.T_WIDTH='140';return escape('Go to the SAS for the spectrum FITS file.')">FITS</a></td></tr>
-	                    <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.Plate%>' onmouseover="this.T_WIDTH='140';return escape('Browsable contents of the spectroscopic plate that this spectrum belongs to.')">Plate</a></td></tr>
-                        <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.SpecObj%>' onmouseover="this.T_WIDTH='140';return escape('Full Parameters for Spectroscopic Observations.')">SpecObj</a></td></tr>	
-	                    <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.sppLines%>' onmouseover="this.T_WIDTH='140';return escape('Stellar Parameter Pipeline indices for spectral lines observed for this spectrum.')">sppLines</a></td></tr>
+                      <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.SpecFITS%>" title="Go to the SAS for the spectrum FITS file.">FITS</a></td></tr>
+	                    <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.Plate%>' title="Browsable contents of the spectroscopic plate that this spectrum belongs to.">Plate</a></td></tr>
+                        <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.SpecObj%>' title="Full Parameters for Spectroscopic Observations.">SpecObj</a></td></tr>	
+	                    <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.sppLines%>' title="Stellar Parameter Pipeline indices for spectral lines observed for this spectrum.">sppLines</a></td></tr>
 
-	                    <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.galSpecLine%>' onmouseover="this.T_WIDTH='140';return escape('Emission line measurements (from MPA-JHU spectroscopic re-analysis) for this spectrum.')">galSpecLine</a></td></tr>
-	                    <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.galSpecIndx%>' onmouseover="this.T_WIDTH='140';return escape('Index measurements (from the MPA-JHU spectroscopic catalogue) for this spectrum.')">galSpecIndx</a></td></tr>
-	                    <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.galSpecInfo%>' onmouseover="this.T_WIDTH='140';return escape('General information (for the MPA-JHU spectroscopic re-analysis) for this spectrum.')">galSpecInfo</a></td></tr>
+	                    <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.galSpecLine%>' title="Emission line measurements (from MPA-JHU spectroscopic re-analysis) for this spectrum.">galSpecLine</a></td></tr>
+	                    <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.galSpecIndx%>' title="Index measurements (from the MPA-JHU spectroscopic catalogue) for this spectrum.">galSpecIndx</a></td></tr>
+	                    <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.galSpecInfo%>' title="General information (for the MPA-JHU spectroscopic re-analysis) for this spectrum.">galSpecInfo</a></td></tr>
 
                         <%
                         if (globals.ReleaseNumber >= 7)         // display fit parameters only for DR7 or newer
                         { 
                         %>
-                            <tr><td align="right"><hr width="90"></td></tr>
-    	                    <tr><td><a class="med" target="_top" href='<%=hrefs.theParameters%>' onmouseover="this.T_WIDTH='140';return escape('Summary of fits to spectroscopic parameters (if a spectrum was observed).')">Fit Parameters</a><br />
-    	                    <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.sppParams%>' onmouseover="this.T_WIDTH='140';return escape('Stellar Parameter Pipeline atmospheric parameters for this spectrum.')">sppParams</a></td></tr>                            
+                            <tr><td align="right"><hr width="90"/></td></tr>
+    	                    <tr><td><a class="med" target="_top" href='<%=hrefs.theParameters%>' title="Summary of fits to spectroscopic parameters (if a spectrum was observed).">Fit Parameters</a><br /></td></tr>
+    	                    <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.sppParams%>' title="Stellar Parameter Pipeline atmospheric parameters for this spectrum.">sppParams</a></td></tr>                            
    
                             <%
                           if (globals.ReleaseNumber >= 8)         // display Portsmouth galaxy spectra fits only for DR8 or newer
                           { 
                             %>
-                                <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.stellarMassStarformingPort%>' onmouseover="this.T_WIDTH='140';return escape('General information (for the Portsmouth spectroscopic re-analysis) for this spectrum, assuming a star forming model.')">StarformingPort</a></td></tr>
-                                <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.stellarMassPassivePort%>' onmouseover="this.T_WIDTH='140';return escape('General information (for the (for the Portsmouth spectroscopic re-analysis) for this spectrum, assuming a passive model.')">PassivePort</a></td></tr>
-	                            <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.emissionLinesPort%>' onmouseover="this.T_WIDTH='140';return escape('Emission line measurements (from Portsmouth spectroscopic re-analysis)')">emissionLinesPort</a></td></tr>
-                                <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.stellarMassPCAWiscBC03%>' onmouseover="this.T_WIDTH='140';return escape('General information (for the Wisconsin spectroscopic re-analysis) for this spectrum, assuming BC03.')">PCAWiscBC03</a></td></tr>
-                                <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.stellarMassPCAWiscM11%>' onmouseover="this.T_WIDTH='140';return escape('General information (for the Wisconsin spectroscopic re-analysis) for this spectrum, assuming M11.')">PCAWiscM11</a></td></tr>
+                                <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.stellarMassStarformingPort%>' title="General information (for the Portsmouth spectroscopic re-analysis) for this spectrum, assuming a star forming model.">StarformingPort</a></td></tr>
+                                <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.stellarMassPassivePort%>' title="General information (for the (for the Portsmouth spectroscopic re-analysis) for this spectrum, assuming a passive model.">PassivePort</a></td></tr>
+	                            <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.emissionLinesPort%>' title="Emission line measurements (from Portsmouth spectroscopic re-analysis)">emissionLinesPort</a></td></tr>
+                                <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.stellarMassPCAWiscBC03%>' title="General information (for the Wisconsin spectroscopic re-analysis) for this spectrum, assuming BC03.">PCAWiscBC03</a></td></tr>
+                                <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.stellarMassPCAWiscM11%>' title="General information (for the Wisconsin spectroscopic re-analysis) for this spectrum, assuming M11.">PCAWiscM11</a></td></tr>
                             <% } %>
    
                             <% if (globals.ReleaseNumber >= 10)         // display Wisconsin & Granada fits only for DR10 or newer
                                {
                             %>    
-                                <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.stellarMassFSPSGranEarlyDust%>' onmouseover="this.T_WIDTH='140';return escape('stellarMassFSPSGranEarlyDust')">FSPSGranEarlyDust</a></td></tr>
-                                <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.stellarMassFSPSGranEarlyNoDust%>' onmouseover="this.T_WIDTH='140';return escape('stellarMassFSPSGranEarlyNoDust')">FSPSGranEarlyNoDust</a></td></tr>
-                                <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.stellarMassFSPSGranWideDust%>' onmouseover="this.T_WIDTH='140';return escape('stellarMassFSPSGranWideDust')">FSPSGranWideDust</a></td></tr>
-                                <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.stellarMassFSPSGranWideNoDust%>' onmouseover="this.T_WIDTH='140';return escape('stellarMassFSPSGranWideNoDust')">FSPSGranWideNoDust</a></td></tr>
+                                <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.stellarMassFSPSGranEarlyDust%>' title="stellarMassFSPSGranEarlyDust">FSPSGranEarlyDust</a></td></tr>
+                                <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.stellarMassFSPSGranEarlyNoDust%>' title="stellarMassFSPSGranEarlyNoDust">FSPSGranEarlyNoDust</a></td></tr>
+                                <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.stellarMassFSPSGranWideDust%>' title="stellarMassFSPSGranWideDust">FSPSGranWideDust</a></td></tr>
+                                <tr><td class="s" align="right"><a target="_top" href='<%=hrefs.stellarMassFSPSGranWideNoDust%>' title="stellarMassFSPSGranWideNoDust">FSPSGranWideNoDust</a></td></tr>
                             <% } %>
                         
                     <% } %>
                     <% } // if (specId != null) %>
-                    <tr><td align="right"><hr width="90"></td></tr>
-                <%} %>
-
-                <%  
-                    // If the ID is a string, then it's an APOGEE object, print these also.
-                    if (!string.IsNullOrEmpty(apid))
-                    { 
+                    <tr><td align="right"><hr width="90"/></td></tr>
+                <%}
+                  // If the ID is a string, then it's an APOGEE object, print these also.
+                  if (!string.IsNullOrEmpty(apid))
+                  { 
                 %>
-                      <tr><td align="left"><a class="med" href='<%=hrefs.Summary%>#irspec' onmouseover="this.T_WIDTH='140';return escape('Summary of infrared spectroscopy')">IR Spec Summary</a></td></tr>
-                      <%--<tr><td class="s" align="right"><a target="_top" href='<%=exploreQuery.apoTest%>' onmouseover="this.T_WIDTH='140';return escape('Display contents of ApogeeStar table')">ApogeeStar</a></td></tr>--%>
-                       <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.apogeeStar%>" onmouseover="this.T_WIDTH='140';return escape(''Display contents of ApogeeStar table')">ApogeeStar</a></td></tr> 
-                      <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.aspcapStar%>" onmouseover="this.T_WIDTH='140';return escape(''Display contents of ASPCAPstar table')">ASPCAPstar</a></td></tr>
-                      <tr><td align="right"><hr width="90"></td></tr>
-
+                      <tr><td align="left"><a class="med" href='<%=hrefs.Summary%>#irspec' title="Summary of infrared spectroscopy">IR Spec Summary</a></td></tr>                      
+                      <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.apogeeStar%>" title="'Display contents of ApogeeStar table">ApogeeStar</a></td></tr> 
+                      <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.aspcapStar%>" title="'Display contents of ASPCAPstar table">ASPCAPstar</a></td></tr>
+                      <tr><td align="right"><hr width="90"/></td></tr>
                 <%} %>
 
 
-	            <tr><td><a class="med" target="_top" href='<%=hrefs.NED%>' onmouseover="this.T_WIDTH='140';return escape('NASA Extragalactic Database matches for this RA,dec.')"> NED search</a></td></tr>
-	            <tr><td><a class="med" target="_top" href='<%=hrefs.SIMBAD%>' onmouseover="this.T_WIDTH='140';return escape('SIMBAD search results for this RA,dec.')"> SIMBAD search</a></td></tr>
-	            <tr><td><a class="med" target="_top" href='<%=hrefs.ADS%>' onmouseover="this.T_WIDTH='140';return escape('Astrophysical Data System literature search results for this RA,dec.')"> ADS search</a></td></tr>
-	            <tr><td align="right"><hr width="90"></td></tr>
-	            <tr><td><a class="med" href='<%=hrefs.ShowBook%>' onmouseover="this.T_WIDTH='140';return escape('Save and view notepad data on Explore objects.')">Notes</a></td></tr>
-	            <tr><td class="s" align="right" ><a href='<%=hrefs.SaveBook%>' onmouseover="this.T_WIDTH='140';return escape('Save this object in notepad.')"> Save in Notes</a></td></tr>
-	            <tr><td class="s" align="right" ><a href='<%=hrefs.ShowBook%>' onmouseover="this.T_WIDTH='140';return escape('View your saved notes, if any.')">Show Notes</a></td></tr>
-	            <tr><td align="right"><hr width="90"></td></tr>
+	            <tr><td><a class="med" target="_top" href='<%=hrefs.NED%>' title="NASA Extragalactic Database matches for this RA,dec."> NED search</a></td></tr>
+	            <tr><td><a class="med" target="_top" href='<%=hrefs.SIMBAD%>' title="SIMBAD search results for this RA,dec."> SIMBAD search</a></td></tr>
+	            <tr><td><a class="med" target="_top" href='<%=hrefs.ADS%>' title="Astrophysical Data System literature search results for this RA,dec."> ADS search</a></td></tr>
+	            <tr><td align="right"><hr width="90"/></td></tr>
+	            <tr><td><a class="med" href='<%=hrefs.ShowBook%>' title="Save and view notepad data on Explore objects.">Notes</a></td></tr>
+	            <tr><td class="s" align="right" ><a href='<%=hrefs.SaveBook%>' title="Save this object in notepad."> Save in Notes</a></td></tr>
+	            <tr><td class="s" align="right" ><a href='<%=hrefs.ShowBook%>' title="View your saved notes, if any.">Show Notes</a></td></tr>
+	            <tr><td align="right"><hr width="90"/></td></tr>
 	            <tr><td><a class="med" href=# onclick="<%=hrefs.Print%>"> Print </a></td></tr>
             </table>
         </div>

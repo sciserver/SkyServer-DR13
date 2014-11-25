@@ -38,9 +38,10 @@
               <td width="200px" class="sitename"><%= siteTitle %></td>
             </tr>
           </table>
+        </td>       
+        <td >
+            <img alt="" src="<%= imgpath %>imageright2.png" />
         </td>
-        <td width="200px"><input type="submit" id="login" value="Login"/> <label></label> </td>
-        <%--<td ><img alt="" src="<%= imgpath %>imageright2.png" /></td>--%>
           
       </tr>
     </table>
