@@ -126,8 +126,8 @@ namespace SkyServer.Tools.Explore
                             str(s.ra,10,5) as specRa, str(s.dec,10,5) as specDec,  s.sciencePrimary, 
                             str(dbo.fDistanceArcMinEq(t.ra,t.dec,s.ra,s.dec),10,8) as distanceArcMin, s.class as specClass 
                             from SpecObjAll s, photoobjall t 
-                            where t.objid=@objId  and s.fluxobjid=t.objid order by desc, plate, MJD, fiber "; 
-                // order by scienceprimary desc, distanceArcMin asc";                
+                            where t.objid=@objId  and s.fluxobjid=t.objid order by  plate, MJD, fiber, 
+                            scienceprimary desc, distanceArcMin asc";                
                 
         #endregion
 
@@ -455,6 +455,13 @@ namespace SkyServer.Tools.Explore
 
                  dbo.fGetUrlFitsAtlas(@fieldId),
                  dbo.fGetUrlFitsField(@fieldId)";
+
+
+        public static string unitQuery = @"SELECT name, unit,tablename FROM DBcolumns
+                                                WHERE tablename in('PhotoObjAll') 
+                                                AND name IN ('u', 'g', 'r', 'i', 'z', 'err_u','err_g','err_r','err_i','err_z',
+                                                'mjd', 'mode', 'nDetect', 'parentID','nChild','extinction_r','petroRadErr')
+                                                ORDER BY name";
     }
 }
 

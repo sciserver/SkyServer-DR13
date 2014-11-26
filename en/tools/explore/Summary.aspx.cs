@@ -209,18 +209,26 @@ namespace SkyServer.Tools.Explore
         private void pmtsFromSpec(string sid)
         {
             long? sidnumber = 0;
+            try
+            {
                 pmtsFromSpecWithApogeeID(sidstring);
                 if (apid != null && apid != string.Empty)
                 {
                     photoFromEq(objectInfo.ra, objectInfo.dec);
                 }
-          
+            }
+            catch (Exception e) { }
+
+            try
+            {
                 sidnumber = Convert.ToInt64(sidstring);
                 pmtsFromSpecWithSpecobjID(sidnumber);
                 if (objectInfo.specObjId != null && objectInfo.specObjId != ZERO_ID)
                 {
                     apogeeFromEq(objectInfo.ra, objectInfo.dec);
-                }          
+                }
+            }
+            catch (Exception e) { }
         }
 
         private void pmtsFromSpecWithApogeeID(string sid)

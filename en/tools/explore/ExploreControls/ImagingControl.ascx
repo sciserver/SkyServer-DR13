@@ -50,11 +50,11 @@
                 <tr><td nowrap align='middle' class='t'><b>Magnitudes</b></td></tr>
             </table>
             <table cellpadding=2 cellspacing=2 border=0 width=420>
-                <tr><td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","u") %>">u</span></td>
-                    <td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","g") %>">g</span></td>
-                    <td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","r") %>" >r</span></td>
-                    <td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","i") %>" >i</span></td>
-                    <td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","z") %>" >z</span></td></tr>
+                <tr><td align='middle' class='h'><span title="unit=<%=columnUnit.Get("u") %>">u</span></td>
+                    <td align='middle' class='h'><span title="unit=<%=columnUnit.Get("g") %>">g</span></td>
+                    <td align='middle' class='h'><span title="unit=<%=columnUnit.Get("r") %>" >r</span></td>
+                    <td align='middle' class='h'><span title="unit=<%=columnUnit.Get("i") %>" >i</span></td>
+                    <td align='middle' class='h'><span title="unit=<%=columnUnit.Get("z") %>" >z</span></td></tr>
                 <tr><td nowrap align='middle' class='t'> <%=u.ToString("F2") %></td>
                     <td nowrap align='middle' class='t'> <%=g.ToString("F2") %></td>
                     <td nowrap align='middle' class='t'> <%=r.ToString("F2") %></td>
@@ -66,11 +66,11 @@
                 <tr><td nowrap align='middle' class='t'><b>Magnitude uncertainties</b></td></tr>
             </table>
             <table cellpadding=2 cellspacing=2 border=0 width=420>
-                <tr><td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","err_u") %>" >err_u</span></td>
-                    <td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","err_g") %>" >err_g</span></td>
-                    <td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","err_r") %>" >err_r</span></td>
-                    <td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","err_i") %>" >err_i</span></td>
-                    <td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","err_z") %>" >err_z</span></td></tr>
+                <tr><td align='middle' class='h'><span title="unit=<%=columnUnit.Get("err_u") %>" >err_u</span></td>
+                    <td align='middle' class='h'><span title="unit=<%=columnUnit.Get("err_g") %>" >err_g</span></td>
+                    <td align='middle' class='h'><span title="unit=<%=columnUnit.Get("err_r") %>" >err_r</span></td>
+                    <td align='middle' class='h'><span title="unit=<%=columnUnit.Get("err_i") %>" >err_i</span></td>
+                    <td align='middle' class='h'><span title="unit=<%=columnUnit.Get("err_z") %>" >err_z</span></td></tr>
                 <tr><td nowrap align='middle' class='t'> <%=err_u.ToString("F2") %></td>
                     <td nowrap align='middle' class='t'> <%=err_g.ToString("F2") %></td>
                     <td nowrap align='middle' class='t'> <%=err_r.ToString("F2") %></td>
@@ -82,13 +82,13 @@
         <tr>
           <td colspan="2">
             <table cellpadding=2 cellspacing=2 border=0 width=625>
-               <tr><td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","mjd") %>" >Image MJD</span></td>
-                   <td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","mode")%>" >mode</span></td>
-                   <td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","nDetect")%>" >Other observations</span></td>
-                   <td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","parentID")%>" >parentID</span></td>
-                   <td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","nChild")%>" >nChild</span></td>
-                   <td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","extinction_r")%>" >extinction_r</span></td>
-                   <td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","petroRadErr")%>" >PetroRad_r (arcmin)</span></td>
+               <tr><td align='middle' class='h'><span title="unit=<%=columnUnit.Get("mjd") %>" >Image MJD</span></td>
+                   <td align='middle' class='h'><span title="unit=<%=columnUnit.Get("mode")%>" >mode</span></td>
+                   <td align='middle' class='h'><span title="unit=<%=columnUnit.Get("nDetect")%>" >Other observations</span></td>
+                   <td align='middle' class='h'><span title="unit=<%=columnUnit.Get("parentID")%>" >parentID</span></td>
+                   <td align='middle' class='h'><span title="unit=<%=columnUnit.Get("nChild")%>" >nChild</span></td>
+                   <td align='middle' class='h'><span title="unit=<%=columnUnit.Get("extinction_r")%>" >extinction_r</span></td>
+                   <td align='middle' class='h'><span title="unit=<%=columnUnit.Get("petroRadErr")%>" >PetroRad_r (arcmin)</span></td>
                </tr>
                <tr><td nowrap align='middle' class='t'><%=mjdNum %></td>
                    <td nowrap align='middle' class='t'><%=mode %></td>
@@ -101,10 +101,10 @@
             </table>
             <table cellpadding=2 cellspacing=2 border=0 width=625>
                 <tr>
-                    <td align='middle' class='h'><span title="unit=<%=getUnit("PhotoObjAll","mjd") %>" >Mjd-Date</span></td>
-                    <td align='middle' class='h'><span title="unit=<%=getUnit("PhotoZ","z") %>" >photoZ (KD-tree method)</span></td>
-                    <td align='middle' class='h'><span title="unit=<%=getUnit("PhotozRF","z") %>" >photoZ (RF method)</span></td>
-                    <td align='middle' class='h'><span title="unit=<%=getUnit("zooSpec","") %>" >Galaxy Zoo 1 morphology</span></td>
+                    <td align='middle' class='h'><span title="unit=<%=columnUnit.Get("mjd") %>" >Mjd-Date</span></td>
+                    <td align='middle' class='h'><span title="unit=<%=columnUnit.Get("z") %>" >photoZ (KD-tree method)</span></td>
+                    <td align='middle' class='h'><span title="unit=<%=columnUnit.Get("z") %>" >photoZ (RF method)</span></td>
+                    <td align='middle' class='h'><span title="unit=" >Galaxy Zoo 1 morphology</span></td>
                 </tr>
                 <tr>
                     <td nowrap align='middle' class='t'><%=mjdDate %></td>

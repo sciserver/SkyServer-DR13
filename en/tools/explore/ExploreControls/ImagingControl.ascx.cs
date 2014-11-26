@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
+using  System.Collections.Specialized;
 
 namespace SkyServer.Tools.Explore
 {
@@ -77,8 +78,11 @@ namespace SkyServer.Tools.Explore
             sdssUrl = globals.SdssUrl;
             flagsLink = sdssUrl + "algorithms/photo_flags_recommend.php";
 
-            if(objId != null && !objId.Equals(""))
-            execQuery();
+            if (objId != null && !objId.Equals(""))
+            {
+                execQuery();
+                getUnit();
+            }
         }
 
         private void execQuery()
@@ -144,6 +148,32 @@ namespace SkyServer.Tools.Explore
                     }
                 }
             }
+        }
+
+        //protected string u_unit, g_unit, r_unit, i_unit, z_unit, 
+        //                 err_u_unit, err_g_unit, err_r_unit, err_i_unit, err_z_unit,
+        //                 mjd_unit,mode_unit;
+
+        protected NameValueCollection columnUnit = new NameValueCollection();
+
+        protected void getUnit(){
+            
+            string cmd = ExplorerQueries.unitQuery;
+           
+            DataSet ds = runQuery.RunCasjobs(cmd);
+             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+             {
+                 if (reader.HasRows)
+                 {
+                    while (reader.Read())
+                    {
+                        string colName =reader[0] is DBNull ? "":(string)reader[0];
+                        string colUnit = reader[0] is DBNull ? "" : (string)reader[1];
+                        columnUnit.Add(colName,colUnit);
+                    }
+                 }
+             }
+             
         }
 
         protected string getUnit(string tablename, string columname) {
