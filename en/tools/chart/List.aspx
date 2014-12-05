@@ -1,21 +1,21 @@
-﻿<%@ Page Title="" Language="C#" EnableViewStateMac="false" MasterPageFile="ListBase.Master" AutoEventWireup="true" CodeBehind="List.aspx.cs" Inherits="SkyServer.Tools.Chart.List" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <script type="text/javascript">
-	function setPage(n) {
-	
-		//set page value for parent, so that we come back to same page
-		if (n>0) document.getElementById("getjpeg").page.value=n;
-
-		// set the local page value, and resubmit
-		document.getElementById("getjpeg").page.value=n;
-		document.getElementById("getjpeg").submit();
-
-		return false;
-	}
-    </script>
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="FCContent" runat="server">
+﻿<%@ Page Title="" Language="C#" EnableViewStateMac="false" MasterPageFile="ListBase.master" AutoEventWireup="true" CodeBehind="List.aspx.cs" Inherits="SkyServer.Tools.Chart.List" %>
+<%--<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     
+</asp:Content>--%>
+<asp:Content ID="Content2" ContentPlaceHolderID="FCContent" runat="server">
+    <script type="text/javascript">
+        function setPage(n) {
+
+            //set page value for parent, so that we come back to same page
+            if (n > 0) document.getElementById("getjpeg").page.value = n;
+
+            // set the local page value, and resubmit
+            document.getElementById("getjpeg").page.value = n;
+            document.getElementById("getjpeg").submit();
+
+            return false;
+        }
+    </script>
     <div>
     <table border="0" cellspacing="2" cellpadding="0">
 	    <tr>

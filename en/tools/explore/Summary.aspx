@@ -9,7 +9,7 @@
 </asp:Content>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="OEContent" runat="server">
-
+    
     <%--<%--This is for Metadata --%>
     <%@ Register TagPrefix="metadata" TagName="MetadataParameters" Src="./ExploreControls/MetaDataControl.ascx"  %>
 

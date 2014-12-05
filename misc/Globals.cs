@@ -63,20 +63,11 @@ namespace SkyServer
         private string apogeeFitsLink;
 
        
-
-        /// <summary>
-        /// 
-        /// </summary>
         private string skyserverRESTservice;
         private string casjobsRESTapi;
         //private string skyServerWSsql;
-
-        public string username
-        {
-            get;
-            set;
-        }
-
+        
+       
         public string CasjobsRESTapi {
             get {
                 return casjobsRESTapi;

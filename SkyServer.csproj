@@ -50,12 +50,15 @@
       <HintPath>lib\DotNetOpenAuth.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\Newtonsoft.Json.5.0.6\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>packages\Newtonsoft.Json.6.0.6\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="openstacknet">
-      <HintPath>lib\openstacknet.dll</HintPath>
+    <Reference Include="openstacknet, Version=1.3.0.0, Culture=neutral, PublicKeyToken=bf74868971e80ac6, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\DemoSkyServer\deodev\SkyServer\lib\openstacknet.dll</HintPath>
+    </Reference>
+    <Reference Include="SciServer.Logging">
+      <HintPath>..\..\Web Services\Deoyani-SkyserverWS\SkyServerWS\Sciserver_webService\bin\SciServer.Logging.dll</HintPath>
     </Reference>
     <Reference Include="SimpleRESTServices">
       <HintPath>packages\SimpleRESTServices.1.3.0.1\lib\net40\SimpleRESTServices.dll</HintPath>
@@ -1945,6 +1948,7 @@
     <Content Include="en\tools\quicklook\images\sdss_logo_tiny.jpg" />
     <Content Include="en\tools\quicklook\images\square.gif" />
     <Content Include="en\tools\quicklook\qlhelp.css" />
+    <Content Include="en\tools\quicklook\quicklook.js" />
     <Content Include="en\tools\quicklook\quicklook.swf" />
     <Content Include="en\tools\quicklook\QuickObj.aspx" />
     <Content Include="en\tools\quicklook\QuickSummary.aspx" />
@@ -5382,12 +5386,26 @@
     <Compile Include="en\tools\chart\Book.aspx.designer.cs">
       <DependentUpon>Book.aspx</DependentUpon>
     </Compile>
+    <Compile Include="en\tools\chart\ChartBase.master.cs">
+      <DependentUpon>ChartBase.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\tools\chart\ChartBase.master.designer.cs">
+      <DependentUpon>ChartBase.master</DependentUpon>
+    </Compile>
     <Compile Include="en\tools\chart\ChartHome.aspx.cs">
       <DependentUpon>ChartHome.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="en\tools\chart\ChartHome.aspx.designer.cs">
       <DependentUpon>ChartHome.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\tools\chart\ListBase.master.cs">
+      <DependentUpon>ListBase.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\tools\chart\ListBase.master.designer.cs">
+      <DependentUpon>ListBase.master</DependentUpon>
     </Compile>
     <Compile Include="en\tools\chart\Navi.aspx.cs">
       <DependentUpon>Navi.aspx</DependentUpon>
@@ -5507,12 +5525,12 @@
     <Compile Include="en\tools\explore\Obj.aspx.designer.cs">
       <DependentUpon>Obj.aspx</DependentUpon>
     </Compile>
-    <Compile Include="en\tools\explore\ObjectExplorer.Master.cs">
-      <DependentUpon>ObjectExplorer.Master</DependentUpon>
+    <Compile Include="en\tools\explore\ObjectExplorer.master.cs">
+      <DependentUpon>ObjectExplorer.master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="en\tools\explore\ObjectExplorer.Master.designer.cs">
-      <DependentUpon>ObjectExplorer.Master</DependentUpon>
+    <Compile Include="en\tools\explore\ObjectExplorer.master.designer.cs">
+      <DependentUpon>ObjectExplorer.master</DependentUpon>
     </Compile>
     <Compile Include="en\tools\explore\parameters.aspx.cs">
       <DependentUpon>parameters.aspx</DependentUpon>
@@ -5640,6 +5658,13 @@
     <Compile Include="en\tools\quicklook\Help.aspx.designer.cs">
       <DependentUpon>Help.aspx</DependentUpon>
     </Compile>
+    <Compile Include="en\tools\quicklook\QuickLook.master.cs">
+      <DependentUpon>QuickLook.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\tools\quicklook\QuickLook.master.designer.cs">
+      <DependentUpon>QuickLook.master</DependentUpon>
+    </Compile>
     <Compile Include="en\tools\quicklook\QuickObj.aspx.cs">
       <DependentUpon>QuickObj.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -5647,6 +5672,7 @@
     <Compile Include="en\tools\quicklook\QuickObj.aspx.designer.cs">
       <DependentUpon>QuickObj.aspx</DependentUpon>
     </Compile>
+    <Compile Include="en\tools\quicklook\QuickQueries.cs" />
     <Compile Include="en\tools\quicklook\Search.aspx.cs">
       <DependentUpon>Search.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -5867,13 +5893,6 @@
     <Compile Include="en\tools\chart\Chart.aspx.designer.cs">
       <DependentUpon>Chart.aspx</DependentUpon>
     </Compile>
-    <Compile Include="en\tools\chart\ChartBase.Master.cs">
-      <DependentUpon>ChartBase.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="en\tools\chart\ChartBase.Master.designer.cs">
-      <DependentUpon>ChartBase.Master</DependentUpon>
-    </Compile>
     <Compile Include="en\tools\chart\ChartInfo.aspx.cs">
       <DependentUpon>ChartInfo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -5901,13 +5920,6 @@
     </Compile>
     <Compile Include="en\tools\chart\List.aspx.designer.cs">
       <DependentUpon>List.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="en\tools\chart\ListBase.Master.cs">
-      <DependentUpon>ListBase.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="en\tools\chart\ListBase.Master.designer.cs">
-      <DependentUpon>ListBase.Master</DependentUpon>
     </Compile>
     <Compile Include="en\tools\chart\ListInfo.aspx.cs">
       <DependentUpon>ListInfo.aspx</DependentUpon>
@@ -6019,13 +6031,6 @@
     </Compile>
     <Compile Include="en\tools\quicklook\QuickSummary.aspx.designer.cs">
       <DependentUpon>QuickSummary.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="en\tools\quicklook\QuickLook.Master.cs">
-      <DependentUpon>QuickLook.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="en\tools\quicklook\QuickLook.Master.designer.cs">
-      <DependentUpon>QuickLook.Master</DependentUpon>
     </Compile>
     <Compile Include="en\tools\ToolsHome.aspx.cs">
       <DependentUpon>ToolsHome.aspx</DependentUpon>
@@ -6271,7 +6276,10 @@
     <Content Include="en\skyserver\SkyServerMaster.master" />
     <Content Include="en\tools\Resolver.ashx" />
     <Content Include="en\skyserver\paper\SkyServer-ACM-SIGMOD-2002.pdf" />
-    <Content Include="en\tools\explore\ObjectExplorer.Master" />
+    <Content Include="en\tools\explore\ObjectExplorer.master" />
+    <Content Include="en\tools\quicklook\QuickLook.master" />
+    <Content Include="en\tools\chart\ChartBase.master" />
+    <Content Include="en\tools\chart\ListBase.master" />
     <None Include="en\tools\STARTBall\FlashJavascriptGateway\FlashJavascriptGateway\.DS_Store" />
     <None Include="en\tools\STARTBall\FlashJavascriptGateway\FlashJavascriptGateway\installation\.DS_Store" />
     <None Include="en\tools\STARTBall\FlashJavascriptGateway\FlashJavascriptGateway\source\flash\actionscript\com\macromedia\javascript\JavaScriptProxy.as" />
@@ -6284,13 +6292,6 @@
     <None Include="en\tools\STARTBall\images\crosshairsLayers.psd" />
     <None Include="en\tools\STARTBall\STARTBall.dcr" />
     <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="en\tools\chart\ChartBase.Master" />
-    <Content Include="en\tools\chart\ListBase.Master" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="en\tools\quicklook\QuickLook.Master" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="en\tools\ToolsMaster.master" />

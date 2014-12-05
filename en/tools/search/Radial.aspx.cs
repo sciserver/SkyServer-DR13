@@ -32,5 +32,10 @@ namespace SkyServer.Tools.Search
             url = ResolveClientUrl("~/en");
             userguide = url + "/help/docs/QS_UserGuide.aspx";
         }
+
+        protected void test(object sender, EventArgs e)
+        {
+            Response.Redirect("X_Results.aspx");
+        }
     }
 }

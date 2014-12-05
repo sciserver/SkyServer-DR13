@@ -69,7 +69,7 @@ namespace SkyServer.Tools.Chart
                 if ("scale".Equals(key)) { qscale = Double.Parse(Request[key]); def = 0; }
                 if ("opt".Equals(key)) { opt = Request[key]; def = 0; }
                 if ("query".Equals(key)) { query = Request[key]; def = 0; }
-                if ("paste".Equals(key)) { imgListPaste = Request[key].Replace(';','\n'); def = 0; }
+                if ("paste".Equals(key)) { imgListPaste = Request[key].Replace(';', '\n'); def = 0; }
             }
         }
 
@@ -99,7 +99,7 @@ namespace SkyServer.Tools.Chart
             string s = "<tr>\n\t<td><span  ONMOUSEOVER=\"this.T_TEMP='3000';this.T_WIDTH='180';return escape('" + tooltip + "')\">" + label + "</span></td>\n";
             s += "\t\t<td><table cellspacing=0 cellpadding=0><tr><td>\n";
             s += "\t\t\t<INPUT class='in' type='text' size='3' maxlength='20' align='right'\n";
-            s += "\t\t\tvalue='" + value + "' name='" + name + "' id='"+name+"'";
+            s += "\t\t\tvalue='" + value + "' name='" + name + "' id='" + name + "'";
             if (change != "") s += " onChange='" + change + "' ";
             s += "></td><td>&nbsp;<span  ONMOUSEOVER=\"this.T_TEMP='3000';this.T_WIDTH='180';return escape('" + tooltip + "')\">" + unit;
             s += "\t\t\t</span></td></tr></table>\n\t\t</td>\n</tr>\n";

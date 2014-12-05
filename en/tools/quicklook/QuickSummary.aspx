@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="QuickLook.Master" AutoEventWireup="true" CodeBehind="QuickSummary.aspx.cs" Inherits="SkyServer.Tools.QuickLook.QuickSummary" %>
 <%@ Import Namespace="System.Data.SqlClient" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+<%@ Import Namespace="SkyServer.Tools.QuickLook" %>
+<%--<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
         table.content td  { font-size:9pt; font-family: arial,helvetica,sans-serif; }
         a.content { color: blue; text-decoration: underline; }
@@ -18,9 +19,9 @@
         }
 
     </script>
-</asp:Content>
+</asp:Content>--%>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-	<table border='0' width='640' class="content">
+	<table border='0' width='640' class="content" id="quickcontent">
 	<tr>	
 	<td colspan=2 align='center'>
         <h2><font color=#000086>Summary data for:&nbsp;&nbsp;<%= name %> </font></h2>
@@ -38,7 +39,7 @@
             </td>
         </tr>
         <tr>
-            <td align='center' width='33%' class='t'><%= objId %></td>
+            <td align='center' width='33%' class='t'><%= id %></td>
             <td align='center' width='33%' class='t'><%= ra %></td>
             <td align='center' width='33%' class='t'><%= dec %></td>
         </tr>
@@ -63,8 +64,8 @@
                 <% if (specObjId != null && !ZERO_ID.Equals(specObjId)) {%>
                         	
     		        <p><b>Preview spectrum (click for a larger version)</b></p>  	
-	   		        <a href='../../get/SpecById.ashx?id=<%= specObjId %>'>
-			            <img src='../../get/SpecById.ashx?id=<%= specObjId %>' width='256' height='205' border='0' align='center' />
+	   		        <a href='../../get/SpecById.ashx?id=<%= specId %>'>
+			            <img src='../../get/SpecById.ashx?id=<%= specId %>' width='256' height='205' border='0' align='center' />
                     </a>
                 <% } else { %>
                     <p align='left'><b>The SDSS has not measured a spectrum for this object.</b><br />  	  	
@@ -75,71 +76,43 @@
             <tr>
             <td align='center' valign='top' width='50%'>
             <p><b>Object Type (type):</b><%= otype %></p>
-            <p><b>&nbsp;Magnitudes:</b>
+            <p><b>&nbsp;Magnitudes:</b></p>
             <table><tr><td>
-            <% 
-                using (SqlConnection oConn = new SqlConnection(globals.ConnectionString)) {
-                    oConn.Open();
-                    
-                    string cmd;
-                    cmd = " select";
-                    cmd += " str(u,7,2) as 'Ultraviolet (u): ', str(err_u,7,2) as ' '";
-	                cmd += " from PhotoObjAll with (nolock) where objID="+id;     
-                    
-                    showMagsTable(oConn,cmd,300);
-                    
-                    cmd = " select";
-                    cmd += " str(g,7,2) as 'Green (g): ', str(err_g,7,2) as ' '";
-	                cmd += " from PhotoObjAll with (nolock) where objID="+id;    
+            <%  
+                string cmd = QuickQueries.uPhoto.Replace("@id",id.ToString());
+                showMagsTable(cmd, 300);
 
-   	                showMagsTable(oConn,cmd,300);
-   	
-   	                cmd = " select";
-                    cmd += " str(r,7,2) as 'Red (r): ', str(err_r,7,2) as ' '";
-	                cmd += " from PhotoObjAll with (nolock) where objID="+id;    
+                cmd = QuickQueries.gPhoto.Replace("@id", id.ToString());
+                showMagsTable(cmd,300);
 
-   	                showMagsTable(oConn,cmd,300);   	
-   	
-                    cmd = " select";
-                    cmd += " str(i,7,2) as 'Infrared - 7600 &Aring; (i): ', str(err_i,7,2) as ' '";
-	                cmd += " from PhotoObjAll with (nolock) where objID="+id;    
+                cmd = QuickQueries.rPhoto.Replace("@id", id.ToString());
+                showMagsTable(cmd, 300);
 
-   	                showMagsTable(oConn,cmd,300);   	
-   	
-   	
-                    cmd = " select";
-                    cmd += " str(z,7,2) as 'Infrared - 9100 &Aring; (z): ', str(err_z,7,2) as ' '";
-	                cmd += " from PhotoObjAll with (nolock) where objID="+id;    
+                cmd = QuickQueries.iPhoto.Replace("@id", id.ToString());
+                showMagsTable(cmd, 300);
 
-   	                showMagsTable(oConn,cmd,300);
+                cmd = QuickQueries.zPhoto.Replace("@id", id.ToString());
+                showMagsTable(cmd, 300);
 
-                    // check the flags to see if the photometry is reliable, give the user a warning if 
-                    // photometry is not reliable. This uses the checkFlags(oCmd,cmd,otype) function, which is 
-                    // in ex-functions.js.
-    
-                    cmd = "select dbo.fPhotoFlagsN(flags) as flags, psfMagErr_g";
-                    cmd += " from PhotoObjAll with (nolock) where objID="+id;
+                // check the flags to see if the photometry is reliable, give the user a warning if 
+                // photometry is not reliable. This uses the checkFlags(oCmd,cmd,otype) function, which is 
+                // in ex-functions.js.
 
-                    bool badphotometry = checkFlags(oConn,cmd,otype);
+                cmd = QuickQueries.flagsPhoto.Replace("@id", id.ToString());
+                 bool badphotometry = checkFlags(cmd,otype);
             %>
 
             <%  if (badphotometry) { %>
-            <p><b>Caution:</b> Magnitudes and other data for this object may be unreliable. See the <b>flags</b> in the <a href='../explore/obj.aspx?id=<%= objId %>+"&spec=<%= specObjId %>' target='explore'>Explore</a> tool summary page for more information.
+            <p><b>Caution:</b> Magnitudes and other data for this object may be unreliable. See the <b>flags</b> in the <a href='../explore/obj.aspx?id=<%= objId %>+"&spec=<%= specObjId %>' target='explore'>Explore</a> tool summary page for more information.</p>
             <% } %>
 
             </table></td><td align='center' valign='top' width='50%'>
 
             <%
-                    if (specObjId != null && !ZERO_ID.Equals(specObjId)) {
-                        cmd = " select class as 'Spectral classification (Class)',";
-                        cmd += " z as 'Redshift (z):', ";
-                        cmd += " plate,mjd,fiberid";
-                        cmd += " from SpecObjAll s";
-		                cmd += " where s.specObjId="+specObjId;
-		
-   		                showSpecData(oConn,cmd,250);
-	                }
-                } // using SqlConnection
+               if (specObjId != null && !ZERO_ID.Equals(specObjId)) {
+                    cmd = QuickQueries.specClass.Replace("@specObjId",specId.ToString());   
+   		            showSpecData(cmd,250);
+	            }                
             %>
             </td></tr>
             </table>

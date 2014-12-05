@@ -1,15 +1,13 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Navi.aspx.cs" Inherits="SkyServer.Tools.Chart.Navi" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true"  MasterPageFile="~/en/HomeMaster.master"  CodeBehind="Navi.aspx.cs" Inherits="SkyServer.Tools.Chart.Navi" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
     
-    <meta http-equiv="X-UA-Compatible" content="chrome=1, IE=edge">
-    <%--<meta name="viewport" content="width=device-width, initial-scale=0.6">--%>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>SDSS <%=globals.Release%> Navigate Tool</title>
-    <link href="../../tools.css" rel="stylesheet" type="text/css">
+ 
+<%--</head>
+
+<body onload="init();">--%>
+    <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">    
+        <link href="../../tools.css" rel="stylesheet" type="text/css">
     <style>
 	     /* a		 {font-family:sans-serif;font-size:8pt;color:#aaaaff; text-decoration:none;} */
 	    .i		 {font-family:sans-serif;font-size:8pt;color:#00ff00;}
@@ -21,18 +19,18 @@
 	    .bl      {font-family:sans-serif;font-size:9pt;color:#182A66;}
         .rd      {font-family:sans-serif;font-size:10pt;color:#E40B25;font-weight: bold;}
 	    
-        #toc   {position:absolute;top:10px;left:10px;}
-        #mtoggle  {position: absolute; top: 10px; left: 225px; z-index:0;} 
-	    #messageZoom {position: absolute; top: 10px; left: 600px; z-index:1;} 
-	    #mframe  {position: absolute; top:  30px; left: 220px; z-index:0;}
-	    #message  {position: absolute; top: 601px; left: 245px; z-index:1;}
-	    #mimage  {position: absolute; top: 56px; left: 246px; z-index:1;}
-	    #mmark   {position: absolute; top:130px; left:100px; z-index:1;}
-	    #minfo   {position: absolute; top: 30px; left:  0px; z-index:1;}
-        #near    {position: absolute; top: 30px; left: 810px; z-index:1;}    
+        #toc   {position:absolute;top:100px;left:10px;}
+        #mtoggle  {position: absolute; top: 110px; left: 225px; z-index:0;} 
+	    #messageZoom {position: absolute; top: 110px; left: 600px; z-index:1;} 
+	    #mframe  {position: absolute; top:  130px; left: 220px; z-index:0;}
+	    #message  {position: absolute; top: 701px; left: 245px; z-index:1;}
+	    #mimage  {position: absolute; top: 156px; left: 246px; z-index:1;}
+	    #mmark   {position: absolute; top:230px; left:100px; z-index:1;}
+	    #minfo   {position: absolute; top: 130px; left:  0px; z-index:1;}
+        #near    {position: absolute; top: 130px; left: 810px; z-index:1;}    
         #canvas1 {background:url('images/loading.jpg')} 
-        #testdebug{position: absolute; top:  621px; left: 250px; z-index:1;}
-        #temptext  {position: absolute; top: 650px; left: 245px; z-index:1;}
+        #testdebug{position: absolute; top:  721px; left: 250px; z-index:1;}
+        #temptext  {position: absolute; top: 750px; left: 245px; z-index:1;}
     </style>
 
     <script type="text/javascript">var wsGetJpegurl = "<%= globals.WSGetJpegUrl %>";</script>
@@ -47,127 +45,118 @@
     <script type="text/javascript"  src="./javascript/hammer.js"></script>
     <script type="text/javascript"  src="./javascript/coord.js"></script>
     <script type="text/javascript"  src="./javascript/showCanvas.js"></script>
-    
-    
+
+   
 <script type="text/javascript">
   
 
-   window.onorientationchange = function() {
-       viewport = document.querySelector("meta[name=viewport]");
-       if (window.orientation == 90 || window.orientation == -90) {
-           viewport.setAttribute('content', 'width=device-width; initial-scale=1.0; user-scalable=1');            
-       } else {
-           viewport.setAttribute('content', 'width=device-width; initial-scale=0.75; user-scalable=0');            
-       } 
-   }
+    window.onorientationchange = function() {
+        viewport = document.querySelector("meta[name=viewport]");
+        if (window.orientation == 90 || window.orientation == -90) {
+            viewport.setAttribute('content', 'width=device-width; initial-scale=1.0; user-scalable=1');            
+        } else {
+            viewport.setAttribute('content', 'width=device-width; initial-scale=0.75; user-scalable=0');            
+        } 
+    }
 
-   function init() {
+    function init() {
 
         //document.getElementById('getImageId').disabled = true;
      
         go		= false;
         ra		= <%=ra%>;
-	    dec		= <%=dec%>;
-	    size	= <%=size%>;
-	    opt		= "<%=opt%>";
-	    scale	= <%=qscale%>;
-	    D2R		= Math.PI/180.0; 	
-        prevscale = scale;	     
-        document.getElementById('opt').value = opt;	    
-        if(opt.indexOf('X') != -1) document.getElementById('twomass').checked = "checked";
-        makeCanvas(release,scale,opt,ra,dec,1); 
-        setzoombar(scale);
+        dec		= <%=dec%>;
+       size	= <%=size%>;
+       opt		= "<%=opt%>";
+       scale	= <%=qscale%>;
+       D2R		= Math.PI/180.0; 	
+       prevscale = scale;	     
+       document.getElementById('opt').value = opt;	    
+       if(opt.indexOf('X') != -1) document.getElementById('twomass').checked = "checked";
+       makeCanvas(release,scale,opt,ra,dec,1); 
+       setzoombar(scale);
 
-    }
+   }
 
     
-    function callNameResolver() {
-         $.ajax({
-             type: "GET",            
-             url : "http://mast.stsci.edu/portal/Mashup/Mashup.asmx/invoke?",
-             dataType: ($.browser.msie) ? "text" : "xml",
-             data: 'request={"service":"Mast.Name.Lookup","format":"xml","params":{"input":"' + document.getElementById('objid').value + '"},"timeout":10,"page":1,"pagesize":100}',
-             success: function(temp) {
-                 document.getElementById('getImageId').disabled = false;
-                 if (typeof temp == "plain") {
-                     alert(temp);
-                 } else {
-                     xml = temp;
-                     $(xml).find('resolvedCoordinate').each(function() {
-                         var ra1 = $(this).find('ra').text();
-                         var dec1 = $(this).find('dec').text();
-                         ra = ra1;
-                         dec = dec1;
-                         $('#ra').val(ra1);
-                         $('#dec').val(dec1);
-                         //resubmit();
-                     });
-                 }
-             },
-             error: function() {
-                 if (jQuery.trim(objtext).length > 0) {
-                     alert("Could not resolve name: " + objtext);
-                 }
-             }
-         });
-     }
+   function callNameResolver() {
+       $.ajax({
+           type: "GET",            
+           url : "http://mast.stsci.edu/portal/Mashup/Mashup.asmx/invoke?",
+           dataType: ($.browser.msie) ? "text" : "xml",
+           data: 'request={"service":"Mast.Name.Lookup","format":"xml","params":{"input":"' + document.getElementById('objid').value + '"},"timeout":10,"page":1,"pagesize":100}',
+           success: function(temp) {
+               document.getElementById('getImageId').disabled = false;
+               if (typeof temp == "plain") {
+                   alert(temp);
+               } else {
+                   xml = temp;
+                   $(xml).find('resolvedCoordinate').each(function() {
+                       var ra1 = $(this).find('ra').text();
+                       var dec1 = $(this).find('dec').text();
+                       ra = ra1;
+                       dec = dec1;
+                       $('#ra').val(ra1);
+                       $('#dec').val(dec1);
+                       //resubmit();
+                   });
+               }
+           },
+           error: function() {
+               if (jQuery.trim(objtext).length > 0) {
+                   alert("Could not resolve name: " + objtext);
+               }
+           }
+       });
+   }
 
-    $(document).ready(function() {
-        var br = $.browser;
-        if(br.msie && br.version < 9.0) {                  
-            var tempurl = "./navi-old.aspx";         
-            setTimeout( window.location = tempurl, 0 );
-        }        
+   $(document).ready(function() {
+       init();
+       var br = $.browser;
+       if(br.msie && br.version < 9.0) {                  
+           var tempurl = "./navi-old.aspx";         
+           setTimeout( window.location = tempurl, 0 );
+       }        
 
-         $('#objid').keydown(function(e) {
-             var objtext = $('#objid').val();
-             var keyC = e.keyCode;
-             if (keyC == 9 || keyC == 13) {                 
-                 callNameResolver();                 
-             }
-         });
-         $('#resolve').click(function() {           
-             callNameResolver();
-         });
-         $('#ra').keydown(function(e){ 
-            document.getElementById('getImageId').disabled = false;
-         });
-         $('#dec').keydown(function(e){ 
-            document.getElementById('getImageId').disabled = false;
-         });         
+       $('#objid').keydown(function(e) {
+           var objtext = $('#objid').val();
+           var keyC = e.keyCode;
+           if (keyC == 9 || keyC == 13) {                 
+               callNameResolver();                 
+           }
+       });
+       $('#resolve').click(function() {           
+           callNameResolver();
+       });
+       $('#ra').keydown(function(e){ 
+           document.getElementById('getImageId').disabled = false;
+       });
+       $('#dec').keydown(function(e){ 
+           document.getElementById('getImageId').disabled = false;
+       });         
        
-     });    
+   });    
 
    </script>
 
-
 <LINK REL="SHORTCUT ICON" HREF="../../../sdss3.ico">
 <div style=POSITION:absolute;LEFT:84;TOP:44;z-index:5;>  </div>
-
-</head>
-
-<body onload="init();">
-    <form id="form1" runat="server">
-    <div>
-    
-    </div>
-    </form>
         <div id="toc">
         <table width="<%=tabwidth%>" border="0" cellspacing="0" cellpadding="2" bgcolor=black>
 	    <tr>
-		    <td width="40"><a href="<%= url%>" TARGET="_top">
+		   <%-- <td width="40"><a href="<%= url%>" TARGET="_top">
 		    <img src="images/sdss3_logo.gif" border="0" width="40" height="50"></a></td>
-		    <td class='title' align="left" width="<%= (tabwidth-40)%>">&nbsp;&nbsp;<%= globals.Release%></td>
+		    <td class='title' align="left" width="<%= (tabwidth-40)%>">&nbsp;&nbsp;<%= globals.Release%></td>--%>
 	    </tr>
         </table>
         <table border="0" cellspacing="0" cellpadding="0" >
 	        <tr>
-                <td class='s' align="left" ONMOUSEOVER="this.T_WIDTH='140';return escape('SkyServer Home page')">|<a target="_top" href="<%= url%>">Home&nbsp;|</a></td>
-                <td class='s' align="left" ONMOUSEOVER="this.T_WIDTH='140';return escape('Help on the current tool')"><a target="MosaicWindow" href="<%= name%>info.aspx">Help&nbsp;|</a></td>
+                <td class='s' align="left" title="SkyServer Home page">|<a target="_top" href="<%= url%>">Home&nbsp;|</a></td>
+                <td class='s' align="left" title="Help on the current tool"><a target="MosaicWindow" href="<%= name%>info.aspx">Help&nbsp;|</a></td>
         <%
             if ("navi".Equals(name)) {
         %>
-                <td class='s' align="left" ONMOUSEOVER="this.T_WIDTH='140';return escape('View the tool tutorial (Flash)')"><a target="MosaicWindow" href="<%= name%>.swf">Tutorial&nbsp;|</a></td>
+                <td class='s' align="left" title="View the tool tutorial (Flash)"><a target="MosaicWindow" href="<%= name%>.swf">Tutorial&nbsp;|</a></td>
 
         <%
             }
@@ -177,20 +166,20 @@
                 {
 				    if("chart".Equals(my_name)) {
 					    %>
-                        <td class='s' align="left" ONMOUSEOVER="this.T_WIDTH='140';return escape('Go to the Finding Chart')"><a href="javascript:void(0)" onclick="return gotochart();">Chart&nbsp;|</a></td>
+                        <td class='s' align="left" title="Go to the Finding Chart"><a href="javascript:void(0)" onclick="return gotochart();">Chart&nbsp;|</a></td>
 				        <% }
                     else if("list".Equals(my_name)) {
 					    %>
-                        <td class='s' align="left" ONMOUSEOVER="this.T_WIDTH='140';return escape('Go to the Image List')"><a href="list.aspx" TARGET="_top">List&nbsp;|</a></td>
+                        <td class='s' align="left" title="Go to the Image List"><a href="list.aspx" TARGET="_top">List&nbsp;|</a></td>
 				        <% }
                     else {
                         %> 
-					    <td class='s' align="left" ONMOUSEOVER="this.T_WIDTH='140';return escape('Go to the Navigate Tool')"><a href="javascript:void(0)" onclick="return gotonavi();">Navi&nbsp;|</a></td>
+					    <td class='s' align="left" title="Go to the Navigate Tool"><a href="javascript:void(0)" onclick="return gotonavi();">Navi&nbsp;|</a></td>
 			            <% }
                 }
             }
         %>			
-		        <td class='s' align="left" ONMOUSEOVER="this.T_WIDTH='140';return escape('Go to the Object Explorer')"><A href="javascript:void(0)" onclick="return gotoExp();">Explore&nbsp;|</A></td>	
+		        <td class='s' align="left" title="Go to the Object Explorer"><A href="javascript:void(0)" onclick="return gotoExp();">Explore&nbsp;|</A></td>	
 	        </tr>
         </table>
 <!--table for parameters-->
@@ -204,12 +193,12 @@
     %>
 </table>
             <table width="<%=tabwidth%>" cellspacing=4 cellpadding=0 border=0>
-	            <tr><td align=middle ONMOUSEOVER="this.T_WIDTH='140';return escape('Get an image of the sky at the specified coordinates')">
+	            <tr><td align=middle title="Get an image of the sky at the specified coordinates')">
 	            <a href="javascript:void(0);" onclick="return resubmit();" id="getImageId"><img 
 			            src="images/get_image2.jpg" ALT="Submit" 
 			            border="0" WIDTH="112" HEIGHT="40" id="getImage" onclick="return resubmit();"></a>
 	            </td>
-	            <td align=middle ONMOUSEOVER="this.T_WIDTH='140';return escape('Open a new window with a printable image')">
+	            <td align=middle title="Open a new window with a printable image')">
 	            <a href="javascript:void(0);" onClick="return popup();"><img 
 			            src="images/printer_icon_blue.jpg" ALT="Printable Image" 
 			            border="0" WIDTH="40" HEIGHT="40"></a>
@@ -228,7 +217,7 @@
             <p />
 
             <map name="zoom_bar_map">
-            <area shape="rect" alt="zoom in" coords=" 2,8,24,28" href="javascript:void(0);" onmouseover="this.T_WIDTH='140';return escape('Zoom in')" onclick="return stepzoom(0.5)"/>
+            <area shape="rect" alt="zoom in" coords=" 2,8,24,28" href="javascript:void(0);" title="Zoom in')" onclick="return stepzoom(0.5)"/>
             <area shape="rect" alt="zoom=5"  coords="25,8,30,24" href="javascript:void(0);" onclick="return setzoom(5)"/>
             <area shape="rect" alt="zoom=4"  coords="33,8,38,24" href="javascript:void(0);" onclick="return setzoom(4)"/>
             <area shape="rect" alt="zoom=3"  coords="41,8,46,24" href="javascript:void(0);" onclick="return setzoom(3)"/>
@@ -242,7 +231,7 @@
             <area shape="rect" alt="zoom=-5" coords="107,8,112,24" href="javascript:void(0);" onclick="return setzoom(-5)"/>
             <area shape="rect" alt="zoom=-6" coords="115,8,120,24" href="javascript:void(0);" onclick="return setzoom(-6)"/>
             <area shape="rect" alt="zoom=-7" coords="123,8,128,24" href="javascript:void(0);" onclick="return setzoom(-7)"/>
-            <area shape="rect" alt="zoom out" coords="132,6,156,28" href="javascript:void(0);" onmouseover="this.T_WIDTH='140';return escape('Zoom out')" onclick="return stepzoom(2.0)">
+            <area shape="rect" alt="zoom out" coords="132,6,156,28" href="javascript:void(0);" title="Zoom out')" onclick="return stepzoom(2.0)">
             </map>
             <!--
             <table width="<%=tabwidth%>" cellpadding=0 cellspacing=0 border=0>
@@ -261,25 +250,25 @@
             </table>
             -->
 <table width="<%=tabwidth%>" cellpadding=0 cellspacing=0 border=1>
-<tr><td align=middle bgcolor="skyblue" ONMOUSEOVER="this.T_TEMP='2000';this.T_WIDTH='140';return escape('Mark various options on the image')">Drawing options</td></tr>
-	<tr><td bgColor="lightblue" ONMOUSEOVER="this.T_TEMP='2000';this.T_WIDTH='140';return escape('Grid with tickmarks to show image scale')"><INPUT type="checkbox" onclick="setopt(this,'G')" name="Grid"  id="Grid"> Grid</td></tr>
-	<tr><td bgColor="lightblue" ONMOUSEOVER="this.T_TEMP='2000';this.T_WIDTH='140';return escape('Information on the Navigation window view')"><INPUT type="checkbox" onclick="setopt(this,'L')" name="Label"  id="Label"> Label</td></tr>
-	<tr><td bgColor="lightblue" ONMOUSEOVER="this.T_TEMP='2000';this.T_WIDTH='140';return escape('Marks photometrically identified objects with light blue circles')"><INPUT type="checkbox" onclick="setopt(this,'P')" name="PhotoObjs"  id="PhotoObjs"> Photometric objects</td></tr>
-	<tr><td bgColor="lightblue" ONMOUSEOVER="this.T_TEMP='2000';this.T_WIDTH='140';return escape('Marks spectroscopic objects with red squares')"><INPUT type="checkbox" onclick="setopt(this,'S')" name="SpecObjs"  id="SpecObjs"> Objects with spectra</td></tr>
-	<tr><td bgColor="lightblue" ONMOUSEOVER="this.T_TEMP='2000';this.T_WIDTH='140';return escape('Inverts black and white in the image')"><INPUT type="checkbox" onclick="setopt(this,'I')" name="InvertImage"   id="InvertImage"> Invert Image</td></tr>	
+<tr><td align=middle bgcolor="skyblue" title="Mark various options on the image">Drawing options</td></tr>
+	<tr><td bgColor="lightblue" title="Grid with tickmarks to show image scale"><INPUT type="checkbox" onclick="setopt(this,'G')" name="Grid"  id="Grid"> Grid</td></tr>
+	<tr><td bgColor="lightblue" title="Information on the Navigation window view"><INPUT type="checkbox" onclick="setopt(this,'L')" name="Label"  id="Label"> Label</td></tr>
+	<tr><td bgColor="lightblue" title="Marks photometrically identified objects with light blue circles"><INPUT type="checkbox" onclick="setopt(this,'P')" name="PhotoObjs"  id="PhotoObjs"> Photometric objects</td></tr>
+	<tr><td bgColor="lightblue" title="Marks spectroscopic objects with red squares"><INPUT type="checkbox" onclick="setopt(this,'S')" name="SpecObjs"  id="SpecObjs"> Objects with spectra</td></tr>
+	<tr><td bgColor="lightblue" title="Inverts black and white in the image"><INPUT type="checkbox" onclick="setopt(this,'I')" name="InvertImage"   id="InvertImage"> Invert Image</td></tr>	
 	<tr><td align=middle bgcolor="skyblue">Advanced options</td></tr>	
 	<!--
-	<tr><td bgColor="lightblue" ONMOUSEOVER="this.T_TEMP='2000';this.T_WIDTH='140';return escape('Marks potential spectroscopy targets with green Xs')"><INPUT type="checkbox" onclick="setopt(this,'T')" name="TargetObjs"  id="TargetObjs"> Spectroscopic Targets</td></tr>
+	<tr><td bgColor="lightblue" title="Marks potential spectroscopy targets with green Xs')"><INPUT type="checkbox" onclick="setopt(this,'T')" name="TargetObjs"  id="TargetObjs"> Spectroscopic Targets</td></tr>
 	-->
-    <tr><td bgColor="lightblue" ONMOUSEOVER="this.T_TEMP='2000';this.T_WIDTH='140';return escape('Shows APOGEE DATA')"><INPUT type="checkbox" onclick="setopt(this,'A')" name="APOGEE" id="APOGEE"> APOGEE Spectra</td></tr>		
-	<tr><td bgColor="lightblue" ONMOUSEOVER="this.T_TEMP='5000';this.T_WIDTH='140';return escape('Draws the outline (green) of each photometric object except at the largest zoom-out scales (where they are not legible)')"><INPUT type="checkbox" onclick="setopt(this,'O')" name="Outline"  id="Outline">SDSS Outlines</td></tr>
-	<tr><td bgColor="lightblue" ONMOUSEOVER="this.T_TEMP='2000';this.T_WIDTH='140';return escape('Draws a rectangular box (pink) around each photometric object')"><INPUT type="checkbox" onclick="setopt(this,'B')" name="BoundingBox" id="BoundingBox">SDSS Bounding Boxes</td></tr>
-	<tr><td bgColor="lightblue" ONMOUSEOVER="this.T_TEMP='2000';this.T_WIDTH='140';return escape('Shows each SDSS field (~10x14 arcmin) in gray')"><INPUT type="checkbox" onclick="setopt(this,'F')" name="Fields" id="Fields">SDSS Fields</td></tr>
-	<tr><td bgColor="lightblue" ONMOUSEOVER="this.T_TEMP='2000';this.T_WIDTH='140';return escape('Shows masks (pink) around bright objects and data artifacts')"><INPUT type="checkbox" onclick="setopt(this,'M')" name="Masks" id="Masks">SDSS Masks</td></tr>
-	<tr><td bgColor="lightblue" ONMOUSEOVER="this.T_TEMP='2000';this.T_WIDTH='140';return escape('Shows plates (lavender) used to collect spectra')"><INPUT type="checkbox" onclick="setopt(this,'Q')" name="Plates" id="Plates">SDSS Plates</td></tr>		
+    <tr><td bgColor="lightblue" title="Shows APOGEE DATA"><INPUT type="checkbox" onclick="setopt(this,'A')" name="APOGEE" id="APOGEE"> APOGEE Spectra</td></tr>		
+	<tr><td bgColor="lightblue" title="Draws the outline (green) of each photometric object except at the largest zoom-out scales (where they are not legible)')"><INPUT type="checkbox" onclick="setopt(this,'O')" name="Outline"  id="Outline">SDSS Outlines</td></tr>
+	<tr><td bgColor="lightblue" title="Draws a rectangular box (pink) around each photometric object"><INPUT type="checkbox" onclick="setopt(this,'B')" name="BoundingBox" id="BoundingBox">SDSS Bounding Boxes</td></tr>
+	<tr><td bgColor="lightblue" title="Shows each SDSS field (~10x14 arcmin) in gray"><INPUT type="checkbox" onclick="setopt(this,'F')" name="Fields" id="Fields">SDSS Fields</td></tr>
+	<tr><td bgColor="lightblue" title="Shows masks (pink) around bright objects and data artifacts"><INPUT type="checkbox" onclick="setopt(this,'M')" name="Masks" id="Masks">SDSS Masks</td></tr>
+	<tr><td bgColor="lightblue" title="Shows plates (lavender) used to collect spectra"><INPUT type="checkbox" onclick="setopt(this,'Q')" name="Plates" id="Plates">SDSS Plates</td></tr>		
     
     <%--<tr><td align=middle bgcolor="skyblue">Imaging options</td></tr>	    
-	<tr><td bgColor="lightblue" ONMOUSEOVER="this.T_TEMP='2000';this.T_WIDTH='140';return escape('Gets TwoMass Images')"><INPUT type="checkbox" onclick="setopt(this,'5')" name="2MASS" id="Checkbox2"> TwoMass</td></tr>--%>
+	<tr><td bgColor="lightblue" title="Gets TwoMass Images')"><INPUT type="checkbox" onclick="setopt(this,'5')" name="2MASS" id="Checkbox2"> TwoMass</td></tr>--%>
 </table>
 </div>
 <input type="hidden" value="512"   name="size" id="size">
@@ -299,10 +288,10 @@
         <div id="mframe">
         <img src="images/naviframe.gif" ISMAP usemap="#navi_map" width="570" height="570" border="0">
         <MAP NAME="navi_map">
-			<AREA SHAPE="rect" ALT="South" COORDS=" 0,535,570,570" HREF="javascript:void(0);" ONMOUSEOVER="this.T_WIDTH='140';return escape('Go south')" onclick="return stepCenter('S')">
-			<AREA SHAPE="rect" ALT="North" COORDS=" 0,  0,570, 15" HREF="javascript:void(0);" ONMOUSEOVER="this.T_WIDTH='140';return escape('Go north')" onclick="return stepCenter('N')">
-			<AREA SHAPE="rect" ALT="East"  COORDS=" 0,  0, 35,570" HREF="javascript:void(0);" ONMOUSEOVER="this.T_WIDTH='140';return escape('Go east')" onclick="return stepCenter('E')">
-			<AREA SHAPE="rect" ALT="West"  COORDS="535, 0,570,570" HREF="javascript:void(0);" ONMOUSEOVER="this.T_WIDTH='140';return escape('Go west')" onclick="return stepCenter('W')">
+			<AREA SHAPE="rect" ALT="South" COORDS=" 0,535,570,570" HREF="javascript:void(0);" title="Go south" onclick="return stepCenter('S')">
+			<AREA SHAPE="rect" ALT="North" COORDS=" 0,  0,570, 15" HREF="javascript:void(0);" title="Go north" onclick="return stepCenter('N')">
+			<AREA SHAPE="rect" ALT="East"  COORDS=" 0,  0, 35,570" HREF="javascript:void(0);" title="Go east" onclick="return stepCenter('E')">
+			<AREA SHAPE="rect" ALT="West"  COORDS="535, 0,570,570" HREF="javascript:void(0);" title="Go west" onclick="return stepCenter('W')">
 		</MAP>
         </div>
 		<div id="mimage">
@@ -317,7 +306,7 @@
         <div id = "temptext" class="bl">Temp TEST!!</div> --%>
 <!--Iframe for shownearest-->
 <script language="JavaScript" type="text/javascript" src="../../wz_tooltip.js"></script>
-<iframe id="near" name='near' width ="160px" height="600px" scrolling="no" frameborder="0" src="blank.html"/>
+<iframe id="near" name='near' width ="160px" height="600px" scrolling="no" frameborder="0" src="blank.html"/></asp:Content>
 
-</body>
-</html>
+<%--</body>
+</html>--%>

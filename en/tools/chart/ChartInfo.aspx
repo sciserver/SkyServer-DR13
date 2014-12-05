@@ -1,9 +1,14 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="ChartBase.Master" AutoEventWireup="true" CodeBehind="ChartInfo.aspx.cs" Inherits="SkyServer.Tools.Chart.ChartInfo" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+<%--<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
-</asp:Content>
+</asp:Content>--%>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="FCContent" runat="server">
+    <STYLE TYPE="text/css">
+
+td{font-family: Arial; font-size: 10pt; color:black; }
+
+</STYLE>
     <div class="content">
 		<h1>SDSS
 			<%= globals.Release%>
@@ -11,7 +16,7 @@
 		<hr width="600" align="left">
 		<h3>Finding Chart (ra, dec, scale, height, width, opt, query)</h3>
 		<ul>
-			<table width="560">
+			<table width="560" >
 				<tr>
 					<td>
 						returns a JPEG image centered on <i>(ra,dec)</i>, of size <i>(height x width)</i>
@@ -245,7 +250,9 @@
 				<span class='s'>&nbsp;*&nbsp; to be implemented later </span></p>
 -->
 		<hr width="540" align="left">
-		<span class='s'>	Authors: Jim Gray, Alex Szalay, Maria Nieto-Santisteban, Tamas Budavari, February 2004.</span>
+		<span class='s'>	Authors: Jim Gray, Alex Szalay, Maria Nieto-Santisteban, Tamas Budavari, February 2004.
+                                     Deoyani Nandrekar-Heinis 2010   
+		</span>
 
     </div>
 </asp:Content>

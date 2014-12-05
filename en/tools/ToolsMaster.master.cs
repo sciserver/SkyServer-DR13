@@ -20,7 +20,7 @@ namespace SkyServer.Tools
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            imgpath = ResolveClientUrl("~/en/images/");
+            imgpath = ResolveClientUrl("~/en/images");
             url = Utilities.getURL(Request);
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             master = (HomeMaster)this.Master;

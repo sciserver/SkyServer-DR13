@@ -76,8 +76,15 @@ namespace SkyServer.Tools.Search
                 response = client.GetAsync(requestUri).Result;
             }
             else {
-                /// Once the authenticated skyserver is ready, we ca update the code to retrieve token
+                
                 string token = "";
+                /// Once the authenticated skyserver is ready, we ca update the code to retrieve token
+                var appRequest = HttpContext.Current.Request;
+                HttpCookie cookie = appRequest.Cookies["Keystone"];
+                if (cookie != null)
+                    if (cookie["token"] != null || !cookie["token"].Equals(""))
+                        token = cookie["token"];
+
                 StringContent content = new StringContent(uploaded);
                 if (!(token == null || token == String.Empty))
                 {

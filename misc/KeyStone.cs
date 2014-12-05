@@ -7,7 +7,7 @@ using net.openstack.Providers.Rackspace;
 using System.Configuration;
 
 
-namespace Skyserver
+namespace SkyServer
 {
     public class Keystone
     {

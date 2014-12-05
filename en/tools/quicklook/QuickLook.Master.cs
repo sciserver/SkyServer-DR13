@@ -38,30 +38,14 @@ namespace SkyServer.Tools.QuickLook
             enUrl = getEnURL();
             url = ResolveClientUrl("~/en");
             string s = Request.QueryString["id"];
-
+            if (s != null & !"".Equals(s))
             id = Utilities.ParseId(s);
-            /*
-            try
-            {
-                if (s != null & !"".Equals(s))
-                {
-                    if (s.StartsWith("0x"))
-                        id = long.Parse(s.Substring(2), NumberStyles.AllowHexSpecifier);
-                    else
-                        id = long.Parse(s);
-                }
-            }
-            catch (Exception ex)
-            {
-                // Could not parse, so leave null
-            }
-            */
-
-            using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
-            {
-                oConn.Open();
-                if (id.HasValue) pmtsFromPhoto(oConn, id);
-            }
+            
+            //using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
+            //{
+            //    oConn.Open();
+            //    if (id.HasValue) pmtsFromPhoto(oConn, id);
+            //}
 
             hrefs.Quicklook = "quickobj.aspx?id=" + id;
             hrefs.Explore = "../explore/obj.aspx?id=" + id;
@@ -89,7 +73,7 @@ namespace SkyServer.Tools.QuickLook
                 }
             }
 
-            hrefs.Search = "search.aspx?id="+objId;
+            hrefs.Search = "search.aspx?id=" + objId;
             hrefs.Eq = "javascript:setEq(\"" + ra + "\",\"" + dec + "\");";
             hrefs.SDSS = "javascript:setSDSS(\"" + objId + "\");";
             hrefs.Id = "javascript:setId(\"" + objId + "\");";

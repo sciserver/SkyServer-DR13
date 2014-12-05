@@ -61,14 +61,14 @@
 	// set the option string value
 	//----------------------------------
 	function setopt(t,c) {
-		var o = document.getElementById('getjpeg').opt.value;
+		var o = document.getElementById('opt').value;
 		var r = new RegExp(c);
 		if (t.checked && o.indexOf(c)==-1) o += c;			
 		if (!t.checked) {
 			var n = o.indexOf(c);
 			if (n>-1) o = o.substring(0,n)+o.substring(n+1);
 		}
-		document.getElementById('getjpeg').opt.value = o;
+		document.getElementById('opt').value = o;
 		return resubmit();	
 	}
 	
@@ -76,7 +76,7 @@
 	// set the option checkboxes 
 	//----------------------------------
 	function setoptstr(flag) {
-		var v = String(document.getElementById('getjpeg').opt.value).toUpperCase();
+		var v = String(document.getElementById('opt').value).toUpperCase();
 		var p, f;
 		p = ["G","L","P","S","O","B","F","M","Q","I","A","X"];
 		f = ["Grid","Label","PhotoObjs","SpecObjs",
@@ -86,13 +86,14 @@
 		for (var i=0; i<p.length;i++) {
 			var state = (v.indexOf(p[i])>-1);
 			if (state) o += p[i];
-			document.getElementById('getjpeg')[f[i]].checked=state;
+		    //document.getElementById('getjpeg')[f[i]].checked=state;
+			document.getElementById("'" + [f[i]] + "'").checked = state;
 		}
 
 		// hack to accommodate debug flag
 		if (v.indexOf("D")>-1)o += "D";		// must not be available in main site DR1
 
-		document.getElementById('getjpeg').opt.value = o;
+		document.getElementById('opt').value = o;
 
 		if (flag==1) return resubmit();	
 		else return false;
@@ -133,7 +134,7 @@
 	// set and validate the ra value
 	//------------------------------------
 	function setra() {
-		var s_ra = String(document.getElementById('getjpeg').ra.value);
+	    var s_ra = String(document.getElementById('ra').value);	    
 		var v;
 		if (s_ra.lastIndexOf(":") > -1) {
 			v = fmt(hms2deg(s_ra,':'), 10, 5);
@@ -147,7 +148,7 @@
 				if (v>360) v-= 360;
 			}
 		}
-		document.getElementById('getjpeg').ra.value = v;
+		document.getElementById('ra').value = v;
 		return false;
 	}
 		
@@ -155,7 +156,7 @@
 	// set and validate the dec value
 	//------------------------------------
 	function setdec() {
-		var s_dec = String(document.getElementById('getjpeg').dec.value);
+		var s_dec = String(document.getElementById('dec').value);
 		var v;
 		if (s_dec.lastIndexOf(":") > -1) {
 			v = fmt(dms2deg(s_dec,':'), 10, 5);
@@ -169,7 +170,7 @@
 				if (v>90) v= 90;
 			}
 		}
-	    	document.getElementById('getjpeg').dec.value = v;
+	    	document.getElementById('dec').value = v;
 		return false;
 	}
 	
@@ -177,11 +178,11 @@
 	// set and validate the width
 	//------------------------------------
 	function setwidth() {
-		var v = parseInt(document.getElementById('getjpeg').width.value);
+		var v = parseInt(document.getElementById('width').value);
 		if(isNaN(v)) v =  400;
 		if (v<64)    v =   64;
 		if (v>2048)  v = 2048;
-		document.getElementById('getjpeg').width.value = v;
+		document.getElementById('width').value = v;
 		return false;
 	}
 
@@ -189,11 +190,11 @@
 	// set and validate the width
 	//------------------------------------
 	function setheight() {
-		var v = parseInt(document.getElementById('getjpeg').height.value);
+		var v = parseInt(document.getElementById('height').value);
 		if(isNaN(v)) v =  400;
 		if (v<64)	 v =   64;
 		if (v>2048)  v = 2048;
-		document.getElementById('getjpeg').height.value = v;
+		document.getElementById('height').value = v;
 		return false;
 	}
 
@@ -201,10 +202,15 @@
 	// validate all parameters
 	//--------------------------------------
 	function validate() {
-		if (document.getElementById('getjpeg').ra) setra();
-		if (document.getElementById('getjpeg').dec) setdec();
-		if (document.getElementById('getjpeg').width) setwidth();
-		if (document.getElementById('getjpeg').height) setheight();
+	    
+		//if (document.getElementById('getjpeg').ra) setra();
+		//if (document.getElementById('getjpeg').dec) setdec();
+		//if (document.getElementById('getjpeg').width) setwidth();
+	    //if (document.getElementById('getjpeg').height) setheight();
+	    if (document.getElementById('ra').value) setra();
+	    if (document.getElementById('dec').value) setdec();
+	    if (document.getElementById('width').value) setwidth();
+	    if (document.getElementById('height').value) setheight();
 	}
 	
 	//--------------------------------------
@@ -231,8 +237,9 @@
 	//--------------------------------------	
 	function resubmit() {
 	    validate();
-		document.getElementById('getjpeg').submit();
-		return false;
+	    window.location = "./Image.aspx" + qstring();
+		//document.getElementById('submit').click();
+		//return false;
 	}
 
 	function fmt(num,total,digits) {
@@ -251,10 +258,10 @@
 	function gotochart() {
 		var s = "chart.aspx";
 		if (branchname!='list') {
-			s+= "?ra="   + fmt(document.getElementById('getjpeg').ra.value,10,5);
-			s+= "&dec="  + fmt(document.getElementById('getjpeg').dec.value,10,5);
-			s+= "&scale="+ fmt(document.getElementById('getjpeg').scale.value,8,4);
-			s+= "&opt="  + document.getElementById('getjpeg').opt.value;
+			s+= "?ra="   + fmt(document.getElementById('ra').value,10,5);
+			s+= "&dec="  + fmt(document.getElementById('dec').value,10,5);
+			s+= "&scale="+ fmt(document.getElementById('scale').value,8,4);
+			s+= "&opt="  + document.getElementById('opt').value;
 			s+= "&width=512&height=512";
 		}
 		top.document.location.href = s;
@@ -267,9 +274,9 @@
 	function gotonavi() {
 		var s = "navi.aspx";
 		if (branchname!='list') {				
-			s+= "?ra="   + fmt(document.getElementById('getjpeg').ra.value,10,5);
-			s+= "&dec="  + fmt(document.getElementById('getjpeg').dec.value,10,5);
-			s+= "&opt="  + document.getElementById('getjpeg').opt.value;
+			s+= "?ra="   + fmt(document.getElementById('ra').value,10,5);
+			s+= "&dec="  + fmt(document.getElementById('dec').value,10,5);
+			s+= "&opt="  + document.getElementById('opt').value;
 		}
 		top.document.location.href = s;
 		return false;
@@ -281,8 +288,8 @@
 	function gotoExp() {
 		var s = "../explore/obj.aspx";
 		if (branchname!='list') {
-			s += "?ra="+document.getElementById('getjpeg').ra.value;
-			s += "&dec="+document.getElementById('getjpeg').dec.value;
+			s += "?ra="+document.getElementById('ra').value;
+			s += "&dec="+document.getElementById('dec').value;
 		}
 		var w = window.open(s,"EXPLORE");
 		w.focus();

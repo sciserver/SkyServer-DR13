@@ -28,7 +28,7 @@ namespace SkyServer.Tools.Explore
 
         public RunQuery() {
             globals = new Globals();
-            requestUri = globals.CasjobsRESTapi;
+            requestUri = globals.CasjobsRESTapi;            
         }
 
         /// <summary>
@@ -42,9 +42,17 @@ namespace SkyServer.Tools.Explore
             
             try
             {
-                var request = (HttpWebRequest)WebRequest.Create(requestUri);
+                var appRequest = HttpContext.Current.Request;
+
+                var request = (HttpWebRequest)WebRequest.Create(requestUri);                
                 request.Method = "POST";
                 request.ContentType = "application/json";
+                
+                HttpCookie cookie = appRequest.Cookies["Keystone"];
+                if(cookie != null)  
+                    if(cookie["token"]!= null  || !cookie["token"].Equals("") )
+                        request.Headers.Add("X-Auth-Token",cookie["token"]);
+
                 StreamWriter streamWriter = new StreamWriter(request.GetRequestStream());
                 StringWriter sw = new StringWriter();
                 JsonWriter jsonWriter = new JsonTextWriter(sw);

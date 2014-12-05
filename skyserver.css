@@ -522,3 +522,187 @@ TH
     font-size:14pt;
     vertical-align:middle;
 }
+
+
+/*Added From tools.css*/
+.c     	{FONT-FAMILY: arial,helvetica,sans-serif;FONT-SIZE: 10pt;}
+.s     	{FONT-FAMILY: arial,helvetica,sans-serif;FONT-SIZE: 8pt;}
+
+#content {position:absolute;top:0px;left:135px;}
+/*#toc   {position:absolute;top:70px;left:10px;}*/
+#search {position:absolute;top:100px;left:200px;}
+
+
+div.content 
+  { 
+      
+      width:800px;
+      /*min-height:800px;*/
+      margin-top:100px;    
+      margin-left:100px;
+  }
+
+/* sections in the Explore tool */
+#metadata
+{
+      /*background-color:pink;*/
+      width:625px;
+}
+    #metadata h1
+    {      
+        color:#000086;
+        margin:2px;
+    }
+    #metadata input
+    {
+        position:relative;
+        top:-4px;
+    }
+    #metadata h2
+    {      
+        margin:2px;
+    }
+
+#imaging
+{
+    /*background-color:orange;*/
+    border-top:thick solid black;
+    border-bottom:thick solid black;
+    width:625px;
+    margin-top:3px;
+}
+
+    #imaging h3
+    {
+      margin:3px;
+    }
+#spectro
+{
+    /*background-color:orange;*/
+    border-top:thick solid black;
+    width:625px;
+    margin-top:3px;
+}
+    #spectro h3
+    {
+        margin:3px;
+    }
+
+    #spectro .infobox 
+    {
+        position:relative;
+        top:-26px;
+        left:150px;
+        width:475px;
+        padding-top:0px;
+        padding-bottom:0px;
+        margin-bottom:-45px;
+    }
+        #spectro .infobox table
+        {
+            position:relative;
+            top:-11px;
+        }
+        #spectro .infobox td
+        {
+            padding:0px;
+            margin:0px;
+        }
+
+#crossid
+{
+    display:none;
+    width:625px;
+    margin-top:3px;
+}
+
+    #crossid.shown {
+        display:block;
+    }
+
+    crossid.hidden {
+        display:none;
+    }
+
+#irspec
+{
+    border-top:thick solid black;
+    width:800px;
+    margin-top:3px;
+}
+    #irspec h3
+    {
+        margin:3px;
+    }
+    #irspec .target
+    {
+        float:right;
+        color:#000086;
+    }
+
+#visits 
+{
+    display:none;
+    margin-top:3px;
+    margin-bottom:10px;
+}
+
+    #visits.shown {
+        display:block;
+    }
+
+    visits.hidden {
+        display:none;
+    }
+
+.irspeclink
+{
+    position:relative;
+/*    top:-40px;*/
+    width:540px;
+  /*  margin-bottom:-40px; */
+    vertical-align:top;
+    font-size:large;
+    width:400px;
+}
+
+.sectionlabel 
+{
+    margin-top:3px;
+    margin-bottom:3px;
+    margin-left:3px;
+}
+
+.showinglink, .hidinglink {
+    color:blue;
+    text-decoration:underline;
+}
+    
+.showinglink {
+    display: inline;
+}
+    a.showinglink:hover {
+        color:blue !important;
+        text-decoration:underline;
+    }
+
+.hidinglink {
+    display: none;
+}
+    a.hidinglink:hover {
+        color:blue !important;
+        text-decoration:underline;
+    }
+
+.nodatafound 
+{
+    color:red;
+    font-weight:bold;
+}
+
+
+
+.tooltip{
+    display: inline;
+    position: relative;
+}

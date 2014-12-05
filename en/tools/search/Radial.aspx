@@ -31,18 +31,8 @@ if( globals.Access == "public" ) {
 }
 %>--%>
 
-    <%
-// Pop up results in a new window for public site only.
-if( globals.Access == "public" ) {
-%>
-    <form method="get" target="search" action="x_results.aspx" id="radial" name="radial">
-<%
-} else {
-%>
-    <form method="get" action="x_results.aspx" id="Form1" name="radial">
-<%
-}
-%>
+    
+ <form method="get" target="search" action="x_results.aspx" id="radial" name="radial" >
 
 <script type="text/javascript">
     window.onload = function page_load() {
