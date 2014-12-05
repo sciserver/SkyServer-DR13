@@ -29,7 +29,7 @@
                 <tr>
                     <td nowrap align='middle' class='t'><%=usno%></td>
                     <td nowrap align='middle' class='t'><%=properMotion%></td>
-                    <td nowrap align='middle' class='t'><%=angle%></td>
+                    <td nowrap align='middle' class='t'><%=angle.ToString("F2")%></td>
                 </tr>
             </table>
             <%}

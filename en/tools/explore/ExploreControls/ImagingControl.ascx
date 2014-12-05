@@ -23,7 +23,7 @@
             <table cellpadding=2 cellspacing=2 border=0 width=420>
                 <tr align='left' >
                     <td  valign='top' class='h'>
-                        <span title="unit=<%=getUnit("PhotoObj","flags") %>')" >
+                        <span title="SDSS flags" >
                             <a href='<%=flagsLink%>'>Flags <img src=../../images/offsite_black.png /></a>
                         </span>
                     </td>
@@ -88,7 +88,7 @@
                    <td align='middle' class='h'><span title="unit=<%=columnUnit.Get("parentID")%>" >parentID</span></td>
                    <td align='middle' class='h'><span title="unit=<%=columnUnit.Get("nChild")%>" >nChild</span></td>
                    <td align='middle' class='h'><span title="unit=<%=columnUnit.Get("extinction_r")%>" >extinction_r</span></td>
-                   <td align='middle' class='h'><span title="unit=<%=columnUnit.Get("petroRadErr")%>" >PetroRad_r (arcmin)</span></td>
+                   <td align='middle' class='h'><span title="unit=<%=columnUnit.Get("petroRad_r")%>" >PetroRad_r (arcsec)</span></td>
                </tr>
                <tr><td nowrap align='middle' class='t'><%=mjdNum %></td>
                    <td nowrap align='middle' class='t'><%=mode %></td>
@@ -104,7 +104,7 @@
                     <td align='middle' class='h'><span title="unit=<%=columnUnit.Get("mjd") %>" >Mjd-Date</span></td>
                     <td align='middle' class='h'><span title="unit=<%=columnUnit.Get("z") %>" >photoZ (KD-tree method)</span></td>
                     <td align='middle' class='h'><span title="unit=<%=columnUnit.Get("z") %>" >photoZ (RF method)</span></td>
-                    <td align='middle' class='h'><span title="unit=" >Galaxy Zoo 1 morphology</span></td>
+                    <td align='middle' class='h'><span>Galaxy Zoo 1 morphology</span></td>
                 </tr>
                 <tr>
                     <td nowrap align='middle' class='t'><%=mjdDate %></td>

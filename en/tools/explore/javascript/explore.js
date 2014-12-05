@@ -48,6 +48,7 @@ function lessPrecise(short, long) {
 }
 
 function findOtherNames(thera, thedec) {
+    //alert("Test");
     var theothernames = document.getElementById("othernames");
     var sdssnamedisplay = document.getElementById("sdssname");
     $.ajax({
@@ -56,12 +57,12 @@ function findOtherNames(thera, thedec) {
         success: function (response) {
             if (response.indexOf("Error:") == 0) {
                 //alert(response);
-                sdssnamedisplay.innerHTML = "No common name found";
+                theothernames.innerHTML = "No common name found";
             }
             else {
                 var s = response.split('\n');
                 theothernames.innerHTML = s[0].substring(6);
-                sdssnamedisplay.innerHTML = "<%= Functions.SDSSname(0.0, 0.0)%>";
+               // sdssnamedisplay.innerHTML = <%= Functions.SDSSname(0.0, 0.0)%>;
             }
         },
         error: function () {

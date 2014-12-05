@@ -5,8 +5,8 @@
     <table class="content">
         <tr>
             <td colspan="2">
-                <h1 id="othernames"><%= Functions.SDSSname(ra, dec)%></h1>
-                <h2 id="sdssname">&nbsp;<input type="button" onclick="findOtherNames(ra, dec)" value="Look up common name" /></h2>
+                <h1 id="sdssname"><%= Functions.SDSSname(ra, dec)%></h1>
+                <h2 id="othernames">&nbsp;<input type="button" onclick=" findOtherNames(<%=ra%>, <%=dec%>);" value="Look up common name" /></h2>
             </td>
         </tr>
         <tr>

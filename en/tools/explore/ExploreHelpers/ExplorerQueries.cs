@@ -460,7 +460,7 @@ namespace SkyServer.Tools.Explore
         public static string unitQuery = @"SELECT name, unit,tablename FROM DBcolumns
                                                 WHERE tablename in('PhotoObjAll') 
                                                 AND name IN ('u', 'g', 'r', 'i', 'z', 'err_u','err_g','err_r','err_i','err_z',
-                                                'mjd', 'mode', 'nDetect', 'parentID','nChild','extinction_r','petroRadErr')
+                                                'mjd', 'mode', 'nDetect', 'parentID','nChild','extinction_r','petroRad_r')
                                                 ORDER BY name";
     }
 }
