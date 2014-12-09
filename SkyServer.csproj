@@ -1763,7 +1763,6 @@
     <Content Include="en\tools\crossid\X_CrossId.aspx" />
     <Content Include="en\tools\Default.aspx" />
     <Content Include="en\tools\explore\AllSpec.aspx" />
-    <Content Include="en\tools\explore\ApogeeTest.aspx" />
     <Content Include="en\tools\explore\Default.aspx" />
     <Content Include="en\tools\explore\DisplayResults.aspx" />
     <Content Include="en\tools\explore\ExploreControls\ApogeeControl.ascx" />
