@@ -4,7 +4,7 @@
 <% if(master.apid != null && !master.apid.Equals("")){ %>
  <div id="irspec">
         <h3>Infrared Spectra
-          <span class="target">Targeted star: <%=master.apid%></span>
+          <span class="target">Targeted star: <%=apogee_id%></span>
         </h3>
         <%if(isData != false){ %>
         <table width="800">
