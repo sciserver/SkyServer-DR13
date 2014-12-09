@@ -46,16 +46,10 @@
     <Reference Include="CSharpFITS_v1.1">
       <HintPath>lib\CSharpFITS_v1.1.dll</HintPath>
     </Reference>
-    <Reference Include="DotNetOpenAuth">
-      <HintPath>lib\DotNetOpenAuth.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\Newtonsoft.Json.5.0.6\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="openstacknet">
-      <HintPath>lib\openstacknet.dll</HintPath>
     </Reference>
     <Reference Include="SimpleRESTServices">
       <HintPath>packages\SimpleRESTServices.1.3.0.1\lib\net40\SimpleRESTServices.dll</HintPath>
