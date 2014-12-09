@@ -10,6 +10,6 @@
 namespace SkyServer.Tools.Explore {
     
     
-    public partial class PhotozRF {
+    public partial class DisplayResults {
     }
 }

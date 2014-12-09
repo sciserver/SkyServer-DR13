@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="ObjectExplorer.Master" AutoEventWireup="true" CodeBehind="Plate.aspx.cs" Inherits="SkyServer.Tools.Explore.Plate" %>
-<%@ Import Namespace="System.Data.SqlClient" %>
+<%@ Import Namespace="System.Data" %>
+<%@ Import Namespace="SkyServer" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="OEHead" runat="server">
     <style type="text/css">
         div.content       
@@ -22,11 +23,7 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="OEContent" runat="server">
-<%
-    using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
-    {
-        oConn.Open();
-%>
+
 <div class="content">
 
     <table class="content">
@@ -50,24 +47,18 @@
     <tr>
     <td valign="top">
         <div id="plate">
-        <%   
-        string cmd = "select * from PlateX where plateId=" + plateId;
-        master.showVTable(oConn, cmd, 200);
+        <%           
+            master.showVTable(ds, 200);
         %>
         </div>
     </td>
     <td valign="top">
         <div id="objects">
         <h2>All Spectra on this plate</h2>
-        <%
-        master.showFTable(oConn, plateId);
-        %>
+        <% showFTable(); %> 
         </div>
     </td>
     </tr>
     </table>
 </div>
-<%
-    } 
-%>
 </asp:Content>

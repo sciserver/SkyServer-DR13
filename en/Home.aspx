@@ -1,9 +1,9 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="HomeMaster.master" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="SkyServer.Home" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+<%--<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
         #logos  {position:absolute;top:0px;left:0px;visibility:visible}
     </style>
-</asp:Content>
+</asp:Content>--%>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 	<div id="logos">
 		<div style="position:absolute;left:<%= logoleftpos%>px;top:108px;z-index:5;">

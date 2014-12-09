@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
+using SkyServer.Tools.Explore;
 
 namespace SkyServer
 {
@@ -33,7 +34,14 @@ namespace SkyServer
 
         protected void Application_Error(object sender, EventArgs e)
         {
+            /// This can be modified to make universal portal
 
+            HttpContext con = HttpContext.Current;
+            string pageR = con.Request.Url.ToString();
+
+            //If Explore Tool throws an error it goes to generic error page
+            if(pageR.Contains("/explore/"))
+                Server.Transfer("ExploreError.aspx");
         }
 
         protected void Session_End(object sender, EventArgs e)

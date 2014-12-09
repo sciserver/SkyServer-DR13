@@ -1,45 +1,12 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ApogeeTest.aspx.cs" Inherits="SkyServer.Tools.Explore.ApogeeTest" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ApogeeControl.ascx.cs" Inherits="SkyServer.Tools.Explore.ApogeeControl" %>
 <%@ Import Namespace="SkyServer" %>
 <%@ Import Namespace="SkyServer.Tools.Explore" %>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-  <link href="../../tools.css" rel="stylesheet" type="text/css" />
-  <title></title>
-  <script type="text/javascript">
-    function showLink(thelink) {
-      document.getElementById(thelink).style.display = "inline";
-    }
-    function hideLink(thelink) {
-      document.getElementById(thelink).style.display = "none";
-    }
-
-    function showSection(thediv) {
-      document.getElementById(thediv).className += "shown ";
-      document.getElementById(thediv).className =
-              document.getElementById(thediv).className.replace
-                    (/(?:^|\s)hidden(?!\S)/g, '')
-      /* code wrapped for readability - above is all one statement */
-    }
-    function hideSection(thediv) {
-      document.getElementById(thediv).className += "hidden ";
-      document.getElementById(thediv).className =
-              document.getElementById(thediv).className.replace
-                  (/(?:^|\s)shown(?!\S)/g, '')
-      /* code wrapped for readability - above is all one statement */
-    }
-  </script>
-</head>
-<body>
-  <form id="form1" runat="server">
-    <div id="content" class="content">
-      <div id="irspec">
+<% if(master.apid != null && !master.apid.Equals("")){ %>
+ <div id="irspec">
         <h3>Infrared Spectra
-          <span class="target">Targeted star: <%=apogeeInfo.apogee_id %></span>
+          <span class="target">Targeted star: <%=apogee_id%></span>
         </h3>
-
+        <%if(isData != false){ %>
         <table width="800">
           <tr>
             <td class="h">Instrument</td>
@@ -47,7 +14,7 @@
           </tr>
           <tr>
             <td class="h">APOGEE ID</td>
-            <td class="t"><%=apogeeInfo.apstar_id %></td>
+            <td class="t"><%=apstar_id %></td>
           </tr>
         </table>
 
@@ -63,17 +30,17 @@
             <td align="center" class="h">Sexagesimal</td>
           </tr>
           <tr>
-            <td align="center" class="t"><%=apogeeInfo.glon.ToString("F5") %></td>                        
-            <td align="center" class="t"><%=apogeeInfo.glat.ToString("F5") %></td>                     
-            <td align="center" class="t"><%=apogeeInfo.ra.ToString("F5") %>, <%=apogeeInfo.dec.ToString("F5") %></td>
-            <td align="center" class="t"><span class="large"><%=Functions.hmsC(apogeeInfo.ra) + ", " + Functions.dmsC(apogeeInfo.dec) %></span></td>
+            <td align="center" class="t"><%=glon.ToString("F5") %></td>                        
+            <td align="center" class="t"><%=glat.ToString("F5") %></td>                     
+            <td align="center" class="t"><%=ra.ToString("F5") %>, <%=dec.ToString("F5") %></td>
+            <td align="center" class="t"><span class="large"><%=Functions.hmsC(ra) + ", " + Functions.dmsC(dec) %></span></td>
           </tr>
         </table>
             
         <table>
           <tr>
             <td colspan="2">
-              <a href="<%=apogeeSpecImage %>"><img src="<%=apogeeSpecImage %>" width="780" height="195" alt="APOGEE infrared spectrum of <%=apogeeInfo.apogee_id %>" /></a>
+              <a href="<%=apogeeSpecImage %>"><img src="<%=apogeeSpecImage %>" width="780" height="195" alt="APOGEE infrared spectrum of <%=apogee_id %>" /></a>
             </td>
           </tr>
           <tr>
@@ -85,9 +52,13 @@
             </td>
           </tr>
         </table>
-                    
+        <%}else{ %>               
+            <table cellpadding=2 cellspacing=2 border=0 width=625>
+                  <tr><td class='nodatafound'>No Spectrum data found for this object</td></tr>
+            </table>     
+        <%} %>
         <h3>Targeting Information</h3>
-             
+         <%if(isData){ %>    
         <table cellpadding="2" cellspacing="2" border="0" width="800">
           <tr>
             <td align="middle" class="h"><span>2MASS j</span></td>
@@ -98,12 +69,12 @@
             <td align="middle" class="h"><span>k_err</span></td>
           </tr>
           <tr>
-            <td nowrap align="middle" class="t"><%=apogeeInfo.j %></td>
-            <td nowrap align="middle" class="t"><%=apogeeInfo.h %></td>
-            <td nowrap align="middle" class="t"><%=apogeeInfo.k %></td>
-            <td nowrap align="middle" class="t"><%=apogeeInfo.j_err %></td>
-            <td nowrap align="middle" class="t"><%=apogeeInfo.h_err %></td>
-            <td nowrap align="middle" class="t"><%=apogeeInfo.k_err %></td>
+            <td nowrap align="middle" class="t"><%=j %></td>
+            <td nowrap align="middle" class="t"><%=h %></td>
+            <td nowrap align="middle" class="t"><%=k %></td>
+            <td nowrap align="middle" class="t"><%=j_err %></td>
+            <td nowrap align="middle" class="t"><%=h_err %></td>
+            <td nowrap align="middle" class="t"><%=k_err %></td>
           </tr>
         </table>
 
@@ -114,28 +85,33 @@
             <td align="middle" class="h"><span>4.5 micron magnitude source</span></td>
           </tr>
           <tr>
-            <td nowrap align="middle" class="t"><%=apogeeInfo.mag_4_5 %></td>
-            <td nowrap align="middle" class="t"><%=apogeeInfo.mag_4_5_err %></td>
-            <td nowrap align="middle" class="t"><%=apogeeInfo.src_4_5 %></td>
+            <td nowrap align="middle" class="t"><%=mag_4_5 %></td>
+            <td nowrap align="middle" class="t"><%=mag_4_5_err %></td>
+            <td nowrap align="middle" class="t"><%=src_4_5 %></td>
           </tr>
         </table>
 
         <table cellpadding="2" cellspacing="2" width="800">
           <tr align="left">
             <td valign="top" class="h">APOGEE target flags 1</td>
-            <td valign="top" class="b"><%=apogeeInfo.apogeeTarget1N %></td>
+            <td valign="top" class="b"><%=apogeeTarget1N %></td>
           </tr>
         </table>
 
         <table cellpadding="2" cellspacing="2" width="800">
           <tr align="left">
             <td valign="top" class="h">APOGEE target flags 2</td>
-            <td valign="top" class="b"><%=apogeeInfo.apogeeTarget2N %></td>
+            <td valign="top" class="b"><%=apogeeTarget2N %></td>
           </tr>
         </table>
+        <%} else { %>
 
+            <table cellpadding=2 cellspacing=2 border=0 width=625>
+                  <tr><td class='nodatafound'>No Targeting data found for this object</td></tr>
+            </table>
+         <%} %>
         <h3>Stellar Parameters</h3>
-                
+          <%if(isData){ %>    
         <table cellpadding="2" cellspacing="2" border="0" width="800">
           <tr>
             <td align="middle" class="h"><span>Avg v<sub>helio</sub> (km/s)</span></td>
@@ -144,10 +120,10 @@
             <td align="middle" class="h"><span>Temp error</span></td>
           </tr>
           <tr>
-            <td nowrap align="middle" class="t"><%=apogeeInfo.vhelio_avg %></td>
-            <td nowrap align="middle" class="t"><%=apogeeInfo.vscatter %></td>
-            <td nowrap align="middle" class="t"><%=apogeeInfo.teff.ToString("F0") %></td>
-            <td nowrap align="middle" class="t"><%=apogeeInfo.teff_err.ToString("F1") %></td>
+            <td nowrap align="middle" class="t"><%=vhelio_avg %></td>
+            <td nowrap align="middle" class="t"><%=vscatter %></td>
+            <td nowrap align="middle" class="t"><%=teff.ToString("F0") %></td>
+            <td nowrap align="middle" class="t"><%=teff_err.ToString("F1") %></td>
           </tr>
         </table>
                 
@@ -161,28 +137,34 @@
             <td align="middle" class="h"><span>[&alpha;/Fe] error</span></td>
           </tr>
           <tr>
-            <td nowrap align="middle" class="t"><%=apogeeInfo.logg.ToString("F2") %></td>
-            <td nowrap align="middle" class="t"><%=apogeeInfo.logg_err.ToString("F3") %></td>
-            <td nowrap align="middle" class="t"><%=apogeeInfo.metals.ToString("F1") %></td>
-            <td nowrap align="middle" class="t"><%=apogeeInfo.metals_err.ToString("F3") %></td>
-            <td nowrap align="middle" class="t"><%=apogeeInfo.alphafe.ToString("F2") %></td>
-            <td nowrap align="middle" class="t"><%=apogeeInfo.alphafe_err.ToString("F3") %></td>
+            <td nowrap align="middle" class="t"><%=logg.ToString("F2") %></td>
+            <td nowrap align="middle" class="t"><%=logg_err.ToString("F3") %></td>
+            <td nowrap align="middle" class="t"><%=metals.ToString("F1") %></td>
+            <td nowrap align="middle" class="t"><%=metals_err.ToString("F3") %></td>
+            <td nowrap align="middle" class="t"><%=alphafe.ToString("F2") %></td>
+            <td nowrap align="middle" class="t"><%=alphafe_err.ToString("F3") %></td>
           </tr>
         </table>
                 
         <table cellpadding="2" cellspacing="2" width="800">
           <tr align="left">
             <td valign="top" class="h">Star flags</td>
-            <td valign="top" class="b"><%=apogeeInfo.apogeeStarFlagN %></td>
+            <td valign="top" class="b"><%=apogeeStarFlagN %></td>
           </tr>
         </table>
 
         <table cellpadding="2" cellspacing="2" width="800">
           <tr align="left">
             <td valign="top" class="h">Processing flags (ASPCAP)</td>
-            <td valign="top" class="b"><%=apogeeInfo.apogeeAspcapFlagN %></td>
+            <td valign="top" class="b"><%=apogeeAspcapFlagN %></td>
           </tr>
         </table>
+      <%} else { %>
+
+            <table cellpadding=2 cellspacing=2 border=0 width=625>
+                  <tr><td class='nodatafound'>No Stellar Parameters found for this object</td></tr>
+            </table>
+         <%} %>
 
         <h3 class="sectionlabel">
           Visits (click to see visit spectrum)
@@ -207,8 +189,8 @@
             </tr>
 
             <% string cellClass = "t";
-               foreach (ApogeeVisit v in apogeeInfo.visits)
-               { %>
+            foreach (ApogeeVisit v in visits)
+            { %>
             <tr>
               <td nowrap align="middle" class="<%=cellClass %>">
                 <a href="http://dr10.sdss3.org/irSpectrumDetail?plateid=<%=v.plate %>&mjd=<%=v.mjd %>&fiber=<%=v.fiberid %>" class="content" target="_blank">
@@ -223,11 +205,8 @@
               <td nowrap align="middle" class="<%=cellClass %>"><%=v.vrel %></td>
             </tr>
             <% cellClass = (cellClass == "t") ? "b" : "t"; // Alternating row colors 
-               } %>
+            } %>
           </table>                          
         </div>  <!-- end of visits div -->
       </div>  <!-- end of irspec div -->
-    </div>  <!-- end of content div -->
-  </form>
-</body>
-</html>
+<%} %>

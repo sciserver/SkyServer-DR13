@@ -6,6 +6,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using System.Data;
+using System.Collections.Specialized;
+using System.IO;
 
 namespace SkyServer.Tools.Search
 {
@@ -26,6 +28,44 @@ namespace SkyServer.Tools.Search
             windows_name = System.Environment.MachineName;
             server_name = Request.ServerVariables["SERVER_NAME"];
             remote_addr = Request.ServerVariables["REMOTE_ADDR"];
+        }
+
+        protected void ProcessRequestREST() 
+        {
+            //NameValueCollection inputForm = Request.Form;
+            //String requestString = "";
+            //foreach (string key in inputForm.Keys)
+            //{
+
+            //    requestString += key + "=" + inputForm[key] + "&";
+            //}
+
+            //string requestUrl = "";
+
+            //bool temp = false;
+            //switch (inputForm["positionType"])
+            //{
+            //    case "cone": requestUrl = globals.ConeSpectroWS; break;
+            //    case "rectangular": requestUrl = globals.RectangularSpectroWS; break;
+            //    case "none": requestUrl = globals.NoPositionSpectroWS; break;
+            //    case "proximity": temp = true;  requestUrl = globals.ProximitySpectroWS; break;
+            //    default: throw new Exception("No proper positionType selcted."); break;
+            //}
+
+            //if (temp) {
+            //    string radecText = inputForm["radecTextArea"];
+            //    if (radecText == null || radecText.Equals(""))
+            //    {
+            //        if (Request.Files.Count > 0 && Request.Files[0].ContentLength > 0)
+            //        {
+            //            radecText = (new StreamReader(Request.Files[0].InputStream)).ReadToEnd();
+            //        }
+            //    }
+            //    ResponseREST.postQuery(requestUrl, requestString, Response, "", radecText);
+            //}else
+            ////ResponseREST.runQuery(requestUrl, requestString, Response); 
+            ResponseREST rs = new ResponseREST();
+            //rs.ProcessRequestREST(Request, Response,"");
         }
 
         protected void ProcessRequest()
