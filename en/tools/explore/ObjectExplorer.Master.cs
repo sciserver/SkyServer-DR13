@@ -186,7 +186,7 @@ namespace SkyServer.Tools.Explore
                         hrefs.stellarMassFSPSGranEarlyDust = "ex_sql.aspx?cmd=select+*+from+stellarMassFSPSGranEarlyDust+where+specObjId=" + specId + "&name=stellarMassFSPSGranEarlyDust&tab=V&id=" + id + "&spec=" + specId + "&apid=" + apid;
                         hrefs.stellarMassFSPSGranEarlyNoDust = "ex_sql.aspx?cmd=select+*+from+stellarMassFSPSGranEarlyNoDust+where+specObjId=" + specId + "&name=stellarMassFSPSGranEarlyNoDust&tab=V&id=" + id + "&spec=" + specId + "&apid=" + apid;
                         hrefs.stellarMassFSPSGranWideDust = "ex_sql.aspx?cmd=select+*+from+stellarMassFSPSGranWideDust+where+specObjId=" + specId + "&name=stellarMassFSPSGranWideDust&tab=V&id=" + id + "&spec=" + specId + "&apid=" + apid;
-                        hrefs.stellarMassFSPSGranWideNoDust = "ex_sql.aspx?cmd=select+*+from+stellarMassFSPSGranWideDust+where+specObjId=" + specId + "&name=stellarMassFSPSGranWideNoDust&tab=V&id=" + id + "&spec=" + specId + "&apid=" + apid;
+                        hrefs.stellarMassFSPSGranWideNoDust = "ex_sql.aspx?cmd=select+*+from+stellarMassFSPSGranWideNoDust+where+specObjId=" + specId + "&name=stellarMassFSPSGranWideNoDust&tab=V&id=" + id + "&spec=" + specId + "&apid=" + apid;
                     }
                 }
                 else
