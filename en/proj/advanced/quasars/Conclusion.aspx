@@ -15,8 +15,7 @@
               <p>from<br>
               SpecPhoto</p>
               <p>where<br>
-              (specclass=3 or specclass=4)<br>
-              and zconf > .35</p>
+              class='QSO'</p>
               <p></p>
               </td>
             </tr>
