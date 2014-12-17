@@ -28,7 +28,7 @@ namespace SkyServer.Tools.Explore
 
         public RunQuery() {
             globals = new Globals();
-            requestUri = globals.CasjobsRESTapi;
+            //requestUri = globals.CasjobsRESTapi;
         }
 
         /// <summary>

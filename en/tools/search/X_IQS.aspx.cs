@@ -28,12 +28,6 @@ namespace SkyServer.Tools.Search
             remote_addr = Request.ServerVariables["REMOTE_ADDR"];
         }
 
-        protected void ProcessRequestREST()
-        {
-            ResponseREST rs = new ResponseREST();
-            //rs.ProcessRequestREST(Request, Response,"");
-        }
-
         protected void ProcessRequest()
         {
 

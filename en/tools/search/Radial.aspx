@@ -18,7 +18,7 @@
 <div id="title">Radial Search</div>
 
 <div id="transp">
-<%--<%
+<%
 // Pop up results in a new window for public site only.
 if( globals.Access == "public" ) {
 %>
@@ -27,19 +27,6 @@ if( globals.Access == "public" ) {
 } else {
 %>
     <form method="get" action="x_radial.aspx" id="radial" name="radial">
-<%
-}
-%>--%>
-
-    <%
-// Pop up results in a new window for public site only.
-if( globals.Access == "public" ) {
-%>
-    <form method="get" target="search" action="x_results.aspx" id="radial" name="radial">
-<%
-} else {
-%>
-    <form method="get" action="x_results.aspx" id="Form1" name="radial">
 <%
 }
 %>
@@ -69,7 +56,8 @@ if( globals.Access == "public" ) {
             document.getElementById('dec').value = "64.05";
             document.getElementById('labelRaOrL').innerHTML = "RA";
             document.getElementById('labelDecOrB').innerHTML = "Dec";
-            document.getElementById('equitorial').checked = "checked";            
+            document.getElementById('equitorial').checked = "checked";
+            
         }
         
     } 
@@ -80,7 +68,6 @@ if( globals.Access == "public" ) {
 
     }
 </script>
-<input type="hidden" name="searchtool" id="searchtool" value="Radial" />
 
 <table BORDER=0 WIDTH="600"  BGCOLOR="#aaaaaa" >
 	<tr><td class="frame">
@@ -164,12 +151,12 @@ if( globals.Access == "public" ) {
 	<table BORDER=0 WIDTH="100%" >
 		<tr class='q'>
 			<td ALIGN=left width="20%">Output Format</td>
-			<%--<td nowrap width="13%" ALIGN=middle><input name=format value="html" type=radio class="box" CHECKED>HTML</td>
+			<td nowrap width="13%" ALIGN=middle><input name=format value="html" type=radio class="box" CHECKED>HTML</td>
 			<td nowrap width="13%" ALIGN=middle><input name=format value="xml"  type=radio class="box">XML</td>
-			--%><td nowrap width="13%" ALIGN=middle><input name=format value="csv"  type=radio class="box" checked>CSV</td>
+			<td nowrap width="13%" ALIGN=middle><input name=format value="csv"  type=radio class="box">CSV</td>
       <td nowrap width="13%" ALIGN=middle><input name=format value="json"  type=radio class="box">JSON</td>
-   <%--   <td nowrap width="13%" ALIGN=middle><input name=format value="votable"  type=radio class="box">VOTable</td>
-      <td nowrap width="13%" ALIGN=middle><input name=format value="fits"  type=radio class="box">FITS</td>--%>
+      <td nowrap width="13%" ALIGN=middle><input name=format value="votable"  type=radio class="box">VOTable</td>
+      <td nowrap width="13%" ALIGN=middle><input name=format value="fits"  type=radio class="box">FITS</td>
 		</tr>
 		<tr>
 			<td align="left"><input id=submit type="submit" value="Submit Request"></td>

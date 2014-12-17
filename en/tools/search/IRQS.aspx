@@ -24,8 +24,7 @@
 <div id="title">Infrared Spectroscopy Query Form</div></a>
 
 <div id="transp">
-<form method="post" enctype="multipart/form-data" action="x_results.aspx" id=irqs name="irqs">
-    <input type="hidden" name="searchtool" id="searchtool" value="IRSpectra" />
+<form method="post" enctype="multipart/form-data" action="x_irqs.aspx" id=irqs name="irqs">
 <!------------------------------------------------------->
 <table border=0 cellspacing=3 cellpadding=3 bgcolor=#aaaaaa>
   <tr><td>

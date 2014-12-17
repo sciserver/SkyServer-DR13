@@ -64,103 +64,10 @@ namespace SkyServer
         private string apogeeFitsLink;
 
 
-
         public string SolarConnectionString
         {
             get { return solarConnectionString; }
         }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private string skyserverRESTservice;
-        private string casjobsRESTapi;
-        //private string skyServerWSsql;
-
-        public string username
-        {
-            get;
-            set;
-        }
-
-        public string CasjobsRESTapi {
-            get {
-                return casjobsRESTapi;
-            }
-        }
-        public string SkyserverRESTservice {
-            get { return skyserverRESTservice; }
-        }
-
-        public string SQLSearchWS
-        {
-            get { return skyserverRESTservice + "SearchTools/SqlSearch"; }
-        }
-
-        public string RectangularSearchWS
-        {
-            get { return skyserverRESTservice + "SearchTools/RectangularSearch"; }
-        }
-
-        public string RadialSearchWS
-        {
-            get { return skyserverRESTservice + "SearchTools/RadialSearch"; }
-        }
-        /// <summary>
-        /// These are Imaging Search Tool services
-        /// </summary>
-        public string ConeImaging
-        {
-            get { return skyserverRESTservice + "ImagingQuery/Cone"; }
-        }
-        public string RectangularImaging
-        {
-            get { return skyserverRESTservice + "ImagingQuery/Rectangular"; }
-        }
-        public string NoPositionImaging
-        {
-            get { return skyserverRESTservice + "ImagingQuery/NoPosition"; }
-        }
-        public string ProximityImaging
-        {
-            get { return skyserverRESTservice + "ImagingQuery/Proximity"; }
-        }
-        /// <summary>
-        /// These are IRSpectraQuery Search Tool services
-        /// </summary>
-        public string ConeIRWS 
-        {
-            get { return skyserverRESTservice + "IRSpectraQuery/ConeIR"; }
-        }
-        public string GalacticIRWS
-        {
-            get { return skyserverRESTservice + "IRSpectraQuery/GalacticIR"; }
-        }
-        public string NoPositionIRWS 
-        {
-            get { return skyserverRESTservice + "IRSpectraQuery/NoPositionIR"; }
-        }
-        /// <summary>
-        /// These are SpectroQuery Search Tool services
-        /// </summary>
-        public string ConeSpectroWS
-        {
-            get { return skyserverRESTservice + "SpectroQuery/ConeSpectro"; }
-        }
-        public string RectangularSpectroWS
-        {
-            get { return skyserverRESTservice + "SpectroQuery/RectangularSpectro"; }
-        }
-        public string NoPositionSpectroWS
-        {
-            get { return skyserverRESTservice + "SpectroQuery/NoPositionSpectro"; }
-        }
-        public string ProximitySpectroWS
-        {
-            get { return skyserverRESTservice + "SpectroQuery/ProximitySpectro"; }
-        }
-        /****/
 
         public string UrlProjRegister
         {
@@ -323,7 +230,7 @@ namespace SkyServer
         {
             get { return "DR" + releaseNumber; }
         }
-       
+
         /*
         public string DBType
         {
@@ -350,17 +257,17 @@ namespace SkyServer
 
         public string WSGetJpegUrl
         {
-            get { return skyserverRESTservice + "ImgCutout/getjpeg"; }
+              get { return WSBaseUrl + "ImgCutout/getjpeg.aspx"; }
         }
 
         public string WSGetImage64
         {
-            get { return skyserverRESTservice + "ImgCutout/getImage64"; }
+            get { return WSBaseUrl + "ImgCutout/getImage64.aspx"; }
         }
 
         public string WSGetCodecUrl
         {
-            get { return skyserverRESTservice + "ImgCutout/getJpegCodec"; }
+            get { return WSBaseUrl + "ImgCutout/getjpegcodec.aspx"; }
         }
 
         public double EqSearchRadius
@@ -477,8 +384,6 @@ namespace SkyServer
             this.rowLimit = int.Parse(appSettings["rowLimit"] ?? "500000");
             this.emacsRowLimit = int.Parse(appSettings["emacsRowLimit"] ?? "500000");
             this.queriesPerMinute = int.Parse(appSettings["queriesPerMinute"] ?? "60");
-            this.skyserverRESTservice = appSettings["restwebservice"];
-            this.casjobsRESTapi = appSettings["casjobsRESTapi"];
 
             if (releaseNumber == 8)
             {

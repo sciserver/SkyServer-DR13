@@ -47,9 +47,9 @@
       <HintPath>lib\CSharpFITS_v1.1.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\Newtonsoft.Json.5.0.6\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <HintPath>packages\Newtonsoft.Json.6.0.6\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="SimpleRESTServices">
       <HintPath>packages\SimpleRESTServices.1.3.0.1\lib\net40\SimpleRESTServices.dll</HintPath>
@@ -2023,7 +2023,6 @@
     <Content Include="en\tools\search\X_IRQS.aspx" />
     <Content Include="en\tools\search\X_Radial.aspx" />
     <Content Include="en\tools\search\X_Rect.aspx" />
-    <Content Include="en\tools\search\X_Results.aspx" />
     <Content Include="en\tools\search\X_SQL.aspx" />
     <Content Include="en\tools\search\X_SQS.aspx" />
     <Content Include="en\tools\STARTBall\FlashJavascriptGateway\FlashJavascriptGateway\docs\license.txt" />
@@ -5968,13 +5967,6 @@
     <Compile Include="en\tools\search\X_Rect.aspx.designer.cs">
       <DependentUpon>X_Rect.aspx</DependentUpon>
     </Compile>
-    <Compile Include="en\tools\search\X_Results.aspx.cs">
-      <DependentUpon>X_Results.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="en\tools\search\X_Results.aspx.designer.cs">
-      <DependentUpon>X_Results.aspx</DependentUpon>
-    </Compile>
     <Compile Include="en\tools\search\X_SQL.aspx.cs">
       <DependentUpon>X_SQL.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -6192,7 +6184,6 @@
     <Compile Include="misc\net.ivoa.data\VOTableWrapper.cs" />
     <Compile Include="en\tools\search\RadialSearchRequest.cs" />
     <Compile Include="en\tools\search\RectSearchRequest.cs" />
-    <Compile Include="misc\ResponseREST.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="misc\QueryFuncs.cs" />
     <Compile Include="misc\ResponseAux.cs" />

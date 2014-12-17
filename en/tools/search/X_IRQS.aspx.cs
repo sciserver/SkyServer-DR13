@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using System.Data;
-using System.Collections.Specialized;
+
 namespace SkyServer.Tools.Search
 {
     public partial class X_IRQS : System.Web.UI.Page
@@ -26,30 +26,6 @@ namespace SkyServer.Tools.Search
             windows_name = System.Environment.MachineName;
             server_name = Request.ServerVariables["SERVER_NAME"];
             remote_addr = Request.ServerVariables["REMOTE_ADDR"];
-        }
-
-        protected void ProcessRequestREST() {
-
-            ResponseREST rs = new ResponseREST();
-            rs.ProcessRequestREST(Request, Response);
-
-            //NameValueCollection inputForm = Request.Form;
-            //String requestString = "";
-            //foreach (string key in inputForm.Keys) {
-                
-            //    requestString += key + "=" + inputForm[key]+"&";
-            //}
-
-            //string requestUrl = "";
-            
-            //switch(inputForm["positionType"]){
-            //    case "cone": requestUrl = globals.ConeIRWS; break;
-            //    case "conelb": requestUrl = globals.GalacticIRWS; break;
-            //    case "none": requestUrl = globals.NoPositionIRWS; break;
-            //    default: throw new Exception("No proper positionType selcted."); break;
-            //}
-            ////string requestUrl = "http://apus.pha.jhu.edu/SkyserverWS/DR10/IRSpectraQuery/GalacticIR";
-            //ResponseREST.runQuery(requestUrl,requestString,Response); 
         }
 
         protected void ProcessRequest()

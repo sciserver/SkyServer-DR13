@@ -17,7 +17,6 @@
 	.txt	{width:260px}
 </style>
 <a href="../../help/docs/QS_UserGuide.aspx" onmouseover="return escape('Form query for imaging data.  Click to see User Guide.');">
-
 <div id="title">
 Imaging Query Form
 </div>
@@ -25,8 +24,8 @@ Imaging Query Form
 
 <div id="transp">
 
-<form method="post" enctype="multipart/form-data" action="x_results.aspx" id=iqs name="iqs">
-<input type="hidden" name="searchtool" id="searchtool" value="Imaging" />
+<form method="post" enctype="multipart/form-data" action="x_iqs.aspx" id=iqs name="iqs">
+
 <!----------------------------------------------------->
 <table border=1 cellspacing=3 cellpadding=3 bgcolor=#aaaaaa>
 <tr><td>
