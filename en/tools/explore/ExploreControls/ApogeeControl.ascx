@@ -139,10 +139,10 @@
           <tr>
             <td nowrap align="middle" class="t"><%=logg.ToString("F2") %></td>
             <td nowrap align="middle" class="t"><%=logg_err.ToString("F3") %></td>
-            <td nowrap align="middle" class="t"><%=metals.ToString("F1") %></td>
-            <td nowrap align="middle" class="t"><%=metals_err.ToString("F3") %></td>
-            <td nowrap align="middle" class="t"><%=alphafe.ToString("F2") %></td>
-            <td nowrap align="middle" class="t"><%=alphafe_err.ToString("F3") %></td>
+            <td nowrap align="middle" class="t"><%=param_m_h.ToString("F1") %></td>
+            <td nowrap align="middle" class="t"><%=param_m_h_err.ToString("F3") %></td>
+            <td nowrap align="middle" class="t"><%=param_alpha_m.ToString("F2") %></td>
+            <td nowrap align="middle" class="t"><%=param_alpha_m_err.ToString("F3") %></td>
           </tr>
         </table>
                 

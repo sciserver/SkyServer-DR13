@@ -342,7 +342,7 @@ namespace SkyServer.Tools.Explore
         #region Apogee_Queries
         
         public static string APOGEE_BASE_QUERY= @" select   a.ra,    a.dec,   a.apstar_id,    a.apogee_id,    a.glon,    a.glat,    a.location_id,   a.commiss,   a.vhelio_avg,    a.vscatter,     b.teff,
-                    b.teff_err,   b.logg,    b.logg_err,   b.metals,    b.metals_err,     b.alphafe,    b.alphafe_err,    c.j,   c.h,   c.k,   c.j_err,   c.h_err,   c.k_err, 
+                    b.teff_err,   b.logg,    b.logg_err,   b.param_m_h,    b.param_m_h_err,     b.param_alpha_m,    b.param_alpha_m_err,    c.j,   c.h,   c.k,   c.j_err,   c.h_err,   c.k_err, 
                     case c.src_4_5      when 'none' then NULL      when 'WISE' then c.wise_4_5      when 'IRAC' then c.irac_4_5      end      as mag_4_5,   case c.src_4_5     
                     when 'none' then NULL      when 'WISE' then c.wise_4_5_err      when 'IRAC' then c.irac_4_5_err      end      as mag_4_5_err,   c.src_4_5,  
                     dbo.fApogeeTarget1N(a.apogee_target1) as apogeeTarget1N,   dbo.fApogeeTarget2N(a.apogee_target2) as apogeeTarget2N, 

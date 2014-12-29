@@ -32,10 +32,10 @@ namespace SkyServer.Tools.Explore
         public float teff_err;            // Temp error
         public float logg;                // Surface Gravity log<sub>10</sub>(g)
         public float logg_err;            // log(g) error
-        public float metals;              // Metallicity [Fe/H]
-        public float metals_err;          // Metal error
-        public float alphafe;             // [&alpha;/Fe]
-        public float alphafe_err;         // [&alpha;/Fe] error
+        public float param_m_h;              // Metallicity [Fe/H]
+        public float param_m_h_err;          // Metal error
+        public float param_alpha_m;             // [&alpha;/Fe]
+        public float param_alpha_m_err;         // [&alpha;/Fe] error
 
         /* TABLE apogeeObject */
         public float j;                   // 2MASS j
@@ -127,10 +127,10 @@ namespace SkyServer.Tools.Explore
                     teff_err = (float)reader["teff_err"];
                     logg = (float)reader["logg"];
                     logg_err = (float)reader["logg_err"];
-                    metals = (float)reader["metals"];
-                    metals_err = (float)reader["metals_err"];
-                    alphafe = (float)reader["alphafe"];
-                    alphafe_err = (float)reader["alphafe_err"];
+                    param_m_h = (float)reader["param_m_h"];
+                    param_m_h_err = (float)reader["param_m_h_err"];
+                    param_alpha_m = (float)reader["param_alpha_m"];
+                    param_alpha_m_err = (float)reader["param_alpha_m_err"];
 
                     j = (float)reader["j"];
                     h = (float)reader["h"];
