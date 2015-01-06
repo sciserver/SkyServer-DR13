@@ -191,7 +191,7 @@ namespace SkyServer.Tools.Explore
                 {
                     ApogeeVisit v = new ApogeeVisit();
                     v.visit_id = (string)reader["visit_id"];
-                    v.plate = (long)reader["plate"];
+                    v.plate = (string)reader["plate"];
                     v.mjd = (long)reader["mjd"];
                     v.fiberid = (long)reader["fiberid"];
                     v.dateobs = (string)reader["dateobs"];

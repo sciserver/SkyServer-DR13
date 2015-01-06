@@ -9,7 +9,7 @@ namespace SkyServer.Tools.Explore
     {
         /* TABLE apogeeVisit */
         public string visit_id;
-        public long plate;
+        public string plate;
         public long mjd;
         public long fiberid;
         public string dateobs;
