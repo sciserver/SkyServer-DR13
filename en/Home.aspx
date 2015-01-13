@@ -1,9 +1,9 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="HomeMaster.master" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="SkyServer.Home" %>
-<%--<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
         #logos  {position:absolute;top:0px;left:0px;visibility:visible}
     </style>
-</asp:Content>--%>
+</asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 	<div id="logos">
 		<div style="position:absolute;left:<%= logoleftpos%>px;top:108px;z-index:5;">
@@ -63,10 +63,10 @@
 					<br>
 					&nbsp;<br>
 					The site hosts data from <a href="<%=globals.SdssUrl%>">Data Release <%=globals.ReleaseNumber%> (<%=globals.Release%>)</a>.
-					<a href="<%=globals.SdssUrl%>whatsnew.php">What's new in <%=globals.Release%></a>, 
+					<a href="<%=globals.SdssUrl%>whatsnew">What's new in <%=globals.Release%></a>, 
 					<a href="news.aspx">what's new on this site</a> and 
-					<a href="help/docs/known.aspx">known problems</a>. 
-					<a class="newstext"	href="sdss/release/">More...</a>
+					<a href="<%=globals.SdssUrl%>problems">known problems</a>. 
+					<a class="newstext"	href="<%=globals.SdssUrl%>">More...</a>
 				</td>
 				<td width="10" class="smallbodyText">&nbsp;</td>
 			</tr>
@@ -264,7 +264,7 @@
 							</td>
 						</tr>
 						<tr height="20">
-							<td nowrap class="menulink"><a class="menulink" target="offsite" href="<%=globals.SdssUrl%>/glossary.php">&nbsp;&nbsp;Glossary &nbsp;</a><img src="images/new_window.png" />						
+							<td nowrap class="menulink"><a class="menulink" target="offsite" href="<%=globals.SdssUrl%>/glossary">&nbsp;&nbsp;Glossary &nbsp;</a><img src="images/new_window.png" />						
 							&nbsp;&nbsp;</td>
 						</tr>
 						<tr height="20">

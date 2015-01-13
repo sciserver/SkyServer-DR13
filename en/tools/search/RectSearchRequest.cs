@@ -189,7 +189,7 @@ namespace SkyServer.Tools.Search
             }
             sql += "   p.apogee_id,p.ra, p.dec, p.glon, p.glat,\n";
             sql += "   p.vhelio_avg,p.vscatter,\n";
-            sql += "   a.teff,a.logg,a.metals\n";
+            sql += "   a.teff,a.logg,a.param_m_h\n";
             sql += "   FROM apogeeStar p\n";
             sql += "   JOIN aspcapStar a on a.apstar_id = p.apstar_id\n";
             sql += "   WHERE ra BETWEEN " + min_ra + " AND " + max_ra + "\n";

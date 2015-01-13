@@ -166,9 +166,9 @@ namespace SkyServer.Tools.Explore
             string specApogeeLink = globals.ApogeeSpectrumLink + "?apogee_id=" + apogee_id;
             string doWeNeedC = (commiss == 1) ? "C" : "";
 
-            apogeeSpecImage = globals.ApogeeFitsLink + location_id + "/plots/apStar" + doWeNeedC + "-s3-" + HttpUtility.UrlEncode(apogee_id) + ".gif";
+            apogeeSpecImage = globals.ApogeeFitsLink + "/stars/apo25m/4128/plots/apStar-r5-" + HttpUtility.UrlEncode(apogee_id) + ".jpg"; ;
             spectrumLink = globals.ApogeeSpectrumLink + "?locid=" + location_id + "&commiss=" + commiss + "&apogeeid=" + apogee_id;
-            fitsLink = globals.ApogeeFitsLink + location_id + "/apStar" + doWeNeedC + "-s3-" + HttpUtility.UrlEncode(apogee_id) + ".fits";
+            fitsLink = globals.ApogeeFitsLink + "/stars/apo25m/4128/apStar" + doWeNeedC + "-r5-" + HttpUtility.UrlEncode(apogee_id) + ".fits";
         }
 
         protected void ReadVisitsFromDbReader()
