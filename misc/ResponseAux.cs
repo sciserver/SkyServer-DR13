@@ -524,9 +524,11 @@ namespace SkyServer
             response.Clear();
             response.Write("<html><head></head><body><h1>ERROR</h1>");
             response.Write("<h2>" + ex.Message + "</h2>");
+            /*
             response.Write("<pre>");
             response.Write(ex.StackTrace);
             response.Write("</pre>");
+            */ 
             response.Write("</body></html>");
         }
 

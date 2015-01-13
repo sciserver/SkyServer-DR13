@@ -23,12 +23,12 @@
 <body background="<%= imgpath %>new_home_bktile.jpg" style="margin-left:25px;margin-top:0px;margin-right:25px;margin-bottom:0px;">
 
   <div id="div_title">
-    <table cellpadding="0" cellspacing="0" border="0" width="800px" style="height:73px">
+    <table cellpadding="0" cellspacing="0" border="0" width="200px" style="height:73px">
       <tr>
         <td align="left" width="50px" style="height:73px;">
           <a href="<%= globals.SdssUrlBase %>"><img alt="" class="imgnoborder" src="<%= imgpath %>sdss3_logo.gif" width="50px" /></a>
         </td>
-        <td width="400px">
+        <td>
           <table width="400px">
             <tr>
               <td width="400px" colspan="2" class="sdss3">Sloan Digital Sky Survey III</td>
@@ -38,8 +38,11 @@
               <td width="200px" class="sitename"><%= siteTitle %></td>
             </tr>
           </table>
+        </td>       
+        <td >
+            <img alt="" src="<%= imgpath %>imageright2.png" />
         </td>
-        <td width="350px"><img alt="" src="<%= imgpath %>imageright2.png" /></td>
+          
       </tr>
     </table>
   </div>
