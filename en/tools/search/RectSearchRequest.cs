@@ -143,7 +143,7 @@ namespace SkyServer.Tools.Search
 
             if (format == "html")
             {
-                sql += " ''<a target=INFO href=" + url + "/tools/explore/obj.aspx?id='' + cast(p.objId as varchar(20)) + ''>'' + cast(p.objId as varchar(20)) + ''</a>'' as objID,\n";
+                sql += " ''<a target=INFO href=" + url + "/tools/explore/obj.aspx?id='' + cast(p.objId as varchar(MAX)) + ''>'' + cast(p.objId as varchar(MAX)) + ''</a>'' as objID,\n";
             }
             else
             {
@@ -181,7 +181,7 @@ namespace SkyServer.Tools.Search
 
             if (format == "html")
             {
-                sql += " ''<a target=INFO href=" + url + "/tools/explore/summary.aspx?apid='' + cast(p.apstar_id as varchar(40)) + ''>'' + cast(p.apstar_id as varchar(40)) + ''</a>'' as apstar_id,\n";
+                sql += " ''<a target=INFO href=" + url + "/tools/explore/summary.aspx?apid='' + cast(p.apstar_id as varchar(MAX)) + ''>'' + cast(p.apstar_id as varchar(MAX)) + ''</a>'' as apstar_id,\n";
             }
             else
             {
