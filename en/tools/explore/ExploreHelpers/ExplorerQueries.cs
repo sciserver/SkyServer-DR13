@@ -424,9 +424,13 @@ namespace SkyServer.Tools.Explore
            
 
         public static string getApogee = @" select apstar_id, ra, dec, apogee_id, glon, glat,location_id,commiss
-                            from apogeeStar
-                            where apstar_id='@apogeeId'";
-                
+                                            from apogeeStar
+                                            where apstar_id='@apogeeId'";
+
+        public static string getApogee2 = @" select apstar_id, ra, dec, apogee_id, glon, glat,location_id,commiss
+                                            from apogeeStar
+                                            where apogee_id='@apogeeId'";
+        
 
         public static string getPlateFromApogee = @"select  top 1   a.ra,    a.dec,   a.apstar_id,    a.apogee_id, v.plate,v.fiberId,v.mjd 
                             from apogeeStar a join apogeeVisit v on a.apogee_id=v.apogee_id 

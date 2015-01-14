@@ -330,8 +330,13 @@ namespace SkyServer.Tools.Explore
         {
             double qra =0, qdec=0;
             objectInfo.apid = apid;
+            string cmd = "";
+            apid = apid.ToLower();
+            if(apid.Contains("apogee"))
+             cmd = ExplorerQueries.getApogee;
+            else
+             cmd = ExplorerQueries.getApogee2;
 
-            string cmd = ExplorerQueries.getApogee;
             cmd = cmd.Replace("@apogeeId",apid);
             DataSet ds = runQuery.RunCasjobs(cmd);
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
