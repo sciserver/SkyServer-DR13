@@ -56,7 +56,9 @@ namespace SkyServer.Tools.Explore
                 }
                 if (key == "sid")
                 {
-                    string s = Request.QueryString["sid"];
+                    string s = Request.QueryString["sid"].Trim().ToUpper();
+                    if (s.StartsWith("2M")) sidstring = s;
+                    else
                     sidstring = (string.Equals(s, "")) ? s : Utilities.ParseId(s).ToString();                   
                 }
                 if (key == "spec")
@@ -212,7 +214,7 @@ namespace SkyServer.Tools.Explore
             try
             {
                 pmtsFromSpecWithApogeeID(sidstring);
-                if (apid != null && apid != string.Empty)
+                if (objectInfo.apid != null && objectInfo.apid != string.Empty)
                 {
                     photoFromEq(objectInfo.ra, objectInfo.dec);
                 }
@@ -238,7 +240,7 @@ namespace SkyServer.Tools.Explore
 
             string cmd = ExplorerQueries.getpmtsFromSpecWithApogeeId;
             cmd = cmd.Replace("@whatdoiget",whatdoiget);
-            cmd = cmd.Replace("@sid",sid);
+            cmd = cmd.Replace("@sid","'"+sid+"'");
 
             DataSet ds = runQuery.RunCasjobs(cmd);
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
