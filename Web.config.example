@@ -10,34 +10,36 @@
         <compilation debug="true" targetFramework="4.0" />
     </system.web>
   <appSettings>
-    <add key="solarConnectionString" value="User ID=skyuser;Password=xxxxxxxx;Data Source=sdssdb002;Database=SDSS_EPO"/>
-    <add key="connectionString" value="User ID=*****;Password=*****;Data Source=sdss3n;"/>
-    <add key="releaseNumber" value="10"/>
-    <add key="database" value="BESTDR10"/>
-    <add key="wsBaseURL" value="http://skyservicetest.pha.jhu.edu/"/>
+    <add key="solarConnectionString" value="User ID=*****;Password=*****;Data Source=sdssdb002;Database=SDSS_EPO"/>
+    <add key="connectionString" value="User ID=*****;Password=*****;Data Source=SDSS3T;"/>
+    <add key="releaseNumber" value="12"/>
+    <add key="database" value="BESTDR12"/>
+    <add key="siteName" value=""/>
+    <add key="siteIcon" value="../images/flag_us.gif"/>
+    
+    <add key="wsBaseURL" value="http://skyservice.pha.jhu.edu/"/>
     <add key="wsSpechome" value="http://www.voservices.net/spectrum/"/>
     <add key="wsFilterhome" value="http://www.voservices.net/filter/"/>
-    <!--<add key="siteName" value="US"/>-->
-    <!--<add key="siteIcon" value="flag_us.gif"/>-->
+    
     <add key="eqSearchRadius" value="0.75"/>
     <add key="access" value="public"/>
-    <add key="dasUrlBase" value="http://dr9.sdss3.org/"/>
-    <add key="visualRA" value="145.267"/>
-    <add key="visualDec" value="34.733"/>
+    <add key="dasUrlBase" value="http://dr12.sdss3.org/"/>
+    <add key="visualRA" value="132.749"/>
+    <add key="visualDec" value="11.656"/>
     <add key="visualScale" value="0.79224"/>
     <add key="exploreDefault" value="1237668296598749280"/>
-    <add key="sdssUrlBase" value="http://www.sdss3.org/"/>
+    <add key="sdssUrlBase" value="http://www.sdss.org/"/>
     <add key="logURL" value="http://skyserver.sdss.org/log/en/traffic/"/>
-    <add key="casJobs" value="http://skyservice.pha.jhu.edu/CasJobs/"/>
+    <add key="casJobs" value="http://skyserver.sdss.org/CasJobs/"/>
     <add key="defaultSpRerun" value="26"/>
     <add key="skyVersion" value="2"/>
     <add key="epoHelp" value="raddick@pha.jhu.edu"/>
-    <add key="urlSolarSystemProj" value="http://skyserver.sdss3.org/solarsystem/"/>
+    <add key="urlSolarSystemProj" value="http://skyserver.sdss.org/solarsystem/"/>
     <add key="urlProjRegister" value="http://skyserver.pha.jhu.edu/register/"/>
-    <add key="apogeeSpectrumLink" value="http://dr10.sdss3.org/irSpectrumDetail" />
-    <add key="apogeeFitsLink" value="http://data.sdss3.org/sas/dr10/apogee/spectro/redux/r3/s3/" />
+    <add key="apogeeSpectrumLink" value="http://dr12.sdss3.org/irSpectrumDetail" />
+    <add key="apogeeFitsLink" value="http://dr12.sdss3.org/sas/dr12/apogee/spectro/redux/r5" />
     <add key="helpdesk" value="helpdesk@sdss3.org"/>
-    <add key="smtp" value="mail.pha.jhu.edu"/>
+    <add key="smtp" value="mail.pha.jhu.edu"/>    
 
     <!-- Timeouts and limits -->
     <add key="defTimeout" value="600"/>

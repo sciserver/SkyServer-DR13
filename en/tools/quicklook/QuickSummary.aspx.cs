@@ -289,11 +289,7 @@ namespace SkyServer.Tools.QuickLook
 
                         //if zConf > 0.35, print a caution message
 
-
-                        var csvlink = "http://data.sdss3.org/csvSpectrum?plateid="+ plate +"&mjd="+ mjd +"&fiber=" + fiberid +"&reduction2d=v5_7_0";
-
-//                        var csvlink = "http://dr9.sdss3.org/dr9-cgi/getSpectra/csv?plateid=" + plate + "&mjd=" + mjd + "&fiber=" + fiberid;
-
+                        var csvlink = globals.DasUrlBase + "csvSpectrum?plateid=" + plate + "&mjd=" + mjd + "&fiber=" + fiberid + "&reduction2d=v5_7_0";
 
                         Response.Write("<a href='" + csvlink + "' target='_blank' class='content'><h3>Get spectrum as CSV</a>");
 
