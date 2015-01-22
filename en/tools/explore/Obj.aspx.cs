@@ -80,20 +80,14 @@ namespace SkyServer.Tools.Explore
                     if (key == "sid")
                     {
                         string s = Request.QueryString["sid"];
-                        sidstring = (string.Equals(s,"")) ? s : Utilities.ParseId(s).ToString();
-                        /*                      
-                        try
+                        if (s.StartsWith("apogee") || s.StartsWith("2M"))
                         {
-                            if (s != null & !"".Equals(sid))
-                            {
-                                if (s.StartsWith("0x"))
-                                    sid = long.Parse(s.Substring(2), NumberStyles.AllowHexSpecifier);
-                                else
-                                    sid = long.Parse(s);
-                            }
+                            sidstring = s;
                         }
-                        catch (Exception ex) { } 
-                        */
+                        else
+                        {
+                            sidstring = (string.Equals(s, "")) ? s : Utilities.ParseId(s).ToString();
+                        }
                     }
                     if (key == "apid")
                     {
