@@ -66,7 +66,7 @@
         <tr>
            <td align=center><p class=caption>A very, very, very, very 
            small part of the photoPrimary table.<br>
-           The full table contains more than 300 data columns and more than<br> <%=globals.NObj%> 
+           The full table contains more than 300 data columns and hundreds of millions of 
            records.</p></td>
          </tr>
       </table>

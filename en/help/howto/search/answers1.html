@@ -14,30 +14,34 @@ function done() {
 
 <p><font color=yellow><b>Practice 1.</b></font></p>
 <p><font color=white>
-    select
+    <pre>
+    SELECT
         ra, dec
-    from
+    FROM
         specObj
-    where
+    WHERE
         ra BETWEEN 140.25 and 140.75 
         AND dec BETWEEN 20.25 and 20.75
+    </pre>
 </font></p>
 
-<p><font color=white>The query returns XXX results, compared to over XXX for the previous query.</font></p>
+<p><font color=white>The query returns 84 results, compared to 310 for the previous query.</font></p>
 
 <p><font color=yellow><b>Practice 2.</b></font></p>
 <p><font color=white>
-    select
+    <pre>
+    SELECT
         ra, dec, bestobjID
-    from
+    FROM
         specObj
-    where
+    WHERE
         ra BETWEEN 140.25 and 140.75 
         AND dec BETWEEN 20.25 and 20.75 
         AND class = 'galaxy'
+    </pre>
 </font></p>
 
-<p><font color=white>The query returns XXX results, meaning XXX of the XXX spectrally-measured 
+<p><font color=white>The query returns 37 results, meaning 37 of the 84 spectrally-measured 
 objects in this region are galaxies.</font></p>
 
 <p><a href="javascript:done()"><font color=gold>Done</font></a></p>

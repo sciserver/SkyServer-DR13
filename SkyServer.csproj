@@ -884,8 +884,41 @@
     <Content Include="en\proj\basic\scavenger\ScavengerHunt.aspx" />
     <Content Include="en\proj\basic\scavenger\Spectra.aspx" />
     <Content Include="en\proj\basic\scavenger\Times.aspx" />
+    <Content Include="en\proj\basic\solarsystem\coordinates\coordinates.aspx" />
+    <Content Include="en\proj\basic\solarsystem\coordinates\default.aspx" />
+    <Content Include="en\proj\basic\solarsystem\coordinates\images\antarctica.jpg" />
+    <Content Include="en\proj\basic\solarsystem\coordinates\images\earth.jpg" />
+    <Content Include="en\proj\basic\solarsystem\coordinates\images\graph.jpg" />
+    <Content Include="en\proj\basic\solarsystem\coordinates\images\orion.jpg" />
+    <Content Include="en\proj\basic\solarsystem\coordinates\images\sky.jpg" />
+    <Content Include="en\proj\basic\solarsystem\coordinates\mapsandglobes.aspx" />
+    <Content Include="en\proj\basic\solarsystem\coordinates\radec.aspx" />
+    <Content Include="en\proj\basic\solarsystem\coordinates\skycoordinates.aspx" />
     <Content Include="en\proj\basic\solarsystem\Default.aspx" />
-    <Content Include="en\proj\basic\solarsystem\SolarHome.aspx" />
+    <Content Include="en\proj\basic\solarsystem\earthsun\conclusion.aspx" />
+    <Content Include="en\proj\basic\solarsystem\earthsun\default.aspx" />
+    <Content Include="en\proj\basic\solarsystem\earthsun\images\North_season.jpg" />
+    <Content Include="en\proj\basic\solarsystem\earthsun\images\sun.jpg" />
+    <Content Include="en\proj\basic\solarsystem\earthsun\seasons.aspx" />
+    <Content Include="en\proj\basic\solarsystem\earthsun\sun.aspx" />
+    <Content Include="en\proj\basic\solarsystem\images\home.gif" />
+    <Content Include="en\proj\basic\solarsystem\images\logo_ms.jpg" />
+    <Content Include="en\proj\basic\solarsystem\images\next.jpg" />
+    <Content Include="en\proj\basic\solarsystem\images\previous.jpg" />
+    <Content Include="en\proj\basic\solarsystem\images\solar_sys2.jpg" />
+    <Content Include="en\proj\basic\solarsystem\mapping\asteroids.aspx" />
+    <Content Include="en\proj\basic\solarsystem\mapping\default.aspx" />
+    <Content Include="en\proj\basic\solarsystem\mapping\graphs.aspx" />
+    <Content Include="en\proj\basic\solarsystem\mapping\images\graph.jpg" />
+    <Content Include="en\proj\basic\solarsystem\mapping\images\jupiter.gif" />
+    <Content Include="en\proj\basic\solarsystem\mapping\images\radectemplate.jpg" />
+    <Content Include="en\proj\basic\solarsystem\mapping\images\radectemplate3.png" />
+    <Content Include="en\proj\basic\solarsystem\mapping\planets.aspx" />
+    <Content Include="en\proj\basic\solarsystem\mapping\sept22.aspx" />
+    <Content Include="en\proj\basic\solarsystem\mapping\shape.aspx" />
+    <Content Include="en\proj\basic\solarsystem\Query.aspx" />
+    <Content Include="en\proj\basic\solarsystem\Results.aspx" />
+    <Content Include="en\proj\basic\solarsystem\SolarSystemHome.aspx" />
     <Content Include="en\proj\basic\spectraltypes\Absorption.aspx" />
     <Content Include="en\proj\basic\spectraltypes\Absorption2.aspx" />
     <Content Include="en\proj\basic\spectraltypes\Connection.aspx" />
@@ -3889,12 +3922,128 @@
     <Compile Include="en\proj\basic\scavenger\Times.aspx.designer.cs">
       <DependentUpon>Times.aspx</DependentUpon>
     </Compile>
-    <Compile Include="en\proj\basic\solarsystem\SolarHome.aspx.cs">
-      <DependentUpon>SolarHome.aspx</DependentUpon>
+    <Compile Include="en\proj\basic\solarsystem\coordinates\coordinates.aspx.cs">
+      <DependentUpon>coordinates.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="en\proj\basic\solarsystem\SolarHome.aspx.designer.cs">
-      <DependentUpon>SolarHome.aspx</DependentUpon>
+    <Compile Include="en\proj\basic\solarsystem\coordinates\coordinates.aspx.designer.cs">
+      <DependentUpon>coordinates.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\coordinates\default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\coordinates\default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\coordinates\mapsandglobes.aspx.cs">
+      <DependentUpon>mapsandglobes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\coordinates\radec.aspx.cs">
+      <DependentUpon>radec.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\coordinates\radec.aspx.designer.cs">
+      <DependentUpon>radec.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\coordinates\skycoordinates.aspx.cs">
+      <DependentUpon>skycoordinates.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\coordinates\skycoordinates.aspx.designer.cs">
+      <DependentUpon>skycoordinates.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\earthsun\conclusion.aspx.cs">
+      <DependentUpon>conclusion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\earthsun\conclusion.aspx.designer.cs">
+      <DependentUpon>conclusion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\earthsun\default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\earthsun\default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\earthsun\seasons.aspx.cs">
+      <DependentUpon>seasons.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\earthsun\seasons.aspx.designer.cs">
+      <DependentUpon>seasons.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\earthsun\sun.aspx.cs">
+      <DependentUpon>sun.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\earthsun\sun.aspx.designer.cs">
+      <DependentUpon>sun.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\mapping\asteroids.aspx.cs">
+      <DependentUpon>asteroids.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\mapping\asteroids.aspx.designer.cs">
+      <DependentUpon>asteroids.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\mapping\default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\mapping\default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\mapping\graphs.aspx.cs">
+      <DependentUpon>graphs.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\mapping\graphs.aspx.designer.cs">
+      <DependentUpon>graphs.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\mapping\planets.aspx.cs">
+      <DependentUpon>planets.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\mapping\planets.aspx.designer.cs">
+      <DependentUpon>planets.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\mapping\sept22.aspx.cs">
+      <DependentUpon>sept22.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\mapping\sept22.aspx.designer.cs">
+      <DependentUpon>sept22.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\mapping\shape.aspx.cs">
+      <DependentUpon>shape.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\mapping\shape.aspx.designer.cs">
+      <DependentUpon>shape.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\Query.aspx.cs">
+      <DependentUpon>Query.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\Query.aspx.designer.cs">
+      <DependentUpon>Query.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\SolarSystemHome.aspx.cs">
+      <DependentUpon>SolarSystemHome.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\SolarSystemHome.aspx.designer.cs">
+      <DependentUpon>SolarSystemHome.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\SolarSystemMaster.Master.cs">
+      <DependentUpon>SolarSystemMaster.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\SolarSystemMaster.Master.designer.cs">
+      <DependentUpon>SolarSystemMaster.Master</DependentUpon>
     </Compile>
     <Compile Include="en\proj\basic\spectraltypes\Absorption.aspx.cs">
       <DependentUpon>Absorption.aspx</DependentUpon>
@@ -6072,6 +6221,11 @@
     <None Include="en\proj\basic\scavenger\scavenger.pdf" />
     <Content Include="en\proj\basic\universe\UniverseMaster.master" />
     <Content Include="en\proj\basic\spectraltypes\SpectralTypesMaster.master" />
+    <None Include="en\proj\basic\solarsystem\coordinates\stars.csv" />
+    <None Include="en\proj\basic\solarsystem\coordinates\stars.xls" />
+    <None Include="en\proj\basic\solarsystem\coordinates\stars_mac.xls" />
+    <None Include="en\proj\basic\solarsystem\mapping\asteroids.xls" />
+    <Content Include="en\proj\basic\solarsystem\SolarSystemMaster.Master" />
     <None Include="en\proj\basic\spectraltypes\pdf\7stars.pdf" />
     <None Include="en\proj\basic\spectraltypes\pdf\filled_example.pdf" />
     <None Include="en\proj\basic\universe\workbooks\explore1.xls" />
