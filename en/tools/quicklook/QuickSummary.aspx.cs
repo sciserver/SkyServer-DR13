@@ -267,7 +267,7 @@ namespace SkyServer.Tools.QuickLook
                         short fiberid = reader.GetInt16(4);
 
 
-                        var spectrumlink = "http://dr9.sdss3.org/spectrumDetail?plateid=" + plate + "&mjd=" + mjd + "&fiber=" + fiberid;
+                        var spectrumlink = globals.DasUrlBase + "spectrumDetail?plateid=" + plate + "&mjd=" + mjd + "&fiber=" + fiberid;
 
                         Response.Write("<h3><a href='" + spectrumlink + "' target='_blank' class='content'>Interactive spectrum<img src='../../images/new_window_black.png' alt=' (new window)' /></a></h3>");
                         Response.Write("<p><b>" + reader.GetName(0) + ":</b> " + reader.GetName(0) + "</p>");
