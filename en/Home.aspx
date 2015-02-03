@@ -201,6 +201,9 @@
 						<tr height="20">
 							<td nowrap class="menulink"><a class="menulink" href="http://www.zooniverse.org">&nbsp;&nbsp;Zooniverse&nbsp;</a><img src="images/offsite.png" />&nbsp;&nbsp;</td>
 						</tr>
+						<tr height="20">
+							<td nowrap class="menulink"><a class="menulink" href="http://voyages.sdss.org">&nbsp;&nbsp;Voyages&nbsp;</a><img src="images/offsite.png" />&nbsp;&nbsp;</td>
+						</tr>
 						
 						<tr height="20">
 							<td nowrap>&nbsp;</td>
