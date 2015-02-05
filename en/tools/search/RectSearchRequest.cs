@@ -195,8 +195,9 @@ namespace SkyServer.Tools.Search
             sql += "   WHERE ra BETWEEN " + min_ra + " AND " + max_ra + "\n";
             sql += "   AND dec BETWEEN " + min_dec + " AND " + max_dec + "\n";
 
+            /*
             int ccount = 1;
-
+            
             if (check_u == "u")
                 sql += Utilities.ccut("u", ccount++, min_u, max_u);
             if (check_g == "g")
@@ -207,7 +208,7 @@ namespace SkyServer.Tools.Search
                 sql += Utilities.ccut("i", ccount++, min_i, max_i);
             if (check_z == "z")
                 sql += Utilities.ccut("z", ccount++, min_z, max_z);
-
+            */
             this.irQuery = sql;
         }
     }
