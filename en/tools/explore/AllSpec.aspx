@@ -31,7 +31,7 @@
         string cmd = "select s.specObjId, s.plate as plate, s.mjd as MJD, s.fiberID as fiber, str(t.ra,10,5) as ra, str(t.dec,10,5) as dec, ";
         cmd += "  str(s.ra,10,5) as specRa, str(s.dec,10,5) as specDec, ";
         cmd += " s.sciencePrimary, str(dbo.fDistanceArcMinEq(t.ra,t.dec,s.ra,s.dec),10,8) as distanceArcMin, ";
-        cmd += " s.class as specClass";
+        cmd += " s.class as class";
         cmd += " from SpecObjAll s, photoobjall t where t.objid=" + objId + " and s.bestobjid=t.objid ";
         //cmd += " order by scienceprimary desc, distanceArcMin asc";
         cmd += " order by scienceprimary desc, plate, MJD, fiber"; 
@@ -50,7 +50,7 @@
         string cmd = "select s.specObjId, s.plate as plate, s.mjd as MJD, s.fiberID as fiber, str(t.ra,10,5) as ra, str(t.dec,10,5) as dec, ";
         cmd += "  str(s.ra,10,5) as specRa, str(s.dec,10,5) as specDec, ";
         cmd += " s.sciencePrimary, str(dbo.fDistanceArcMinEq(t.ra,t.dec,s.ra,s.dec),10,8) as distanceArcMin, ";
-        cmd += " s.class as specClass";
+        cmd += " s.class as class";
         cmd += " from SpecObjAll s, photoobjall t where t.objid=" + objId + " and s.fluxobjid=t.objid ";
         //cmd += " order by scienceprimary desc, distanceArcMin asc";
         cmd += " order by scienceprimary desc, plate, MJD, fiber ";   

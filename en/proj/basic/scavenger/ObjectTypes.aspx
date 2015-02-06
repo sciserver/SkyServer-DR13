@@ -89,7 +89,7 @@
         </tr>
       </table>
 
-      <p>The images of quasars look like stars. Quasars can only be reliably identified by looking at their spectra. If you find a star in the Navigation Tool and wonder if it might be a quasar, check to see if the SDSS has measured its spectrum. If it has a spectrum measured, open the Object Explorer to see the spectrum. If the object's specClass is listed as "QSO" or "HIZ_QSO," the object is a quasar.</p>
+      <p>The images of quasars look like stars. Quasars can only be reliably identified by looking at their spectra. If you find a star in the Navigation Tool and wonder if it might be a quasar, check to see if the SDSS has measured its spectrum. If it has a spectrum measured, open the Object Explorer to see the spectrum. If the object's class is listed as "QSO" or "HIZ_QSO," the object is a quasar.</p>
 
       
       </td>

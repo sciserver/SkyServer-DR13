@@ -404,7 +404,7 @@ namespace SkyServer
                 nObj = "360 million";
                 nStar = "180 million";
                 nGalaxy = "175 million"; //count from view galaxy
-                nQuasar = "121,363"; //specclass = 3 or 4
+                nQuasar = "121,363"; //class = 3 or 4
                 nSpec = "1,640,960";
                 nStarSpec = "464,301";
                 nStarNoSpec = "179 million"; //count from view star

@@ -236,7 +236,7 @@ namespace SkyServer.Tools.QuickLook
         {
             /*
                 This function displays *only* the spectral data required by the 'Quick Look' interface.
-                Only specClass, Redshift (z), and zConf will ever be sent to this function.
+                Only class, Redshift (z), and zConf will ever be sent to this function.
                 The function includes specialized formatting to work with those data.
 	
                     -Jordan Raddick, 9/17/07

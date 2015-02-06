@@ -114,7 +114,7 @@
       have spectra. It is a lot faster to search a smaller database.</p>
       <p>The WHERE block tells the computer what features to look for.
       We are looking for objects with spectra and well-measured redshifts that 
-      are classified as quasars (specClass = 3).</p>
+      are classified as quasars (class = 3).</p>
       <p>Students can have the data returned as a HTML file in their browser or 
       a comma separated value file (csv). If they choose HTML, they can 
       select the data in the table and paste it into an Excel spreadsheet. 
