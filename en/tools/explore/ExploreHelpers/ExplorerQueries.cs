@@ -117,14 +117,14 @@ namespace SkyServer.Tools.Explore
         //AllSpec Queries
         public  static string AllSpec1= @"select s.specObjId, s.plate as plate, s.mjd as MJD, s.fiberID as fiber, 
                             str(t.ra,10,5) as ra, str(t.dec,10,5) as dec, str(s.ra,10,5) as specRa, str(s.dec,10,5) as specDec, s.sciencePrimary, 
-                            str(dbo.fDistanceArcMinEq(t.ra,t.dec,s.ra,s.dec),10,8) as distanceArcMin, s.class as specClass 
+                            str(dbo.fDistanceArcMinEq(t.ra,t.dec,s.ra,s.dec),10,8) as distanceArcMin, s.class as class 
                             from SpecObjAll s, photoobjall t
                             where t.objid=@objId  and s.bestobjid=t.objid  order by scienceprimary desc, plate, MJD, fiber";
                 
         
         public static string AllSpec2  = @"select s.specObjId, s.plate as plate, s.mjd as MJD, s.fiberID as fiber, str(t.ra,10,5) as ra, str(t.dec,10,5) as dec, 
                             str(s.ra,10,5) as specRa, str(s.dec,10,5) as specDec,  s.sciencePrimary, 
-                            str(dbo.fDistanceArcMinEq(t.ra,t.dec,s.ra,s.dec),10,8) as distanceArcMin, s.class as specClass 
+                            str(dbo.fDistanceArcMinEq(t.ra,t.dec,s.ra,s.dec),10,8) as distanceArcMin, s.class as class 
                             from SpecObjAll s, photoobjall t 
                             where t.objid=@objId  and s.fluxobjid=t.objid order by  plate, MJD, fiber, 
                             scienceprimary desc, distanceArcMin asc";                

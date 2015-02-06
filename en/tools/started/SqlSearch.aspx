@@ -53,7 +53,7 @@
            SpecObj s, PhotoObj p, plateX w</p>
            <p>where<br>
            p.ObjID=s.bestObjID and w.plateID=s.plateID and<br>
-           s.z &gt; 4 and s.zConf &gt; 0.95 and s.specClass = 3</p>
+           s.z &gt; 4 and s.zConf &gt; 0.95 and s.class = 3</p>
            </td>
          </tr>
        </table>

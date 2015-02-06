@@ -20,7 +20,7 @@
 
 <img src="images/explore.jpg">
 
-<p>Scroll down to the bottom of the page. The spectrum is the graph at the lower left. Just above the graph, look at the piece of data labeled "specClass." SpecClass indicates what type of object this is. The example in the screenshot above says GALAXY under specClass, so the object is a galaxy.</p>
+<p>Scroll down to the bottom of the page. The spectrum is the graph at the lower left. Just above the graph, look at the piece of data labeled "class." Class indicates what type of object this is. The example in the screenshot above says GALAXY under class, so the object is a galaxy.</p>
 
 <p>Click Next to learn about the types of objects you will see.</p>
 
