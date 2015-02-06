@@ -178,6 +178,7 @@ namespace SkyServer.Tools.Search
             sql += "   JOIN fGetNearbyApogeeStarEq(" + ra + "," + dec + "," + radius + ") n on p.apstar_id=n.apstar_id\n";
             sql += "   JOIN aspcapStar a on a.apstar_id = p.apstar_id";
 
+            /*
             int ccount = 0;
 
             if (check_u == "u")
@@ -190,6 +191,7 @@ namespace SkyServer.Tools.Search
                 sql += Utilities.ccut("i", ccount++, min_i, max_i);
             if (check_z == "z")
                 sql += Utilities.ccut("z", ccount++, min_z, max_z);
+            */
 
             this.irQuery = sql;
         }
