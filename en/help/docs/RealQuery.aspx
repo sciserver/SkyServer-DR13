@@ -1252,9 +1252,9 @@ Some hints on searching SkyServer:</p>
 	cmd += "WHERE<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;&nbsp; z BETWEEN 0.4 and 0.5<br>\r\n";
 	cmd += "</td></tr>\r\n";
-	cmd += "<tr><td>&nbsp;&nbsp;&nbsp;&nbsp; and nnIsInside=1 </td><td> -- the estimated object has nearest neighbors in the reference set<br>\r\n</td></tr>";
-	cmd += "<tr><td>&nbsp;&nbsp;&nbsp;&nbsp; and nnCount>95  </td><td> -- note that zErr=-1000 indicates unreliable redshift estimate,<br>\r\n</td></tr>";
-	cmd += "<tr><td>&nbsp;&nbsp;&nbsp;&nbsp; and zErr BETWEEN 0 and 0.03   </td><td> -- that's why the lower bound on zErr is needed<br>\r\n</td></tr>";
+    cmd += "<tr><td>&nbsp;&nbsp;&nbsp;&nbsp; and photoErrorClass=1 </td><td> -- the estimated object has low photometric errors, and enough nearest<br>\r\n</td></tr>";
+    cmd += "<tr><td>&nbsp;&nbsp;&nbsp;&nbsp; and nnCount>95  </td><td> -- neighbors in the reference set; note that zErr=-9999 indicates an<br>\r\n</td></tr>";
+    cmd += "<tr><td>&nbsp;&nbsp;&nbsp;&nbsp; and zErr BETWEEN 0 and 0.03   </td><td> -- unreliable redshift estimate, hence the lower bound on zErr<br>\r\n</td></tr>";
 	cmd += "<tr><td colspan=2><br>\r\n";
 	cmd2 = "-- A simple luminosity function with the same selection criteria as above<br>\r\n";
 	cmd2 += "-- Returns a histogram of absolute magnitudes for the given redshift range.<br>\r\n";
@@ -1264,7 +1264,7 @@ Some hints on searching SkyServer:</p>
 	cmd2 += "FROM <a href=\""+url+"/help/browser/browser.aspx?cmd=description+Photoz+U\">Photoz</a><br>\r\n";
 	cmd2 += "WHERE<br>\r\n";
 	cmd2 += "&nbsp;&nbsp;&nbsp;&nbsp; z BETWEEN 0.4 and 0.5<br>\r\n";
-	cmd2 += "&nbsp;&nbsp;&nbsp;&nbsp; and nnIsInside=1 and nnCount>95<br>\r\n";
+    cmd2 += "&nbsp;&nbsp;&nbsp;&nbsp; and photoErrorClass=1 and nnCount>95<br>\r\n";
 	cmd2 += "&nbsp;&nbsp;&nbsp;&nbsp; and  zErr BETWEEN 0 and 0.03<br>\r\n";
 	cmd2 += "group by round(absMagR,1)<br>\r\n";
 	cmd2 += "order by round(absMagR,1)<br>\r\n";
