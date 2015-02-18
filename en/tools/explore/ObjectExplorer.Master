@@ -76,7 +76,7 @@
                         { 
                         %>
 		                        <tr><td class="s" align="right"><a target="_top" href="<%= hrefs.PhotoZ %>" title="Photometric redshift for this object (from the Photoz table), if it exists.">PhotoZ</a></td></tr>
-                                <tr><td class="s" align="right"><a target="_top" href="<%= hrefs.PhotozRF %>" title="Random forest calculated phhotometric redshift for this object (from the PhotozRF table), if it exists.">PhotozRF</a></td></tr>
+                                <%--<tr><td class="s" align="right"><a target="_top" href="<%= hrefs.PhotozRF %>" title="Random forest calculated phhotometric redshift for this object (from the PhotozRF table), if it exists.">PhotozRF</a></td></tr>--%>
                         <% 
                         }
                         %>

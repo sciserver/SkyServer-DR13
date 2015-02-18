@@ -77,7 +77,7 @@ namespace SkyServer.Tools.Explore
             if (globals.ReleaseNumber > 4)
             {
                 hrefs.PhotoZ = "DisplayResults.aspx?&name=photoZ&" + allId;
-                hrefs.PhotozRF = "DisplayResults.aspx?&name=photozRF&" + allId;
+               // hrefs.PhotozRF = "DisplayResults.aspx?&name=photozRF&" + allId;
             }
 
             hrefs.Matches = "matches.aspx?"+allId;

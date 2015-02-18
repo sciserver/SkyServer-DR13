@@ -50,7 +50,7 @@ namespace SkyServer.Tools.Explore
 
         //--- PhotoZ, photoZRF
         protected string photoZ_KD;//33
-        protected string photoZ_RF;//34
+        //protected string photoZ_RF;//34
         protected string galaxyZoo_Morph;//35
 
         protected string mjdDate = "";
@@ -142,7 +142,7 @@ namespace SkyServer.Tools.Explore
                         ////--- PhotoZ, photoZRF
                         photoZ_KD = reader["photoZ_KD"] is DBNull ? " - " : (string)reader["photoZ_KD"];
 
-                        photoZ_RF = reader["photoZ_KD"] is DBNull ? " - " : (string)reader["photoZ_RF"];
+                        //photoZ_RF = reader["photoZ_KD"] is DBNull ? " - " : (string)reader["photoZ_RF"];
 
                         galaxyZoo_Morph = reader["photoZ_KD"] is DBNull ? " - " : (string)reader["galaxyZoo_Morph"];
                     }

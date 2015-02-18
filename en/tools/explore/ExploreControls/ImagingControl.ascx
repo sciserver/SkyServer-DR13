@@ -103,13 +103,13 @@
                 <tr>
                     <td align='middle' class='h'><span title="unit=<%=columnUnit.Get("mjd") %>" >Mjd-Date</span></td>
                     <td align='middle' class='h'><span title="unit=<%=columnUnit.Get("z") %>" >photoZ (KD-tree method)</span></td>
-                    <td align='middle' class='h'><span title="unit=<%=columnUnit.Get("z") %>" >photoZ (RF method)</span></td>
+                    <%--<td align='middle' class='h'><span title="unit=<%=columnUnit.Get("z") %>" >photoZ (RF method)</span></td>--%>
                     <td align='middle' class='h'><span>Galaxy Zoo 1 morphology</span></td>
                 </tr>
                 <tr>
                     <td nowrap align='middle' class='t'><%=mjdDate %></td>
                     <td nowrap align='middle' class='t'><%=photoZ_KD %></td>
-                    <td nowrap align='middle' class='t'><%=photoZ_RF %></td>
+                    <%--<td nowrap align='middle' class='t'><%=photoZ_RF %></td>--%>
                     <td nowrap align='middle' class='t'><%=galaxyZoo_Morph %></td>
                 </tr>
             </table>                            
@@ -117,4 +117,5 @@
         </tr>
      </table>
    </div>   
-  <%--  <!-- end of imaging div  -->--%><%} %>
+  <%--  <!-- end of imaging div  -->--%>
+<%} %>
