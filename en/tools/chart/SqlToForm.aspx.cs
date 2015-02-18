@@ -9,7 +9,7 @@ namespace SkyServer.Tools.Chart
 {
     public partial class SqlToForm : System.Web.UI.Page
     {
-        protected string url;
+        //protected string url;
         protected string suburl;
         protected string prturl;
         protected string query;
@@ -19,11 +19,12 @@ namespace SkyServer.Tools.Chart
         protected void Page_Load(object sender, EventArgs e)
         {
             master = (ListBase)Page.Master;
-            url = master.getURL();
+            //url = master.getURL();
+
             suburl = "list.aspx";
             prturl = "printlist.aspx";
             query = "f_sql.aspx";
-            caller = url + "list.aspx";
+            caller = ResolveUrl("list.aspx");
         }
     }
 }

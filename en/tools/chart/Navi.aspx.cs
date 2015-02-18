@@ -28,7 +28,8 @@ namespace SkyServer.Tools.Chart
         protected void Page_Load(object sender, EventArgs e)
         {
             globals = (Globals)Application[Globals.PROPERTY_NAME];
-            url = getURL();
+            //url = getURL();
+            url = ResolveUrl("~");
             ra = globals.VisualRA;
             dec = globals.VisualDec;
             qscale = globals.VisualScale;
@@ -59,7 +60,7 @@ namespace SkyServer.Tools.Chart
             s += "\t\t\t</span></td></tr></table>\n\t\t</td>\n</tr>\n";
             Response.Write(s);
         }
-
+        /*
         string getURL()
         {
             string host = Request.ServerVariables["SERVER_NAME"];
@@ -80,5 +81,6 @@ namespace SkyServer.Tools.Chart
             }
             return root;
         }
+        */
     }
 }

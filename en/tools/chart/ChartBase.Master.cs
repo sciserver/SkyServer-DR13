@@ -28,7 +28,8 @@ namespace SkyServer.Tools.Chart
         protected void Page_Load(object sender, EventArgs e)
         {
             globals = (Globals)Application[Globals.PROPERTY_NAME];
-            url = getURL();
+            //url = getURL();
+            url = ResolveUrl("~");
             ra = globals.VisualRA;
             dec = globals.VisualDec;
             qscale = globals.VisualScale;
@@ -48,6 +49,7 @@ namespace SkyServer.Tools.Chart
             }	
         }
 
+        /*
         string getURL()
         {
             string host = Request.ServerVariables["SERVER_NAME"];
@@ -68,7 +70,8 @@ namespace SkyServer.Tools.Chart
             }
             return root;
         }
-        
+        */
+
         protected void drawFormBox(string label,string name,string value,string change,string unit,string tooltip) 
         {
 		    string s = "<tr>\n\t<td><span  ONMOUSEOVER=\"this.T_TEMP='3000';this.T_WIDTH='180';return escape('"+tooltip+"')\">"+label+"</span></td>\n";
