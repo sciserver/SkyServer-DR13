@@ -236,7 +236,7 @@ namespace SkyServer.Tools.QuickLook
         {
             /*
                 This function displays *only* the spectral data required by the 'Quick Look' interface.
-                Only specClass, Redshift (z), and zConf will ever be sent to this function.
+                Only class, Redshift (z), and zConf will ever be sent to this function.
                 The function includes specialized formatting to work with those data.
 	
                     -Jordan Raddick, 9/17/07
@@ -267,7 +267,7 @@ namespace SkyServer.Tools.QuickLook
                         short fiberid = reader.GetInt16(4);
 
 
-                        var spectrumlink = "http://dr9.sdss3.org/spectrumDetail?plateid=" + plate + "&mjd=" + mjd + "&fiber=" + fiberid;
+                        var spectrumlink = globals.DasUrlBase + "spectrumDetail?plateid=" + plate + "&mjd=" + mjd + "&fiber=" + fiberid;
 
                         Response.Write("<h3><a href='" + spectrumlink + "' target='_blank' class='content'>Interactive spectrum<img src='../../images/new_window_black.png' alt=' (new window)' /></a></h3>");
                         Response.Write("<p><b>" + reader.GetName(0) + ":</b> " + reader.GetName(0) + "</p>");
@@ -289,10 +289,7 @@ namespace SkyServer.Tools.QuickLook
 
                         //if zConf > 0.35, print a caution message
 
-
-
-                        var csvlink = "http://dr9.sdss3.org/dr9-cgi/getSpectra/csv?plateid=" + plate + "&mjd=" + mjd + "&fiber=" + fiberid;
-
+                        var csvlink = globals.DasUrlBase + "csvSpectrum?plateid=" + plate + "&mjd=" + mjd + "&fiber=" + fiberid + "&reduction2d=v5_7_0";
 
                         Response.Write("<a href='" + csvlink + "' target='_blank' class='content'><h3>Get spectrum as CSV</a>");
 

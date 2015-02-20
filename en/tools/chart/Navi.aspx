@@ -289,9 +289,9 @@
 
 <td id='main' valign="top">
 <!--This Contains Canvas-->
-        <div name="toggeleImage" id="mtoggle">  <b> Select Image Source :  </b>
-        <input type="radio" class="imgsource" name="rad" id="sdss"  value="sdss" checked="checked" onclick="setImageSource(this,'Z')"/>SDSS
-        <input type="radio" class="imgsource" name="rad" id="twomass" value="twomass" onclick="setImageSource(this,'X')" />2MASS
+        <div name="toggeleImage" id="mtoggle">  <span class='snavi'><b> Select Image Source :  </b></span>
+        <input type="radio" name="rad" id="sdss"  value="sdss" checked="checked" onclick="setImageSource(this,'Z')"/><span class='s'>SDSS</span>
+        <input type="radio" name="rad" id="twomass" value="twomass" onclick="setImageSource(this,'X')" /><span class='s'>2MASS</span>
             
             <br />            
         </div>

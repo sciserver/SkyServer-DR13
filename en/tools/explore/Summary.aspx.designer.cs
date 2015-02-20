@@ -11,5 +11,50 @@ namespace SkyServer.Tools.Explore {
     
     
     public partial class Summary {
+        
+        /// <summary>
+        /// MetadataParameters1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SkyServer.Tools.Explore.MetaDataControl MetadataParameters1;
+        
+        /// <summary>
+        /// ImagingParameters1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SkyServer.Tools.Explore.ImagingControl ImagingParameters1;
+        
+        /// <summary>
+        /// CrossId1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SkyServer.Tools.Explore.CrossIdControls CrossId1;
+        
+        /// <summary>
+        /// SpectralControl1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SkyServer.Tools.Explore.SpectralControl SpectralControl1;
+        
+        /// <summary>
+        /// ApogeeControl1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SkyServer.Tools.Explore.ApogeeControl ApogeeControl1;
     }
 }

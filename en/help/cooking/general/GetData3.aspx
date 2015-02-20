@@ -81,8 +81,10 @@
       
   <li><p>If you would rather use SQL to search by position, write your query so that it uses one of the position functions, 
          either <span class="sml">dbo.fGetNearbyObjEq(ra,dec,radius)</span> or <span class="sml">dbo.fGetObjFromRect(ra1,ra2,dec1,dec2)</span>. 
-         Specify the function in the FROM block, and be sure to check that the object IDs are the same in the WHERE block. So here is 
-         a query to search a radial patch of sky, returning IDs and positions (click <b>Submit</b> to run):</p></li>
+         Specify the table containing the data you want in the FROM block, and the function in the JOIN...ON block, joining on 
+         photoObj.objID = dbo.fGetNearbyObjEq(ra,dec,radius).objID (for photometric data) or 
+         specObj.bestObjID = dbo.fGetNearbyObjEq(ra,dec,radius).objID (for spectroscopic data). So here is 
+         a query to search a radial patch of sky, returning IDs and positions (click <b>Submit</b> to run):</p></li>dbo.fGetNearbyObjEq(ra,dec,radius).objID
 </ol>
 
 <!--<table class="code" width="100%">
@@ -100,7 +102,8 @@
 
 	<%	
 	    string query = "SELECT p.objid, p.ra, p.dec\n";
-	    query += "FROM PhotoObj p, dbo.fGetNearbyObjEq(180,0.2,5) n\n";
+	    query += "FROM PhotoObj p\n";
+        query += "JOIN dbo.fGetNearbyObjEq(180,0.2,5) n ON n.objID = p.objID\n";
 	    query += "WHERE n.objID = p.objID"; 
 	    /*query = "QUERY FROM MAIN BODY"; */
 	   	ResponseAux.sqlform(0,query,url,Response); 	%>

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="../HelpMaster.master" AutoEventWireup="true" CodeBehind="API.aspx.cs" Inherits="SkyServer.Help.Docs.API" %>
+﻿<%@ Page Title="SkyServer: Application Programming Interface" Language="C#" MasterPageFile="../HelpMaster.master" AutoEventWireup="true" CodeBehind="API.aspx.cs" Inherits="SkyServer.Help.Docs.API" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HelpContent" runat="server">
 <div id="title">API: Programmer's Interface</div>
 <div id="transp">
@@ -270,6 +270,7 @@ Basically you must post to the server a field called "paste" which contains the 
 &lt;input name=format value="xml"  type=radio class="box"&gt;
 &lt;input name=format value="csv"  type=radio class="box"&gt;
 &lt;input TYPE="reset" VALUE="Reset " class="button" id="reset" name="reset"&gt;
+&lt;/FORM&gt;
 </pre>
 
 	</td></tr>

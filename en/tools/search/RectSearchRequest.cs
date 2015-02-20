@@ -143,7 +143,7 @@ namespace SkyServer.Tools.Search
 
             if (format == "html")
             {
-                sql += " ''<a target=INFO href=" + url + "/tools/explore/obj.aspx?id='' + cast(p.objId as varchar(20)) + ''>'' + cast(p.objId as varchar(20)) + ''</a>'' as objID,\n";
+                sql += " ''<a target=INFO href=" + url + "/tools/explore/obj.aspx?id='' + cast(p.objId as varchar(MAX)) + ''>'' + cast(p.objId as varchar(MAX)) + ''</a>'' as objID,\n";
             }
             else
             {
@@ -181,7 +181,7 @@ namespace SkyServer.Tools.Search
 
             if (format == "html")
             {
-                sql += " ''<a target=INFO href=" + url + "/tools/explore/summary.aspx?apid='' + cast(p.apstar_id as varchar(40)) + ''>'' + cast(p.apstar_id as varchar(40)) + ''</a>'' as apstar_id,\n";
+                sql += " ''<a target=INFO href=" + url + "/tools/explore/summary.aspx?apid='' + cast(p.apstar_id as varchar(MAX)) + ''>'' + cast(p.apstar_id as varchar(MAX)) + ''</a>'' as apstar_id,\n";
             }
             else
             {
@@ -189,12 +189,13 @@ namespace SkyServer.Tools.Search
             }
             sql += "   p.apogee_id,p.ra, p.dec, p.glon, p.glat,\n";
             sql += "   p.vhelio_avg,p.vscatter,\n";
-            sql += "   a.teff,a.logg,a.metals\n";
+            sql += "   a.teff,a.logg,a.param_m_h\n";
             sql += "   FROM apogeeStar p\n";
             sql += "   JOIN aspcapStar a on a.apstar_id = p.apstar_id\n";
             sql += "   WHERE ra BETWEEN " + min_ra + " AND " + max_ra + "\n";
             sql += "   AND dec BETWEEN " + min_dec + " AND " + max_dec + "\n";
 
+            /*
             int ccount = 1;
 
             if (check_u == "u")
@@ -207,6 +208,7 @@ namespace SkyServer.Tools.Search
                 sql += Utilities.ccut("i", ccount++, min_i, max_i);
             if (check_z == "z")
                 sql += Utilities.ccut("z", ccount++, min_z, max_z);
+            */
 
             this.irQuery = sql;
         }

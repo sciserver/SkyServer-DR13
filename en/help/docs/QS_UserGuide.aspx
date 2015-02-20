@@ -259,7 +259,7 @@ you want returned from your query?
         <p>
 The options are:
 <%
-    showEnumQS(oConn, "specClass");
+    showEnumQS(oConn, "class");
 %>
 
         <hr>

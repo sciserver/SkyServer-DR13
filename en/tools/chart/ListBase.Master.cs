@@ -58,8 +58,8 @@ namespace SkyServer.Tools.Chart
         protected void Page_Load(object sender, EventArgs e)
         {
             globals = (Globals)Application[Globals.PROPERTY_NAME];
-            url = getURL();
-
+            //url = getURL();
+            url = ResolveUrl("~");
             string key;
             for (var i = 0; i < Request.Params.Keys.Count; i++)
             {
@@ -73,6 +73,7 @@ namespace SkyServer.Tools.Chart
             }
         }
 
+        /*
         public string getURL()
         {
             string host = Request.ServerVariables["SERVER_NAME"];
@@ -93,6 +94,7 @@ namespace SkyServer.Tools.Chart
             }
             return root;
         }
+        */
 
         protected void drawFormBox(string label, string name, string value, string change, string unit, string tooltip)
         {

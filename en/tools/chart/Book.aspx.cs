@@ -335,12 +335,11 @@ namespace SkyServer.Tools.Chart
             {
                 try
                 {
-                    /// to remove ' from the 'id' string
-                    long t = long.Parse(temp[0].Substring(1, temp[i].Length-2));
-                    tlist.Add(temp[i]);                    
+                    // to remove ' from the 'id' string
+                    tlist.Add(temp[i].Replace("\'",""));                    
                 }
                 catch (Exception e) {
-                    //objids += "";
+                    // objids += "";
                 }
             }
             string objids = "";

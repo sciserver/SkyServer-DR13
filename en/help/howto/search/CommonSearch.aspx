@@ -29,18 +29,18 @@
       and over again in your queries. Click on the table name to see some of the 
       most common data entries in that table (links open in new windows).</p>
       
-      <p><a href="#top" onclick="javascript:popup('photoobj.aspx','sidebar',650,790)">
+      <p><a href="#top" onclick="javascript:popup('photoobj.html','sidebar',650,790)">
       PhotoObj</a> - stores information about the images of 
       every object, including run, rerun, camcol, field, ra, dec, magnitudes and 
       object flags.</p>
       <p><a href="#top" 
-      onclick="javascript:popup('platex.aspx','sidebar',650,440)">
+      onclick="javascript:popup('platex.html','sidebar',650,440)">
       PlateX</a> - stores information on the aluminum plates that the SDSS 
       uses to take spectra, including their exposure times and reddening 
       information. You will need to find the Plate and MJD in this table to 
       look up an object's spectrum in the Get Spectra tool.</p>
       <p><a href="#top" 
-      onclick="javascript:popup('specobj.aspx','sidebar',650,650)">
+      onclick="javascript:popup('specobj.html','sidebar',650,650)">
       SpecObj</a> - stores information on objects' spectra, 
       including redshifts and spectroscopic classifications.</p>
       

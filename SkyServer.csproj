@@ -47,8 +47,17 @@
       <HintPath>lib\CSharpFITS_v1.1.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>lib\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Newtonsoft.Json.6.0.6\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleRESTServices">
+      <HintPath>packages\SimpleRESTServices.1.3.0.1\lib\net40\SimpleRESTServices.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Windows\Microsoft.NET\Framework64\v4.0.30319\System.Net.Http.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -884,8 +893,41 @@
     <Content Include="en\proj\basic\scavenger\ScavengerHunt.aspx" />
     <Content Include="en\proj\basic\scavenger\Spectra.aspx" />
     <Content Include="en\proj\basic\scavenger\Times.aspx" />
+    <Content Include="en\proj\basic\solarsystem\coordinates\coordinates.aspx" />
+    <Content Include="en\proj\basic\solarsystem\coordinates\default.aspx" />
+    <Content Include="en\proj\basic\solarsystem\coordinates\images\antarctica.jpg" />
+    <Content Include="en\proj\basic\solarsystem\coordinates\images\earth.jpg" />
+    <Content Include="en\proj\basic\solarsystem\coordinates\images\graph.jpg" />
+    <Content Include="en\proj\basic\solarsystem\coordinates\images\orion.jpg" />
+    <Content Include="en\proj\basic\solarsystem\coordinates\images\sky.jpg" />
+    <Content Include="en\proj\basic\solarsystem\coordinates\mapsandglobes.aspx" />
+    <Content Include="en\proj\basic\solarsystem\coordinates\radec.aspx" />
+    <Content Include="en\proj\basic\solarsystem\coordinates\skycoordinates.aspx" />
     <Content Include="en\proj\basic\solarsystem\Default.aspx" />
-    <Content Include="en\proj\basic\solarsystem\SolarHome.aspx" />
+    <Content Include="en\proj\basic\solarsystem\earthsun\conclusion.aspx" />
+    <Content Include="en\proj\basic\solarsystem\earthsun\default.aspx" />
+    <Content Include="en\proj\basic\solarsystem\earthsun\images\North_season.jpg" />
+    <Content Include="en\proj\basic\solarsystem\earthsun\images\sun.jpg" />
+    <Content Include="en\proj\basic\solarsystem\earthsun\seasons.aspx" />
+    <Content Include="en\proj\basic\solarsystem\earthsun\sun.aspx" />
+    <Content Include="en\proj\basic\solarsystem\images\home.gif" />
+    <Content Include="en\proj\basic\solarsystem\images\logo_ms.jpg" />
+    <Content Include="en\proj\basic\solarsystem\images\next.jpg" />
+    <Content Include="en\proj\basic\solarsystem\images\previous.jpg" />
+    <Content Include="en\proj\basic\solarsystem\images\solar_sys2.jpg" />
+    <Content Include="en\proj\basic\solarsystem\mapping\asteroids.aspx" />
+    <Content Include="en\proj\basic\solarsystem\mapping\default.aspx" />
+    <Content Include="en\proj\basic\solarsystem\mapping\graphs.aspx" />
+    <Content Include="en\proj\basic\solarsystem\mapping\images\graph.jpg" />
+    <Content Include="en\proj\basic\solarsystem\mapping\images\jupiter.gif" />
+    <Content Include="en\proj\basic\solarsystem\mapping\images\radectemplate.jpg" />
+    <Content Include="en\proj\basic\solarsystem\mapping\images\radectemplate3.png" />
+    <Content Include="en\proj\basic\solarsystem\mapping\planets.aspx" />
+    <Content Include="en\proj\basic\solarsystem\mapping\sept22.aspx" />
+    <Content Include="en\proj\basic\solarsystem\mapping\shape.aspx" />
+    <Content Include="en\proj\basic\solarsystem\Query.aspx" />
+    <Content Include="en\proj\basic\solarsystem\Results.aspx" />
+    <Content Include="en\proj\basic\solarsystem\SolarSystemHome.aspx" />
     <Content Include="en\proj\basic\spectraltypes\Absorption.aspx" />
     <Content Include="en\proj\basic\spectraltypes\Absorption2.aspx" />
     <Content Include="en\proj\basic\spectraltypes\Connection.aspx" />
@@ -1716,7 +1758,13 @@
     <Content Include="en\tools\Default.aspx" />
     <Content Include="en\tools\explore\AllSpec.aspx" />
     <Content Include="en\tools\explore\Default.aspx" />
-    <Content Include="en\tools\explore\Ex_SQL.aspx" />
+    <Content Include="en\tools\explore\DisplayResults.aspx" />
+    <Content Include="en\tools\explore\ExploreControls\ApogeeControl.ascx" />
+    <Content Include="en\tools\explore\ExploreControls\CrossIdControls.ascx" />
+    <Content Include="en\tools\explore\ExploreControls\ImagingControl.ascx" />
+    <Content Include="en\tools\explore\ExploreControls\MetaDataControl.ascx" />
+    <Content Include="en\tools\explore\ExploreControls\SpectralControl.ascx" />
+    <Content Include="en\tools\explore\ExploreError.aspx" />
     <Content Include="en\tools\explore\FitsImg.aspx" />
     <Content Include="en\tools\explore\FitsSpec.aspx" />
     <Content Include="en\tools\explore\galaxyzoo.aspx" />
@@ -1730,11 +1778,12 @@
     <Content Include="en\tools\explore\images\sdsslogo-tiny.jpg" />
     <Content Include="en\tools\explore\images\sdss_logo_tiny.jpg" />
     <Content Include="en\tools\explore\images\square.gif" />
+    <Content Include="en\tools\explore\javascript\apogee.js" />
+    <Content Include="en\tools\explore\javascript\master.js" />
     <Content Include="en\tools\explore\Matches.aspx" />
     <Content Include="en\tools\explore\Neighbors.aspx" />
+    <Content Include="en\tools\explore\javascript\explore.js" />
     <Content Include="en\tools\explore\Obj.aspx" />
-    <Content Include="en\tools\explore\PhotoZ.aspx" />
-    <Content Include="en\tools\explore\PhotozRF.aspx" />
     <Content Include="en\tools\explore\Plate.aspx" />
     <Content Include="en\tools\explore\Search.aspx" />
     <Content Include="en\tools\explore\SetEq.aspx" />
@@ -3889,12 +3938,128 @@
     <Compile Include="en\proj\basic\scavenger\Times.aspx.designer.cs">
       <DependentUpon>Times.aspx</DependentUpon>
     </Compile>
-    <Compile Include="en\proj\basic\solarsystem\SolarHome.aspx.cs">
-      <DependentUpon>SolarHome.aspx</DependentUpon>
+    <Compile Include="en\proj\basic\solarsystem\coordinates\coordinates.aspx.cs">
+      <DependentUpon>coordinates.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="en\proj\basic\solarsystem\SolarHome.aspx.designer.cs">
-      <DependentUpon>SolarHome.aspx</DependentUpon>
+    <Compile Include="en\proj\basic\solarsystem\coordinates\coordinates.aspx.designer.cs">
+      <DependentUpon>coordinates.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\coordinates\default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\coordinates\default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\coordinates\mapsandglobes.aspx.cs">
+      <DependentUpon>mapsandglobes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\coordinates\radec.aspx.cs">
+      <DependentUpon>radec.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\coordinates\radec.aspx.designer.cs">
+      <DependentUpon>radec.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\coordinates\skycoordinates.aspx.cs">
+      <DependentUpon>skycoordinates.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\coordinates\skycoordinates.aspx.designer.cs">
+      <DependentUpon>skycoordinates.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\earthsun\conclusion.aspx.cs">
+      <DependentUpon>conclusion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\earthsun\conclusion.aspx.designer.cs">
+      <DependentUpon>conclusion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\earthsun\default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\earthsun\default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\earthsun\seasons.aspx.cs">
+      <DependentUpon>seasons.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\earthsun\seasons.aspx.designer.cs">
+      <DependentUpon>seasons.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\earthsun\sun.aspx.cs">
+      <DependentUpon>sun.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\earthsun\sun.aspx.designer.cs">
+      <DependentUpon>sun.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\mapping\asteroids.aspx.cs">
+      <DependentUpon>asteroids.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\mapping\asteroids.aspx.designer.cs">
+      <DependentUpon>asteroids.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\mapping\default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\mapping\default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\mapping\graphs.aspx.cs">
+      <DependentUpon>graphs.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\mapping\graphs.aspx.designer.cs">
+      <DependentUpon>graphs.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\mapping\planets.aspx.cs">
+      <DependentUpon>planets.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\mapping\planets.aspx.designer.cs">
+      <DependentUpon>planets.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\mapping\sept22.aspx.cs">
+      <DependentUpon>sept22.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\mapping\sept22.aspx.designer.cs">
+      <DependentUpon>sept22.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\mapping\shape.aspx.cs">
+      <DependentUpon>shape.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\mapping\shape.aspx.designer.cs">
+      <DependentUpon>shape.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\Query.aspx.cs">
+      <DependentUpon>Query.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\Query.aspx.designer.cs">
+      <DependentUpon>Query.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\SolarSystemHome.aspx.cs">
+      <DependentUpon>SolarSystemHome.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\SolarSystemHome.aspx.designer.cs">
+      <DependentUpon>SolarSystemHome.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\SolarSystemMaster.Master.cs">
+      <DependentUpon>SolarSystemMaster.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\proj\basic\solarsystem\SolarSystemMaster.Master.designer.cs">
+      <DependentUpon>SolarSystemMaster.Master</DependentUpon>
     </Compile>
     <Compile Include="en\proj\basic\spectraltypes\Absorption.aspx.cs">
       <DependentUpon>Absorption.aspx</DependentUpon>
@@ -5415,12 +5580,81 @@
     <Compile Include="en\tools\crossid\X_CrossId.aspx.designer.cs">
       <DependentUpon>X_CrossId.aspx</DependentUpon>
     </Compile>
+    <Compile Include="en\tools\explore\DisplayResults.aspx.cs">
+      <DependentUpon>DisplayResults.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\tools\explore\DisplayResults.aspx.designer.cs">
+      <DependentUpon>DisplayResults.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\tools\explore\ExploreControls\ApogeeControl.ascx.cs">
+      <DependentUpon>ApogeeControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\tools\explore\ExploreControls\ApogeeControl.ascx.designer.cs">
+      <DependentUpon>ApogeeControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="en\tools\explore\ExploreControls\CrossIdControls.ascx.cs">
+      <DependentUpon>CrossIdControls.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\tools\explore\ExploreControls\CrossIdControls.ascx.designer.cs">
+      <DependentUpon>CrossIdControls.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="en\tools\explore\ExploreControls\ImagingControl.ascx.cs">
+      <DependentUpon>ImagingControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\tools\explore\ExploreControls\ImagingControl.ascx.designer.cs">
+      <DependentUpon>ImagingControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="en\tools\explore\ExploreControls\MetaDataControl.ascx.cs">
+      <DependentUpon>MetaDataControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\tools\explore\ExploreControls\MetaDataControl.ascx.designer.cs">
+      <DependentUpon>MetaDataControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="en\tools\explore\ExploreControls\SpectralControl.ascx.cs">
+      <DependentUpon>SpectralControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\tools\explore\ExploreControls\SpectralControl.ascx.designer.cs">
+      <DependentUpon>SpectralControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="en\tools\explore\ExploreError.aspx.cs">
+      <DependentUpon>ExploreError.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\tools\explore\ExploreError.aspx.designer.cs">
+      <DependentUpon>ExploreError.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\tools\explore\ExploreHelpers\ApogeeVisit.cs" />
+    <Compile Include="en\tools\explore\ExploreHelpers\ExceptionUtility.cs" />
+    <Compile Include="en\tools\explore\ExploreHelpers\HelperFunctions.cs" />
+    <Compile Include="en\tools\explore\ExploreHelpers\ObjectInfo.cs" />
     <Compile Include="en\tools\explore\galaxyzoo.aspx.cs">
       <DependentUpon>galaxyzoo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="en\tools\explore\galaxyzoo.aspx.designer.cs">
       <DependentUpon>galaxyzoo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\tools\explore\ExploreHelpers\ExplorerQueries.cs" />
+    <Compile Include="en\tools\explore\ExploreHelpers\RunQuery.cs" />
+    <Compile Include="en\tools\explore\Obj.aspx.cs">
+      <DependentUpon>Obj.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\tools\explore\Obj.aspx.designer.cs">
+      <DependentUpon>Obj.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\tools\explore\ObjectExplorer.Master.cs">
+      <DependentUpon>ObjectExplorer.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\tools\explore\ObjectExplorer.Master.designer.cs">
+      <DependentUpon>ObjectExplorer.Master</DependentUpon>
     </Compile>
     <Compile Include="en\tools\explore\parameters.aspx.cs">
       <DependentUpon>parameters.aspx</DependentUpon>
@@ -5429,12 +5663,12 @@
     <Compile Include="en\tools\explore\parameters.aspx.designer.cs">
       <DependentUpon>parameters.aspx</DependentUpon>
     </Compile>
-    <Compile Include="en\tools\explore\PhotozRF.aspx.cs">
-      <DependentUpon>PhotozRF.aspx</DependentUpon>
+    <Compile Include="en\tools\explore\Plate.aspx.cs">
+      <DependentUpon>Plate.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="en\tools\explore\PhotozRF.aspx.designer.cs">
-      <DependentUpon>PhotozRF.aspx</DependentUpon>
+    <Compile Include="en\tools\explore\Plate.aspx.designer.cs">
+      <DependentUpon>Plate.aspx</DependentUpon>
     </Compile>
     <Compile Include="en\tools\getimg\Fields.aspx.cs">
       <DependentUpon>Fields.aspx</DependentUpon>
@@ -5831,13 +6065,6 @@
     <Compile Include="en\tools\explore\AllSpec.aspx.designer.cs">
       <DependentUpon>AllSpec.aspx</DependentUpon>
     </Compile>
-    <Compile Include="en\tools\explore\Ex_SQL.aspx.cs">
-      <DependentUpon>Ex_SQL.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="en\tools\explore\Ex_SQL.aspx.designer.cs">
-      <DependentUpon>Ex_SQL.aspx</DependentUpon>
-    </Compile>
     <Compile Include="en\tools\explore\FitsImg.aspx.cs">
       <DependentUpon>FitsImg.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -5855,7 +6082,7 @@
     <Compile Include="misc\net.ivoa.data\DataSetWrapper.cs" />
     <Compile Include="misc\net.ivoa.data\DataWrapper.cs" />
     <Compile Include="misc\Functions.cs" />
-    <Compile Include="en\tools\explore\HRefs.cs" />
+    <Compile Include="en\tools\explore\ExploreHelpers\HRefs.cs" />
     <Compile Include="en\tools\explore\Matches.aspx.cs">
       <DependentUpon>Matches.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -5869,34 +6096,6 @@
     </Compile>
     <Compile Include="en\tools\explore\Neighbors.aspx.designer.cs">
       <DependentUpon>Neighbors.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="en\tools\explore\Obj.aspx.cs">
-      <DependentUpon>Obj.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="en\tools\explore\Obj.aspx.designer.cs">
-      <DependentUpon>Obj.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="en\tools\explore\ObjectExplorer.Master.cs">
-      <DependentUpon>ObjectExplorer.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="en\tools\explore\ObjectExplorer.Master.designer.cs">
-      <DependentUpon>ObjectExplorer.Master</DependentUpon>
-    </Compile>
-    <Compile Include="en\tools\explore\PhotoZ.aspx.cs">
-      <DependentUpon>PhotoZ.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="en\tools\explore\PhotoZ.aspx.designer.cs">
-      <DependentUpon>PhotoZ.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="en\tools\explore\Plate.aspx.cs">
-      <DependentUpon>Plate.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="en\tools\explore\Plate.aspx.designer.cs">
-      <DependentUpon>Plate.aspx</DependentUpon>
     </Compile>
     <Compile Include="en\tools\explore\Search.aspx.cs">
       <DependentUpon>Search.aspx</DependentUpon>
@@ -6072,6 +6271,11 @@
     <None Include="en\proj\basic\scavenger\scavenger.pdf" />
     <Content Include="en\proj\basic\universe\UniverseMaster.master" />
     <Content Include="en\proj\basic\spectraltypes\SpectralTypesMaster.master" />
+    <None Include="en\proj\basic\solarsystem\coordinates\stars.csv" />
+    <None Include="en\proj\basic\solarsystem\coordinates\stars.xls" />
+    <None Include="en\proj\basic\solarsystem\coordinates\stars_mac.xls" />
+    <None Include="en\proj\basic\solarsystem\mapping\asteroids.xls" />
+    <Content Include="en\proj\basic\solarsystem\SolarSystemMaster.Master" />
     <None Include="en\proj\basic\spectraltypes\pdf\7stars.pdf" />
     <None Include="en\proj\basic\spectraltypes\pdf\filled_example.pdf" />
     <None Include="en\proj\basic\universe\workbooks\explore1.xls" />
@@ -6205,6 +6409,7 @@
     <Content Include="en\skyserver\SkyServerMaster.master" />
     <Content Include="en\tools\Resolver.ashx" />
     <Content Include="en\skyserver\paper\SkyServer-ACM-SIGMOD-2002.pdf" />
+    <Content Include="en\tools\explore\ObjectExplorer.Master" />
     <None Include="en\tools\STARTBall\FlashJavascriptGateway\FlashJavascriptGateway\.DS_Store" />
     <None Include="en\tools\STARTBall\FlashJavascriptGateway\FlashJavascriptGateway\installation\.DS_Store" />
     <None Include="en\tools\STARTBall\FlashJavascriptGateway\FlashJavascriptGateway\source\flash\actionscript\com\macromedia\javascript\JavaScriptProxy.as" />
@@ -6216,13 +6421,11 @@
     <None Include="en\tools\STARTBall\images\crosshairs.psd" />
     <None Include="en\tools\STARTBall\images\crosshairsLayers.psd" />
     <None Include="en\tools\STARTBall\STARTBall.dcr" />
+    <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="en\tools\chart\ChartBase.Master" />
     <Content Include="en\tools\chart\ListBase.Master" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="en\tools\explore\ObjectExplorer.Master" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="en\tools\quicklook\QuickLook.Master" />
@@ -6242,17 +6445,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>6679</DevelopmentServerPort>
-          <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
-          <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
-          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>

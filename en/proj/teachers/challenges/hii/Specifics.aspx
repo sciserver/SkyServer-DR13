@@ -78,7 +78,7 @@
 	      <p>photoObj, specObj, plate</p>
           <p>where</p>
           <p>photoObj.objId = specObj.objID AND specObj.plateID = plate.plateID AND 
-          specObj.specClass = 2 and photoObj.u - photoObj.z < 2</p>
+          specObj.class = 2 and photoObj.u - photoObj.z < 2</p>
 
 		   </td>
 		 </tr>

@@ -342,7 +342,7 @@ namespace SkyServer.Tools.Search
             }
 
             //			next line selects quasars
-            if (objecttype.SelectedItem.Text.CompareTo("quasars") == 0) l.Add("(s.specclass = 3 or s.specclass = 4)");
+            if (objecttype.SelectedItem.Text.CompareTo("quasars") == 0) l.Add("(s.class = 3 or s.class = 4)");
 
             if (allorspectra.SelectedItem.Text.CompareTo("only objects with spectra") == 0)
             {

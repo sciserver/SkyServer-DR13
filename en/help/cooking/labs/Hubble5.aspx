@@ -48,10 +48,10 @@ looks like this:</p>
    <td>select top 1000 p.objid, p.ra, p.dec, p.u, p.g, p.r, p.i, p.z, s.z as redshift</td>
  </tr>
  <tr>
-   <td>from galaxy p, specobj s</td>
+   <td>from galaxy p</td>
  </tr>
  <tr>
-   <td>where p.objid=s.bestobjid</td>
+   <td>join specObj s on s.bestObjID = p.objID</td>
  </tr>
 </table>
 </li>

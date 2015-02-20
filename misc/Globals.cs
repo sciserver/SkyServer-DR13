@@ -33,6 +33,7 @@ namespace SkyServer
         private string epoHelp;
         private string helpdesk;
         private string smtp;
+        private string solarConnectionString;
 
         private string nDegrees;
         private string nObj;
@@ -61,6 +62,12 @@ namespace SkyServer
 
         private string apogeeSpectrumLink;
         private string apogeeFitsLink;
+
+
+        public string SolarConnectionString
+        {
+            get { return solarConnectionString; }
+        }
 
         public string UrlProjRegister
         {
@@ -336,7 +343,7 @@ namespace SkyServer
         public Globals()
         {
             var appSettings = System.Web.Configuration.WebConfigurationManager.AppSettings;
-
+            this.solarConnectionString = appSettings["solarConnectionString"];
             this.releaseNumber = int.Parse(appSettings["releaseNumber"]);
             //this.dbType = appSettings["dbType"];
             this.connectionString = appSettings["connectionString"];
@@ -397,7 +404,7 @@ namespace SkyServer
                 nObj = "360 million";
                 nStar = "180 million";
                 nGalaxy = "175 million"; //count from view galaxy
-                nQuasar = "121,363"; //specclass = 3 or 4
+                nQuasar = "121,363"; //class = 3 or 4
                 nSpec = "1,640,960";
                 nStarSpec = "464,301";
                 nStarNoSpec = "179 million"; //count from view star

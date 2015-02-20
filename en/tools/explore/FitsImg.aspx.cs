@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data.SqlClient;
+using System.Data;
 using SkyServer;
 
 namespace SkyServer.Tools.Explore
@@ -14,64 +14,41 @@ namespace SkyServer.Tools.Explore
         protected Globals globals;
         protected string[] hrefsCf;
         protected string fieldId;
+        protected RunQuery runQuery;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             globals = (Globals)Application[Globals.PROPERTY_NAME];
-            long? fieldId = Utilities.ParseId(Request.QueryString["fieldId"]);
+            runQuery = new RunQuery();
+            long? fieldId = Utilities.ParseId(Request.QueryString["field"]);
             if (fieldId.HasValue)
             {
-                using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
-                {
-                    oConn.Open();
-                    hrefsCf = getCFrame(oConn, fieldId.Value);
-                }
+               
+                hrefsCf = getCFrame(fieldId.Value);
+                
             }
         }
 
-        private string[] getCFrame(SqlConnection oConn, long fieldId)
+        private string[] getCFrame(long fieldId)
         {
             string[] result = null;
-            using (SqlCommand oCmd = oConn.CreateCommand())
+            string cmd = ExplorerQueries.fitsimg.Replace("@fieldId", fieldId.ToString());                
+            DataSet ds = runQuery.RunCasjobs(cmd);
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
-                string cmd = "select";
-                cmd += " dbo.fGetUrlFitsCFrame(" + fieldId + ",'u'),";
-                cmd += " dbo.fGetUrlFitsCFrame(" + fieldId + ",'g'),";
-                cmd += " dbo.fGetUrlFitsCFrame(" + fieldId + ",'r'),";
-                cmd += " dbo.fGetUrlFitsCFrame(" + fieldId + ",'i'),";
-                cmd += " dbo.fGetUrlFitsCFrame(" + fieldId + ",'z'),";
 
-                cmd += " dbo.fGetUrlFitsBin(" + fieldId + ",'u'),";
-                cmd += " dbo.fGetUrlFitsBin(" + fieldId + ",'g'),";
-                cmd += " dbo.fGetUrlFitsBin(" + fieldId + ",'r'),";
-                cmd += " dbo.fGetUrlFitsBin(" + fieldId + ",'i'),";
-                cmd += " dbo.fGetUrlFitsBin(" + fieldId + ",'z'),";
-
-                cmd += " dbo.fGetUrlFitsMask(" + fieldId + ",'u'),";
-                cmd += " dbo.fGetUrlFitsMask(" + fieldId + ",'g'),";
-                cmd += " dbo.fGetUrlFitsMask(" + fieldId + ",'r'),";
-                cmd += " dbo.fGetUrlFitsMask(" + fieldId + ",'i'),";
-                cmd += " dbo.fGetUrlFitsMask(" + fieldId + ",'z'),";
-
-                cmd += " dbo.fGetUrlFitsAtlas(" + fieldId + "),";
-                cmd += " dbo.fGetUrlFitsField(" + fieldId + ")";
-
-                oCmd.CommandText = cmd;
-                using (SqlDataReader reader = oCmd.ExecuteReader())
-                {
-
-                    if (reader.HasRows)
-                    {
+                    //if (reader.Read())
+                    //{
                         result = new string[reader.FieldCount];
                         while (reader.Read())
                         {
                             for (int i = 0; i < reader.FieldCount; i++)
                                 result[i] = reader.GetValue(i).ToString();
                         }
-                    }
-                } // using SqlDataReader
+                    //}
+             } // using DataReader
 
-            } // using SqlCommand
+            
             return result;
         }
     

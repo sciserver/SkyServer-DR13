@@ -22,7 +22,7 @@ IMG {
  .qsize {width: 78px;font-size:10pt;font-family:courier;}
  .aa    { color: #aaaaff; font-weight: bold; font-size:12pt;}
  .bb    { color: #aaaaff; font-weight: bold; font-size:10pt;}
-    
+.snavi     	{FONT-FAMILY: arial,helvetica,sans-serif;FONT-SIZE: 10pt;}    
 				
 				
   .title 	{FONT-FAMILY: arial,helvetica,sans-serif;FONT-SIZE: 14pt;
@@ -256,3 +256,11 @@ IMG {
     color:red;
     font-weight:bold;
 }
+
+
+
+.tooltip{
+    display: inline;
+    position: relative;
+}
+

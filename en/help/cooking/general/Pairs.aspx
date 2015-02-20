@@ -53,25 +53,19 @@ window), type the following query (or see it in the textbox at the bottom of thi
     <td></td>
   </tr>
   <tr>
-    <td>FROM PhotoTag   P1,				-- P1 is the first object</td>
+    <td>FROM PhotoTag   P1				-- P1 is the first object</td>
   </tr>
   <tr>
-    <td>&nbsp;&nbsp;&nbsp;&nbsp;Neighbors  N,				-- N is the pre-computed neighbor objects</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;JOIN Neighbors  N ON N.objID = P1.objID				-- N is pre-computed neighbors</td>
   </tr>
   <tr>
-    <td>&nbsp;&nbsp;&nbsp;&nbsp;PhotoTag   P2				-- P2 is the second object</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;JOIN PhotoTag   P2 ON P2.objID = p1.OBJid				-- P2 is the second object</td>
   </tr>
   <tr>
     <td></td>
   </tr>
   <tr>
-    <td>WHERE P1.objID = N. objID 			-- P1 and P2 are neighbors</td>
-  </tr>
-  <tr>
-    <td>&nbsp;&nbsp;&nbsp;&nbsp;AND P2.objID = N.NeighborObjID </td>
-  </tr>
-  <tr>
-    <td>&nbsp;&nbsp;&nbsp;&nbsp;AND N.Distance < .05			-- objects are within 3 arcseconds  </td>
+    <td>WHERE N.Distance < .05			-- objects are within 3 arcseconds  </td>
   </tr>		
 </table>
 </li>

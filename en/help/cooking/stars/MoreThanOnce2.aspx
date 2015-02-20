@@ -31,8 +31,13 @@
       <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-- for 100 objects</td>
     </tr>
     <tr>
-      <td>FROM matchhead h, match m&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-- from "match" tables</td>
+      <td>FROM matchhead h</td>
     </tr>
+    <tr>
+      <td>JOIN match m ON matchhead h &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-- from "match" tables</td>
+    </tr>
+       match m&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-- from "match" tables</td>
+
     <tr>
       <td></td>
     </tr>
