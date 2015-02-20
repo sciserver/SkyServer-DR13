@@ -69,8 +69,8 @@ namespace SkyServer.Tools.Explore
                         cmd = ExplorerQueries.PhotoTagQuery.Replace("@objId", objId); break;
                 case "photoZ":
                         cmd = ExplorerQueries.PhotoZ.Replace("@objId", objId); break;
-                case "photozRF":
-                        cmd = ExplorerQueries.PhotozRF.Replace("@objId", objId); break;
+                //case "photozRF":
+                //        cmd = ExplorerQueries.PhotozRF.Replace("@objId", objId); break;
 
                 case "Field":
                         cmd = ExplorerQueries.FieldQuery.Replace("@fieldId", fieldId); break;

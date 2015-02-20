@@ -101,7 +101,7 @@ namespace SkyServer.Tools.Explore
                 //string c1 = "select * from Photoz2 where objid=" + objid;       
 
         //PhotzRF
-        public static string PhotozRF= "select * from PhotozRF where objid=@objId";
+        //public static string PhotozRF= "select * from PhotozRF where objid=@objId";
                 //string c2 = "select * from Photoz2 where objid=" + objid;
 
         #region plate
@@ -282,13 +282,14 @@ namespace SkyServer.Tools.Explore
             dbo.fPhotoModeN(po.mode) as mode,po.mjd as 'mjdNum',  (po.nDetect-1) as 'Other observations', po.parentID, po.nChild, str(po.extinction_r,7,2) as extinction_r,
             str(po.petroRad_r,9,2)+' &plusmn; '+str(po.petroRadErr_r,10,3) as 'petrorad_r',
             --- photz,photozRF,zoospec 
-            (str(phz.z,7,3)+' &plusmn; '+str(phz.zerr,8,4))as 'photoZ_KD', (str(phzrf.z,7,3)+' &plusmn; '+str(phzrf.zerr,8,4)) as 'photoZ_RF', 
+            (str(phz.z,7,3)+' &plusmn; '+str(phz.zerr,8,4))as 'photoZ_KD', 
+            ---(str(phzrf.z,7,3)+' &plusmn; '+str(phzrf.zerr,8,4)) as 'photoZ_RF', 
             case (1*zz.spiral+10*zz.elliptical+100*zz.uncertain) when 1 then 'Spiral' when 10 then 'Elliptical' when 100 then 'Uncertain' else '-' end as 'GalaxyZoo_Morph' 
             --all joins
              from PhotoTag pt  
              left outer join PhotoObj po on po.objid = pt.objid
              left outer join Photoz phz on pt.objid=phz.objid 
-             left outer join PhotozRF phzrf on pt.objid=phzrf.objid 
+             ---left outer join PhotozRF phzrf on pt.objid=phzrf.objid 
              left outer join zooSpec zz on pt.objid=zz.objid 
              left outer join field f on f.fieldID=pt.fieldID 
              left outer join photoobjall pa with (nolock)on  pa.objid = pt.objid 
