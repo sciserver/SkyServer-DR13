@@ -29,19 +29,19 @@ var check;
 
 function quicklook(id) {
 	var url = "../quicklook/quickobj.aspx?id="+id;
-	var w = window.open(url,'_top');
+	var w = window.open(url,'_blank');
 	w.focus();
 }
 
 function explore(id) {
 	var url = "../explore/obj.aspx?id="+id;
-	var w = window.open(url,'_top');
+	var w = window.open(url,'_blank');
 	w.focus();
 }
 
 function exploreAPOGEE(id) {
     var url = "../explore/summary.aspx?apid=" + id;
-    var w = window.open(url, '_top');
+    var w = window.open(url, '_blank');
     w.focus();
 }
 
