@@ -15,10 +15,11 @@ namespace SkyServer.Tools.Search
 
 //        protected double searchRA1 = 197.61;		// radial RA and first rect RA
 //	    protected double searchDec1 = 18.44;		// radial dec and first rect dec
-	    protected double searchRad = 3.0;		// radial search radius
+//	    protected double searchRad = 3.0;		// radial search radius
 //	    protected double searchRA2 = 15.65;		// second rect RA
 //      protected double searchDec2 = 0.6 ;		// second rect dec
 
+        protected double searchRad = 3.0;		// radial search radius
         protected string url;
         protected string userguide;
         protected Globals globals;

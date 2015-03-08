@@ -7,9 +7,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SkyServer.Tools.Search {
+namespace SkyServer.en.tools.crossmatch {
     
     
-    public partial class X_IQS {
+    public partial class CrossMatch {
     }
 }

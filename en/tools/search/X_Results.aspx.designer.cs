@@ -10,6 +10,6 @@
 namespace SkyServer.Tools.Search {
     
     
-    public partial class X_IRQS {
+    public partial class X_Results {
     }
 }

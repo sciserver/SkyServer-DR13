@@ -19,7 +19,7 @@
 <div id="title">SQL Search</div>
 
 <div id="transp">
-<%
+<%--<%
 // For public site, pop up results in a new window.
 if( globals.Access == "public" ) {
 %>
@@ -28,6 +28,19 @@ if( globals.Access == "public" ) {
 } else {
 %>
     <form method ="post" name="sql" action="x_sql.aspx">
+<%
+}
+%>--%>
+
+    <%
+// For public site, pop up results in a new window.
+if( globals.Access == "public" ) {
+%>
+    <form method ="post" target="search" name="sql" action="x_results.aspx">
+<%
+} else {
+%>
+    <form method ="post" name="sql" action="x_results.aspx">
 <%
 }
 %>
@@ -44,7 +57,7 @@ if( globals.Access == "public" ) {
     }
 
 </script>
-
+<input type="hidden" name="searchtool" id="searchtool" value="SQL" />
 <table BORDER=0 WIDTH="600"  cellpadding=1 cellspacing=1 bgcolor="#aaaaaa">
 	
 	<tr><td class='frame'>
@@ -129,12 +142,12 @@ if( globals.Access == "public" ) {
 			<table BORDER=0 WIDTH="100%" >
 			  <tr>
 				<td ALIGN=left class="qtitle">Output Format</td>
-				<td nowrap class="q"><input name=format value="html" type=radio class="box" CHECKED>HTML</td>
+				<td nowrap class="q"><input name=format value="html" type=radio class="box" >HTML</td>
 				<td nowrap class="q"><input name=format value="xml"  type=radio class="box">XML</td>
-				<td nowrap class="q"><input name=format value="csv"  type=radio class="box">CSV</td>
-        <td nowrap class="q"><input name=format value="json"  type=radio class="box">JSON</td>
-        <td nowrap class="q"><input name=format value="votable"  type=radio class="box">VOTable</td>
-        <td nowrap class="q"><input name=format value="fits"  type=radio class="box">FITS</td>
+				<td nowrap class="q"><input name=format value="csv"  type=radio class="box" checked>CSV</td>
+                <td nowrap class="q"><input name=format value="json"  type=radio class="box">JSON</td>
+                <td nowrap class="q"><input name=format value="votable"  type=radio class="box">VOTable</td>
+                <td nowrap class="q"><input name=format value="fits"  type=radio class="box">FITS</td>
 				</tr>
 			</table>
 		</td>

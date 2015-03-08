@@ -18,7 +18,7 @@
 
 
 <div id="transp">
-<%
+<%--<%
 // Pop up results in a new window for public site only.
 if( globals.Access == "public" ) {
 %>
@@ -27,6 +27,19 @@ if( globals.Access == "public" ) {
 } else {
 %>
     <form method="get" action="x_rect.aspx" id="rect" name="rect">
+<%
+}
+%>--%>
+
+    <%
+// Pop up results in a new window for public site only.
+if( globals.Access == "public" ) {
+%>
+    <form method="get" target="search" action="x_results.aspx" id="rect" name="rect">
+<%
+} else {
+%>
+    <form method="get" action="x_results.aspx" id="Form1" name="rect">
 <%
 }
 %>
@@ -72,7 +85,7 @@ if( globals.Access == "public" ) {
 
     }
 </script>
-
+<input type="hidden" name="searchtool" id="searchtool" value="Rectangular" />
 <table BORDER=0 WIDTH="600" bgcolor=#aaaaaa>
 	<tr><td class="frame">
 	NOTE: To be fair to other users, queries run from SkyServer search
@@ -151,9 +164,9 @@ if( globals.Access == "public" ) {
 	<table BORDER=0 WIDTH="100%" >
   	<tr class='q'>
 			<td ALIGN=left width="20%">Output Format</td>
-			<td nowrap width="13%" ALIGN=middle><input name=format value="html" type=radio class="box" CHECKED>HTML</td>
+			<td nowrap width="13%" ALIGN=middle><input name=format value="html" type=radio class="box">HTML</td>
 			<td nowrap width="13%" ALIGN=middle><input name=format value="xml"  type=radio class="box">XML</td>
-			<td nowrap width="13%" ALIGN=middle><input name=format value="csv"  type=radio class="box">CSV</td>
+			<td nowrap width="13%" ALIGN=middle><input name=format value="csv"  type=radio class="box" checked>CSV</td>
       <td nowrap width="13%" ALIGN=middle><input name=format value="json"  type=radio class="box">JSON</td>
       <td nowrap width="13%" ALIGN=middle><input name=format value="votable"  type=radio class="box">VOTable</td>
       <td nowrap width="13%" ALIGN=middle><input name=format value="fits"  type=radio class="box">FITS</td>

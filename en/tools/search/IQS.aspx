@@ -24,8 +24,8 @@ Imaging Query Form
 
 <div id="transp">
 
-<form method="post" enctype="multipart/form-data" action="x_iqs.aspx" id=iqs name="iqs">
-
+<form method="post" target="search"  enctype="multipart/form-data" action="x_results.aspx" id=iqs name="iqs">
+<input type="hidden" name="searchtool" id="searchtool" value="Imaging" />
 <!----------------------------------------------------->
 <table border=1 cellspacing=3 cellpadding=3 bgcolor=#aaaaaa>
 <tr><td>
