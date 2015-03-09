@@ -218,9 +218,7 @@
           program such as Microsoft Excel to make your diagram. You may use this 
           <a href="workbooks/exercise1.xls" target="workbooks">SkyServer workbook</a> to store 
           the data. If you don't have a graphing program, you can download a free program 
-          such as <a href="http://www.openoffice.org" target="offsite">Open Office</a> 
-          (Windows/Mac/Linux) or <a href="http://www.ds.unifi.it/stefanin/AGR_2001/SH/sssheet.htm" target="offsite">
-          Sphygmic Spreadsheet</a> (Windows).</p>
+          such as <a href="http://www.openoffice.org" target="offsite">Open Office</a>.</p>
           
           <p>For help on how to make a 
           graph using Microsoft Excel, see SkyServer's 

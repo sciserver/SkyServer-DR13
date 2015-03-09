@@ -44,9 +44,7 @@
           Be sure to save it as plain text rather than HTML.</p>
 
           <p>Import the file into a graphing program such as Excel. If you don't have a graphing program, 
-          you can download a free program such as <a href="http://www.openoffice.org" target="offsite">Open Office</a> 
-          (Windows/Mac/Linux) or <a href="http://www.ds.unifi.it/stefanin/AGR_2001/SH/sssheet.htm" target="offsite">
-          Sphygmic Spreadsheet</a> (Windows).</p>
+          you can download a free program such as <a href="http://www.openoffice.org" target="offsite">Open Office</a>.</p>
           
           <p>Use Excel's "Import Text File" option, or a similar option in another program, to import the data (see 
           SkyServer's <a href="../../../help/howto/graph/open.aspx" target="help">Graphing and 
