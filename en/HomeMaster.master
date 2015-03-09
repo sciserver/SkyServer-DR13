@@ -42,7 +42,18 @@
         <td >
             <img alt="" src="<%= imgpath %>imageright2.png" />
         </td>
-          
+        <td width="400px">
+            <form id="form1" runat="server">            
+                <table><tr>
+                    <td><asp:Label ID="loginName" runat="server" Text="Guest" /></td>
+                    <td>
+                    <asp:ImageButton ID="KeystoneLogin" ImageUrl="../images/idies.png" OnClick="KeystoneLogin_Click" width="60" height="23" runat="server"></asp:ImageButton>                
+                    <asp:ImageButton ID="KeystoneLogout" ImageUrl="../images/sign-out.png" OnClick="KeystoneLogout_Click" width="60" height="23" runat="server"></asp:ImageButton>               
+                    </td>
+                 </tr></table>            
+             </form>
+        </td>
+        <%--<td ><img alt="" src="<%= imgpath %>imageright2.png" /></td>--%>
       </tr>
     </table>
   </div>

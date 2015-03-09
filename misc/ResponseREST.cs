@@ -27,7 +27,8 @@ namespace SkyServer.Tools.Search
     {
 
         HttpResponse httpResponse;
-        HttpCookie myCookie;
+        HttpCookie cookie;
+        string token = "";
         public void ProcessRequest()
         {
 
@@ -38,8 +39,11 @@ namespace SkyServer.Tools.Search
         public void ProcessRequestREST(HttpRequest Request, HttpResponse Response)
         {
             httpResponse = Response;
-            //myCookie = new HttpCookie("KeystoneToken");
-            //myCookie = Request.Cookies["token"];
+            
+            cookie = Request.Cookies["Keystone"];
+            if (cookie != null)
+                if (cookie["token"] != null || !cookie["token"].Equals(""))
+                    token = cookie["token"];
 
             NameValueCollection inputForm = Request.Form;
             if(inputForm.Count==0)
@@ -113,10 +117,7 @@ namespace SkyServer.Tools.Search
 
         private void runQuery(String serviceUrl, String requestString, string uploaded, string returnType)
         {
-            /// Once the authenticated skyserver is ready, we can update the code to retrieve token
-            string token = "";
-             //if(myCookie != null)
-             //   token = myCookie.Value;
+            /// Once the authenticated skyserver is ready, we can update the code to retrieve token          
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(serviceUrl);                        
             string requestUri = client.BaseAddress + "?" + requestString;
