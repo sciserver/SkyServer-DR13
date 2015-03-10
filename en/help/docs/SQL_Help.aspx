@@ -59,7 +59,7 @@ submit your queries to a particular database.  This site is configured
 to submit your queries to the <%=globals.Database%> database, which contains the
 best data and most recent processings for the entire released sky area. 
 <p>
-The <%=globals.Database%> database contains a large number of tables, some of which contain photometric measurements (such as PhotoObj), spectroscopic measurements (such as SpecObj), or information about the observing conditions (Field) or survey geometry(TileBoundary). See the <a href="datamodel.aspx">data model page</a> for more details.</p>
+The <%=globals.Database%> database contains a large number of tables, some of which contain photometric measurements (such as PhotoObj), spectroscopic measurements (such as SpecObj), or information about the observing conditions (Field) or survey geometry(TileBoundary). See the <a href="http://data.sdss3.org/datamodel/">data model page</a> for more details.</p>
 
 <p>In addition to the tables, we have defined <b>Views</b>, which are subsets or combinations of the data stored in the tables. Views are queried the same way Tables are; they exist just to make your life easier. For instance, the view <b>Galaxy</b> can be used to get photometric data on objects we classify as galaxies, without having to specify the classification in your query.<br><p>
 Both the Skyserver and CasJobs interfaces have a <b>Schema Browser</b>. It shows you all of the available databases, the tables in each database, and the quantities stored in each column of the tables.
@@ -202,8 +202,7 @@ PhotoObjAll table and the PhotoTag view each have the <b>flags</b> field, SpecOb
 
 <p>One of the most important uses of bit flags is to indicate why an object was 
 targeted for spectroscopy. A list of spectroscopic target flags is available on the 
-<a href="http://www.sdss3.org/dr9/spectro/targets.php">DR9 Spectroscopic 
-Target Flags</a> page.</p>
+    <a href="<%=globals.SdssUrl%>spectro/targets.php">Spectroscopic Target Flags</a> page.</p>
 
 This section describes how you can test 
 for flag values in your query.  For sample queries that demonstrate the use of

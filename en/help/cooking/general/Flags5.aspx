@@ -37,7 +37,7 @@
         if (option == 1) {
             msg += "SELECT objid, ra, dec\n";
             msg += "FROM photoTag\n";
-            msg += "WHERE (flags & dbo.fPhotoFlags('MOVED')) > 0";
+            msg += "WHERE (flags & dbo.fPhotoFlags('MOVED')) != 0";
         }
 
         if (option == 2) {
@@ -80,7 +80,7 @@
 
         <ol type="a">
            <li><p>To find only objects for which a certain flag is present:</p>
-               <p class="code">WHERE (p.flags & dbo.fPhotoFlags('<i>flag</i>')) > 0</p>
+               <p class="code">WHERE (p.flags & dbo.fPhotoFlags('<i>flag</i>')) != 0</p>
                <p>Replace <i>flag</i> with the name of the flag you want to search.</p>
                <p>For example, this query will find IDs and positions of objects that have 
 		       been flagged as having moved:</p>
@@ -92,7 +92,7 @@
 		           <td>FROM photoTag</td>
 		         </tr>
 		         <tr>
-		           <td>WHERE (flags & dbo.fPhotoFlags('MOVED')) > 0</td>
+		           <td>WHERE (flags & dbo.fPhotoFlags('MOVED')) != 0</td>
 		         </tr>
 		       </table>
 		   </li>
