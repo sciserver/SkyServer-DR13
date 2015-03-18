@@ -21,14 +21,17 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
 using Newtonsoft.Json.Linq;
 
+
 namespace SkyServer.Tools.Search
 {
     public class ResponseREST
     {
-
+        
         HttpResponse httpResponse;
         HttpCookie cookie;
         string token = "";
+        string requestUrl = "";
+        String requestString = "";
         public void ProcessRequest()
         {
 
@@ -48,7 +51,7 @@ namespace SkyServer.Tools.Search
             NameValueCollection inputForm = Request.Form;
             if(inputForm.Count==0)
              inputForm = Request.QueryString;
-            String requestString = "";
+           
             foreach (string key in inputForm.Keys)
             {
                 requestString += key + "=" + inputForm[key] + "&";
@@ -56,7 +59,7 @@ namespace SkyServer.Tools.Search
 
             String searchTool = inputForm["searchtool"];
 
-            string requestUrl = "";
+            
             bool temp = false;
             string radecText = "";
             Globals globals = new Globals();
@@ -206,7 +209,187 @@ namespace SkyServer.Tools.Search
             }
             sb.AppendFormat("</table></body></html>");
             return sb.ToString();
-        } 
+        }
 
+
+        //***************************************************************************************************************************************************************
+        // this code can be redesigned and thought after April 15 2015
+
+
+
+        //</summary>
+        //<param name="command"></param>
+        //<returns></returns>
+        public DataSet RunCasjobs(string command)
+        {
+            // throw new IndexOutOfRangeException("There is an invalid argument");
+
+            try
+            {
+
+                var request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(ConfigurationManager.AppSettings["casjobsRESTapi"]);
+                request.Method = "POST";
+                request.ContentType = "application/json";
+                request.Accept = "application/x-dataset";
+
+                if (!token.Equals("") && token != null)
+                    request.Headers.Add("X-Auth-Token", token);
+
+                StreamWriter streamWriter = new StreamWriter(request.GetRequestStream());
+                StringWriter sw = new StringWriter();
+                JsonWriter jsonWriter = new JsonTextWriter(sw);
+                jsonWriter.WriteStartObject();
+                jsonWriter.WritePropertyName("Query");
+                jsonWriter.WriteValue(command);
+                //jsonWriter.WritePropertyName("ReturnDataSet");
+                //jsonWriter.WriteValue(true);
+                jsonWriter.WriteEndObject();
+                jsonWriter.Close();
+                streamWriter.Write(sw.ToString());
+                streamWriter.Close();
+
+                DataSet ds = null;
+                using (System.Net.HttpWebResponse response = (System.Net.HttpWebResponse)request.GetResponse())
+                {
+                    BinaryFormatter fmt = new BinaryFormatter();
+                    ds = (DataSet)fmt.Deserialize(response.GetResponseStream());
+                }
+                return ds;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("There is an error running this Query.\n Query:" + command + " ");
+
+            }
+        }
+
+        /// <summary>
+        /// this is a hack  for some of QS_parameter functions
+        /// </summary>
+
+        public void showImgParams(string type, HttpResponse response)
+        {
+
+            string cmd = "SELECT [name] FROM DBColumns WHERE tableName='PhotoObjAll'";
+
+            response.Write("<td class='q' width='100'>");
+            DataSet ds = RunCasjobs(cmd);
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            {   
+                if (!reader.HasRows)
+                {
+                    response.Write("<b>No columns found for table PhotoObjAll</b>\n");
+                }
+                else
+                {
+                    response.Write("\t<SELECT name=\"imgparams\" multiple=\"multiple+\" size=\"3\">\n");
+                    if (type == "spec")
+                    {
+                        response.Write("\t\t<OPTION value=\"none\" selected>none</OPTION>\n");
+                        response.Write("\t\t<OPTION value=\"minimal\">minimal</OPTION>\n");
+                    }
+                    else
+                        response.Write("\t\t<OPTION value=\"minimal\" selected>minimal</OPTION>\n");
+                    response.Write("\t\t<OPTION value=\"typical\">typical</OPTION>\n");
+                    response.Write("\t\t<OPTION value=\"radec\">radec</OPTION>\n");
+                    response.Write("\t\t<OPTION value=\"model_mags\">model_mags</OPTION>\n");
+                    response.Write("\t\t<OPTION value=\"model_magerrs\">model_magerrs</OPTION>\n");
+                    response.Write("\t\t<OPTION value=\"psf_mags\">psf_mags</OPTION>\n");
+                    response.Write("\t\t<OPTION value=\"psf_magerrs\">psf_magerrs</OPTION>\n");
+                    response.Write("\t\t<OPTION value=\"petro_mags\">petro_mags</OPTION>\n");
+                    response.Write("\t\t<OPTION value=\"petro_magerrs\">petro_magerrs</OPTION>\n");
+                    response.Write("\t\t<OPTION value=\"model_colors\">model_colors</OPTION>\n");
+                    response.Write("\t\t<OPTION value=\"ugModelColor\">ugModelColor</OPTION>\n");
+                    response.Write("\t\t<OPTION value=\"grModelColor\">grModelColor</OPTION>\n");
+                    response.Write("\t\t<OPTION value=\"riModelColor\">riModelColor</OPTION>\n");
+                    response.Write("\t\t<OPTION value=\"izModelColor\">izModelColor</OPTION>\n");
+                    response.Write("\t\t<OPTION value=\"SDSSname\">SDSSname</OPTION>\n");
+                    response.Write("\t\t<OPTION value=\"blankImg\"> </OPTION>\n");
+                    while (reader.Read())
+                    {
+                        response.Write("\t\t<OPTION value=\"" + Utilities.getSqlString(reader.GetValue(0)) + "\">" + Utilities.getSqlString(reader.GetValue(0)) + "\n");
+                    }
+                    response.Write("\t</OPTION></SELECT>\n");
+                }
+                response.Write("</td>\n");
+            } // using dattable reader
+
+        }
+
+        public  void showSpecParams( string type, HttpResponse response)
+        {
+            
+             string cmd = "SELECT [name] FROM DBColumns WHERE tableName='SpecObjAll'";
+             DataSet ds = RunCasjobs(cmd);
+             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+             {
+                response.Write("<td class='q' width='100'>");
+                if (!reader.HasRows)
+                {
+                    response.Write("<b>No columns found for table SpecObjAll</b>\n");
+                }
+                else
+                {
+                    response.Write("\t<SELECT name=\"specparams\" multiple=\"multiple\" size=\"3\">\n");
+                    if (type == "spec")
+                        response.Write("\t\t<OPTION value=\"minimal\" selected>minimal</OPTION>\n");
+                    else
+                    {
+                        response.Write("\t\t<OPTION value=\"none\" selected>none</OPTION>\n");
+                        response.Write("\t\t<OPTION value=\"minimal\">minimal</OPTION>\n");
+                    }
+                    response.Write("\t\t<OPTION value=\"typical\">typical</OPTION>\n");
+                    response.Write("\t\t<OPTION value=\"radec\">radec</OPTION>\n");
+                    response.Write("\t\t<OPTION value=\"blankSpec\"> </OPTION>\n");
+                    while (reader.Read())
+                    {
+                        response.Write("\t\t<OPTION value=\"" + Utilities.getSqlString(reader.GetValue(0)) + "\">" + Utilities.getSqlString(reader.GetValue(0)) + "\n");
+
+                    }
+                    response.Write("\t</OPTION></SELECT>\n");
+                }
+                response.Write("</td>\n");
+             } // using DataReader
+            
+        }
+
+        public  void showIRSpecParams( string type, HttpResponse response)
+        {            
+            string cmd = "SELECT [name] FROM DBColumns WHERE tableName='apogeeStar'";
+            DataSet ds = RunCasjobs(cmd);
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+               
+            {
+                response.Write("<td class='q' colspan='2' align='center'>");
+                if (!reader.HasRows)
+                {
+                    response.Write("<b>No columns found for table apogeeStar</b>\n");
+                }
+                else
+                {
+                    response.Write("\t<SELECT style=\"width:200px;\" name=\"irspecparams\" multiple=\"multiple\" size=\"6\">\n");
+                    if (type == "irspec")
+                        response.Write("\t\t<OPTION value=\"minimal\">Minimal</OPTION>\n");
+                    else
+                    {
+                        response.Write("\t\t<OPTION value=\"none\" selected>none</OPTION>\n");
+                        response.Write("\t\t<OPTION value=\"minimal\">minimal</OPTION>\n");
+                    }
+                    response.Write("\t\t<OPTION value=\"typical\" selected>Typical</OPTION>\n");
+                    response.Write("\t\t<OPTION value=\"blankSpec\"> </OPTION>\n");
+                    while (reader.Read())
+                    {
+                        response.Write("\t\t<OPTION value=\"" + Utilities.getSqlString(reader.GetValue(0)) + "\">" + Utilities.getSqlString(reader.GetValue(0)) + "\n");
+
+                    }
+                    response.Write("\t\t<OPTION value=\"blankSpec\"> </OPTION>\n");
+                    response.Write("\t\t<OPTION value=\"twomassj\">2MASS J</OPTION>\n");
+                    response.Write("\t\t<OPTION value=\"twomassh\">2MASS H</OPTION>\n");
+                    response.Write("\t\t<OPTION value=\"twomassk\">2MASS K_s</OPTION>\n");
+                    response.Write("\t</OPTION></SELECT>\n");
+                }
+                response.Write("</td>\n");
+            } // using DataReader           
+        }       
     }
 }

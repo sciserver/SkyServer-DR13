@@ -1,6 +1,8 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="QS_Imaging.ascx.cs" Inherits="SkyServer.Tools.Search.QS_Imaging" %>
 <%@ Import Namespace="SkyServer" %>
 <%@ Import Namespace="System.Data.SqlClient" %>
+<%@ Import Namespace="SkyServer.Tools.Search" %>
+<%@ Import Namespace="System.Data" %>
 <table cellspacing='3' cellpadding='3' class='frame' width='640'>
 <!-------------------------------------------------------------------------------->
   <tr><td align=middle>
@@ -109,16 +111,13 @@
 		  <table>
 			<tr>
 <%
-    using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
-    {
-        oConn.Open();
+        ResponseREST rs = new ResponseREST();
         
         string cmd = "SELECT [name] FROM DataConstants WHERE field='PhotoFlags' ORDER BY value";
-        using (SqlCommand oCmd = oConn.CreateCommand())
+
+        DataSet ds = rs.RunCasjobs(cmd);
+        using (DataTableReader reader = ds.Tables[0].CreateDataReader())
         {
-            oCmd.CommandText = cmd;
-            using (SqlDataReader reader = oCmd.ExecuteReader())
-            {
                 if (!reader.HasRows)
                 {
                     Response.Write("<td><b>No PhotoFlags found in DataConstants table</b></td>\n");
@@ -136,7 +135,7 @@
                     while (reader.Read())
                     {
                         
-                        values.Add(reader.GetSqlValue(0).ToString());
+                        values.Add(reader.GetValue(0).ToString());
                     }
 
                     foreach (string v in values)
@@ -155,9 +154,7 @@
                     }
                     Response.Write("\t</OPTION></SELECT></td>\n");
                 }
-            } // using SqlDataReader
-        } // using SqlCommand
-    } // using SqlConnection
+            } // using DataReader
 %>
 			</tr>
 		  </table>

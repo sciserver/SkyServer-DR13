@@ -146,8 +146,12 @@
 						</tr>
 						<tr height="20">
 							<td nowrap class="menulink">
-							   <a class="menulink" href="tools/crossid/crossid.aspx">
+							   <%--<a class="menulink" href="tools/crossid/crossid.aspx">
 							     &nbsp;&nbsp;Cross-ID&nbsp;&nbsp;&nbsp;
+							   </a>--%>
+
+                                <a class="menulink" href="tools/crossmatch/crossmatch.aspx">
+							     &nbsp;&nbsp;SkyQuery CrossMatch &nbsp;&nbsp;&nbsp;
 							   </a>
 							 </td>
 						</tr>						

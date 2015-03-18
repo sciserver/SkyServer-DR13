@@ -1,6 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="QS_Parameter.ascx.cs" Inherits="SkyServer.Tools.Search.QS_Parameter" %>
 <%@ Import Namespace="SkyServer" %>
 <%@ Import Namespace="System.Data.SqlClient" %>
+<%@ Import Namespace="SkyServer.Tools.Search" %>
 
 	<table BORDER=0 WIDTH="100%" >
 		<tr>
@@ -51,14 +52,13 @@
 	</tr></table></td>
   </tr>
 
-    <% using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
-       {
-           oConn.Open();
+    <% 
+        ResponseREST rs = new ResponseREST();
 
            if (queryType == "irspec")
            {
                Response.Write("<tr><td colspan='2' class='q' align='center'>Infrared Spectra</td></tr>");
-               ResponseAux.showIRSpecParams(oConn, queryType, Response);
+               rs.showIRSpecParams(queryType, Response);
                Response.Write("</tr>\n");
            }   
            else     // this else means: show Imaging and Spectroscopy params only if this is not the Infrared Spectro tool
@@ -77,16 +77,17 @@
 <%           
             if (queryType == "spec")
                 {
-                   ResponseAux.showSpecParams(oConn, queryType, Response);
-                   ResponseAux.showImgParams(oConn, queryType, Response);
+                   rs.showSpecParams(queryType, Response);
+                   rs.showImgParams(queryType, Response);
                }
                else 
                {
-                   ResponseAux.showImgParams(oConn, queryType, Response);
-                   ResponseAux.showSpecParams(oConn, queryType, Response);
+                 
+                 rs.showImgParams(queryType, Response);
+                 rs.showSpecParams(queryType, Response);
                }
            }
-       }
+       
     %>
     </tr>
   </table>

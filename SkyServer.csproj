@@ -54,7 +54,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\Newtonsoft.Json.6.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="openstacknet">
+    <Reference Include="openstacknet, Version=1.3.0.0, Culture=neutral, PublicKeyToken=bf74868971e80ac6, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\openstacknet.dll</HintPath>
     </Reference>
     <Reference Include="SimpleRESTServices">
@@ -175,6 +176,7 @@
     <Content Include="en\get\noimage2.gif" />
     <Content Include="en\get\noimage2.jpg" />
     <Content Include="en\GSearch.aspx" />
+    <Content Include="en\HandleKeystone.aspx" />
     <Content Include="en\help\browser\Browser.aspx" />
     <Content Include="en\help\browser\Default.aspx" />
     <Content Include="en\help\browser\images\backtotop.gif" />
@@ -474,6 +476,7 @@
     <Content Include="en\images\titlebar1.jpg" />
     <Content Include="en\links\Default.aspx" />
     <Content Include="en\links\LinksHome.aspx" />
+    <Content Include="en\Loginfloat.ascx" />
     <Content Include="en\News.aspx" />
     <Content Include="en\proj\advanced\AdvancedHome.aspx" />
     <Content Include="en\proj\advanced\color\Amounts.aspx" />
@@ -2209,6 +2212,13 @@
     <Compile Include="en\GSearch.aspx.designer.cs">
       <DependentUpon>GSearch.aspx</DependentUpon>
     </Compile>
+    <Compile Include="en\HandleKeystone.aspx.cs">
+      <DependentUpon>HandleKeystone.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\HandleKeystone.aspx.designer.cs">
+      <DependentUpon>HandleKeystone.aspx</DependentUpon>
+    </Compile>
     <Compile Include="en\help\BrowserFunctions.cs" />
     <Compile Include="en\help\browser\Browser.aspx.cs">
       <DependentUpon>Browser.aspx</DependentUpon>
@@ -2965,6 +2975,13 @@
     </Compile>
     <Compile Include="en\links\LinksMaster.master.designer.cs">
       <DependentUpon>LinksMaster.master</DependentUpon>
+    </Compile>
+    <Compile Include="en\Loginfloat.ascx.cs">
+      <DependentUpon>Loginfloat.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\Loginfloat.ascx.designer.cs">
+      <DependentUpon>Loginfloat.ascx</DependentUpon>
     </Compile>
     <Compile Include="en\News.aspx.cs">
       <DependentUpon>News.aspx</DependentUpon>

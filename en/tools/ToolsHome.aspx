@@ -58,11 +58,11 @@ You can even enter free-format SQL queries, or use a simple form to search the d
     Internally it uses SkyQuery , a state of art cross match engine and its web services.
     User also can monitor all the queries submitted. 
 
-<a href="crossid/">Object Crossid</a> allows you to upload
+<%--<a href="crossid/">Object Crossid</a> allows you to upload
 search the database for sky positions, objects with a 
 a list of object positions, and returns the SDSS objects
 which are within a certain radius of those positions.
-A few simple upload formats are supported.
+A few simple upload formats are supported.--%>
 
 <%
 if( globals.ReleaseNumber > 1 ) {

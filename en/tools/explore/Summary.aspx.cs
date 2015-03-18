@@ -32,16 +32,17 @@ namespace SkyServer.Tools.Explore
         int? mjd = null;
         short? plate = null;
         short? fiber = null;
-
+        private HttpCookie cookie;
+        private string token = "";
       
         protected void Page_Load(object sender, EventArgs e)
         {
            
-            runQuery = new RunQuery();
+            
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             master = (ObjectExplorer)Page.Master;
             Session["objectInfo"] = objectInfo;
-
+          
             if (Request.QueryString.Keys.Count == 0)
             {
                 id = globals.ExploreDefault;
@@ -80,7 +81,18 @@ namespace SkyServer.Tools.Explore
                 if (key == "mjd") mjd = int.Parse(Request.QueryString["mjd"]);
                 if (key == "fiber") fiber = short.Parse(Request.QueryString["fiber"]);
             }
-           
+
+            ///Check for authenticated token
+            cookie = Request.Cookies["Keystone"];
+            if (cookie != null)
+            {
+                if (cookie["token"] != null || !cookie["token"].Equals(""))
+                {
+                    token = cookie["token"];
+
+                }
+            }
+            runQuery = new RunQuery(token);
             //This is imp function to get all different ids.
             getObjPmts();
 

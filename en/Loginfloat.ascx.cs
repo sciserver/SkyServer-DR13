@@ -4,63 +4,19 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Text.RegularExpressions;
-using DotNetOpenAuth.OpenId.RelyingParty;
-using System.Web.Security;
-using System.Data.SqlClient;
-using DotNetOpenAuth.OpenId.Extensions.AttributeExchange;
 using System.Configuration;
-using SkyServer;
 
-
-namespace SkyServer
+namespace SkyServer.en
 {
-    public partial class HomeMaster : System.Web.UI.MasterPage
+    public partial class Loginfloat : System.Web.UI.UserControl
     {
-        public string imgpath;
-
-        protected string url;
-        protected string contactUrl;
-        protected string siteTitle;
-        protected Globals globals;
-
-        protected string userid ="Guest", token;
+        protected string userid = "Guest", token;
         protected bool isValidUser = false;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            globals = (Globals)Application[Globals.PROPERTY_NAME];
-
-            url = ResolveClientUrl("~/en/");
-            imgpath = ResolveClientUrl("~/en/images/");
-
-            contactUrl = globals.ContactUrl + "&url=" + Server.UrlEncode("http://" + Request.ServerVariables["SERVER_NAME"] + Request.ServerVariables["SCRIPT_NAME"] + Request.ServerVariables["QUERY_STRING"]);
-
-            if (globals.SiteName != globals.Release)
-            {
-                siteTitle = globals.Release + " " + globals.SiteName;
-            }
-            else
-            {
-                siteTitle = globals.SiteName;
-            }
-
-            siteTitle += ((globals.SiteIcon != null) ? "&nbsp;<img src=\"../" + url + "images/"+globals.SiteIcon + "\"/>" : "");
-
-            /////This is for login portal       
-            //TryKeystoneLogin();
-
-            //loginName.Text = userid;
-            //if (isValidUser)
-            //{
-            //    KeystoneLogin.Visible = false;
-            //    KeystoneLogout.Visible = true;
-            //}
-            //else
-            //{
-            //    KeystoneLogin.Visible = true;
-            //    KeystoneLogout.Visible = false;
-            //}
+            ///This is for login portal       
+            TryKeystoneLogin();
         }
 
         private void TryKeystoneLogin()
@@ -86,16 +42,19 @@ namespace SkyServer
 
                             HttpCookie cookie = new HttpCookie("Keystone");
                             cookie["token"] = token;
+                            Session["USERID"] = userid;
                             Response.Cookies.Add(cookie);
-                           
-                           
+
+
                         }
-                        catch (Exception e) {
+                        catch (Exception e)
+                        {
                             HttpCookie cookie = new HttpCookie("Keystone");
                             cookie["token"] = "";
+                            Session["USERID"] = "";
                             isValidUser = false;
                         }
-                    }                 
+                    }
                 }
                 else
                 {
@@ -115,23 +74,26 @@ namespace SkyServer
                             {
                                 var userAccess = Keystone.Authenticate(token);
                                 userid = userAccess.User.Name;
+                                Session["USERID"] = userid;
                                 isValidUser = true;
                             }
                         }
-                        catch (Exception e) {                            
+                        catch (Exception e)
+                        {
                             cookie["token"] = "";
+                            Session["USERID"] = "";
                             isValidUser = false;
                         }
-                        
-                    }                    
+
+                    }
                 }
             }
             catch (UnauthorizedAccessException ex)
-            {                
+            {
                 Response.Redirect(ConfigurationManager.AppSettings["Keystone.Portal"] + "?message=" + Uri.EscapeDataString(ex.Message));
             }
             catch (Exception ex)
-            {                
+            {
                 throw new Exception("Keystone error: " + ex.Message, ex);
             }
         }
@@ -141,7 +103,8 @@ namespace SkyServer
             Response.Redirect(ConfigurationManager.AppSettings["Keystone.Portal"] + "?callbackUrl=" + HttpUtility.UrlEncode(Request.Url.AbsoluteUri));
         }
 
-        protected void KeystoneLogout_Click(object sender, EventArgs e) {
+        protected void KeystoneLogout_Click(object sender, EventArgs e)
+        {
             if (Request.Cookies["Keystone"] != null)
             {
                 HttpCookie fake = new HttpCookie("Keystone");

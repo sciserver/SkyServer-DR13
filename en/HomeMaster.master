@@ -20,7 +20,22 @@
 
 </head>
 
+
+    
+
+
 <body background="<%= imgpath %>new_home_bktile.jpg" style="margin-left:25px;margin-top:0px;margin-right:25px;margin-bottom:0px;">
+
+    <%-- <script type="text/javascript">
+         function keystone_login(logout) {
+             if (logout) {
+                 window.location.href = "handleKeystone.aspx";
+             }
+             else {
+                 window.location.href = "<%= ConfigurationManager.AppSettings["Keystone.Login"]+HttpUtility.UrlEncode(Request.Url.AbsoluteUri)%>";
+        }
+    }
+    </script>--%>
 
   <div id="div_title">
     <table cellpadding="0" cellspacing="0" border="0" width="200px" style="height:73px">
@@ -43,7 +58,13 @@
             <img alt="" src="<%= imgpath %>imageright2.png" />
         </td>
         <td width="400px">
-            <form id="form1" runat="server">            
+            <asp:ContentPlaceHolder ID="Content1"  runat="server">
+                    <%@ Register TagPrefix="login" TagName="loginParam" Src="Loginfloat.ascx"  %>
+                    <login:loginParam ID="loginParams" runat="server"/>
+                </asp:ContentPlaceHolder>  
+
+            <%--<form id="form1" runat="server">        
+                  
                 <table><tr>
                     <td><asp:Label ID="loginName" runat="server" Text="Guest" /></td>
                     <td>
@@ -51,7 +72,7 @@
                     <asp:ImageButton ID="KeystoneLogout" ImageUrl="../images/sign-out.png" OnClick="KeystoneLogout_Click" width="60" height="23" runat="server"></asp:ImageButton>               
                     </td>
                  </tr></table>            
-             </form>
+             </form>--%>
         </td>
         <%--<td ><img alt="" src="<%= imgpath %>imageright2.png" /></td>--%>
       </tr>
