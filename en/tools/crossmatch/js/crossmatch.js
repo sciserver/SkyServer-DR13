@@ -1,10 +1,5 @@
-﻿function init() {
-    callServices();
-    //testFunction();
-}
-
-var baseURL = 'http://scitest01.pha.jhu.edu/skyquery/';
-var xAuth = "60853695f7494b719af364bf4b4905db";
+﻿//var skyqueryUrl = 'http://scitest01.pha.jhu.edu/skyquery/';
+var xAuth = "";
 var selectedQueue = "long";
 var sampleQueries = [
     "Select top 10 ra,dec from  SDSSDR7:Field",
@@ -14,10 +9,38 @@ var sampleQueries = [
 ];
 
 
+function init() {
+
+    readCookie("Keystone");
+
+    //callServices();
+    
+}
+
+
+function readCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    //console.log(ca);
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) {
+            var temp = c.substring(nameEQ.length, c.length);
+            if (temp.indexOf("token") > -1)
+                xAuth = temp.replace("token=", "");
+            console.log(xAuth);
+            return c.substring(nameEQ.length, c.length);
+        }
+    }
+    return null;
+}
+
+
 function callServices() {
 
 
-    var datasetsUrl = baseURL + "Api/V1/Schema.svc/datasets";
+    var datasetsUrl = skyqueryUrl + "Api/V1/Schema.svc/datasets";
     var tablesUrl = "";
 
     //update database dropdown
@@ -60,7 +83,7 @@ function callServices() {
 
 function callJobs(whichqueue) {
     //load Jobs 
-    var jobsurl = baseURL + "Api/V1/Jobs.svc/queues/" + whichqueue + "/jobs";
+    var jobsurl = skyqueryUrl + "Api/V1/Jobs.svc/queues/" + whichqueue + "/jobs";
     console.log(jobsurl);
     skyQueryConnect(jobsurl, xAuth, "GET", "jobs");
 }
@@ -80,7 +103,7 @@ function callSubmit() {
 
     // to open more information about skyquery apis
     $(document).on('click', "#info", function () {
-        window.location = baseURL+"/Api/Default.aspx";
+        window.location = skyqueryUrl+"/Api/Default.aspx";
     });
 
     // to open more information about skyquery apis
@@ -94,7 +117,7 @@ function callSubmit() {
 
 function submitJob(whichqueue) {
    
-    var jobsurl = baseURL + "Api/V1/Jobs.svc/queues/" + whichqueue + "/jobs";
+    var jobsurl = skyqueryUrl + "Api/V1/Jobs.svc/queues/" + whichqueue + "/jobs";
     var obj = new Object();
     obj.query = $("#query").val();
 
@@ -179,7 +202,7 @@ function updateJobs(response) {
                 //if (text2.output.indexOf(":") >= 0)
                 if (typeof text2.output != 'undefined')
                      dbtb = text2.output.split(":");
-                var link = baseURL + "Api/V1/Data.svc/" + dbtb[0] + "/" + dbtb[1];
+                var link = skyqueryUrl + "Api/V1/Data.svc/" + dbtb[0] + "/" + dbtb[1];
                 var dnlink = "<a href=" + link + "  download><span class=\"" + getLabelCls(text2.status) + "\"> " + text2.output + "</span></a>";
                 tablerow += "<td>"+dnlink+"</td>";
             });

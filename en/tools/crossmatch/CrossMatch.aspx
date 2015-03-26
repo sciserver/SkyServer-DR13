@@ -1,7 +1,4 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="CrossMatch.aspx.cs" Inherits="SkyServer.en.tools.crossmatch.CrossMatch" %>
-
-<!DOCTYPE html>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -31,7 +28,11 @@
   </head>
 
   <body role="document" onload="init()">
-
+      <%string skyqueryurl = ConfigurationManager.AppSettings["skyqueryUrl"]; %>
+      <script type="text/javascript">var skuqyeryUrl = "<%=skyqueryurl%>";</script>
+      <%@ Register TagPrefix="login" TagName="loginParam" Src="..\..\Loginfloat.ascx"  %>
+  <login:loginParam ID="loginParams" runat="server"/>
+  
     <!-- Fixed navbar -->
     <!--style="background-image: url(images/new_titlebar.jpg)">-->
       <!--<div class="container" > 
@@ -45,11 +46,11 @@
     
       </div>-->
     
-    <div class="container-fluid">
+   <div class="container-fluid">
         <div class="row">
            <!-- <a class="header-brand" href="#"></a> -->
             <div class="col-lg-3 col-lg-offset-9">
-                <button type="button" class="btn btn-lg btn-default"  id="Button2">Login</button>
+           <%--<button type="button" class="btn btn-lg btn-default"  id="Button2">Login</button>--%>
             </div>
          </div>         
     </div>

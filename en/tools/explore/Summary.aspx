@@ -8,7 +8,13 @@
     <script type="text/javascript" src="./javascript/explore.js"></script>
 </asp:Content>
 
+
 <asp:Content ID="Content1" ContentPlaceHolderID="OEContent" runat="server">
+
+    <%--<asp:ContentPlaceHolder ID="ContentPlaceHolder1"  runat="server">--%>
+                    <%@ Register TagPrefix="login" TagName="loginParam" Src="../../Loginfloat.ascx"  %>
+                    <login:loginParam ID="loginParams" runat="server"/>
+                <%--</asp:ContentPlaceHolder> --%>
 
     <%--<%--This is for Metadata --%>
     <%@ Register TagPrefix="metadata" TagName="MetadataParameters" Src="./ExploreControls/MetaDataControl.ascx"  %>

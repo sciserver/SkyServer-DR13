@@ -52,6 +52,10 @@
     </asp:ContentPlaceHolder>
 </head>
 <body>
+    <asp:ContentPlaceHolder ID="Content1"  runat="server">
+                    <%@ Register TagPrefix="login" TagName="loginParam" Src="../../Loginfloat.ascx"  %>
+                    <login:loginParam ID="loginParams" runat="server"/>
+                </asp:ContentPlaceHolder> 
     <script type="text/javascript">
         var branchname = "<%=name%>";
     </script>

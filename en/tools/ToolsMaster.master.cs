@@ -79,7 +79,8 @@ namespace SkyServer.Tools
             //      }
             //  }
   
-              gutter += "6,Object Crossid,/tools/crossid/crossid.aspx;";
+              //gutter += "6,Object Crossid,/tools/crossid/crossid.aspx;";
+                  gutter += "6,Skyquery CrossMatch,/tools/crossmatch/crossmatch.aspx;";
 
               if( globals.ReleaseNumber > 1 ) {
   	            gutter += "8,CasJobs,"+globals.CasJobs+"' TARGET='CASJOBS;";

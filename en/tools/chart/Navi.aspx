@@ -147,6 +147,10 @@
 </head>
 
 <body onload="init();">
+    <%--<asp:ContentPlaceHolder ID="Content1"  runat="server">--%>
+                    <%@ Register TagPrefix="login" TagName="loginParam" Src="../../Loginfloat.ascx"  %>
+                    <login:loginParam ID="loginParams" runat="server"/>
+                <%--</asp:ContentPlaceHolder>--%>
     <form id="form1" runat="server">
     <div>
     

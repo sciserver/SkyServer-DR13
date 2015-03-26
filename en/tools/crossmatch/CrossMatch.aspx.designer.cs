@@ -11,5 +11,14 @@ namespace SkyServer.en.tools.crossmatch {
     
     
     public partial class CrossMatch {
+        
+        /// <summary>
+        /// loginParams control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SkyServer.en.Loginfloat loginParams;
     }
 }
