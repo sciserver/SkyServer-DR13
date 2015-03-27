@@ -29,7 +29,7 @@
 
   <body role="document" onload="init()">
       <%string skyqueryurl = ConfigurationManager.AppSettings["skyqueryUrl"]; %>
-      <script type="text/javascript">var skuqyeryUrl = "<%=skyqueryurl%>";</script>
+      <script type="text/javascript">var skyqueryUrl = "<%=skyqueryurl%>";</script>
       <%@ Register TagPrefix="login" TagName="loginParam" Src="..\..\Loginfloat.ascx"  %>
   <login:loginParam ID="loginParams" runat="server"/>
   

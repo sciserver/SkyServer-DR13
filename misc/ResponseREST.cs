@@ -161,7 +161,7 @@ namespace SkyServer.Tools.Search
         public void setContentType(string format) { 
             format  = format.ToLower();
             switch(format){
-                case "csv"    :  httpResponse.ContentType ="text/plain"; break;
+                case "csv"    :  httpResponse.ContentType = "text/plain"; break;
                 case "xml"    :  httpResponse.ContentType = "application/xml"; break;
                 case "votable":  httpResponse.ContentType = "application/xml"; break;
                 case "json"   :  httpResponse.ContentType = "application/json"; break;

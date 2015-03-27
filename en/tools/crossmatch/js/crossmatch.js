@@ -12,8 +12,7 @@ var sampleQueries = [
 function init() {
 
     readCookie("Keystone");
-
-    //callServices();
+    callServices();
     
 }
 
