@@ -52,7 +52,7 @@ namespace SkyServer.Tools.Explore
         private void executeQuery() {
 
             try {
-                ds = runQuery.RunCasjobs(cmd);  
+                ds = runQuery.RunCasjobs(cmd,"Explore: Display Results");  
             }
             catch (Exception e) {
                 throw new Exception(e.Message);

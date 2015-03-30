@@ -39,7 +39,13 @@ namespace SkyServer.Tools.Explore
         {
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             master = (ObjectExplorer)Page.Master;
-            runQuery = new RunQuery();
+
+            string token = "";
+            HttpCookie cookie = Request.Cookies["Keystone"];
+            if (cookie != null)
+                if (cookie["token"] != null || !cookie["token"].Equals(""))
+                    token = cookie["token"];
+            runQuery = new RunQuery(token);
             try
             {
                 //objId = Request.QueryString["id"];
@@ -59,7 +65,7 @@ namespace SkyServer.Tools.Explore
         {
 
             string cmd = ExplorerQueries.getSpectroQuery.Replace("@objId", objId).Replace("@specId", master.specId.ToString());
-            DataSet ds = runQuery.RunCasjobs(cmd);
+            DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Spectral");
 
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {

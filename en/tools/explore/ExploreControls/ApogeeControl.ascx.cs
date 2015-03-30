@@ -92,7 +92,12 @@ namespace SkyServer.Tools.Explore
         {
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             master = (ObjectExplorer)Page.Master;
-            runQuery = new RunQuery();
+            string token = "";
+            HttpCookie cookie = Request.Cookies["Keystone"];
+            if (cookie != null)
+                if (cookie["token"] != null || !cookie["token"].Equals(""))
+                    token = cookie["token"];
+            runQuery = new RunQuery(token);
             
                 if (master.apid != null && !master.apid.Equals(""))
                 {
@@ -112,7 +117,7 @@ namespace SkyServer.Tools.Explore
 
         protected void ReadInfoFromDbReader()  
         {
-            DataSet ds  = runQuery.RunCasjobs(command);
+            DataSet ds  = runQuery.RunCasjobs(command,"Explore: Apogee");
            
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
@@ -184,7 +189,7 @@ namespace SkyServer.Tools.Explore
             }
             command = command.Replace("@id", "'" + apogee_id + "'");
 
-            DataSet ds = runQuery.RunCasjobs(command);
+            DataSet ds = runQuery.RunCasjobs(command, "Explore: Apogee");
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
                 while (reader.Read()) // Multiple rows expected

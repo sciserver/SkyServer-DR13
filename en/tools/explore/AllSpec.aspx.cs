@@ -27,10 +27,10 @@ namespace SkyServer.Tools.Explore
 
         private void executeQuery() {
             string cmd = ExplorerQueries.AllSpec1.Replace("@objId", objId);
-            ds_spec1 =runQuery.RunCasjobs(cmd);
+            ds_spec1 =runQuery.RunCasjobs(cmd,"Explore: All Spec");
 
             cmd = ExplorerQueries.AllSpec2.Replace("@objId", objId);
-            ds_spec2 = runQuery.RunCasjobs(cmd);
+            ds_spec2 = runQuery.RunCasjobs(cmd,"Explore: All Spec");
         }
     }
 }

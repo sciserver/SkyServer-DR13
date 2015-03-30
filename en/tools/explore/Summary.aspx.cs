@@ -128,7 +128,7 @@ namespace SkyServer.Tools.Explore
             cmd = cmd.Replace("@plate", plate.ToString());
             cmd = cmd.Replace("@fiberId", fiber.ToString());
 
-            DataSet ds = runQuery.RunCasjobs(cmd);
+            DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
                 if (reader.Read())
@@ -148,7 +148,7 @@ namespace SkyServer.Tools.Explore
             // if we couldn't find that plate/mjd/fiber, maybe it's an APOGEE object
             if (!String.IsNullOrEmpty(objectInfo.objId))
             {
-                ds = runQuery.RunCasjobs(cmd);
+                ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
                 using (DataTableReader reader = ds.Tables[0].CreateDataReader())
                 {
                     if (reader.Read())
@@ -168,7 +168,7 @@ namespace SkyServer.Tools.Explore
             cmd = cmd.Replace("@qdec", qdec.ToString());
             cmd = cmd.Replace("@searchRadius", (0.5 / 60).ToString());
 
-            DataSet ds = runQuery.RunCasjobs(cmd);
+            DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
                 if (reader.Read())
@@ -184,7 +184,7 @@ namespace SkyServer.Tools.Explore
             cmd = cmd.Replace("@qra", qra.ToString());
             cmd = cmd.Replace("@qdec", qdec.ToString());
             cmd = cmd.Replace("@searchRadius", (0.5 / 60).ToString());
-            DataSet ds = runQuery.RunCasjobs(cmd);
+            DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
                 if (reader.Read())
@@ -202,7 +202,7 @@ namespace SkyServer.Tools.Explore
             cmd = cmd.Replace("@qdec", qdec.ToString());
             cmd = cmd.Replace("@searchRadius", (0.5 / 60).ToString());
 
-            DataSet ds = runQuery.RunCasjobs(cmd);
+            DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
                 if (reader.Read())
@@ -254,7 +254,7 @@ namespace SkyServer.Tools.Explore
             cmd = cmd.Replace("@whatdoiget",whatdoiget);
             cmd = cmd.Replace("@sid","'"+sid+"'");
 
-            DataSet ds = runQuery.RunCasjobs(cmd);
+            DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
                 if (reader.Read())
@@ -270,7 +270,7 @@ namespace SkyServer.Tools.Explore
         {
             string cmd = ExplorerQueries.getpmtsFromSpecWithSpecobjID;
             cmd = cmd.Replace("@sid", sid.ToString());
-            DataSet ds = runQuery.RunCasjobs(cmd);
+            DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
                 if (reader.Read())
@@ -295,7 +295,7 @@ namespace SkyServer.Tools.Explore
             string cmd = ExplorerQueries.getpmtsFromPhoto;
             cmd = cmd.Replace("@objid", id.ToString());
 
-            DataSet ds = runQuery.RunCasjobs(cmd);
+            DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
                 if (reader.Read())
@@ -320,7 +320,7 @@ namespace SkyServer.Tools.Explore
                 cmd = ExplorerQueries.getPlateFiberFromSpecObj;
                 cmd = cmd.Replace("@specId", specId.ToString());
                 
-                ds = runQuery.RunCasjobs(cmd);
+                ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
                 using (DataTableReader reader = ds.Tables[0].CreateDataReader())
                 {
                     if (reader.Read())
@@ -352,7 +352,7 @@ namespace SkyServer.Tools.Explore
              cmd = ExplorerQueries.getApogee2;
 
             cmd = cmd.Replace("@apogeeId",apid);
-            DataSet ds = runQuery.RunCasjobs(cmd);
+            DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
                 if (reader.Read())
@@ -367,7 +367,7 @@ namespace SkyServer.Tools.Explore
             cmd = cmd.Replace("@qdec", qdec.ToString());
             cmd = cmd.Replace("@searchRadius", (0.5/60).ToString());
 
-            ds = runQuery.RunCasjobs(cmd);
+            ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
                 if (reader.Read())

@@ -64,7 +64,12 @@ namespace SkyServer.Tools.Explore
         {
             globals = (Globals)Application[Globals.PROPERTY_NAME];            
             master  = (ObjectExplorer)Page.Master;
-            runQuery = new RunQuery();
+            string token = "";
+            HttpCookie cookie = Request.Cookies["Keystone"];
+            if (cookie != null)
+                if (cookie["token"] != null || !cookie["token"].Equals(""))
+                    token = cookie["token"];
+            runQuery = new RunQuery(token);
 
             try
             {
@@ -88,7 +93,7 @@ namespace SkyServer.Tools.Explore
         private void execQuery()
         {
             string cmd = ExplorerQueries.getImagingQuery.Replace("@objId", objId);
-            DataSet ds = runQuery.RunCasjobs(cmd);
+            DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Imaging");
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
                 if (reader.Read())
@@ -160,7 +165,7 @@ namespace SkyServer.Tools.Explore
             
             string cmd = ExplorerQueries.unitQuery;
            
-            DataSet ds = runQuery.RunCasjobs(cmd);
+            DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Imaging");
              using (DataTableReader reader = ds.Tables[0].CreateDataReader())
              {
                  if (reader.HasRows)
@@ -181,7 +186,7 @@ namespace SkyServer.Tools.Explore
             string cmd = ExplorerQueries.getUnit;
             cmd = cmd.Replace("@tablename", tablename);
             cmd = cmd.Replace("@name", columname);
-            DataSet ds = runQuery.RunCasjobs(cmd);
+            DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Imaging");
              using (DataTableReader reader = ds.Tables[0].CreateDataReader())
              {
                  if (reader.HasRows)

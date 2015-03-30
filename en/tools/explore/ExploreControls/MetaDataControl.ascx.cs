@@ -30,7 +30,12 @@ namespace SkyServer.Tools.Explore
         {
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             master = (ObjectExplorer)Page.Master;
-            runQuery = new RunQuery();
+            string token = "";
+            HttpCookie cookie = Request.Cookies["Keystone"];
+            if (cookie != null)
+                if (cookie["token"] != null || !cookie["token"].Equals(""))
+                    token = cookie["token"];
+            runQuery = new RunQuery(token);
 
             if (master.objId != null && !master.objId.Equals(""))
             executeQuery();      
@@ -39,7 +44,7 @@ namespace SkyServer.Tools.Explore
         private void executeQuery()
         {
             string cmd = ExplorerQueries.getObjParamaters.Replace("@objId", master.objId);
-            DataSet ds = runQuery.RunCasjobs(cmd);
+            DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Metadata");
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
                 if (reader.Read())

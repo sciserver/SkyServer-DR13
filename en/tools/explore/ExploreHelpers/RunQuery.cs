@@ -46,7 +46,7 @@ namespace SkyServer.Tools.Explore
          //</summary>
          //<param name="command"></param>
          //<returns></returns>
-        public DataSet RunCasjobs(string command)
+        public DataSet RunCasjobs(string command, string taskname)
         {
            // throw new IndexOutOfRangeException("There is an invalid argument");
             
@@ -66,6 +66,8 @@ namespace SkyServer.Tools.Explore
                 jsonWriter.WriteStartObject();
                 jsonWriter.WritePropertyName("Query");
                 jsonWriter.WriteValue(command);
+                jsonWriter.WritePropertyName("TaskName");
+                jsonWriter.WriteValue(taskname);
                 //jsonWriter.WritePropertyName("ReturnDataSet");
                 //jsonWriter.WriteValue(true);
                 jsonWriter.WriteEndObject();

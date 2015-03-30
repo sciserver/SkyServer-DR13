@@ -31,13 +31,13 @@ namespace SkyServer.Tools.Explore
 
         private void executeQuery() {
             string cmd = ExplorerQueries.Plate.Replace("@plateId",plateId.ToString());
-            ds = runQuery.RunCasjobs(cmd);
+            ds = runQuery.RunCasjobs(cmd,"Explore: Plates");
         }
 
         public void showFTable()
         {
             string cmd = ExplorerQueries.PlateShow.Replace("@plateId", plateId.ToString());
-            DataSet ds = runQuery.RunCasjobs(cmd);
+            DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Plates");
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
                 string u = "<a class='content' target='_top' href='summary.aspx?sid=";

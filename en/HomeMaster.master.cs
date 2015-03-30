@@ -63,96 +63,96 @@ namespace SkyServer
             //}
         }
 
-        private void TryKeystoneLogin()
-        {
-            try
-            {
-                if (Request["token"] != null)
-                {
-                    if (Request["token"] == "")
-                    {
-                        HttpCookie cookie = new HttpCookie("Keystone");
-                        cookie.Expires = DateTime.Now.AddDays(-1);
-                        Response.Cookies.Add(cookie);
-                    }
-                    else
-                    {
-                        try
-                        {
-                            string token = Request["token"];
-                            var userAccess = Keystone.Authenticate(token);
-                            userid = userAccess.User.Name;
-                            isValidUser = true;
+        //private void TryKeystoneLogin()
+        //{
+        //    try
+        //    {
+        //        if (Request["token"] != null)
+        //        {
+        //            if (Request["token"] == "")
+        //            {
+        //                HttpCookie cookie = new HttpCookie("Keystone");
+        //                cookie.Expires = DateTime.Now.AddDays(-1);
+        //                Response.Cookies.Add(cookie);
+        //            }
+        //            else
+        //            {
+        //                try
+        //                {
+        //                    string token = Request["token"];
+        //                    var userAccess = Keystone.Authenticate(token);
+        //                    userid = userAccess.User.Name;
+        //                    isValidUser = true;
 
-                            HttpCookie cookie = new HttpCookie("Keystone");
-                            cookie["token"] = token;
-                            Response.Cookies.Add(cookie);
+        //                    HttpCookie cookie = new HttpCookie("Keystone");
+        //                    cookie["token"] = token;
+        //                    Response.Cookies.Add(cookie);
                            
                            
-                        }
-                        catch (Exception e) {
-                            HttpCookie cookie = new HttpCookie("Keystone");
-                            cookie["token"] = "";
-                            isValidUser = false;
-                        }
-                    }                 
-                }
-                else
-                {
-                    HttpCookie cookie = Request.Cookies["Keystone"];
-                    if (cookie != null)
-                    {
-                        string token = cookie["token"];
-                        try
-                        {
-                            if (token == null || token == "")
-                            {
-                                HttpCookie fake = new HttpCookie("Keystone");
-                                fake.Expires = DateTime.Now.AddDays(-1);
-                                Response.Cookies.Add(fake);
-                            }
-                            else
-                            {
-                                var userAccess = Keystone.Authenticate(token);
-                                userid = userAccess.User.Name;
-                                isValidUser = true;
-                            }
-                        }
-                        catch (Exception e) {                            
-                            cookie["token"] = "";
-                            isValidUser = false;
-                        }
+        //                }
+        //                catch (Exception e) {
+        //                    HttpCookie cookie = new HttpCookie("Keystone");
+        //                    cookie["token"] = "";
+        //                    isValidUser = false;
+        //                }
+        //            }                 
+        //        }
+        //        else
+        //        {
+        //            HttpCookie cookie = Request.Cookies["Keystone"];
+        //            if (cookie != null)
+        //            {
+        //                string token = cookie["token"];
+        //                try
+        //                {
+        //                    if (token == null || token == "")
+        //                    {
+        //                        HttpCookie fake = new HttpCookie("Keystone");
+        //                        fake.Expires = DateTime.Now.AddDays(-1);
+        //                        Response.Cookies.Add(fake);
+        //                    }
+        //                    else
+        //                    {
+        //                        var userAccess = Keystone.Authenticate(token);
+        //                        userid = userAccess.User.Name;
+        //                        isValidUser = true;
+        //                    }
+        //                }
+        //                catch (Exception e) {                            
+        //                    cookie["token"] = "";
+        //                    isValidUser = false;
+        //                }
                         
-                    }                    
-                }
-            }
-            catch (UnauthorizedAccessException ex)
-            {                
-                Response.Redirect(ConfigurationManager.AppSettings["Keystone.Portal"] + "?message=" + Uri.EscapeDataString(ex.Message));
-            }
-            catch (Exception ex)
-            {                
-                throw new Exception("Keystone error: " + ex.Message, ex);
-            }
-        }
+        //            }                    
+        //        }
+        //    }
+        //    catch (UnauthorizedAccessException ex)
+        //    {                
+        //        Response.Redirect(ConfigurationManager.AppSettings["Keystone.Portal"] + "?message=" + Uri.EscapeDataString(ex.Message));
+        //    }
+        //    catch (Exception ex)
+        //    {                
+        //        throw new Exception("Keystone error: " + ex.Message, ex);
+        //    }
+        //}
 
-        protected void KeystoneLogin_Click(object sender, EventArgs e)
-        {
-            Response.Redirect(ConfigurationManager.AppSettings["Keystone.Portal"] + "?callbackUrl=" + HttpUtility.UrlEncode(Request.Url.AbsoluteUri));
-        }
+        //protected void KeystoneLogin_Click(object sender, EventArgs e)
+        //{
+        //    Response.Redirect(ConfigurationManager.AppSettings["Keystone.Portal"] + "?callbackUrl=" + HttpUtility.UrlEncode(Request.Url.AbsoluteUri));
+        //}
 
-        protected void KeystoneLogout_Click(object sender, EventArgs e) {
-            if (Request.Cookies["Keystone"] != null)
-            {
-                HttpCookie fake = new HttpCookie("Keystone");
-                fake.Expires = DateTime.Now.AddDays(-1);
-                Response.Cookies.Add(fake);
-                Response.Redirect(ConfigurationManager.AppSettings["Keystone.Portal"] + "?logout=true");
-            }
-            else
-            {
-                Response.Redirect(HttpUtility.UrlEncode(Request.Url.AbsoluteUri));
-            }
-        }
+        //protected void KeystoneLogout_Click(object sender, EventArgs e) {
+        //    if (Request.Cookies["Keystone"] != null)
+        //    {
+        //        HttpCookie fake = new HttpCookie("Keystone");
+        //        fake.Expires = DateTime.Now.AddDays(-1);
+        //        Response.Cookies.Add(fake);
+        //        Response.Redirect(ConfigurationManager.AppSettings["Keystone.Portal"] + "?logout=true");
+        //    }
+        //    else
+        //    {
+        //        Response.Redirect(HttpUtility.UrlEncode(Request.Url.AbsoluteUri));
+        //    }
+        //}
     }
 }

@@ -33,7 +33,7 @@ namespace SkyServer.Tools.Explore
         {
             string[] result = null;
             string cmd = ExplorerQueries.fitsimg.Replace("@fieldId", fieldId.ToString());                
-            DataSet ds = runQuery.RunCasjobs(cmd);
+            DataSet ds = runQuery.RunCasjobs(cmd,"Explore: FitsImg");
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
 
