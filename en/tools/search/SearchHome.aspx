@@ -31,10 +31,10 @@ matching the criteria you entered, in the format you requested.
 	&nbsp;Search the sky in a rectangular region <%if( (globals.Access == "public") && (globals.ReleaseNumber > 3) ) {%>(<b>EASY</b>)<% }%>
 
 <%	if( (globals.Access == "public") && (globals.ReleaseNumber > 3 && globals.ReleaseNumber < 8) ) { %>
-  <li><a href="form/">Search Form</a>:
+ <%-- <li><a href="form/">Search Form</a>:
 	&nbsp;Search the sky by selecting choices from an online form (<b>EASY</b>)
   <li><a href="../qbuilder">Query Builder</a>:
-	&nbsp;Build a SQL query by clicking on various menus (<b>HARDER</b>)
+	&nbsp;Build a SQL query by clicking on various menus (<b>HARDER</b>)--%>
 <%  }	%>
 	
   <li><a href="sql.aspx">SQL</a>:

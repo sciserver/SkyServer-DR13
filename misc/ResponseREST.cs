@@ -36,6 +36,7 @@ namespace SkyServer.Tools.Search
         {
 
         }
+        public ResponseREST() { }
         /// <summary>
         /// This method is used to pass all the requests and run rest web service
         /// </summary>

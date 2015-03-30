@@ -136,7 +136,7 @@ if( globals.Access == "public" ) {
 %>
 		</td>
 		<td nowrap class="q" onmouseover="return escape('Checking this box will do only a syntax check when you press Submit.  Uncheck and press Submit again when done.');">&nbsp;
-		<input TYPE="checkbox" VALUE="Syntax" id="syntax" name="syntax">Check Syntax Only?
+		<%--<input TYPE="checkbox" VALUE="Syntax" id="syntax" name="syntax">Check Syntax Only?--%>
 		</td>	
 		<td class='frame'>
 			<table BORDER=0 WIDTH="100%" >

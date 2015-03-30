@@ -25,9 +25,14 @@
     <![endif]-->
       <!--Cross match specific-->
       <link href="css/crossmatch.css" rel="stylesheet">    
+
+      <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+       <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+
   </head>
 
   <body role="document" onload="init()">
+      <script>hljs.initHighlightingOnLoad();</script>
       <%string skyqueryurl = ConfigurationManager.AppSettings["skyqueryUrl"]; %>
       <script type="text/javascript">var skyqueryUrl = "<%=skyqueryurl%>";</script>
       <%@ Register TagPrefix="login" TagName="loginParam" Src="..\..\Loginfloat.ascx"  %>
@@ -103,11 +108,11 @@
     </div>
                             
        <div class="query-text-area">
-        <textarea class="form-control" id="query" rows="5">
-        SELECT s.objid, s.ra, s.dec, g.objid, g.ra, g.dec, x.ra, x.dec INTO twowayxmatch FROM SDSSDR7:PhotoObjAll AS s WITH(POINT(s.ra, s.dec), ERROR(0.1, 0.1, 0.1)) 
-        CROSS JOIN GALEX:PhotoObjAll AS g WITH(POINT(g.ra, g.dec), ERROR(0.2, 0.2, 0.2)) XMATCH BAYESFACTOR x MUST EXIST s MUST EXIST g HAVING LIMIT 1e3 
-        WHERE s.ra BETWEEN 0 AND 5 AND s.dec BETWEEN 0 AND 5  AND g.ra BETWEEN 0 AND 5 AND g.dec BETWEEN 0 AND 5
+        <pre> <%--<code class="SQL"> --%>
+        <textarea class="form-control" id="query" rows="5">SELECT s.objid, s.ra, s.dec, g.objid, g.ra, g.dec, x.ra, x.dec INTO twowayxmatch FROM SDSSDR7:PhotoObjAll AS s WITH(POINT(s.ra, s.dec), ERROR(0.1, 0.1, 0.1)) CROSS JOIN GALEX:PhotoObjAll AS g WITH(POINT(g.ra, g.dec), ERROR(0.2, 0.2, 0.2)) XMATCH BAYESFACTOR x MUST EXIST s MUST EXIST g HAVING LIMIT 1e3 WHERE s.ra BETWEEN 0 AND 5 AND s.dec BETWEEN 0 AND 5  AND g.ra BETWEEN 0 AND 5 AND g.dec BETWEEN 0 AND 5
         </textarea>
+            <%--</code>--%>
+        </pre>
       </div>
 
       <p>  
