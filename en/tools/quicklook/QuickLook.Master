@@ -1,9 +1,9 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="QuickLook.Master.cs" Inherits="SkyServer.Tools.QuickLook.ObjectQuickLook" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="QuickLook.master.cs" Inherits="SkyServer.Tools.QuickLook.QuickLook" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head id="Head1" runat="server">
+<head runat="server">
     <link href="../../tools.css" rel="stylesheet" type="text/css" />
     <style>
       .hh	 {font-family: arial,helvetica,sans-serif;font-weight:bolder;font-size:10pt;}
@@ -87,7 +87,7 @@
     }
 
     function getid(id) {
-        var link = "summary.aspx?id=" + id;
+        var link = "quickobj.aspx?id=" + id;
         return link;
     }
 
@@ -116,13 +116,15 @@
         }
     }
 
+
+
 </script>
     <title></title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body leftmargin="8" topmargin="8" class="quicklook">
-    <form id="form2" runat="server">
+    <form id="form1" runat="server">
 
     <table border=0 cellspacing=0 cellpadding=2 bgcolor=black>
 	<tr>

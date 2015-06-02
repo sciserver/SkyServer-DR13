@@ -1996,13 +1996,13 @@
     <Content Include="en\tools\quicklook\images\square.gif" />
     <Content Include="en\tools\quicklook\qlhelp.css" />
     <Content Include="en\tools\quicklook\quicklook.swf" />
-    <Content Include="en\tools\quicklook\QuickLookControls\MetaDataControl.ascx" />
+    <Content Include="en\tools\quicklook\QuickObj.aspx" />
+    <Content Include="en\tools\quicklook\QuickSummary.aspx" />
     <Content Include="en\tools\quicklook\Search.aspx" />
     <Content Include="en\tools\quicklook\SetEq.aspx" />
     <Content Include="en\tools\quicklook\SetId.aspx" />
     <Content Include="en\tools\quicklook\SetPlfib.aspx" />
     <Content Include="en\tools\quicklook\SetSDSS.aspx" />
-    <Content Include="en\tools\quicklook\Summary.aspx" />
     <Content Include="en\tools\scroll\Camcol.aspx" />
     <Content Include="en\tools\scroll\Default.aspx" />
     <Content Include="en\tools\scroll\ScrollHome.aspx" />
@@ -5828,24 +5828,13 @@
     <Compile Include="en\tools\quicklook\Help.aspx.designer.cs">
       <DependentUpon>Help.aspx</DependentUpon>
     </Compile>
-    <Compile Include="en\tools\quicklook\HRefs.cs" />
-    <Compile Include="en\tools\quicklook\QuickLook.Master.cs">
-      <DependentUpon>QuickLook.Master</DependentUpon>
+    <Compile Include="en\tools\quicklook\QuickObj.aspx.cs">
+      <DependentUpon>QuickObj.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="en\tools\quicklook\QuickLook.Master.designer.cs">
-      <DependentUpon>QuickLook.Master</DependentUpon>
+    <Compile Include="en\tools\quicklook\QuickObj.aspx.designer.cs">
+      <DependentUpon>QuickObj.aspx</DependentUpon>
     </Compile>
-    <Compile Include="en\tools\quicklook\QuickLookControls\MetaDataControl.ascx.cs">
-      <DependentUpon>MetaDataControl.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="en\tools\quicklook\QuickLookControls\MetaDataControl.ascx.designer.cs">
-      <DependentUpon>MetaDataControl.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="en\tools\quicklook\QuickLookHelpers\ObjectInfo.cs" />
-    <Compile Include="en\tools\quicklook\QuickLookHelpers\QuickLookQueries.cs" />
-    <Compile Include="en\tools\quicklook\QuickLookHelpers\RunQuery.cs" />
     <Compile Include="en\tools\quicklook\Search.aspx.cs">
       <DependentUpon>Search.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -5880,13 +5869,6 @@
     </Compile>
     <Compile Include="en\tools\quicklook\SetSDSS.aspx.designer.cs">
       <DependentUpon>SetSDSS.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="en\tools\quicklook\Summary.aspx.cs">
-      <DependentUpon>Summary.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="en\tools\quicklook\Summary.aspx.designer.cs">
-      <DependentUpon>Summary.aspx</DependentUpon>
     </Compile>
     <Compile Include="en\tools\Resolver.ashx.cs">
       <DependentUpon>Resolver.ashx</DependentUpon>
@@ -6176,6 +6158,21 @@
     <Compile Include="en\tools\explore\Summary.aspx.designer.cs">
       <DependentUpon>Summary.aspx</DependentUpon>
     </Compile>
+    <Compile Include="en\tools\quicklook\HRefs.cs" />
+    <Compile Include="en\tools\quicklook\QuickSummary.aspx.cs">
+      <DependentUpon>QuickSummary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\tools\quicklook\QuickSummary.aspx.designer.cs">
+      <DependentUpon>QuickSummary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\tools\quicklook\QuickLook.Master.cs">
+      <DependentUpon>QuickLook.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\tools\quicklook\QuickLook.Master.designer.cs">
+      <DependentUpon>QuickLook.Master</DependentUpon>
+    </Compile>
     <Compile Include="en\tools\ToolsHome.aspx.cs">
       <DependentUpon>ToolsHome.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -6429,7 +6426,6 @@
     <Content Include="en\tools\crossmatch\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="en\tools\crossmatch\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="en\tools\crossmatch\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="en\tools\quicklook\QuickLook.Master" />
     <None Include="en\tools\STARTBall\FlashJavascriptGateway\FlashJavascriptGateway\.DS_Store" />
     <None Include="en\tools\STARTBall\FlashJavascriptGateway\FlashJavascriptGateway\installation\.DS_Store" />
     <None Include="en\tools\STARTBall\FlashJavascriptGateway\FlashJavascriptGateway\source\flash\actionscript\com\macromedia\javascript\JavaScriptProxy.as" />
@@ -6446,6 +6442,9 @@
   <ItemGroup>
     <Content Include="en\tools\chart\ChartBase.Master" />
     <Content Include="en\tools\chart\ListBase.Master" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="en\tools\quicklook\QuickLook.Master" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="en\tools\ToolsMaster.master" />

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/en/tools/QuickLook/QuickLook.Master" AutoEventWireup="true" CodeBehind="Search.aspx.cs" Inherits="SkyServer.Tools.QuickLook.Search" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/en/tools/quicklook/QuickLook.Master" AutoEventWireup="true" CodeBehind="Search.aspx.cs" Inherits="SkyServer.Tools.QuickLook.Search" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
         div.content       

@@ -50,7 +50,7 @@
             s += padHex(cf, 4);
             s += padHex(obj, 4);
 
-            var w = window.open('summary.aspx?id=' + s, 'EXPLORE');
+            var w = window.open('quickobj.aspx?id=' + s, 'EXPLORE');
             window.close();
             w.focus();
             return;
