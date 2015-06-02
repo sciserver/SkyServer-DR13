@@ -10,15 +10,15 @@
 namespace SkyServer.Tools.QuickLook {
     
     
-    public partial class QuickObj {
+    public partial class Summary {
         
         /// <summary>
-        /// form1 control.
+        /// MetadataParameters1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::SkyServer.Tools.QuickLook.MetaDataControl MetadataParameters1;
     }
 }
