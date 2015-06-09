@@ -20,7 +20,7 @@
 
         function press_ok() {
             var f = (document.layers) ? document.ctrl.document.forms[0] : document.forms[0];
-            var w = window.open('quickobj.aspx?plate=' + f.plate.value + '&mjd=' + f.mjd.value + '&fiber=' + f.fiber.value, 'EXPLORE');
+            var w = window.open('summary.aspx?plate=' + f.plate.value + '&mjd=' + f.mjd.value + '&fiber=' + f.fiber.value, 'EXPLORE');
             window.close();
             w.focus();
             return;

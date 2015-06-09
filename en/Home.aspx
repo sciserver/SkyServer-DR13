@@ -94,8 +94,8 @@
 						</tr>
 						<tr height="20">
 							<td nowrap class="menulink">
-							  <%--<a class="menulink" href="tools/quicklook/quickobj.aspx">
-							    &nbsp;&nbsp;Quick Look</a>&nbsp;&nbsp;|--%>
+							  <a class="menulink" href="tools/quicklook/quickobj.aspx">
+							    &nbsp;&nbsp;Quick Look</a>&nbsp;&nbsp;|
 							    <a class="menulink" href="tools/explore/obj.aspx">&nbsp;&nbsp;Explore&nbsp;&nbsp;&nbsp;</a>
 							</td>
 						</tr>

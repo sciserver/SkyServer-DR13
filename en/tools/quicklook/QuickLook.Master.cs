@@ -6,90 +6,129 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using System.Globalization;
+using SkyServer;
+using SkyServer.Tools.QuickLook;
+using System.Collections.Specialized;
+using System.Data;
+
+
 
 namespace SkyServer.Tools.QuickLook
 {
-    public partial class QuickLook : System.Web.UI.MasterPage
+
+    public partial class ObjectQuickLook : System.Web.UI.MasterPage
     {
         protected const string ZERO_ID = "0x0000000000000000";
 
-        double? ra;
-        double? dec;
-        int? mjd;
-        short? fiber;
-        protected int? plate;
-
-
-        string objId;
-        string specObjId;
-
-        protected int tabwidth = 128;
-        protected long? id = 1237654386268439267;
         protected Globals globals;
-        protected HRefs hrefs;
+        protected HRefs hrefs = new HRefs();
         protected string enUrl;
+        protected string url = null;
+        protected int tabwidth = 128;
 
-        protected string url;
+        public QuickLookQueries exploreQuery;
+
+        //public long? id = null;
+        public long? specId = null;
+        public string apid;
+        public string objId = null;
+        public string specObjId = null;
+
+        public double? ra = null;
+        public double? dec = null;
+
+        public string plateId = null;
+        public string fieldId = null;
+        public short? fiberId = null;
+        public int? mjd;
+        public short? plate;
+
+        public int? run;
+        public short? rerun;
+        public short? camcol;
+        public short? field;
+
+        // from quicklook.master.cs
+        short? fiber;
+        //protected int? plate;
+        protected long? id = 1237654386268439267;
+
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
             globals = (Globals)Application[Globals.PROPERTY_NAME];
-            hrefs = new HRefs();
+
+            exploreQuery = new QuickLookQueries();
+            //Get Values from Session Object
+            if ((ObjectInfo)Session["QuickLookObjectInfo"] == null)
+            {
+                id = globals.ExploreDefault;
+            }
+            else
+            {
+                getSessionIds();
+            }
+
+            url = getURL();
             enUrl = getEnURL();
-            url = ResolveClientUrl("~/en");
-            string s = Request.QueryString["id"];
 
-            id = Utilities.ParseId(s);
-            /*
-            try
-            {
-                if (s != null & !"".Equals(s))
-                {
-                    if (s.StartsWith("0x"))
-                        id = long.Parse(s.Substring(2), NumberStyles.AllowHexSpecifier);
-                    else
-                        id = long.Parse(s);
-                }
-            }
-            catch (Exception ex)
-            {
-                // Could not parse, so leave null
-            }
-            */
+            // common query to explorer
+            string allId = "id=" + id + "&spec=" + specId + "&apid=" + apid + "&field=" + fieldId;
 
-            using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
+            // id is the decimal representation; objId is the hex representation.
+
+
+            hrefs.SaveBook = "javascript:saveBook(\"" + objId + "\");";
+            hrefs.ShowBook = "javascript:showNotes();";
+
+            if (globals.Database.StartsWith("STRIPE"))
             {
-                oConn.Open();
-                if (id.HasValue) pmtsFromPhoto(oConn, id);
+                if (run == 106) run = 100006;
+                if (run == 206) run = 200006;
             }
 
-            hrefs.Quicklook = "quickobj.aspx?id=" + id;
+
+
+            string hmsRA;
+            hmsRA = Functions.hmsPad(ra ?? 0).Replace(" ", "+");
+
+            string dmsDec;
+            if (dec >= 0)
+                dmsDec = Functions.dmsPad(dec ?? 0).Replace("+", "%2B");
+            else
+                dmsDec = Functions.dmsPad(dec ?? 0);
+            dmsDec = dmsDec.Replace(" ", "+");
+
+            //initializing the links on the master webpage, given the parameters of the object
+            hrefs.Quicklook = "summary.aspx?id=" + id;
             hrefs.Explore = "../explore/obj.aspx?id=" + id;
             hrefs.FindingChart = "../chart/chart.aspx?ra=" + ra + "&dec=" + dec;
 
             if (plate.HasValue && mjd.HasValue && fiber.HasValue)
             {
-                hrefs.Quicklook = "quickobj.aspx?plate=" + plate + "&mjd=" + mjd + "&fiber=" + fiber;
+                hrefs.Quicklook = "summary.aspx?plate=" + plate + "&mjd=" + mjd + "&fiber=" + fiber;
                 hrefs.Explore = "../explore/obj.aspx?plate=" + plate + "&mjd=" + mjd + "&fiber=" + fiber;
             }
             else
             {
                 if (ra.HasValue && dec.HasValue)
                 {
-                    hrefs.Quicklook = "quickobj.aspx?ra=" + ra + "&dec=" + dec;
+                    hrefs.Quicklook = "summary.aspx?ra=" + ra + "&dec=" + dec;
                     hrefs.Explore = "../explore/obj.aspx?ra=" + ra + "&dec=" + dec;
                 }
                 else
                 {
                     if (specObjId != null && !ZERO_ID.Equals(specObjId))
                     {
-                        hrefs.Quicklook = "quickobj.aspx?sid=" + specObjId;
+                        hrefs.Quicklook = "summary.aspx?sid=" + specObjId;
                         hrefs.Explore = "../explore/obj.aspx?sid=" + specObjId;
                     }
                 }
             }
 
-            hrefs.Search = "search.aspx?id="+objId;
+            hrefs.Search = "search.aspx?id=" + objId;
             hrefs.Eq = "javascript:setEq(\"" + ra + "\",\"" + dec + "\");";
             hrefs.SDSS = "javascript:setSDSS(\"" + objId + "\");";
             hrefs.Id = "javascript:setId(\"" + objId + "\");";
@@ -102,52 +141,61 @@ namespace SkyServer.Tools.QuickLook
             hrefs.Examples = "help.aspx#examples";
 
             hrefs.Print = "framePrint();";
-            hrefs.Help = "help.aspx"; 	
+            hrefs.Help = "help.aspx";
+
+
         }
 
-        public void pmtsFromPhoto(SqlConnection oConn, long? id)
+        private void getSessionIds()
         {
-            using (SqlCommand oCmd = oConn.CreateCommand())
+
+            ObjectInfo o = (ObjectInfo)Session["QuickLookObjectInfo"];
+            objId = o.objId;
+            specObjId = o.specObjId;
+            apid = o.apid;
+
+            ra = o.ra;
+            dec = o.dec;
+
+            plateId = o.plateId;
+            fieldId = o.fieldId;
+            fiberId = o.fiberId;
+            mjd = o.mjd;
+            plate = o.plate;
+
+            run = o.run;
+            rerun = o.rerun;
+            camcol = o.camcol;
+            field = o.field;
+
+            id = o.id;
+            specId = o.specId;
+        }
+
+        public string getURL()
+        {
+            string host = Request.ServerVariables["SERVER_NAME"];
+            string path = Request.ServerVariables["SCRIPT_NAME"];
+
+            string root = "http://" + host;
+            string s = path;
+            string[] q = s.Split('/');
+
+            string lang = "";
+            for (int i = 0; i < q.Length; i++)
             {
-                oCmd.CommandText =
-                    " select p.ra, p.dec," +
-                    " cast(s.specobjid as binary(8)) as specObjId," +
-                    " cast(p.objId as binary(8)) as objId " +
-                    " from PhotoTag p " +
-                    " left outer join SpecObjAll s ON s.bestobjid=p.objid " +
-                    " where p.objId=dbo.fObjId(@id) ";
-
-                oCmd.Parameters.AddWithValue("@id", id);
-                using (SqlDataReader reader = oCmd.ExecuteReader())
+                if (i > 0) root += "/";
+                root += q[i];
+                lang = q[i];
+                if (lang == "en" || lang == "de" || lang == "jp"
+                  || lang == "hu" || lang == "sp" || lang == "ce" || lang == "pt"
+                  || lang == "zh" || lang == "uk" || lang == "ru")
                 {
-                    if (reader.Read())
-                    {
-                        ra = reader.GetDouble(0);
-                        dec = reader.GetDouble(1);
-                        specObjId = Utilities.BytesToHex(reader.GetSqlBytes(2).Buffer);
-                        objId = Utilities.BytesToHex(reader.GetSqlBytes(3).Buffer);
-                    }
+                    //depth = q.length - i - 2;
+                    return root;
                 }
-                // get the plateId and fiberId from the specObj, if it exists
-
-                if (specObjId != null && !ZERO_ID.Equals(specObjId))
-                {
-                    oCmd.Parameters.Clear();
-                    oCmd.CommandText =
-                        " select s.mjd, s.fiberId, q.plate" +
-                        " from SpecObjAll s JOIN PlateX q ON s.plateId=q.plateId where specObjId=@specObjId";
-                    oCmd.Parameters.AddWithValue("@specObjId", long.Parse(specObjId.Substring(2), NumberStyles.AllowHexSpecifier));
-                    using (SqlDataReader reader = oCmd.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            mjd = reader.GetInt32(0);
-                            fiber = reader.GetInt16(1);
-                            plate = reader.GetInt16(2);
-                        }
-                    }
-                }
-            } // using SqlCommand
+            }
+            return root;
         }
 
         public string getEnURL()
@@ -178,5 +226,147 @@ namespace SkyServer.Tools.QuickLook
             }
             return root;
         }
+
+        // ***** Functions *****
+
+
+
+        //public string getUnit(string tableName, string name)
+        //{            
+        //    DataSet ds = runQuery.RunCasjobs(exploreQuery.getUnit(tableName,name));
+        //    using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+        //    {
+        //        if (reader.Read())
+        //            {
+        //                return reader.GetString(0);
+        //            }
+        //    }            
+
+        //    return "";
+        //}
+
+
+
+
+        /// <summary>
+        /// Vertical aligned table  With DataSet
+        /// </summary>
+        /// <param name="namevalues"></param>
+        /// <param name="w"></param>
+        public void showVTable(DataSet ds, int w)
+        {
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            {
+                char c = 't'; string unit = "test";
+                Response.Write("<table cellpadding=2 cellspacing=2 border=0");
+                if (w > 0)
+                    Response.Write(" width=" + w);
+                Response.Write(">\n");
+                if (reader.HasRows)
+                {
+                    if (reader.Read())
+                    {
+                        for (int k = 0; k < reader.FieldCount; k++)
+                        {
+                            Response.Write("<tr align='left' >");
+                            Response.Write("<td  valign='top' class='h'>");
+                            Response.Write("<span ");
+                            if (unit != "")
+                                Response.Write("ONMOUSEOVER=\"this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=" + unit + "')\" ");
+                            Response.Write("></span>");
+                            Response.Write(reader.GetName(k) + "</td>");
+
+                            Response.Write("<td valign='top' class='" + c + "'>");
+                            Response.Write(reader.GetValue(k));
+                            Response.Write("</td>");
+                            Response.Write("</tr>");
+                        }
+                    }
+                }
+                else
+                {
+                    Response.Write("<tr> <td class='nodatafound'>No data found for this object </td></tr>");
+                }
+                Response.Write("</table>");
+            }
+        }
+
+        /// <summary>
+        /// Added new HTable with namevalue pair options
+        /// </summary>
+        /// <param name="namevalues"></param>
+        /// <param name="w"></param>
+        public void showHTable(DataSet ds, int w, string target)
+        {
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            {
+                char c = 't'; string unit = "test";
+
+                Response.Write("<table cellpadding=2 cellspacing=2 border=0");
+
+                if (w > 0)
+                    Response.Write(" width=" + w);
+                Response.Write(">\n");
+
+                Response.Write("<tr>");
+
+                if (reader.HasRows)
+                {
+                    for (int k = 0; k < reader.FieldCount; k++)
+                    {
+                        Response.Write("<td align='middle' class='h'>");
+                        Response.Write("<span ");
+                        if (unit != "")
+                            Response.Write("ONMOUSEOVER=\"this.T_ABOVE=true;this.T_WIDTH='100';return escape('<i>unit</i>=" + unit + "')\" ");
+                        Response.Write("></span>");
+                        Response.Write(reader.GetName(k) + "</td>");
+                    }
+                    Response.Write("</tr>");
+
+
+                    while (reader.Read())
+                    {
+                        Response.Write("<tr>");
+
+                        for (int k = 0; k < reader.FieldCount; k++)
+                        {
+                            Response.Write("<td nowrap align='middle' class='" + c + "'>");
+
+                            // think something else if possible for this
+                            if (target.Equals("AllSpectra") && k == 0)
+                            {
+                                string u = "<a class='content' target='_top' href='Summary.aspx?sid=";
+                                Response.Write(u + reader.GetValue(k) + "'>" + reader.GetValue(k) + "</a></td>");
+                            }
+
+                            else if (target.Equals("Neighbors") && k == 0)
+                            {
+                                string u = "<a class='content' target='_top' href='Summary.aspx?id=";
+                                Response.Write(u + reader.GetValue(k) + "'>" + reader.GetValue(k) + "</a></td>");
+                            }
+
+                            else
+                            {
+                                Response.Write(reader.GetValue(k));
+                            }
+                            Response.Write("</td>");
+                        }
+                    }
+                }
+                else
+                {
+                    Response.Write(" <td class='nodatafound'>No data found for this object </td>");
+                }
+
+                Response.Write("</tr>");
+
+                Response.Write("</table>");
+            }
+        }
     }
+
+
+
+
+
 }
