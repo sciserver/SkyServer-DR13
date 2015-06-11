@@ -318,6 +318,11 @@ WHERE
 </pre>
 </td></tr></table>
 <p>
+As mentioned above, if you are running a query that is expected to match a large number of rows (millions), it is better
+to first obtain the binary bitmask resulting from the multiple flag arithmetic and using that single bitmask instead of
+repeated function calls to the flag functions, as described in the <a href="#functions"> Using dbo
+functions in your query</a> subsection of the <a href="#optquery">Optimizing Queries</a> section below.
+
 
 <a name="clean"></a>
 <br>
@@ -804,7 +809,33 @@ WHERE
 </pre></td></tr></table>
 <p>
 This will avoid the wastefully repeated function call for each and every photobj
-in the table.
+in the table.This is even more important when you are using multiple flags and you can
+reduce the comparison to a single bitmask using flag arithmetic.  In the final example
+above in the <a href="">Querying Bit Flags</a> section, you can replace the original query:
+<pre>
+SELECT top 10 objid, flags FROM PhotoTag
+WHERE 
+    ( flags & (dbo.fPhotoFlags('NODEBLEND')
+               + dbo.fPhotoFlags('BINNED1')
+               + dbo.fPhotoFlags('BINNED2')) ) = 0
+</pre>
+with a more efficient version by first running the following pre-query:
+<pre>
+SELECT (dbo.fPhotoFlags('NODEBLEND')
+               + dbo.fPhotoFlags('BINNED1')
+               + dbo.fPhotoFlags('BINNED2'))
+</pre>
+which returns the bitmask value <b>805306432</b>, which can in turn be substituted back in the 
+original query as follows:
+<pre>
+SELECT top 10 objid, flags FROM PhotoTag
+WHERE 
+    ( flags & 805306432 ) = 0
+</pre>
+so as to save 3 function calls and make the query significantly more efficient. (In this particular example it does 
+not matter because we are only asking for 10 rows, but if the "TOP 10" were to be removed and the query was run
+on millions of rows, it would make a difference).
+
 <p>
 
 <hr>
