@@ -54,6 +54,8 @@ matching the criteria you entered, in the format you requested.
 	&nbsp;Form-based query on imaging data
   <li><a href="SQS.aspx">Spectro Query </a>:
 	&nbsp;Form-based query on spectroscopic data
+  <li><a href="IRQS.aspx">IR Spectro Query </a>:
+	&nbsp;Form-based query on IR spectroscopic data
 
 </ul>
 <h4>The names and units of fields on the query pages</h4>

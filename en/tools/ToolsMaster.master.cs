@@ -75,12 +75,13 @@ namespace SkyServer.Tools
                   gutter += "5.4,Imaging Query,/tools/search/IQS.aspx;";
             //      if( dbType == "BEST" ) {
 	              gutter += "5.5,Spectro Query,/tools/search/SQS.aspx;";
-                  if (globals.ReleaseNumber == 10) { gutter += "5.6,IR Spec Query,/tools/search/IRQS.aspx;"; }
+                  if (globals.ReleaseNumber >= 10) { gutter += "5.6,IR Spec Query,/tools/search/IRQS.aspx;"; }
             //      }
             //  }
   
               //gutter += "6,Object Crossid,/tools/crossid/crossid.aspx;";
-                  gutter += "6,Skyquery CrossMatch,/tools/crossmatch/crossmatch.aspx;";
+            // hiding the link until crossmatch is working      
+            //gutter += "6,Skyquery CrossMatch,/tools/crossmatch/crossmatch.aspx;";
 
               if( globals.ReleaseNumber > 1 ) {
   	            gutter += "8,CasJobs,"+globals.CasJobs+"' TARGET='CASJOBS;";
