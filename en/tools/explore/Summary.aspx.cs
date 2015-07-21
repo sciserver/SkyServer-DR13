@@ -144,7 +144,8 @@ namespace SkyServer.Tools.Explore
             cmd = ExplorerQueries.getApogeeFromEq;
             cmd = cmd.Replace("@qra", objectInfo.ra.ToString());
             cmd = cmd.Replace("@qdec", objectInfo.dec.ToString());
-            cmd = cmd.Replace("@searchRadius", (0.5 / 60).ToString());
+            //cmd = cmd.Replace("@searchRadius", (0.5 / 60).ToString());
+            cmd = cmd.Replace("@searchRadius", (globals.EqSearchRadius).ToString());
             // if we couldn't find that plate/mjd/fiber, maybe it's an APOGEE object
             if (!String.IsNullOrEmpty(objectInfo.objId))
             {
@@ -166,8 +167,8 @@ namespace SkyServer.Tools.Explore
             string cmd = ExplorerQueries.getApogeeFromEq;
             cmd = cmd.Replace("@qra", qra.ToString());
             cmd = cmd.Replace("@qdec", qdec.ToString());
-            cmd = cmd.Replace("@searchRadius", (0.5 / 60).ToString());
-
+            cmd = cmd.Replace("@searchRadius", (globals.EqSearchRadius).ToString());
+            //cmd = cmd.Replace("@searchRadius", (0.5 / 60).ToString());
             DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
@@ -183,7 +184,8 @@ namespace SkyServer.Tools.Explore
             string cmd = ExplorerQueries.getPhotoFromEq;
             cmd = cmd.Replace("@qra", qra.ToString());
             cmd = cmd.Replace("@qdec", qdec.ToString());
-            cmd = cmd.Replace("@searchRadius", (0.5 / 60).ToString());
+            cmd = cmd.Replace("@searchRadius", (globals.EqSearchRadius).ToString());
+            //cmd = cmd.Replace("@searchRadius", (0.5 / 60).ToString());
             DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
@@ -200,8 +202,8 @@ namespace SkyServer.Tools.Explore
             string cmd = ExplorerQueries.getpmtsFromEq;
             cmd = cmd.Replace("@qra", qra.ToString());
             cmd = cmd.Replace("@qdec", qdec.ToString());
-            cmd = cmd.Replace("@searchRadius", (0.5 / 60).ToString());
-
+            cmd = cmd.Replace("@searchRadius", (globals.EqSearchRadius).ToString());
+            //cmd = cmd.Replace("@searchRadius", (0.5 / 60).ToString());
             DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
@@ -365,7 +367,8 @@ namespace SkyServer.Tools.Explore
             cmd = ExplorerQueries.getpmtsFromEq;
             cmd = cmd.Replace("@qra", qra.ToString());
             cmd = cmd.Replace("@qdec", qdec.ToString());
-            cmd = cmd.Replace("@searchRadius", (0.5/60).ToString());
+            cmd = cmd.Replace("@searchRadius", (globals.EqSearchRadius).ToString());
+            //cmd = cmd.Replace("@searchRadius", (0.5/60).ToString());
 
             ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())

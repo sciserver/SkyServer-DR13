@@ -180,7 +180,8 @@ namespace SkyServer.Tools.QuickLook
             string cmd = QuickLookQueries.getObjIDFromEq;
             cmd = cmd.Replace("@qra", qra.ToString());
             cmd = cmd.Replace("@qdec", qdec.ToString());
-            cmd = cmd.Replace("@searchRadius", (0.5 / 60).ToString());
+            cmd = cmd.Replace("@searchRadius", (globals.EqSearchRadius).ToString());
+            //cmd = cmd.Replace("@searchRadius", (0.5 / 60).ToString());
             DataSet ds = runQuery.RunCasjobs(cmd, "QuickLook: Summary");
             string ObjID2 = null;
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
@@ -240,7 +241,8 @@ namespace SkyServer.Tools.QuickLook
             cmd = QuickLookQueries.getObjIDFromEq;
             cmd = cmd.Replace("@qra", qra.ToString());
             cmd = cmd.Replace("@qdec", qdec.ToString());
-            cmd = cmd.Replace("@searchRadius", (0.5 / 60).ToString());
+            cmd = cmd.Replace("@searchRadius", (globals.EqSearchRadius).ToString());
+            //cmd = cmd.Replace("@searchRadius", (0.5 / 60).ToString());
             setObjectInfo(cmd);
         }
 

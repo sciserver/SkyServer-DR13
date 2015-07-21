@@ -77,7 +77,7 @@ if( globals.Access == "public" ) {
 %>
 	<span style="float:right;margin-top:2px;">
 		<input TYPE="button" VALUE="Clear Query" id="clear" name="clear" color="#00FFFF" onClick="clearQuery();"
-			onmouseover="return escape('Press this button to clear the query window and enter your own query.  To undo clear, click mouse in query window and press Ctrl-Z (repearedly).  To reset to default query, press Reset button.');"/>
+			onmouseover="return escape('Press this button to clear the query window and enter your own query.  To undo clear, click mouse in query window and press Ctrl-Z (repeatedly).  To reset to default query, press Reset button.');"/>
 	</span>
 	</td></tr>
 	<tr VALIGN=top><td align="center">
