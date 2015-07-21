@@ -294,7 +294,7 @@ namespace SkyServer
         }
         public string ContactUrl
         {
-            get { return "http://skyserver.sdss3.org/contact/?release=" + Release + "&helpdesk=" + helpdesk + "&smtp=" + smtp + "&epoHelp=" + epoHelp + "&subject=SkyServer+" + Release + "+issue:+"; }
+            get { return "http://skyserver.sdss.org/contact/?release=" + Release + "&helpdesk=" + helpdesk + "&smtp=" + smtp + "&epoHelp=" + epoHelp + "&subject=SkyServer+" + Release + "+issue:+"; }
         }
         public string LogUrl
         {

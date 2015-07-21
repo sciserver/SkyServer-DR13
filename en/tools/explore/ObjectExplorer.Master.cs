@@ -51,7 +51,6 @@ namespace SkyServer.Tools.Explore
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             
             exploreQuery = new ExplorerQueries();           
-            //Get Values from Session Object
             getSessionIds();
 
             url = getURL();

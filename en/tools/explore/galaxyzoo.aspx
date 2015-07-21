@@ -48,11 +48,11 @@
         DataSet ds = null;
 
         cmd = ExplorerQueries.zooSpec1.Replace("@objId", objId);
-        ds =runQuery.RunCasjobs(cmd);
+        ds =runQuery.RunCasjobs(cmd,"Explore:GalaxyZoo");
         master.showHTable(ds, 600, "PhotoObj");
 
         cmd = ExplorerQueries.zooSpec2.Replace("@objId", objId);
-        ds =runQuery.RunCasjobs(cmd);
+        ds =runQuery.RunCasjobs(cmd,"Explore:GalaxyZoo");
         master.showHTable(ds, 600, "PhotoObj");
         
         // No spec
@@ -63,7 +63,7 @@
         
      <%    
         
-         ds=runQuery.RunCasjobs(cmd);
+         ds = runQuery.RunCasjobs(cmd, "Explore:GalaxyZoo");
          master.showHTable(ds, 600, "PhotoObj");
          
          // confidence
@@ -74,7 +74,7 @@
         
      <%
          cmd = ExplorerQueries.zooConfidence2.Replace("@objId", objId);
-         ds =runQuery.RunCasjobs(cmd);
+         ds = runQuery.RunCasjobs(cmd, "Explore:GalaxyZoo");
          master.showHTable(ds, 600, "PhotoObj");                   
          
          //zooMirrorBias
@@ -85,7 +85,7 @@
         
      <%
          cmd = ExplorerQueries.zooMirrorBias2.Replace("@objId", objId);
-         ds =runQuery.RunCasjobs(cmd);  
+         ds = runQuery.RunCasjobs(cmd, "Explore:GalaxyZoo");  
          master.showHTable(ds, 600, "PhotoObj");
 
          //zooMonochromeBias
@@ -114,7 +114,7 @@
         
      <%
             cmd = ExplorerQueries.zoo2MainSpecz2.Replace("@objId", objId);
-            ds =runQuery.RunCasjobs(cmd);
+            ds = runQuery.RunCasjobs(cmd, "Explore:GalaxyZoo");
             master.showHTable(ds, 600, "PhotoObj");
 
             //zoo2MainPhotoz
@@ -125,7 +125,7 @@
         
      <%
             cmd = ExplorerQueries.zoo2MainPhotoz2.Replace("@objId", objId);
-            ds =runQuery.RunCasjobs(cmd);
+            ds = runQuery.RunCasjobs(cmd, "Explore:GalaxyZoo");
             master.showHTable(ds, 600, "PhotoObj");
 
             //zoo2Stripe82Normal
@@ -136,7 +136,7 @@
         
      <%
             cmd = ExplorerQueries.zoo2Stripe82Normal2.Replace("@objId", objId);
-            ds =runQuery.RunCasjobs(cmd);
+            ds = runQuery.RunCasjobs(cmd, "Explore:GalaxyZoo");
             master.showHTable(ds, 600, "PhotoObj");
 
             //zoo2Stripe82Coadd1
@@ -147,7 +147,7 @@
         
      <%
             cmd = ExplorerQueries.zoo2Stripe82Coadd1_2.Replace("@objId", objId);
-            ds =runQuery.RunCasjobs(cmd);
+            ds = runQuery.RunCasjobs(cmd, "Explore:GalaxyZoo");
             master.showHTable(ds, 600, "PhotoObj");
 
             //zoo2Stripe82Coadd2
@@ -158,7 +158,7 @@
         
      <%
             cmd = ExplorerQueries.zoo2Stripe82Coadd2_2.Replace("@objId", objId);
-            ds =runQuery.RunCasjobs(cmd);
+            ds = runQuery.RunCasjobs(cmd, "Explore:GalaxyZoo");
             master.showHTable(ds, 600, "PhotoObj");
      
          }  // end of if statement where we control whether Zoo 2 data get displayed
