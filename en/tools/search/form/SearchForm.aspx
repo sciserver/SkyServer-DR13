@@ -6,7 +6,7 @@
 		<TABLE height="500" cellSpacing="0" cellPadding="0" width="640" border="0" ms_2d_layout="TRUE">
 			<TR vAlign="top">
 				<TD width="640" height="500">
-					<form id="Form1" method="post" runat="server">
+					<form id="Form1" target="search" method="post" runat="server">
 						<TABLE height="400" cellSpacing="0" cellPadding="0" width="640" border="0" ms_2d_layout="TRUE">
 							<tr><td colspan="3" bgcolor="#252525"><h1 align=center>SkyServer Search Form</h1></td></tr>
 							<TR vAlign="middle">

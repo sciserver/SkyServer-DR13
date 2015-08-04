@@ -2,6 +2,8 @@
 <%@ Register TagPrefix="uc" TagName="QS_Parameter" Src="QS_Parameter.ascx" %>
 <%@ Register TagPrefix="uc" TagName="QS_Position" Src="QS_Position.ascx" %>
 <%@ Register TagPrefix="uc" TagName="QS_Imaging" Src="QS_Imaging.ascx" %>
+
+
 <asp:Content ID="Content1" ContentPlaceHolderID="ToolsContent" runat="server">
 <style type="text/css">
 	td,p	{font-size:9pt; color:#000000}

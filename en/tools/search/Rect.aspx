@@ -109,13 +109,13 @@ if( globals.Access == "public" ) {
                 </td>
 			</tr>
 			<tr ALIGN=middle VALIGN=center>
-				<td><input id="min_ra" NAME="min_ra" SIZE="20"></td>
+				<td><input TYPE="FLOAT" id="min_ra" NAME="min_ra" SIZE="20" value="258.2"></td>
  				<td width="40%" class="qtitle"><asp:Label ID="labelRaOrL"></asp:Label></td>
-				<td><input TYPE="FLOAT" id="max_ra" name="max_ra" SIZE="20"></td></tr>
+				<td><input TYPE="FLOAT" id="max_ra" name="max_ra" SIZE="20" value="258.3"></td></tr>
 			<tr ALIGN=middle VALIGN=center>
-				<td><input TYPE="FLOAT" id="min_dec" NAME="min_dec" SIZE="20"></td>
+				<td><input TYPE="FLOAT" id="min_dec" NAME="min_dec" SIZE="20" value="64"></td>
  				<td width="40%" class="qtitle"><asp:Label ID="labelDecOrB"></asp:Label></td>
-				<td><input TYPE="FLOAT" id="max_dec" NAME="max_dec" SIZE="20"></td></tr>
+				<td><input TYPE="FLOAT" id="max_dec" NAME="max_dec" SIZE="20" value="64.1"></td></tr>
 		</table>
 	</td></tr>
 
@@ -164,9 +164,9 @@ if( globals.Access == "public" ) {
 	<table BORDER=0 WIDTH="100%" >
   	<tr class='q'>
 			<td ALIGN=left width="20%">Output Format</td>
-			<td nowrap width="13%" ALIGN=middle><input name=format value="html" type=radio class="box">HTML</td>
+			<td nowrap width="13%" ALIGN=middle><input name=format value="html" type=radio class="box" CHECKED> HTML</td>
 			<td nowrap width="13%" ALIGN=middle><input name=format value="xml"  type=radio class="box">XML</td>
-			<td nowrap width="13%" ALIGN=middle><input name=format value="csv"  type=radio class="box" checked>CSV</td>
+			<td nowrap width="13%" ALIGN=middle><input name=format value="csv"  type=radio class="box">CSV</td>
       <td nowrap width="13%" ALIGN=middle><input name=format value="json"  type=radio class="box">JSON</td>
       <td nowrap width="13%" ALIGN=middle><input name=format value="votable"  type=radio class="box">VOTable</td>
       <td nowrap width="13%" ALIGN=middle><input name=format value="fits"  type=radio class="box">FITS</td>

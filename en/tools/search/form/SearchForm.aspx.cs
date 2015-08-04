@@ -11,7 +11,8 @@ namespace SkyServer.Tools.Search
 {
     public partial class SearchForm : System.Web.UI.Page
     {
-        private string SkyServer = "../x_sql.aspx";
+        //private string SkyServer = "../x_sql.aspx";
+        private string SkyServer = "../X_Results.aspx";
         private string ImageListFormat = "../../chart/f_sql.aspx";
         private string ShowImageList = "../../chart/list.aspx";
 
@@ -499,7 +500,7 @@ namespace SkyServer.Tools.Search
         protected void runSql(object sender, System.EventArgs e)
         {
             prevText = SqlBox.Text;
-            string query = SkyServer + "?format=";
+            string query = SkyServer + "?searchtool=SearchForm&format=";
             query += RadioButtonList1.SelectedItem.Value;
             query += "&cmd=";
             string cmd = SqlBox.Text.Replace("\n", "%0A");
@@ -511,7 +512,7 @@ namespace SkyServer.Tools.Search
         protected void runSqlSyntaxCheck(object sender, System.EventArgs e)
         {
             prevText = SqlBox.Text;
-            string query = SkyServer + "?syntax=Syntax&format=";
+            string query = SkyServer + "?searchtool=SearchForm&syntax=Syntax&format=";
             query += RadioButtonList1.SelectedItem.Value;
             query += "&cmd=";
             string cmd = SqlBox.Text.Replace("\n", "%0A");

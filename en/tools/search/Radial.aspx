@@ -44,6 +44,10 @@ if( globals.Access == "public" ) {
 }
 %>
 
+<script language="javascript" src="../form/validate.js"></script>
+
+
+
 <script type="text/javascript">
     window.onload = function page_load() {
         document.getElementById('ra').value = "258.25";
@@ -79,8 +83,25 @@ if( globals.Access == "public" ) {
         w.focus();
 
     }
+
+    function SetUband() {
+        var umin_s = document.getElementById('min_u').value;
+        var umax_s = document.getElementById('max_u').value;
+        document.getElementById('uband').value = "0,30"  //umin_s.concat(",").concat(umax_s);
+    }
+
+
+
 </script>
 <input type="hidden" name="searchtool" id="searchtool" value="Radial" />
+<input type="hidden" id=uband name=uband />
+<input type="hidden" id=gband name=gband />
+<input type="hidden" id=rband name=rband />
+<input type="hidden" id=iband name=iband />
+<input type="hidden" id=zband name=zband />
+
+
+
 
 <table BORDER=0 WIDTH="600"  BGCOLOR="#aaaaaa" >
 	<tr><td class="frame">
@@ -108,10 +129,10 @@ if( globals.Access == "public" ) {
 			</tr>
             <tr ALIGN=middle VALIGN=center>
 				<td WIDTH="30%" class="qtitle"><asp:Label ID="labelRaOrL"></asp:Label></td>
-				<td WIDTH="70%" class="q"><input id="ra" name="ra" SIZE="20" value="27"></td></tr>
+				<td WIDTH="70%" class="q"><input id="ra" name="ra" SIZE="20" value="258.25"></td></tr>
 			<tr ALIGN=middle VALIGN=center>
 				<td WIDTH="30%" class="qtitle"><asp:Label ID="labelDecOrB"></asp:Label></td>
-				<td class="q"><input id=dec name=dec VALUE="<%=Math.Round(globals.VisualDec,2)%>" SIZE="20"></td></tr>
+				<td class="q"><input id=dec name=dec VALUE="64.05" SIZE="20"></td></tr>
 			<tr ALIGN=middle VALIGN=center>
 				<td class="qtitle">radius [arcmins]</td>
 				<td class="q"><input id=radius name=radius VALUE="<%=searchRad%>" SIZE="20"></td></tr>
@@ -127,34 +148,34 @@ if( globals.Access == "public" ) {
   <td class="qtitle">Max</td>
   </tr>
  <tr ALIGN=middle VALIGN=center>
-  <td class="qtitle"><input id=query_u name=check_u type=checkbox class="box" value=u></td>
-  <td class="q"><input TYPE="FLOAT" NAME="min_u" VALUE="0" SIZE="5"></td>
+  <td class="qtitle"><input id=query_u name=check_u type=checkbox class="box" value=u onclick="javascript: SetUband();"></td>
+  <td class="q"><input TYPE="FLOAT" id="min_u" NAME="min_u" VALUE="0" SIZE="5" OnBlur="validate(min_u,'r','magnitude',0,30,1)"  ></td>
   <td class="qtitle">u</td>
-  <td class="q"><input TYPE="FLOAT" NAME="max_u" VALUE="20" SIZE="5"></td>
+  <td class="q"><input TYPE="FLOAT" id="max_u" NAME="max_u" VALUE="20" SIZE="5" OnBlur="validate(max_u,'r','magnitude',0,30,1)" ></td>
   </tr>
  <tr ALIGN=middle VALIGN=center>
   <td class="qtitle"><input id=check_g name=check_g type=checkbox class="box" value=g></td>
-  <td class="q"><input TYPE="FLOAT" NAME="min_g" VALUE="0" SIZE="5"></td>
+  <td class="q"><input TYPE="FLOAT" id="min_g" NAME="min_g" VALUE="0" SIZE="5"></td>
   <td class="qtitle">g</td>
-  <td class="q"><input TYPE="FLOAT" NAME="max_g" VALUE="20" SIZE="5"></td>
+  <td class="q"><input TYPE="FLOAT" id="max_g" NAME="max_g" VALUE="20" SIZE="5"></td>
   </tr>
  <tr ALIGN=middle VALIGN=center>
   <td class="qtitle"><input id=check_r name=check_r type=checkbox class="box" value=r></td>
-  <td class="q"><input TYPE="FLOAT" NAME="min_r" VALUE="0" SIZE="5"></td>
+  <td class="q"><input TYPE="FLOAT" id="min_r" NAME="min_r" VALUE="0" SIZE="5"></td>
   <td class="qtitle">r</td>
-  <td class="q"><input TYPE="FLOAT" NAME="max_r" VALUE="20" SIZE="5"></td>
+  <td class="q"><input TYPE="FLOAT" id="max_r" NAME="max_r" VALUE="20" SIZE="5"></td>
   </tr>
  <tr ALIGN=middle VALIGN=center>
   <td class="qtitle"><input id=check_i name=check_i type=checkbox class="box" value=i></td>
-  <td class="q"><input TYPE="FLOAT" NAME="min_i" VALUE="0" SIZE="5"></td>
+  <td class="q"><input TYPE="FLOAT" id="min_i" NAME="min_i" VALUE="0" SIZE="5"></td>
   <td class="qtitle">i</td>
-  <td class="q"><input TYPE="FLOAT" NAME="max_i" VALUE="20" SIZE="5"></td>
+  <td class="q"><input TYPE="FLOAT" id="max_i" NAME="max_i" VALUE="20" SIZE="5"></td>
   </tr>
  <tr ALIGN=middle VALIGN=center>
   <td class="qtitle"><input id=check_z name=check_z type=checkbox class="box" value=z></td>
-  <td class="q"><input TYPE="FLOAT" NAME="min_z" VALUE="0" SIZE="5"></td>
+  <td class="q"><input TYPE="FLOAT" id="min_z" NAME="min_z" VALUE="0" SIZE="5"></td>
   <td class="qtitle">z</td>
-  <td class="q"><input TYPE="FLOAT" NAME="max_z" VALUE="20" SIZE="5"></td>
+  <td class="q"><input TYPE="FLOAT" id="max_z" NAME="max_z" VALUE="20" SIZE="5"></td>
   </tr>
 </table>
 	</td></tr>
@@ -166,7 +187,7 @@ if( globals.Access == "public" ) {
 			<td ALIGN=left width="20%">Output Format</td>
 			<td nowrap width="13%" ALIGN=middle><input name=format value="html" type=radio class="box" CHECKED>HTML</td>
 			<td nowrap width="13%" ALIGN=middle><input name=format value="xml"  type=radio class="box">XML</td>
-			<td nowrap width="13%" ALIGN=middle><input name=format value="csv"  type=radio class="box" checked>CSV</td>
+			<td nowrap width="13%" ALIGN=middle><input name=format value="csv"  type=radio class="box">CSV</td>
       <td nowrap width="13%" ALIGN=middle><input name=format value="json"  type=radio class="box">JSON</td>
       <td nowrap width="13%" ALIGN=middle><input name=format value="votable"  type=radio class="box">VOTable</td>
       <td nowrap width="13%" ALIGN=middle><input name=format value="fits"  type=radio class="box">FITS</td>
@@ -190,6 +211,7 @@ if( globals.Access == "public" ) {
 	entries, you will receive many records!)
 	</td></tr>  
 </table>
+
 
 
 </form>

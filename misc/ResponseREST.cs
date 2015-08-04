@@ -66,6 +66,7 @@ namespace SkyServer.Tools.Search
             Globals globals = new Globals();
 
             switch(searchTool){
+                case "SearchForm": requestUrl = globals.SQLSearchWS; break;
                 case "SQL": requestUrl = globals.SQLSearchWS; break;
                 case "Radial": requestUrl = globals.RadialSearchWS; break;
                 case "Rectangular": requestUrl = globals.RectangularSearchWS; break;
@@ -76,7 +77,7 @@ namespace SkyServer.Tools.Search
                         case "rectangular": requestUrl = globals.RectangularImaging; break;
                         case "none": requestUrl = globals.NoPositionImaging; break;
                         case "proximity": temp = true; requestUrl = globals.ProximityImaging; break;
-                        default: throw new Exception("No proper positionType selcted."); break;
+                        default: throw new Exception("No proper positionType selected."); break;
                     }
                     break;
                 case "Spectro":
@@ -86,7 +87,7 @@ namespace SkyServer.Tools.Search
                         case "rectangular": requestUrl = globals.RectangularSpectroWS; break;
                         case "none": requestUrl = globals.NoPositionSpectroWS; break;
                         case "proximity": temp = true; requestUrl = globals.ProximitySpectroWS; break;
-                        default: throw new Exception("No proper positionType selcted."); break;
+                        default: throw new Exception("No proper positionType selected."); break;
                     }
                     break;
                 case "IRSpectra":
@@ -96,7 +97,7 @@ namespace SkyServer.Tools.Search
                         case "conelb": requestUrl = globals.GalacticIRWS; break;
                         case "none": requestUrl = globals.NoPositionIRWS; break;
                         //case "proximity": temp = true; requestUrl = globals.ProximitySpectroWS; break;
-                        default: throw new Exception("No proper positionType selcted."); break;
+                        default: throw new Exception("No proper positionType selected."); break;
                     }
                     break;
                 default: throw new Exception("Select proper tool");
@@ -105,6 +106,7 @@ namespace SkyServer.Tools.Search
             
             if (temp)
             {
+                /*
                 radecText = inputForm["radecTextArea"];
                 if (radecText == null || radecText.Equals(""))
                 {
@@ -112,7 +114,27 @@ namespace SkyServer.Tools.Search
                     {
                         radecText = (new StreamReader(Request.Files[0].InputStream)).ReadToEnd();
                     }
-                }                
+                } 
+                 */
+                if (Request.Files.Count > 0 && Request.Files[0].ContentLength > 0)
+                {
+                    radecText = (new StreamReader(Request.Files[0].InputStream)).ReadToEnd();
+                }
+                else
+                {
+                    try
+                    {
+                        radecText = inputForm["radecTextArea"];
+                        if(radecText.Length == 0)
+                            throw new ApplicationException("ERROR: No (RA,DEC) list specified for Proximity search.");
+                    }
+                    catch
+                    {
+                        throw new ApplicationException("ERROR: Neither upload file nor list specified for Proximity search.");
+                    }
+
+                }
+
             }
 
             runQuery(requestUrl, requestString, radecText, inputForm["format"]);
@@ -139,7 +161,8 @@ namespace SkyServer.Tools.Search
                 content.Headers.Add("X-Auth-Token", token);
                 respMessage = client.PostAsync(requestUri, content).Result;
             }else{
-                respMessage = client.GetAsync(requestUri).Result;
+                //respMessage = client.GetAsync(requestUri).Result;
+                respMessage = client.PostAsync(requestUri, content).Result;
             }
 
             respMessage.EnsureSuccessStatusCode();
@@ -153,7 +176,8 @@ namespace SkyServer.Tools.Search
 
             setContentType(returnType);
             if (returnType.ToLower().Equals("html"))
-                httpResponse.Write(JsonToHtml(queryResult));
+                //httpResponse.Write(JsonToHtml(queryResult));
+                httpResponse.Write(queryResult);
             else
                 httpResponse.Write(queryResult);
             

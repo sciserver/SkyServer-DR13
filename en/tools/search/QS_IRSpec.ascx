@@ -152,7 +152,7 @@
         cmd += " AND [name] NOT IN ('APOGEE_EMBEDDEDCLUSTER_STAR', 'APOGEE_LONGBAR', 'APOGEE_EMISSION_STAR', 'APOGEE_KEPLER_COOLDWARF', 'APOGEE_MIRCLUSTER_STAR', 'APOGEE_CHECKED')\n";
         cmd += " ORDER BY field,value";
         DataSet data =  rs.RunCasjobs(cmd);
-        using (DataTableReader reader = data.CreateDataReader(ds.Tables[0]))
+        using (DataTableReader reader = data.CreateDataReader(data.Tables[0]))
         {
                 if (!reader.HasRows)
                 {
@@ -162,7 +162,7 @@
                 else
                 {
 %>                  <td align='middle' onmouseover="return escape('The bit-wise OR of these flags must be non-zero');">
-                        <strong>At least one of these flags ON</strong></td>\n");
+                        <strong>At least one of these flags ON</strong></td>
                     <td width=20>&nbsp;</td>
                     <td align='middle' onmouseover="return escape('The bit-wise AND of these flags must be zero');">
                         <strong>All of these flags OFF</strong><br></td></tr>

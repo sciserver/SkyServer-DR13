@@ -268,7 +268,8 @@ function runfootprint() {
        var ra = document.getElementById(prefix + "centerRA").value;
        var dec = document.getElementById(prefix + "centerDec").value;
        var rad = document.getElementById(prefix + "radius").value;
-      var w=window.open( "../x_radial.aspx?format=html&topnum=10&fp=only&ra="+ra+"&dec="+dec+"&radius="+rad, "query", "" );
+       //var w = window.open("../x_radial.aspx?format=html&topnum=10&fp=only&ra=" + ra + "&dec=" + dec + "&radius=" + rad, "query", "");
+       var w = window.open("../X_Results.aspx?searchtool=Radial&format=html&topnum=10&fp=only&ra=" + ra + "&dec=" + dec + "&radius=" + rad, "query", "");
       w.focus();
    }
 }
@@ -277,12 +278,14 @@ function runfootprint() {
 function runquery() {
     if ((document.getElementById(prefix+"SqlBox").readOnly == true) && (document.getElementById("EditQueryStatus").value == "DoneEdit")) {
         var q = escape(document.getElementById(prefix+"SqlBox").value).replace(/\+/g, "%2B");
-      var w = window.open("../x_sql.aspx?format=" + document.getElementById("SkyServerText").value + "&cmd=" + q, "query", "");
+        //var w = window.open("../x_sql.aspx?format=" + document.getElementById("SkyServerText").value + "&cmd=" + q, "query", "");
+        var w = window.open("../X_Results.aspx?searchtool=SearchForm&format=" + document.getElementById("SkyServerText").value + "&cmd=" + q, "query", "");
       w.focus();
    } else {
       if( validate_onsubmit() ) {
           var q = escape(document.getElementById(prefix + "SqlBox").value).replace(/\+/g, "%2B");
-         var w = window.open("../x_sql.aspx?format=" + document.getElementById("SkyServerText").value + "&cmd=" + q, "query", "");
+          //var w = window.open("../x_sql.aspx?format=" + document.getElementById("SkyServerText").value + "&cmd=" + q, "query", "");
+          var w = window.open("../X_Results.aspx?searchtool=SearchForm&format=" + document.getElementById("SkyServerText").value + "&cmd=" + q, "query", "");
          w.focus();
       }
    }

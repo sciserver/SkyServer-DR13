@@ -136,15 +136,15 @@ if( globals.Access == "public" ) {
 %>
 		</td>
 		<td nowrap class="q" onmouseover="return escape('Checking this box will do only a syntax check when you press Submit.  Uncheck and press Submit again when done.');">&nbsp;
-		<%--<input TYPE="checkbox" VALUE="Syntax" id="syntax" name="syntax">Check Syntax Only?--%>
+		<input TYPE="checkbox" VALUE="Syntax" id="syntax" name="syntax">Check Syntax Only?
 		</td>	
 		<td class='frame'>
 			<table BORDER=0 WIDTH="100%" >
 			  <tr>
 				<td ALIGN=left class="qtitle">Output Format</td>
-				<td nowrap class="q"><input name=format value="html" type=radio class="box" >HTML</td>
+				<td nowrap class="q"><input name=format value="html" type=radio class="box" checked>HTML</td>
 				<td nowrap class="q"><input name=format value="xml"  type=radio class="box">XML</td>
-				<td nowrap class="q"><input name=format value="csv"  type=radio class="box" checked>CSV</td>
+				<td nowrap class="q"><input name=format value="csv"  type=radio class="box">CSV</td>
                 <td nowrap class="q"><input name=format value="json"  type=radio class="box">JSON</td>
                 <td nowrap class="q"><input name=format value="votable"  type=radio class="box">VOTable</td>
                 <td nowrap class="q"><input name=format value="fits"  type=radio class="box">FITS</td>
