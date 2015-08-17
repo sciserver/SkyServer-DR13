@@ -82,10 +82,47 @@ if( globals.Access == "public" ) {
     function goToWindow() {
         var w = window.open("", 'search');
         w.focus();
-
     }
+
+    function SetUband() {
+        var umin_s = String(document.getElementById('min_u').value);
+        var umax_s = String(document.getElementById('max_u').value);
+        document.getElementById('uband').value = umin_s + "," + umax_s;
+    }
+
+    function SetGband() {
+        var gmin_s = String(document.getElementById('min_g').value);
+        var gmax_s = String(document.getElementById('max_g').value);
+        document.getElementById('gband').value = gmin_s + "," + gmax_s;
+    }
+
+    function SetRband() {
+        var rmin_s = String(document.getElementById('min_r').value);
+        var rmax_s = String(document.getElementById('max_r').value);
+        document.getElementById('rband').value = rmin_s + "," + rmax_s;
+    }
+
+    function SetIband() {
+        var imin_s = String(document.getElementById('min_i').value);
+        var imax_s = String(document.getElementById('max_i').value);
+        document.getElementById('iband').value = imin_s + "," + imax_s;
+    }
+
+    function SetZband() {
+        var zmin_s = String(document.getElementById('min_z').value);
+        var zmax_s = String(document.getElementById('max_z').value);
+        document.getElementById('zband').value = zmin_s + "," + zmax_s;
+    }
+
+
 </script>
 <input type="hidden" name="searchtool" id="searchtool" value="Rectangular" />
+<input type="hidden" id=uband name=uband />
+<input type="hidden" id=gband name=gband />
+<input type="hidden" id=rband name=rband />
+<input type="hidden" id=iband name=iband />
+<input type="hidden" id=zband name=zband />
+
 <table BORDER=0 WIDTH="600" bgcolor=#aaaaaa>
 	<tr><td class="frame">
 	NOTE: To be fair to other users, queries run from SkyServer search
@@ -128,34 +165,34 @@ if( globals.Access == "public" ) {
   <td class="qtitle">Max</td>
   </tr>
  <tr ALIGN=middle VALIGN=center>
-  <td class="qtitle"><input id=query_u name=check_u type=checkbox class="box" value=u></td>
-  <td class="q"><input TYPE="FLOAT" NAME="min_u" VALUE="0" SIZE="5"></td>
+  <td class="qtitle"><input id=query_u name=check_u type=checkbox class="box" value=u onblur="SetUband()"></td>
+  <td class="q"><input TYPE="FLOAT" id="min_u" NAME="min_u" VALUE="0" SIZE="5"  onblur="SetUband()"  ></td>
   <td class="qtitle">u</td>
-  <td class="q"><input TYPE="FLOAT" NAME="max_u" VALUE="20" SIZE="5"></td>
+  <td class="q"><input TYPE="FLOAT" id="max_u" NAME="max_u" VALUE="20" SIZE="5"  onblur="SetUband()" ></td>
   </tr>
  <tr ALIGN=middle VALIGN=center>
-  <td class="qtitle"><input id=check_g name=check_g type=checkbox class="box" value=g></td>
-  <td class="q"><input TYPE="FLOAT" NAME="min_g" VALUE="0" SIZE="5"></td>
+  <td class="qtitle"><input id=check_g name=check_g type=checkbox class="box" value=g onblur="SetGband()"></td>
+  <td class="q"><input TYPE="FLOAT" id="min_g" NAME="min_g" VALUE="0" SIZE="5" onblur="SetGband()"></td>
   <td class="qtitle">g</td>
-  <td class="q"><input TYPE="FLOAT" NAME="max_g" VALUE="20" SIZE="5"></td>
+  <td class="q"><input TYPE="FLOAT" id="max_g" NAME="max_g" VALUE="20" SIZE="5" onblur="SetGband()"></td>
   </tr>
  <tr ALIGN=middle VALIGN=center>
-  <td class="qtitle"><input id=check_r name=check_r type=checkbox class="box" value=r></td>
-  <td class="q"><input TYPE="FLOAT" NAME="min_r" VALUE="0" SIZE="5"></td>
+  <td class="qtitle"><input id=check_r name=check_r type=checkbox class="box" value=r onblur="SetRband()"></td>
+  <td class="q"><input TYPE="FLOAT" id="min_r" NAME="min_r" VALUE="0" SIZE="5" onblur="SetRband()"></td>
   <td class="qtitle">r</td>
-  <td class="q"><input TYPE="FLOAT" NAME="max_r" VALUE="20" SIZE="5"></td>
+  <td class="q"><input TYPE="FLOAT" id="max_r" NAME="max_r" VALUE="20" SIZE="5" onblur="SetRband()"></td>
   </tr>
  <tr ALIGN=middle VALIGN=center>
-  <td class="qtitle"><input id=check_i name=check_i type=checkbox class="box" value=i></td>
-  <td class="q"><input TYPE="FLOAT" NAME="min_i" VALUE="0" SIZE="5"></td>
+  <td class="qtitle"><input id=check_i name=check_i type=checkbox class="box" value=i onblur="SetIband()"></td>
+  <td class="q"><input TYPE="FLOAT" id="min_i" NAME="min_i" VALUE="0" SIZE="5" onblur="SetIband()"></td>
   <td class="qtitle">i</td>
-  <td class="q"><input TYPE="FLOAT" NAME="max_i" VALUE="20" SIZE="5"></td>
+  <td class="q"><input TYPE="FLOAT" id="max_i" NAME="max_i" VALUE="20" SIZE="5" onblur="SetIband()"></td>
   </tr>
  <tr ALIGN=middle VALIGN=center>
-  <td class="qtitle"><input id=check_z name=check_z type=checkbox class="box" value=z></td>
-  <td class="q"><input TYPE="FLOAT" NAME="min_z" VALUE="0" SIZE="5"></td>
+  <td class="qtitle"><input id=check_z name=check_z type=checkbox class="box" value=z onblur="SetZband()"></td>
+  <td class="q"><input TYPE="FLOAT" id="min_z" NAME="min_z" VALUE="0" SIZE="5" onblur="SetZband()"></td>
   <td class="qtitle">z</td>
-  <td class="q"><input TYPE="FLOAT" NAME="max_z" VALUE="20" SIZE="5"></td>
+  <td class="q"><input TYPE="FLOAT" id="max_z" NAME="max_z" VALUE="20" SIZE="5" onblur="SetZband()"></td>
   </tr>
 </table>
 	</td></tr>

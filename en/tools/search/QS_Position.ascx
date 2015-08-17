@@ -102,14 +102,14 @@
 		<table width=100%><tr>
 			<td width='45'><a href=<%=userguide%>#PositionRectangularConstraint 
 				onmouseover="return escape('FORMAT:  D.ddddd, HH:MM:SS.ss, or HH MM SS.ss (J2000)');">ra</a></td>
-			<td align=right><input class='pos' type=text name=raMin size=3></td>
+			<td align=right><input class='pos' type=text name=raMin size=3 value=<%=qsRaCenter%> /></td>
 		</tr></table>
 	</td>
 	<td class='q' width=100>
 		<table width=100%><tr>
 			<td width='45'><a href=<%=userguide%>#PositionRectangularConstraint 
 				onmouseover="return escape('FORMAT:  sD.ddddd, sDD:MM:SS.ss, or sDD MM SS.ss (J2000)');">dec</a></td>
-			<td align=right><input class='pos' type=text name=decMin size=3></td>
+			<td align=right><input class='pos' type=text name=decMin size=3 value="0.20"></td>
 		</tr></table>
 	</td>
 	<td class='q' rowspan='2'>
@@ -122,14 +122,14 @@
 		<table width=100%><tr>
 			<td width='45'><a href=<%=userguide%>#PositionRectangularConstraint 
 				onmouseover="return escape('FORMAT:  D.ddddd, HH:MM:SS.ss, or HH MM SS.ss (J2000)');">ra</a></td>
-			<td align=right><input class='pos' type=text name=raMax size=3></td>
+			<td align=right><input class='pos' type=text name=raMax size=3 value=<%=qsRaCenter+0.2%> /></td>
 		</tr></table>
 	</td>
 	<td class='q' width=100>
 		<table width=100%><tr>
 			<td width='45'><a href=<%=userguide%>#PositionRectangularConstraint 
 				onmouseover="return escape('FORMAT:  sD.ddddd, sDD:MM:SS.ss, or sDD MM SS.ss (J2000)');">dec</a></td>
-			<td align=right><input class='pos' type=text name=decMax size=3></td>
+			<td align=right><input class='pos' type=text name=decMax size=3 value="0.22"></td>
 		</tr></table>
 	</td>
 </tr>

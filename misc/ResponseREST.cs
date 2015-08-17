@@ -14,6 +14,7 @@ using System.Net.Http.Headers;
 
 using System.Threading.Tasks;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.IO;
 
 using System.Threading;
@@ -52,11 +53,12 @@ namespace SkyServer.Tools.Search
             NameValueCollection inputForm = Request.Form;
             if(inputForm.Count==0)
              inputForm = Request.QueryString;
-           
+
             foreach (string key in inputForm.Keys)
             {
-                requestString += key + "=" + inputForm[key] + "&";
+                    requestString += key + "=" + Uri.EscapeDataString(inputForm[key]) + "&";
             }
+
 
             String searchTool = inputForm["searchtool"];
 
@@ -143,9 +145,11 @@ namespace SkyServer.Tools.Search
 
         private void runQuery(String serviceUrl, String requestString, string uploaded, string returnType)
         {
+            Globals globals = new Globals();
             /// Once the authenticated skyserver is ready, we can update the code to retrieve token          
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri(serviceUrl);                        
+            client.BaseAddress = new Uri(serviceUrl);
+            client.Timeout = new TimeSpan(0, 0, 0, globals.TimeoutSkyserverWS);// default is 100000ms
             string requestUri = client.BaseAddress + "?" + requestString;
 
             string queryResult = "";
@@ -165,21 +169,24 @@ namespace SkyServer.Tools.Search
                 respMessage = client.PostAsync(requestUri, content).Result;
             }
 
-            respMessage.EnsureSuccessStatusCode();
+            //respMessage.EnsureSuccessStatusCode();
             if (respMessage.IsSuccessStatusCode)
                 queryResult = respMessage.Content.ReadAsStringAsync().Result;
-                
             else
-                throw new ApplicationException("Query did not return results successfully, check input and try again later.");
-
-           
+            {
+                string ErrorMessage = respMessage.Content.ReadAsStringAsync().Result;
+                queryResult = getErrorMessageHTMLresult(ErrorMessage);
+                returnType = "html";
+                //throw new ApplicationException("Query did not return results successfully, check input and try again later.");
+            }
 
             setContentType(returnType);
-            if (returnType.ToLower().Equals("html"))
-                //httpResponse.Write(JsonToHtml(queryResult));
-                httpResponse.Write(queryResult);
-            else
-                httpResponse.Write(queryResult);
+            httpResponse.Write(queryResult);
+            //if (returnType.ToLower().Equals("html"))
+            //    //httpResponse.Write(JsonToHtml(queryResult));
+            //    httpResponse.Write(queryResult);
+            //else
+            //    httpResponse.Write(queryResult);
             
         }
 
@@ -199,6 +206,44 @@ namespace SkyServer.Tools.Search
 
             //return format;
         }
+
+
+        public string getErrorMessageHTMLresult(string ErrorMessage)
+        {
+            string message = "";
+            string message2 = "";
+            string[] Expressions = new string[] { "\"Error Message\":\"(.*?)\"", "\"Error Message\": \"(.*?)\"", "\"Error Message\" :\"(.*?)\"", "\"Error Message\" : \"(.*?)\"", "\"Message\":\"(.*?)\"", "\"Message\" :\"(.*?)\"" , "\"Message\": \"(.*?)\"", "\"Message\" : \"(.*?)\""};
+            foreach (string expresion in Expressions)
+            {
+                Regex regex = new Regex(expresion);
+                var v = regex.Match(ErrorMessage);
+                message = v.Groups[1].ToString();
+                if (message != "")
+                    break;
+            }
+            if (message == "")
+            {
+                message = "Query did not return results successfully, check input and try again later.";
+
+                string errmessage = ErrorMessage.ToLower();
+                if (errmessage.Contains("<html>"))
+                {
+                    message2 = errmessage;
+                    message += "<br>MORE INFO FROM RESPONSE:<br><br>";
+                }
+            }
+
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat("<html><head>\n");
+            sb.AppendFormat("<title>Skyserver Error</title>\n");
+            sb.AppendFormat("</head><body bgcolor=white>\n");
+            sb.AppendFormat("<h2>An error occured</h2>");
+            sb.AppendFormat("<H3 BGCOLOR=pink><font color=red><br>" + message + "</font></H3>");
+            sb.AppendFormat("</BODY></HTML>\n");
+            sb.AppendFormat(message2);
+            return sb.ToString();
+        }
+
 
         public string JsonToHtml(string json) {
 
@@ -241,7 +286,53 @@ namespace SkyServer.Tools.Search
         // this code can be redesigned and thought after April 15 2015
 
 
+        public DataSet RunCasjobs(string command, string taskname)
+        {
+            // throw new IndexOutOfRangeException("There is an invalid argument");
 
+            try
+            {
+
+                var request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(ConfigurationManager.AppSettings["casjobsRESTapi"]);
+                request.Method = "POST";
+                request.ContentType = "application/json";
+                request.Accept = "application/x-dataset";
+
+                if (!token.Equals("") && token != null)
+                    request.Headers.Add("X-Auth-Token", token);
+
+                StreamWriter streamWriter = new StreamWriter(request.GetRequestStream());
+                StringWriter sw = new StringWriter();
+                JsonWriter jsonWriter = new JsonTextWriter(sw);
+                jsonWriter.WriteStartObject();
+                jsonWriter.WritePropertyName("Query");
+                jsonWriter.WriteValue(command);
+                jsonWriter.WritePropertyName("TaskName");
+                jsonWriter.WriteValue(taskname);
+                //jsonWriter.WritePropertyName("ReturnDataSet");
+                //jsonWriter.WriteValue(true);
+                jsonWriter.WriteEndObject();
+                jsonWriter.Close();
+                streamWriter.Write(sw.ToString());
+                streamWriter.Close();
+
+                DataSet ds = null;
+                using (System.Net.HttpWebResponse response = (System.Net.HttpWebResponse)request.GetResponse())
+                {
+                    BinaryFormatter fmt = new BinaryFormatter();
+                    ds = (DataSet)fmt.Deserialize(response.GetResponseStream());
+                }
+                return ds;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("There is an error running this Query.\n Query:" + command + " ");
+
+            }
+
+
+
+        }
         //</summary>
         //<param name="command"></param>
         //<returns></returns>
@@ -298,7 +389,7 @@ namespace SkyServer.Tools.Search
             string cmd = "SELECT [name] FROM DBColumns WHERE tableName='PhotoObjAll'";
 
             response.Write("<td class='q' width='100'>");
-            DataSet ds = RunCasjobs(cmd);
+            DataSet ds = RunCasjobs(cmd, "SkyServer:showImgParams");
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {   
                 if (!reader.HasRows)
@@ -345,7 +436,7 @@ namespace SkyServer.Tools.Search
         {
             
              string cmd = "SELECT [name] FROM DBColumns WHERE tableName='SpecObjAll'";
-             DataSet ds = RunCasjobs(cmd);
+             DataSet ds = RunCasjobs(cmd,"SkyServer:showSpecParams");
              using (DataTableReader reader = ds.Tables[0].CreateDataReader())
              {
                 response.Write("<td class='q' width='100'>");
@@ -380,8 +471,9 @@ namespace SkyServer.Tools.Search
 
         public  void showIRSpecParams( string type, HttpResponse response)
         {            
-            string cmd = "SELECT [name] FROM DBColumns WHERE tableName='apogeeStar'";
-            DataSet ds = RunCasjobs(cmd);
+            //string cmd = "SELECT [name] FROM DBColumns WHERE tableName='apogeeStar'";
+            string cmd = "SELECT CASE WHEN [name] = 'file' then '['+[name]+']' else [name] END FROM DBColumns WHERE tableName='apogeeStar'";
+            DataSet ds = RunCasjobs(cmd,"SkyServer:showIRSpecParams");
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
                
             {

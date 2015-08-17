@@ -36,11 +36,11 @@ if( globals.Access == "public" ) {
 // For public site, pop up results in a new window.
 if( globals.Access == "public" ) {
 %>
-    <form method ="post" target="search" name="sql" action="x_results.aspx">
+    <form method ="get" target="search" name="sql" action="x_results.aspx">
 <%
 } else {
 %>
-    <form method ="post" name="sql" action="x_results.aspx">
+    <form method ="get" name="sql" action="x_results.aspx">
 <%
 }
 %>

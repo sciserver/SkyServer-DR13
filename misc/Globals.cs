@@ -62,6 +62,7 @@ namespace SkyServer
 
         private string apogeeSpectrumLink;
         private string apogeeFitsLink;
+        private int timeoutSkyserverWS;
 
        
 
@@ -432,6 +433,10 @@ namespace SkyServer
             get { return apogeeFitsLink; }
         }
 
+        public int TimeoutSkyserverWS
+        {
+            get { return timeoutSkyserverWS; }
+        }
         public Globals()
         {
             var appSettings = System.Web.Configuration.WebConfigurationManager.AppSettings;
@@ -476,6 +481,7 @@ namespace SkyServer
             this.rowLimit = int.Parse(appSettings["rowLimit"] ?? "500000");
             this.emacsRowLimit = int.Parse(appSettings["emacsRowLimit"] ?? "500000");
             this.queriesPerMinute = int.Parse(appSettings["queriesPerMinute"] ?? "60");
+            this.timeoutSkyserverWS = int.Parse(appSettings["TimeoutSkyserverWS"] ?? "100000");// time in milliseconds
             this.skyserverRESTservice = appSettings["restwebservice"];
             this.casjobsRESTapi = appSettings["casjobsRESTapi"];
 

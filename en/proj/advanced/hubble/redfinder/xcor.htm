@@ -52,12 +52,14 @@
 
 	function loadSimg(o) {
 		var s = "images/spSpec-51943-0284-";
-		simg.src = s + o.options[o.selectedIndex].value + ".gif";
+		//simg.src = s + o.options[o.selectedIndex].value + ".gif";
+		document.getElementById("spectrum").src = s + o.options[o.selectedIndex].value + ".gif";
 	}
 	
 	function loadTimg(o) {
 		var s = "images/template";
-		timg.src = s + o.options[o.selectedIndex].value + ".gif";
+		//timg.src = s + o.options[o.selectedIndex].value + ".gif";
+		document.getElementById("template").src = s + o.options[o.selectedIndex].value + ".gif";
 	}
 	
 	var spectrum	= new Div('spectrum',100,220);
