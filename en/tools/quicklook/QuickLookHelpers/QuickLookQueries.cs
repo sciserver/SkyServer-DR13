@@ -25,6 +25,10 @@ namespace SkyServer.Tools.QuickLook
 
         public static string getParamsFromObjID =  QueryHeader + " from PhotoTag p LEFT JOIN SpecObjAll s ON (s.bestobjid=p.objid AND s.scienceprimary=1) where p.objId=dbo.fObjId(@objid)";
 
+        public static string getpmtsFrom5PartSDSS = @"declare @skyversion int;select top 1 @skyversion=skyversion from run;" + QueryHeader + " from PhotoTag p LEFT JOIN SpecObjAll s ON (s.bestobjid=p.objid AND s.scienceprimary=1) where p.objId=dbo.fObjidFromSDSS(@skyversion,@run,@rerun,@camcol,@field,@obj);";
+
+
+
 
         public static string getParamsFromSpecObjID = QueryHeader + " from PhotoTag p JOIN SpecObjAll s ON (s.bestobjid=p.objid AND s.scienceprimary=1) where s.specobjid=@sid";
 

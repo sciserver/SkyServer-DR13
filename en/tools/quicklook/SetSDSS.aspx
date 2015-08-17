@@ -50,7 +50,8 @@
             s += padHex(cf, 4);
             s += padHex(obj, 4);
 
-            var w = window.open('summary.aspx?id=' + s, 'EXPLORE');
+            //var w = window.open('summary.aspx?id=' + s, 'EXPLORE');
+            var w = window.open('summary.aspx?run=' + a[0] + '&rerun=' + a[1] + '&camcol=' + a[2] + '&field=' + a[3] + '&obj=' + a[4], 'EXPLORE'); 
             window.close();
             w.focus();
             return;
@@ -68,7 +69,7 @@
 	        <table cellspacing="12"><tr><td class="wtxt">
 	        Enter the 5-part SDSS Id 
 	        separated by a hyphen,
-	        like 752-40-5-273-249  <br>
+	        like 5314-301-1-136-96  <br>
 	        then press OK
 	        </td></tr></table>
         </div>
@@ -77,7 +78,7 @@
 	        <form action="" method=post id="F1">
 	        <table BORDER=2 width=200 bgcolor=#000040>
 		        <tr><td class="wtxt">SDSSId</td>
-			        <td align=center><input TYPE="text" name="sdssid" size=16></td>
+			        <td align=center><input TYPE="text" name="sdssid" size=16 value="5314-301-1-136-96"></td>
 		        </tr>
 	        </table>
 	        </form>

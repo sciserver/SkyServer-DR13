@@ -36,6 +36,13 @@ namespace SkyServer.Tools.QuickLook
         private HttpCookie cookie;
         private string token = "";
 
+        protected Int16? run = null;
+        protected Int16? rerun = null;
+        protected byte? camcol = null;
+        protected Int16? field = null;
+        protected Int16? obj = null;
+
+
      
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -50,56 +57,87 @@ namespace SkyServer.Tools.QuickLook
                 id = globals.ExploreDefault;
             }
 
-            foreach (string key in Request.QueryString.Keys)
+            try
             {
-                if (key == "id")
+                foreach (string key in Request.QueryString.Keys)
                 {
-                    string s = Request.QueryString["id"];
-                    id = Utilities.ParseId(s);                   
-                }
-                if (key == "sid")
-                {
-                    string s = Request.QueryString["sid"].Trim().ToUpper();
-                    if (s.StartsWith("2M")) sidstring = s;
-                    else
-                    sidstring = (string.Equals(s, "")) ? s : Utilities.ParseId(s).ToString();                   
-                }
-                if (key == "spec")
-                {
-                    string s = Request.QueryString["spec"];
-                    sidstring = (string.Equals(s, "")) ? s : Utilities.ParseId(s).ToString();                 
-                }
-                if (key == "apid")
-                {
-                    string s = HttpUtility.UrlEncode(Request.QueryString["apid"]);                    
-                    if (s != null & !"".Equals(s))
+                    if (key == "id")
                     {
+                        string s = Request.QueryString["id"];
+                        id = Utilities.ParseId(s);
+                    }
+                    if (key == "sid")
+                    {
+                        string s = Request.QueryString["sid"].Trim().ToUpper();
+                        if (s.StartsWith("2M")) sidstring = s;
+                        else
+                            sidstring = (string.Equals(s, "")) ? s : Utilities.ParseId(s).ToString();
+                    }
+                    if (key == "spec")
+                    {
+                        string s = Request.QueryString["spec"];
+                        sidstring = (string.Equals(s, "")) ? s : Utilities.ParseId(s).ToString();
+                    }
+                    if (key == "apid")
+                    {
+                        string s = HttpUtility.UrlEncode(Request.QueryString["apid"]);
+                        if (s != null & !"".Equals(s))
+                        {
                             apid = s;
-                    }                    
-                }
-                if (key == "ra") qra = Utilities.parseRA(Request.QueryString["ra"]); // need to parse J2000
-                if (key == "dec") qdec = Utilities.parseDec(Request.QueryString["dec"]); // need to parse J2000
-                if (key == "plate") plate = short.Parse(Request.QueryString["plate"]);
-                if (key == "mjd") mjd = int.Parse(Request.QueryString["mjd"]);
-                if (key == "fiber") fiber = short.Parse(Request.QueryString["fiber"]);
-            }
+                        }
+                    }
+                    if (key == "ra") qra = Utilities.parseRA(Request.QueryString["ra"]); // need to parse J2000
+                    if (key == "dec") qdec = Utilities.parseDec(Request.QueryString["dec"]); // need to parse J2000
+                    if (key == "plate") plate = short.Parse(Request.QueryString["plate"]);
+                    if (key == "mjd") mjd = int.Parse(Request.QueryString["mjd"]);
+                    if (key == "fiber") fiber = short.Parse(Request.QueryString["fiber"]);
 
-            ///Check for authenticated token
-            cookie = Request.Cookies["Keystone"];
-            if (cookie != null)
-            {
-                if (cookie["token"] != null || !cookie["token"].Equals(""))
+                    if (key == "run")
+                    {
+                        try { string s = Request.QueryString["run"]; run = string.Equals(s, "") ? run : Convert.ToInt16(s); }
+                        catch { }
+                    }
+                    if (key == "rerun")
+                    {
+                        try { string s = Request.QueryString["rerun"]; rerun = string.Equals(s, "") ? rerun : Convert.ToInt16(s); }
+                        catch { }
+                    }
+                    if (key == "camcol")
+                    {
+                        try { string s = Request.QueryString["camcol"]; camcol = string.Equals(s, "") ? camcol : Convert.ToByte(s); }
+                        catch { }
+                    }
+                    if (key == "field")
+                    {
+                        try { string s = Request.QueryString["field"]; field = string.Equals(s, "") ? field : Convert.ToInt16(s); }
+                        catch { }
+                    }
+                    if (key == "obj")
+                    {
+                        try { string s = Request.QueryString["obj"]; obj = string.Equals(s, "") ? obj : Convert.ToInt16(s); }
+                        catch { }
+                    }
+
+                }
+
+                ///Check for authenticated token
+                cookie = Request.Cookies["Keystone"];
+                if (cookie != null)
                 {
-                    token = cookie["token"];
+                    if (cookie["token"] != null || !cookie["token"].Equals(""))
+                    {
+                        token = cookie["token"];
 
+                    }
                 }
-            }
-            runQuery = new RunQuery(token);
-            //This is imp function to get all different ids.
-            getObjPmts();
+                runQuery = new RunQuery(token);
+                //This is imp function to get all different ids.
+                getObjPmts();
 
-            //parseId and store ObjectInfo in session
-            parseIds();
+                //parseId and store ObjectInfo in session
+                parseIds();
+            }
+            catch { }
 
         }
 
@@ -120,6 +158,7 @@ namespace SkyServer.Tools.QuickLook
             else if (qra.HasValue && qdec.HasValue) setFromEq(qra, qdec);
             else if (specId.HasValue || !String.IsNullOrEmpty(sidstring)) setFromSpecObjID(sidstring);
             else if (id.HasValue && !specId.HasValue) setFromObjID(id);
+            else if (!id.HasValue && !specId.HasValue && (run.HasValue || rerun.HasValue || camcol.HasValue || field.HasValue || obj.HasValue)) setFrom5PartSDSS(run, rerun, camcol, field, obj);
             else if (!String.IsNullOrEmpty(apid)) parseApogeeID(apid);
         }
 
@@ -208,12 +247,25 @@ namespace SkyServer.Tools.QuickLook
         }
 
 
+        private void setFrom5PartSDSS(Int16? Run, Int16? Rerun, byte? Camcol, Int16? Field, Int16? Obj)
+        {
+            string cmd = QuickLookQueries.getpmtsFrom5PartSDSS;
+            cmd = cmd.Replace("@run", Run == null ? "null" : Run.ToString());
+            cmd = cmd.Replace("@rerun", Rerun == null ? "null" : Rerun.ToString());
+            cmd = cmd.Replace("@camcol", Camcol == null ? "null" : Camcol.ToString());
+            cmd = cmd.Replace("@field", Field == null ? "null" : Field.ToString());
+            cmd = cmd.Replace("@obj", Obj == null ? "null" : Obj.ToString());
+            setObjectInfo(cmd);
+        }
+
+
         private void setFromObjID(long? id)
         {
             string cmd = QuickLookQueries.getParamsFromObjID;
             cmd = cmd.Replace("@objid", id.ToString());
             setObjectInfo(cmd);
         }
+
 
 
         private void parseApogeeID(string idstring)

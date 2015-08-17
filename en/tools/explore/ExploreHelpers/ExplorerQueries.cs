@@ -264,7 +264,7 @@ namespace SkyServer.Tools.Explore
         ///Metadata Queries
         ///
         public static String getObjParamaters = @"select p.ra, p.dec, s.specObjId, p.clean, s.survey, cast(p.mode as int) as mode, 
-                                                dbo.fPhotoTypeN(p.type) as otype, p.mjd
+                                                dbo.fPhotoTypeN(p.type) as otype, p.mjd, p.run, p.rerun, p.camcol, p.field, p.obj 
                                                 from PhotoObjAll p LEFT OUTER JOIN SpecObjAll s ON s.bestobjid=p.objid AND s.scienceprimary=1
                                                 where p.objId= @objId";
                 
@@ -408,7 +408,15 @@ namespace SkyServer.Tools.Explore
                      from PhotoTag p 
                      left outer join SpecObjAll s ON s.bestobjid=p.objid AND s.scienceprimary=1
                      where p.objId=dbo.fObjId(@objid)";
-                
+
+
+        public static string getpmtsFrom5PartSDSS = @"declare @skyversion int;select top 1 @skyversion=skyversion from run;select p.ra, p.dec, p.run, p.rerun, p.camcol, p.field,
+                     cast(p.fieldId as binary(8)) as fieldId,
+                     cast(s.specobjid as binary(8)) as specObjId,
+                     cast(p.objId as binary(8)) as objId 
+                     from PhotoTag p 
+                     left outer join SpecObjAll s ON s.bestobjid=p.objid AND s.scienceprimary=1
+                     where p.objId=dbo.fObjidFromSDSS(@skyversion,@run,@rerun,@camcol,@field,@obj)";
 
         public static string getPlateFiberFromSpecObj = @"select cast(s.plateId as binary(8)) as plateId, s.mjd, s.fiberId, q.plate 
                            from SpecObjAll s JOIN PlateX q ON s.plateId=q.plateId 

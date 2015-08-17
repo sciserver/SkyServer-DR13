@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -15,7 +16,7 @@ namespace SkyServer.Tools.Explore
             Exception ex = Server.GetLastError();
 
             // Create a safe message
-            string safeMsg = "A problem has occurred in the Explore tool. Please inform sdss3-cas@pha.jhu.edu. ";
+            string safeMsg = "A problem has occurred in the Explore tool. Please inform " + ConfigurationManager.AppSettings["helpdesk"].ToString() + ".";
 
             if (ex != null)
             {

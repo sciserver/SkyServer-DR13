@@ -34,7 +34,15 @@ namespace SkyServer.Tools.Explore
         short? fiber = null;
         private HttpCookie cookie;
         private string token = "";
-      
+
+        Int16? run = null;
+        Int16? rerun = null;
+        byte? camcol = null;
+        Int16? field = null;
+        Int16? obj = null;
+
+
+        
         protected void Page_Load(object sender, EventArgs e)
         {
            
@@ -80,6 +88,32 @@ namespace SkyServer.Tools.Explore
                 if (key == "plate") plate = short.Parse(Request.QueryString["plate"]);
                 if (key == "mjd") mjd = int.Parse(Request.QueryString["mjd"]);
                 if (key == "fiber") fiber = short.Parse(Request.QueryString["fiber"]);
+
+                if (key == "run")
+                {
+                    try { string s = Request.QueryString["run"]; run = string.Equals(s, "") ? run : Convert.ToInt16(s); }
+                    catch { }
+                }
+                if (key == "rerun")
+                {
+                    try { string s = Request.QueryString["rerun"]; rerun = string.Equals(s, "") ? rerun : Convert.ToInt16(s); }
+                    catch { }
+                }
+                if (key == "camcol")
+                {
+                    try { string s = Request.QueryString["camcol"]; camcol = string.Equals(s, "") ? camcol : Convert.ToByte(s); }
+                    catch { }
+                }
+                if (key == "field")
+                {
+                    try { string s = Request.QueryString["field"]; field = string.Equals(s, "") ? field : Convert.ToInt16(s); }
+                    catch { }
+                }
+                if (key == "obj")
+                {
+                    try { string s = Request.QueryString["obj"]; obj = string.Equals(s, "") ? obj : Convert.ToInt16(s); }
+                    catch { }
+                }
             }
 
             ///Check for authenticated token
@@ -118,6 +152,7 @@ namespace SkyServer.Tools.Explore
             else if (qra.HasValue && qdec.HasValue) pmtsFromEq(qra, qdec);
             else if (specId.HasValue || !String.IsNullOrEmpty(sidstring)) pmtsFromSpec(sidstring);
             else if (id.HasValue && !specId.HasValue) pmtsFromPhoto(id);
+            else if (!id.HasValue && !specId.HasValue && (run.HasValue || rerun.HasValue || camcol.HasValue || field.HasValue || obj.HasValue)  ) pmtsFrom5PartSDSS(run,rerun,camcol,field,obj);
             else if (!String.IsNullOrEmpty(apid)) parseApogeeID(apid);
         }
 
@@ -341,6 +376,62 @@ namespace SkyServer.Tools.Explore
             }
             catch { }
         }
+
+
+        private void pmtsFrom5PartSDSS(Int16? Run, Int16? Rerun, byte? Camcol, Int16?Field, Int16? Obj)
+        {
+            string cmd = ExplorerQueries.getpmtsFrom5PartSDSS;
+            cmd = cmd.Replace("@run", Run == null ? "null" : Run.ToString());
+            cmd = cmd.Replace("@rerun", Rerun == null ? "null" : Rerun.ToString());
+            cmd = cmd.Replace("@camcol", Camcol == null ? "null" : Camcol.ToString());
+            cmd = cmd.Replace("@field", Field == null ? "null" : Field.ToString());
+            cmd = cmd.Replace("@obj", Obj == null ? "null" : Obj.ToString());
+
+            DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            {
+                if (reader.Read())
+                {
+                   objectInfo.ra = (double)reader["ra"];
+                   objectInfo.dec = (double)reader["dec"];
+                   objectInfo.run = (short)reader["run"];
+                   objectInfo.rerun = (short)reader["rerun"];
+                   objectInfo.camcol = (byte)reader["camcol"];
+                   objectInfo.field = (short)reader["field"];
+                   objectInfo.fieldId = reader["fieldId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["fieldId"]);
+                   objectInfo.objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
+                   objectInfo.specObjId = reader["specObjId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["specObjId"]);
+
+                }
+            }
+
+            // get the plateId and fiberId from the specObj, if it exists
+            if (objectInfo.specObjId != null && !ZERO_ID.Equals(objectInfo.specObjId))
+            {
+                long specId = long.Parse(objectInfo.specObjId.Substring(2), NumberStyles.AllowHexSpecifier);
+                cmd = ExplorerQueries.getPlateFiberFromSpecObj;
+                cmd = cmd.Replace("@specId", specId.ToString());
+                
+                ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
+                using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+                {
+                    if (reader.Read())
+                    {
+                       objectInfo.plateId = reader["plateId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["plateId"]);
+                       objectInfo.mjd = (int)reader["mjd"];
+                       objectInfo.fiberId = (short) reader["fiberId"];
+                       objectInfo.plate = (short)reader["plate"];
+                    }
+                } // using DataReader
+            }
+
+            try
+            {
+                apogeeFromEq(objectInfo.ra, objectInfo.dec);
+            }
+            catch { }
+        }
+
 
         private void parseApogeeID(string idstring)
         {

@@ -23,6 +23,12 @@ namespace SkyServer.Tools.Explore
         protected string survey;
         protected int? imageMJD = null;
 
+        protected Int16? run = null;
+        protected Int16? rerun = null;
+        protected byte? camcol = null;
+        protected Int16? field = null;
+        protected Int16? obj = null;
+
         protected ObjectExplorer master;
         protected RunQuery runQuery;
       
@@ -59,6 +65,12 @@ namespace SkyServer.Tools.Explore
                         mode = (int)reader["mode"];
                         otype = reader["otype"] is DBNull ? null : (string)reader["otype"];
                         imageMJD = (int)reader["mjd"];
+
+                        run = (Int16)reader["run"];
+                        rerun = (Int16)reader["rerun"];
+                        camcol = (byte)reader["camcol"];
+                        field = (Int16)reader["field"];
+                        obj = (Int16)reader["obj"];
                     }
                 }
             }

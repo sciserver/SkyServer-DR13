@@ -35,7 +35,7 @@
     <form id="form1" runat="server">
     <div>
         <div id="logo">
-        <img src="images/sdsslogo-tiny.jpg" hspace="6px" align=left>
+        <img src="images/sdss3_logo.gif" hspace="0px" align=left>
         </div>
 
         <div id="text">
@@ -49,13 +49,13 @@
 	        <form action="" method=post id="F1">
 	        <table BORDER=2 width=200 bgcolor=#000040>
 		        <tr><td class="wtxt">Plate</td>
-			        <td align=center><input TYPE="text" name="plate" size=10></td>
+			        <td align=center><input TYPE="text" name="plate" size=10 value="349"></td>
 		        </tr>
 		        <tr><td class="wtxt">MJD</td>
-			        <td align=center><input TYPE="text" name="mjd" size=10></td>
+			        <td align=center><input TYPE="text" name="mjd" size=10 value="51699"></td>
 		        </tr>
 		        <tr><td class="wtxt">Fiber</td>
-			        <td align=center><input TYPE="text" name="fiber" size=10></td>
+			        <td align=center><input TYPE="text" name="fiber" size=10 value="33"></td>
 		        </tr>
 	        </table>
 	        </form>

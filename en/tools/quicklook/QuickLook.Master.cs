@@ -47,6 +47,7 @@ namespace SkyServer.Tools.QuickLook
         public short? rerun;
         public short? camcol;
         public short? field;
+        public short? obj;
 
         // from quicklook.master.cs
         short? fiber;
@@ -62,7 +63,7 @@ namespace SkyServer.Tools.QuickLook
 
             exploreQuery = new QuickLookQueries();
             //Get Values from Session Object
-            if ((ObjectInfo)Session["QuickLookObjectInfo"] == null)
+/*            if ((ObjectInfo)Session["QuickLookObjectInfo"] == null)
             {
                 id = globals.ExploreDefault;
             }
@@ -70,7 +71,8 @@ namespace SkyServer.Tools.QuickLook
             {
                 getSessionIds();
             }
-
+*/
+            getSessionIds();
             url = getURL();
             enUrl = getEnURL();
 

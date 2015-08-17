@@ -121,8 +121,11 @@ function resolveName() {
             else {
                 var s = response.split('\n');
                 $('#searchName').val(s[0].substring(6));
-                $('#searchRA').val(s[1].substring(4));
-                $('#searchDec').val(s[2].substring(5));
+                //$('#searchRA').val(s[1].substring(4));
+                //$('#searchDec').val(s[2].substring(5));
+                var windowPage = "summary.aspx";
+                window.location = windowPage + '?ra=' + s[1].substring(4) + '&dec=' + s[2].substring(5);
+                
             }
         },
         error: function () {
@@ -173,20 +176,22 @@ function press_ok(kind) {
                 alert('The SDSS Id has 5 parts,\n Run-Rerun-Camcol-Field-Obj\n');
                 return false;
             }
-            var rerun = Number(a[1]) + 2048;  // skyversion=1
-            var run = Number(a[0]);
-            var camcol = Number(a[2]);
-            var field = Number(a[3]);
-            var obj = Number(a[4]);
-            var cf = 8192 * camcol + field;
+            //var rerun = Number(a[1]) + 2048;  // skyversion=1
+            //var rerun = Number(a[1]) + 4096;  // skyversion=2
+            //var run = Number(a[0]);
+            //var camcol = Number(a[2]);
+            //var field = Number(a[3]);
+            //var obj = Number(a[4]);
+            //var cf = 8192 * camcol + field;
 
-            var s = "0x";
-            s += padHex(rerun, 4);
-            s += padHex(run, 4);
-            s += padHex(cf, 4);
-            s += padHex(obj, 4);
+            //var s = "0x";
+            //s += padHex(rerun, 4);
+            //s += padHex(run, 4);
+            //s += padHex(cf, 4);
+            //s += padHex(obj, 4);
 
-            window.location = windowPage+'?id=' + s;
+            //window.location = windowPage + '?id=' + s //Number(s).toString(10);
+            window.location = windowPage + '?run=' + a[0] + '&rerun=' + a[1] + '&camcol=' + a[2] + '&field=' + a[3] + '&obj=' + a[4]
             break;
         case "specid":
             window.location = windowPage+'?sid=' + encodeURIComponent(f.searchSpecID.value);

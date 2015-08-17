@@ -33,12 +33,12 @@
     <form id="form1" runat="server">
     <div>
         <div id="logo">
-        <img src="images/sdsslogo-tiny.jpg" hspace="6px" align=left>
+        <img src="images/sdss3_logo.gif" hspace="0px" align=left>
         </div>
 
         <div id="text">
 	        <table><tr><td class="wtxt">
-	        Enter the RA and dec in degrees (e.g., 195.16 2.5) or sexagesimal (e.g., 13:00:39.2 +02:30:02.8) then press OK
+	        Enter the RA and dec in degrees (e.g., 256.8707287 63.3852515) or sexagesimal (e.g., 13:00:39.2 +02:30:02.8) then press OK
 	        </td></tr></table>
         </div>
 
@@ -46,10 +46,10 @@
         <form action="" method=post id="F1">
 	        <table BORDER=2 width=200 bgcolor=#000040>
 		        <tr><td class="wtxt">Ra</td>
-			        <td align=center><input TYPE="text" name="ra" size=10></td>
+			        <td align=center><input TYPE="text" name="ra" size=10 value="256.8707287"></td>
 		        </tr>
 		        <tr><td class="wtxt">Dec</td>
-			        <td align=center><input TYPE="text" name="dec" size=10></td>
+			        <td align=center><input TYPE="text" name="dec" size=10 value="63.3852515"></td>
 		        </tr>
 	        </table>
         </form>

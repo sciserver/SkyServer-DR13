@@ -112,7 +112,7 @@
             <table cellpadding=2 cellspacing=2 border=0 width=625>
                   <%--<tr><td class='nodatafound'>Object is out of SDSS footprint</td></tr>--%>                 
             <%  if (String.IsNullOrEmpty(master.apid) && String.IsNullOrEmpty(master.specObjId)) {%>
-                <tr><td class='nodatafound'>The object corresponding to the id specified does not exist in the database.<br> Please try another object.</td></tr>
+                <tr><td class='nodatafound'>The object corresponding to the specified input does not exist in the database.<br> Please try another object.</td></tr>
             <% } else if (!String.IsNullOrEmpty(master.apid) || !String.IsNullOrEmpty(master.specObjId)) {%>
                 <tr><td class='nodatafound'>There is no image corresponding to the specified id in the SDSS imaging data.</td></tr>
             <% }%>

@@ -34,10 +34,10 @@
 <body bgcolor="#000000" text="white" topmargin="0" leftmargin="10" onload="init()">
     <form id="form1" runat="server">
     <div>
-        <div id="logo" class="wtxt">
-        <img src="images/sdsslogo-tiny.jpg" hspace="6px" align=left>
-	        <table cellspacing="12"><tr><td class="wtxt">
-	        Enter the ObjId,<br> then press OK
+        <div id="logo">
+        <img src="images/sdss3_logo.gif" hspace="0px" align=left>
+	        <table ><tr><td class="wtxt">
+	        Enter the ObjId, then press OK
 	        </td></tr></table>
         </div>
 
@@ -45,7 +45,7 @@
 	        <form action="" method=post id="F1">
 	        <table BORDER="2" width="200" bgcolor="#000040">
 		        <tr><td class="wtxt">ObjId</td>
-			        <td align=center><input TYPE="text" name="objid" size="18"></td>
+			        <td align=center><input TYPE="text" name="objid" size="24" value="1237671939267428634"></td>
 		        </tr>
 	        </table>
 	        </form>

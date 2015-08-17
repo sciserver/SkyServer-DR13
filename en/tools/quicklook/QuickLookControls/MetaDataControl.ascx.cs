@@ -16,8 +16,8 @@ namespace SkyServer.Tools.QuickLook
         
         protected Globals globals;
 
-        protected double ra ;
-        protected double dec ;
+        protected double? ra ;
+        protected double? dec ;
 
         protected long? specObjId = null;
         protected int? clean = null;
@@ -25,6 +25,7 @@ namespace SkyServer.Tools.QuickLook
         protected string otype = null;
         protected string survey;
         protected int? imageMJD = null;
+
 
 
         protected string name = null;
@@ -53,6 +54,8 @@ namespace SkyServer.Tools.QuickLook
         protected string spectralclass = "";
         protected float? redshift = null; 
 
+
+
         public ObjectQuickLook master;
         protected RunQuery runQuery;
 
@@ -70,38 +73,40 @@ namespace SkyServer.Tools.QuickLook
                     token = cookie["token"];
             runQuery = new RunQuery(token);
 
-            if (master.objId != null && !master.objId.Equals(""))
-            //executeQuery();
-            name = Functions.SDSSname(ra, dec);
-
             ObjectInfo o = (ObjectInfo)Session["QuickLookObjectInfo"];
             objId = o.objId;
             specObjId = o.specId;
-            ra = (double)o.ra;
-            dec = (double)o.dec;
+            ra = o.ra;
+            dec = o.dec;
             id = o.id;
             otype = o.otype;
             flags = o.flags;
 
-            u = o.u;
-            g = o.g;
-            r = o.r;
-            i = o.i;
-            z = o.z;
-            err_u = o.err_u;
-            err_g = o.err_g;
-            err_r = o.err_r;
-            err_i = o.err_i;
-            err_z = o.err_z;
+            if (o.objId != null && !o.objId.Equals(""))
+            {
+                //executeQuery();
+                name = Functions.SDSSname((double)ra, (double)dec);
 
-            plate = o.plate;
-            mjd = o.mjd;
-            fiberid = o.fiberId;
-            spectralclass = o.spectralClass;
-            redshift = o.redshift;
+                u = o.u;
+                g = o.g;
+                r = o.r;
+                i = o.i;
+                z = o.z;
+                err_u = o.err_u;
+                err_g = o.err_g;
+                err_r = o.err_r;
+                err_i = o.err_i;
+                err_z = o.err_z;
 
-            badphotometry = checkFlags(flags, otype);
-            naviLink = "javascript:showNavi(" + ra + "," + dec + ");";
+                plate = o.plate;
+                mjd = o.mjd;
+                fiberid = o.fiberId;
+                spectralclass = o.spectralClass;
+                redshift = o.redshift;
+
+                badphotometry = checkFlags(flags, otype);
+                naviLink = "javascript:showNavi(" + ra + "," + dec + ");";
+            }
         }
 
 
