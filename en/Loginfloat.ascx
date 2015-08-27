@@ -10,7 +10,7 @@
          else {
              //window.location.href = "<%= ConfigurationManager.AppSettings["Keystone.Login"]+Request.Url.AbsoluteUri%>";
              window.location.href = "<%= ConfigurationManager.AppSettings["Keystone.Login"]+ConfigurationManager.AppSettings["skyserverBase"]+Request.Url.AbsolutePath%>";
-             alert(window.location.href);
+             //alert(window.location.href);
              }
          }
     </script>

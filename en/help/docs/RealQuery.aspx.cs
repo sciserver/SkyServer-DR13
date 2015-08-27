@@ -42,7 +42,8 @@ namespace SkyServer.Help.Docs
             Response.Write("<a name=\"" + qName + "\"></a><h3>" + qry + " &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"#top\"><img src=\"images/top.gif\" ALT=\"Back to Top\" NOSAVE BORDER=\"0\" HEIGHT=\"25\" ALIGN=\"TOP\"></a>");
             string cmdRun = stripHTML(cmd1);
             Response.Write(" <a href=\"" + url + "/tools/search/sql.aspx?cmd=" + cmdRun + "\" ONMOUSEOVER=\"this.T_WIDTH='180';return escape('Load this query into SQL Search form so you can modify it before you run it.')\" target=\"tools\"><img src=\"images/load.gif\" ALT=\"Load Query\" BORDER=\"0\" HEIGHT=\"25\" ALIGN=\"TOP\"></a>");
-            Response.Write(" <a href=\"" + url + "/tools/search/x_sql.aspx?cmd=" + cmdRun + "&format=html\" ONMOUSEOVER=\"this.T_TEMP='3000';this.T_WIDTH='180';return escape('Execute this query on the server immediately.')\"><img src=\"images/run.gif\" ALT=\"Run Query\" BORDER=\"0\" HEIGHT=\"25\" ALIGN=\"TOP\"></a></h3>");
+            //Response.Write(" <a href=\"" + url + "/tools/search/x_sql.aspx?cmd=" + cmdRun + "&format=html\" ONMOUSEOVER=\"this.T_TEMP='3000';this.T_WIDTH='180';return escape('Execute this query on the server immediately.')\"><img src=\"images/run.gif\" ALT=\"Run Query\" BORDER=\"0\" HEIGHT=\"25\" ALIGN=\"TOP\"></a></h3>");
+            Response.Write(" <a href=\"" + url + "/tools/search/x_results.aspx?searchtool=SQL&cmd=" + cmdRun + "&format=html\" ONMOUSEOVER=\"this.T_TEMP='3000';this.T_WIDTH='180';return escape('Execute this query on the server immediately.')\"><img src=\"images/run.gif\" ALT=\"Run Query\" BORDER=\"0\" HEIGHT=\"25\" ALIGN=\"TOP\"></a></h3>");
             Response.Write(cmd2);
         }
     }

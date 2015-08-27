@@ -81,7 +81,7 @@
     }
 
     
-    function callNameResolver() {
+    function callNameResolverOLD() {
          $.ajax({
              type: "GET",            
              url : "http://mast.stsci.edu/portal/Mashup/Mashup.asmx/invoke?",
@@ -100,7 +100,7 @@
                          dec = dec1;
                          $('#ra').val(ra1);
                          $('#dec').val(dec1);
-                         //resubmit();
+                         resubmit();
                      });
                  }
              },
@@ -110,7 +110,35 @@
                  }
              }
          });
-     }
+    }
+
+
+    function callNameResolver() {
+        var name = document.getElementById('objid').value;
+        $.ajax({
+            type: "GET",
+            url: "../Resolver.ashx?name=" + name,
+            success: function (response) {
+                document.getElementById('getImageId').disabled = false;
+                if (response.indexOf("Error:") == 0) {
+                    alert(response);
+                }
+                else {
+                    var s = response.split('\n');
+                    //$('#searchName').val(s[0].substring(6));
+                    $('#ra').val(s[1].substring(4));
+                    $('#dec').val(s[2].substring(5));
+                    resubmit();
+                }
+            },
+            error: function () {
+                alert("Error: Could not resolve name.");
+            }
+        });
+    }
+
+
+
 
     $(document).ready(function() {
         var br = $.browser;
@@ -209,9 +237,9 @@
 </table>
             <table width="<%=tabwidth%>" cellspacing=4 cellpadding=0 border=0>
 	            <tr><td align=middle ONMOUSEOVER="this.T_WIDTH='140';return escape('Get an image of the sky at the specified coordinates')">
-	            <a href="javascript:void(0);" onclick="return resubmit();" id="getImageId"><img 
+	            <a href="javascript:void(0);" onClick="return resubmit();" id="getImageId"><img 
 			            src="images/get_image2.jpg" ALT="Submit" 
-			            border="0" WIDTH="112" HEIGHT="40" id="getImage" onclick="return resubmit();"></a>
+			            border="0" WIDTH="112" HEIGHT="40" id="getImage"></a>
 	            </td>
 	            <td align=middle ONMOUSEOVER="this.T_WIDTH='140';return escape('Open a new window with a printable image')">
 	            <a href="javascript:void(0);" onClick="return popup();"><img 

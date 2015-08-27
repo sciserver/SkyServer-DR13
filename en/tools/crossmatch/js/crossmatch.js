@@ -265,7 +265,7 @@ function skyQueryConnect(url, authToken, method, caller, senddata) {
 function testFunction() {
 
     $.ajax({
-        url: "http://scitest02.pha.jhu.edu/skyquery/Api/V1/Schema.svc/datasets",        
+        url: skyqueryUrl + "Api/V1/Schema.svc/datasets",        
          
         dataType: "json",
        

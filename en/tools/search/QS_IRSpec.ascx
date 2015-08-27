@@ -94,7 +94,7 @@
         cmd += " AND [name] NOT IN ('APOGEE_FAINT', 'APOGEE_MEDIUM', 'APOGEE_BRIGHT', 'APOGEE_CHECKED')\n";
         cmd += " ORDER BY field,value";
         
-        DataSet ds = rs.RunCasjobs(cmd);
+        DataSet ds = rs.RunCasjobs(cmd, "SkyServer:QS_IRSpec:ApogeeTarget1");
         using(DataTableReader reader = ds.CreateDataReader(ds.Tables[0]))
         {
                 if (!reader.HasRows)
@@ -151,7 +151,7 @@
         cmd += " WHERE field='ApogeeTarget2' AND [name] != ''\n";
         cmd += " AND [name] NOT IN ('APOGEE_EMBEDDEDCLUSTER_STAR', 'APOGEE_LONGBAR', 'APOGEE_EMISSION_STAR', 'APOGEE_KEPLER_COOLDWARF', 'APOGEE_MIRCLUSTER_STAR', 'APOGEE_CHECKED')\n";
         cmd += " ORDER BY field,value";
-        DataSet data =  rs.RunCasjobs(cmd);
+        DataSet data = rs.RunCasjobs(cmd, "SkyServer:QS_IRSpec:ApogeeTarget2");
         using (DataTableReader reader = data.CreateDataReader(data.Tables[0]))
         {
                 if (!reader.HasRows)

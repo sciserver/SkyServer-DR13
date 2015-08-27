@@ -68,7 +68,7 @@
         <h3>Cross Match Client</h3>
         <p>
             This tool uses Skyquery web services to run cross match. More about SkyQuery is available 
-            <a href="http://scitest02.pha.jhu.edu/skyquery/">here</a> 
+            <a href="<%=skyqueryurl%>">here</a> 
         </p>
       </div>
       

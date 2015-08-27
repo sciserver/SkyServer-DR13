@@ -115,7 +115,7 @@
         
         string cmd = "SELECT [name] FROM DataConstants WHERE field='PhotoFlags' ORDER BY value";
 
-        DataSet ds = rs.RunCasjobs(cmd);
+        DataSet ds = rs.RunCasjobs(cmd, "SkyServer:QS_Imaging:PhotoFlags");
         using (DataTableReader reader = ds.Tables[0].CreateDataReader())
         {
                 if (!reader.HasRows)

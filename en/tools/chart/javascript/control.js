@@ -198,9 +198,11 @@
       } else {
       v = parseFloat(s_ra);
       if(isNaN(v)) v=180.0;
-      if (v < 0) v += 360; 
-      if ( v > 360) v -= 360;
-      }
+      //if (v < 0) v += 360; 
+      if (v < 0) v = v % 360;
+      //if (v > 360) v -= 360;
+      if (v > 360) v = v % 360;
+  }
       }
       document.getElementById('ra').value = v;
       return false;

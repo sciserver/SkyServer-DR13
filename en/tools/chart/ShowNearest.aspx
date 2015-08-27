@@ -53,7 +53,7 @@ function saveBook(id) {
 }
 
 function init() {
-	check = new Div('check',120,416);
+	check = new Div('check',120,428);
 	//check.show();
 	check.hide();
 }

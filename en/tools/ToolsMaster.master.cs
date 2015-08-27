@@ -81,7 +81,7 @@ namespace SkyServer.Tools
   
               gutter += "6,Object Crossid,/tools/crossid/crossid.aspx;";
             // hiding the link until crossmatch is working      
-            gutter += "6,Skyquery CrossMatch,/tools/crossmatch/crossmatch.aspx;";
+            gutter += "7,Skyquery CrossMatch,/tools/crossmatch/crossmatch.aspx;";
 
               if( globals.ReleaseNumber > 1 ) {
   	            gutter += "8,CasJobs,"+globals.CasJobs+"' TARGET='CASJOBS;";

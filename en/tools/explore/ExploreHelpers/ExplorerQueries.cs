@@ -133,13 +133,23 @@ namespace SkyServer.Tools.Explore
 
         #region matches
         ///Matches Queries
-        public static  string matches1 = @"select dbo.fIAUFromEq(p.ra,p.dec) as 'IAU name', p.objid, p.thingid, dbo.fPhotoModeN(p.mode) as mode
+        public static string matches1 = @"select dbo.fIAUFromEq(p.ra,p.dec) as 'IAU name', p.objid, p.thingid, dbo.fPhotoModeN(p.mode) as 'mode description'
                                         from Photoobjall p where p.objid=@objId";
                 
 
-        public static string matches2  = @" select t.objid, t.thingid, p.mode, dbo.fPhotoModeN(p.mode) as '(mode description)'
+/*        public static string matches2  = @" select t.objid, t.thingid, p.mode, dbo.fPhotoModeN(p.mode) as '(mode description)'
                                         from thingindex t join photoobjall p on t.objid = p.objid 
                                         where t.objid=@objId and p.mode != 1 order by p.mode";
+*/
+        public static string matches2  = @" select d.objid, d.thingid, p2.mode, dbo.fPhotoModeN(p2.mode) as 'mode description'
+                                        from thingIndex t join detectionIndex d on t.thingId=d.thingId join phototag p on t.objid = p.objid join phototag p2 on d.objid = p2.objid 
+                                        where t.objid=@objId order by p2.mode";
+
+
+
+
+
+
         #endregion
 
         #region neighbors

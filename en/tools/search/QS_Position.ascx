@@ -17,7 +17,7 @@
         <tr>
 	        <td class='q'> 
 		        <table><tr>
-			        <td><input type=radio name=positionType value=cone></td>
+			        <td><input type=radio name=positionType value=cone checked></td>
 			        <td><a href=<%=userguide%>#PositionConeConstraint 
 				        onmouseover="return escape('Search within a given radius of a position');">RA / Dec</a></td>
 		        </tr></table>
@@ -49,7 +49,7 @@
       <tr>
 	        <td class='q'> 
 		        <table><tr>
-			        <td><input type=radio name=positionType value=conelb checked></td>
+			        <td><input type=radio name=positionType value=conelb></td>
 			        <td onmouseover="return escape('Search within a given radius of a position');">Galactic<br />Coordinates</td>
 		        </tr></table>
 	        </td>

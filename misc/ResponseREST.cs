@@ -153,6 +153,7 @@ namespace SkyServer.Tools.Search
             string requestUri = client.BaseAddress + "?" + requestString;
 
             string queryResult = "";
+            byte[]  queryResultByte = null;
             HttpResponseMessage respMessage = null;
             StringContent content = null;
             if (uploaded == null || uploaded.Equals(""))
@@ -171,7 +172,10 @@ namespace SkyServer.Tools.Search
 
             //respMessage.EnsureSuccessStatusCode();
             if (respMessage.IsSuccessStatusCode)
-                queryResult = respMessage.Content.ReadAsStringAsync().Result;
+                if (returnType=="fits")
+                    queryResultByte = respMessage.Content.ReadAsByteArrayAsync().Result;
+                else
+                    queryResult = respMessage.Content.ReadAsStringAsync().Result;
             else
             {
                 string ErrorMessage = respMessage.Content.ReadAsStringAsync().Result;
@@ -181,7 +185,12 @@ namespace SkyServer.Tools.Search
             }
 
             setContentType(returnType);
-            httpResponse.Write(queryResult);
+            if (returnType=="fits")
+                httpResponse.BinaryWrite(queryResultByte);
+            else
+                httpResponse.Write(queryResult);
+            
+            httpResponse.End();
             //if (returnType.ToLower().Equals("html"))
             //    //httpResponse.Write(JsonToHtml(queryResult));
             //    httpResponse.Write(queryResult);
@@ -212,6 +221,7 @@ namespace SkyServer.Tools.Search
         {
             string message = "";
             string message2 = "";
+/*
             string[] Expressions = new string[] { "\"Error Message\":\"(.*?)\"", "\"Error Message\": \"(.*?)\"", "\"Error Message\" :\"(.*?)\"", "\"Error Message\" : \"(.*?)\"", "\"Message\":\"(.*?)\"", "\"Message\" :\"(.*?)\"" , "\"Message\": \"(.*?)\"", "\"Message\" : \"(.*?)\""};
             foreach (string expresion in Expressions)
             {
@@ -232,7 +242,37 @@ namespace SkyServer.Tools.Search
                     message += "<br>MORE INFO FROM RESPONSE:<br><br>";
                 }
             }
+ */ 
 
+            try
+            {
+                JObject jarr = JObject.Parse(ErrorMessage);
+                foreach (KeyValuePair<String, JToken> property in jarr)
+                {
+                    string propertyName = property.Key.ToString();
+                    if (propertyName == "Error Message" || propertyName == "Message")
+                    {
+                        message = property.Value.ToString();
+                        break;
+                    }
+                }
+                if (message == "")
+                {
+                    message = "Query did not return results successfully, check input and try again later.";
+
+                    string errmessage = ErrorMessage.ToLower();
+                    if (errmessage.Contains("<html"))
+                    {
+                        message2 = errmessage;
+                        message += "<br>MORE INFO FROM RESPONSE:<br><br>";
+                    }
+                    else { message += "<br>MORE DETAILED INFO FROM RESPONSE:<br><br>"+ErrorMessage;}
+                }
+
+            }
+            catch { message = ""; }
+
+            
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat("<html><head>\n");
             sb.AppendFormat("<title>Skyserver Error</title>\n");

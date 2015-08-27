@@ -32,7 +32,7 @@ namespace SkyServer.Get
                     //oCmd.Parameters.AddWithValue("@specid", specid);
 
                     //using (SqlDataReader reader = oCmd.ExecuteReader())
-                    DataSet ds = rs.RunCasjobs(cmd);
+                    DataSet ds = rs.RunCasjobs(cmd,"SkyServer:SpecById");
                     using (DataTableReader reader = ds.CreateDataReader(ds.Tables[0]))  
                     {
                         // start writing the image
