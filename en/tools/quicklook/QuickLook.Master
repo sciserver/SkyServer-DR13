@@ -16,9 +16,10 @@
       #check {visibility:hidden; }
       #content {position:absolute;top:0px;left:135px;background-color:White;}
     </style>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" language="javascript">
 
-
+    var search = false;
     function gotochart(ra, dec) {
         var s = "../chart/chart.aspx?ra=" + ra + "&dec=" + dec;
         var w = window.open(s, "NAVIGATE");
@@ -116,6 +117,96 @@
         }
     }
 
+    function toggleSearch() {
+        if (search) {
+            document.getElementById("search").style.display = "none";
+            document.getElementById("content").style.position = "absolute";
+            document.getElementById("content").style.top = "0px";
+            document.getElementById("content").style.left = "135px";
+            search = false;
+        }
+        else {
+            document.getElementById("content").style.position = "absolute";
+            document.getElementById("content").style.top = "100px";
+            document.getElementById("content").style.left = "135px";
+            document.getElementById("search").style.display = "block";
+            search = true;
+        }
+    }
+
+    function press_ok(kind) {
+        var windowPage = "summary.aspx";
+        var f = (document.layers) ? document.ctrl.document.forms[0] : document.forms[0];
+        switch (kind) {
+            case 'name':
+                //callNameResolver();
+                break;
+            case "objid":
+                window.location = windowPage + '?id=' + f.searchObjID.value;
+                break;
+            case "radec":
+                window.location = windowPage + '?ra=' + f.searchRA.value + '&dec=' + f.searchDec.value;
+                break;
+            case "sdss":
+                var a = String(f.searchSDSS.value).split("-");
+                if (a.length != 5) {
+                    alert('The SDSS Id has 5 parts,\n Run-Rerun-Camcol-Field-Obj\n');
+                    return false;
+                }
+                //var rerun = Number(a[1]) + 2048;  // skyversion=1
+                //var rerun = Number(a[1]) + 4096;  // skyversion=2
+                //var run = Number(a[0]);
+                //var camcol = Number(a[2]);
+                //var field = Number(a[3]);
+                //var obj = Number(a[4]);
+                //var cf = 8192 * camcol + field;
+
+                //var s = "0x";
+                //s += padHex(rerun, 4);
+                //s += padHex(run, 4);
+                //s += padHex(cf, 4);
+                //s += padHex(obj, 4);
+
+                //window.location = windowPage + '?id=' + s //Number(s).toString(10);
+                window.location = windowPage + '?run=' + a[0] + '&rerun=' + a[1] + '&camcol=' + a[2] + '&field=' + a[3] + '&obj=' + a[4]
+                break;
+            case "specid":
+                window.location = windowPage + '?sid=' + encodeURIComponent(f.searchSpecID.value);
+                break;
+            case "plfib":
+                window.location = windowPage + '?plate=' + f.searchPlate.value + '&mjd=' + f.searchMJD.value + '&fiber=' + f.searchFiber.value;
+                break;
+            default:
+                alert('Not supported');
+                break;
+        }
+
+        return false;
+    }
+
+    function resolveName() {
+        var name = $('#searchName').val();
+        $.ajax({
+            type: "GET",
+            url: "../Resolver.ashx?name=" + name,
+            success: function (response) {
+                if (response.indexOf("Error:") == 0) {
+                    alert(response);
+                }
+                else {
+                    var s = response.split('\n');
+                    var windowPage = "summary.aspx";
+                    window.location = windowPage + '?ra=' + s[1].substring(4) + '&dec=' + s[2].substring(5);
+
+                }
+            },
+            error: function () {
+                alert("Error: Could not resolve name.");
+            }
+        });
+    }
+
+
 </script>
     <title></title>
     <asp:ContentPlaceHolder ID="head" runat="server">
@@ -131,6 +222,30 @@
 	  </tr>
       </table>
 
+        <div id="search" style="display:none;">
+          <table>
+            <tr>
+              <td width="120px" align="center"><h2>Search by</h2><input type="button" onclick="toggleSearch()" value="Hide"></input></td>
+              <td>
+                <table>
+                  <tr><td align="right" class="s">Name:</td><td><input type="text" id="searchName" name="searchName" value="ACO  2255"></input></td><td><input type="button" onclick="resolveName()" value="Find"/></td></tr>
+                  <tr><td align="right" class="s">RA/Dec:</td><td><input type="text" size="8" id="searchRA" name="searchRA" value="258.20837"></input>/<input type="text" size="8" id="searchDec" name="searchDec" value="64.05295"></input></td><td><input type="button" onclick="press_ok('radec')" name="searchRADECbutton" value ="Go"></input></td></tr>
+                   <tr><td align="right" class="s">ObjID:</td><td><input type="text" name="searchObjID" value="1237671939804561470"></input></td><td><input type="button" onclick="press_ok('objid')" value="Go"></input></td></tr>
+                </table>
+               </td>
+               <td>
+                <table>
+                <tr><td align="right" class="s">SpecID or APOGEE ID:</td><td><input type="text" name="searchSpecID" value="396421249233872896"></input></td><td><input type="button" onclick="press_ok('specid')" value="Go"></input></td></tr>
+                <tr><td align="right" class="s">5-part SDSS:</td><td><input type="text" name="searchSDSS" value="6162-301-3-133-62"></input></td><td><input type="button" onclick="press_ok('sdss')" value="Go"></input></td></tr>
+                <tr><td align="right" class="s">Plate-MJD-Fiber:</td><td><input type="text" size="4" name="searchPlate" value="352"></input>-<input type="text" size="4" name="searchMJD" value="51694"></input>-<input type="text" size="4" name="searchFiber" value="380"></input></td><td><input type="button" onclick="press_ok('plfib')" value="Go"></input></td></tr>
+                </table>
+               </td>
+              </tr>
+            </table>
+        </div>
+
+
+
     <div id="toc" >
       <table width="110" cellspacing=0 cellpadding=0>
 	    <tr><td class="s" align="right"><hr width="90"></td></tr>
@@ -138,12 +253,18 @@
 	    <tr><td class="s" align="right"><hr width="90"></td></tr>
 	    <tr><td align="left"><a class="quicklook" target="tools" href='<%=hrefs.Explore %>' ONMOUSEOVER="this.T_WIDTH='140';return escape('Study this object in more depth with the Explore tool.')">Explore</a></td></tr>	
 	    <tr><td align="right"><hr width="90"></td></tr>
-	    <tr><td><a class="quicklook" target="OMAIN" href='<%=hrefs.Search%>' ONMOUSEOVER="this.T_WIDTH='140';return escape('Use these options to search for specific objects.')">Search by</a></td></tr>
+
+        <tr><td class="med"><a id="searchLabel" href="#" onclick="toggleSearch();" value="Hide" ONMOUSEOVER="this.T_WIDTH='140';return escape('Search for specific objects.')">Search</a></td></tr>
+        <tr><td align="right"><hr width="90"></td></tr>
+
+            <!--
+	    <tr><td><a class="quicklook" target="OMAIN" href='<%=hrefs.Search%>' ONMOUSEOVER="this.T_WIDTH='140';return escape('Use these options to search for specific objects.')">Search by</a></td></!--tr>
 	    <tr><td class="s" align="right"><a class="quicklook" href='<%=hrefs.Id%>' ONMOUSEOVER="this.T_WIDTH='140';return escape('Search by SDSS Object ID (objid).')">ObjId</a></td></tr>
 	    <tr><td class="s" align="right"><a class="quicklook" href='<%=hrefs.Eq%>' ONMOUSEOVER="this.T_WIDTH='140';return escape('Search by location (ra, dec).')">Ra,dec</a></td></tr>
 	    <tr><td class="s" align="right"><a class="quicklook" href='<%=hrefs.SDSS%>' ONMOUSEOVER="this.T_WIDTH='140';return escape('Search by SDSS run-rerun-camcol-field-obj code.')">5-part SDSS</a></td></tr>
 	    <tr><td class="s" align="right"><a class="quicklook" href='<%=hrefs.Plfib%>' ONMOUSEOVER="this.T_WIDTH='140';return escape('Search for a particular spectrum (and its matching image) by its plate number, modified Julian date of observation and number of its fiber on the plate.')">Plate-MJD-Fiber</a></td></tr>
 	    <tr><td class="s" align="right"><hr width="90"></td></tr>
+            -->
 	    <tr><td><a class="quicklook" href='<%=hrefs.ShowBook%>' ONMOUSEOVER="this.T_WIDTH='140';return escape('Save or view objects using your SkyServer notebook.')">Notes</a></td></tr>
 	    <tr><td class="s" align="right" ><a class="quicklook" href='<%=hrefs.SaveBook%>' ONMOUSEOVER="this.T_WIDTH='140';return escape('Save this object in your SkyServer notebook.')"> Add to Notes</a><!--<div id='check'><!--<img src='../images/checkmark.gif' alt="Added to notebook" /></div>--></td></tr>
 	    <tr><td class="s" align="right" ><a class="quicklook" href='<%=hrefs.ShowBook%>' ONMOUSEOVER="this.T_WIDTH='140';return escape('View data for any objects you have saved in your SkyServer notebook.')">Show Notes</a></td></tr>
