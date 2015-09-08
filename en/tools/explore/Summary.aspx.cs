@@ -41,7 +41,7 @@ namespace SkyServer.Tools.Explore
         Int16? field = null;
         Int16? obj = null;
 
-
+        private SqlConnection oConn = null;
         
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -127,11 +127,16 @@ namespace SkyServer.Tools.Explore
                 }
             }
             runQuery = new RunQuery(token);
-            //This is imp function to get all different ids.
-            getObjPmts();
+            using (this.oConn = new SqlConnection(globals.ConnectionString))
+            {
+                this.oConn.Open();
+                //This is imp function to get all different ids.
+                getObjPmts();
 
-            //parseId and store ObjectInfo in session
-            parseIds();
+                //parseId and store ObjectInfo in session
+                parseIds();
+                this.oConn.Close();
+            }
             
         }
 
@@ -158,94 +163,177 @@ namespace SkyServer.Tools.Explore
 
         private void ObjIDFromPlfib(short? plate, int? mjd, short? fiber)
         {
-            string cmd = ExplorerQueries.getObjIDFromPlatefiberMjd;
-            cmd = cmd.Replace("@mjd", mjd.ToString());
-            cmd = cmd.Replace("@plate", plate.ToString());
-            cmd = cmd.Replace("@fiberId", fiber.ToString());
 
-            DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            using (SqlCommand oCmd = oConn.CreateCommand())
             {
-                if (reader.Read())
-                {
-                   objectInfo.objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
-                   objectInfo.specObjId = reader["specObjId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["specObjId"]);
-                   objectInfo.ra = (double)reader["ra"];
-                   objectInfo.dec = (double)reader["dec"];
-                }
-            } // using DataTableReader
-
-
-            cmd = ExplorerQueries.getApogeeFromEq;
-            cmd = cmd.Replace("@qra", objectInfo.ra.ToString());
-            cmd = cmd.Replace("@qdec", objectInfo.dec.ToString());
-            //cmd = cmd.Replace("@searchRadius", (0.5 / 60).ToString());
-            cmd = cmd.Replace("@searchRadius", (globals.EqSearchRadius).ToString());
-            // if we couldn't find that plate/mjd/fiber, maybe it's an APOGEE object
-            if (!String.IsNullOrEmpty(objectInfo.objId))
-            {
-                ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
-                using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+                string cmd = ExplorerQueries.getObjIDFromPlatefiberMjd;
+                cmd = cmd.Replace("@mjd", mjd.ToString());
+                cmd = cmd.Replace("@plate", plate.ToString());
+                cmd = cmd.Replace("@fiberId", fiber.ToString());
+                oCmd.CommandText = cmd;
+                using (SqlDataReader reader = oCmd.ExecuteReader())
                 {
                     if (reader.Read())
                     {
-                        objectInfo.apid = (string)reader["apstar_id"];
+                        objectInfo.objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
+                        objectInfo.specObjId = reader["specObjId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["specObjId"]);
+                        objectInfo.ra = (double)reader["ra"];
+                        objectInfo.dec = (double)reader["dec"];
                     }
-                } // using DataTableReader                
+                }
+                cmd = ExplorerQueries.getApogeeFromEq;
+                cmd = cmd.Replace("@qra", objectInfo.ra.ToString());
+                cmd = cmd.Replace("@qdec", objectInfo.dec.ToString());
+                //cmd = cmd.Replace("@searchRadius", (0.5 / 60).ToString());
+                cmd = cmd.Replace("@searchRadius", (globals.EqSearchRadius).ToString());
+                // if we couldn't find that plate/mjd/fiber, maybe it's an APOGEE object
+                if (!String.IsNullOrEmpty(objectInfo.objId))
+                {
+                    oCmd.CommandText = cmd;
+                    using (SqlDataReader reader = oCmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            objectInfo.apid = (string)reader["apstar_id"];
+                        }
+                    }
+                }
             }
+
+            /*
+                                    string cmd = ExplorerQueries.getObjIDFromPlatefiberMjd;
+                                    cmd = cmd.Replace("@mjd", mjd.ToString());
+                                    cmd = cmd.Replace("@plate", plate.ToString());
+                                    cmd = cmd.Replace("@fiberId", fiber.ToString());
+
+                                    DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
+                                    using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+                                    {
+                                        if (reader.Read())
+                                        {
+                                           objectInfo.objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
+                                           objectInfo.specObjId = reader["specObjId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["specObjId"]);
+                                           objectInfo.ra = (double)reader["ra"];
+                                           objectInfo.dec = (double)reader["dec"];
+                                        }
+                                    } // using DataTableReader
+
+                                    cmd = ExplorerQueries.getApogeeFromEq;
+                                    cmd = cmd.Replace("@qra", objectInfo.ra.ToString());
+                                    cmd = cmd.Replace("@qdec", objectInfo.dec.ToString());
+                                    //cmd = cmd.Replace("@searchRadius", (0.5 / 60).ToString());
+                                    cmd = cmd.Replace("@searchRadius", (globals.EqSearchRadius).ToString());
+                                    // if we couldn't find that plate/mjd/fiber, maybe it's an APOGEE object
+                                    if (!String.IsNullOrEmpty(objectInfo.objId))
+                                    {
+                                        ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
+                                        using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+                                        {
+                                            if (reader.Read())
+                                            {
+                                                objectInfo.apid = (string)reader["apstar_id"];
+                                            }
+                                        } // using DataTableReader                
+                                    }
+            */
 
         }
 
         private void apogeeFromEq(double? qra, double? qdec)
         {
-
-            string cmd = ExplorerQueries.getApogeeFromEq;
-            cmd = cmd.Replace("@qra", qra.ToString());
-            cmd = cmd.Replace("@qdec", qdec.ToString());
-            cmd = cmd.Replace("@searchRadius", (globals.EqSearchRadius).ToString());
-            //cmd = cmd.Replace("@searchRadius", (0.5 / 60).ToString());
-            DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            // direct connection with the database:
+            using (SqlCommand oCmd = oConn.CreateCommand())
             {
-                if (reader.Read())
+                string cmd = ExplorerQueries.getApogeeFromEq;
+                cmd = cmd.Replace("@qra", qra.ToString());
+                cmd = cmd.Replace("@qdec", qdec.ToString());
+                cmd = cmd.Replace("@searchRadius", (globals.EqSearchRadius).ToString());
+                oCmd.CommandText = cmd;
+                using (SqlDataReader reader = oCmd.ExecuteReader())
                 {
-                    objectInfo.apid = (string)reader["apstar_id"];
+                    if (reader.Read())
+                    {
+                        objectInfo.apid = (string)reader["apstar_id"];
+                    }
                 }
             }
+
+            /*
+                        string cmd = ExplorerQueries.getApogeeFromEq;
+                        cmd = cmd.Replace("@qra", qra.ToString());
+                        cmd = cmd.Replace("@qdec", qdec.ToString());
+                        cmd = cmd.Replace("@searchRadius", (globals.EqSearchRadius).ToString());
+                        //cmd = cmd.Replace("@searchRadius", (0.5 / 60).ToString());
+                        DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
+                        using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+                        {
+                            if (reader.Read())
+                            {
+                                objectInfo.apid = (string)reader["apstar_id"];
+                            }
+                        }
+            */
+
+
         }
 
         private void photoFromEq(double? qra, double? qdec)
         {
-            string cmd = ExplorerQueries.getPhotoFromEq;
-            cmd = cmd.Replace("@qra", qra.ToString());
-            cmd = cmd.Replace("@qdec", qdec.ToString());
-            cmd = cmd.Replace("@searchRadius", (globals.EqSearchRadius).ToString());
-            //cmd = cmd.Replace("@searchRadius", (0.5 / 60).ToString());
-            DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            // direct connection with the database:
+            using (SqlCommand oCmd = oConn.CreateCommand())
             {
-                if (reader.Read())
+                string cmd = ExplorerQueries.getPhotoFromEq;
+                cmd = cmd.Replace("@qra", qra.ToString());
+                cmd = cmd.Replace("@qdec", qdec.ToString());
+                cmd = cmd.Replace("@searchRadius", (globals.EqSearchRadius).ToString());
+                oCmd.CommandText = cmd;
+                using (SqlDataReader reader = oCmd.ExecuteReader())
                 {
-                   objectInfo.objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
-                  objectInfo.specObjId = reader["specObjId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["specObjId"]);
+                    if (reader.Read())
+                    {
+                        objectInfo.objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
+                        objectInfo.specObjId = reader["specObjId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["specObjId"]);
+                    }
                 }
             }
+
+            /*
+                        string cmd = ExplorerQueries.getPhotoFromEq;
+                        cmd = cmd.Replace("@qra", qra.ToString());
+                        cmd = cmd.Replace("@qdec", qdec.ToString());
+                        cmd = cmd.Replace("@searchRadius", (globals.EqSearchRadius).ToString());
+                        //cmd = cmd.Replace("@searchRadius", (0.5 / 60).ToString());
+                        DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
+                        using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+                        {
+                            if (reader.Read())
+                            {
+                               objectInfo.objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
+                              objectInfo.specObjId = reader["specObjId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["specObjId"]);
+                            }
+                        }
+            */
+
+
         }
 
         private void pmtsFromEq(double? qra, double? qdec)
         {
-            string cmd = ExplorerQueries.getpmtsFromEq;
-            cmd = cmd.Replace("@qra", qra.ToString());
-            cmd = cmd.Replace("@qdec", qdec.ToString());
-            cmd = cmd.Replace("@searchRadius", (globals.EqSearchRadius).ToString());
-            //cmd = cmd.Replace("@searchRadius", (0.5 / 60).ToString());
-            DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            // direct connection with the database:
+            using (SqlCommand oCmd = oConn.CreateCommand())
             {
-                if (reader.Read())
+                string cmd = ExplorerQueries.getpmtsFromEq;
+                cmd = cmd.Replace("@qra", qra.ToString());
+                cmd = cmd.Replace("@qdec", qdec.ToString());
+                cmd = cmd.Replace("@searchRadius", (globals.EqSearchRadius).ToString());
+                oCmd.CommandText = cmd;
+                using (SqlDataReader reader = oCmd.ExecuteReader())
                 {
-                   objectInfo.objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
-                   objectInfo.specObjId = reader["specObjId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["specObjId"]);
+                    if (reader.Read())
+                    {
+                        objectInfo.objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
+                        objectInfo.specObjId = reader["specObjId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["specObjId"]);
+                    }
                 }
             }
             if (objectInfo.objId != null && !objectInfo.objId.Equals(""))
@@ -254,6 +342,31 @@ namespace SkyServer.Tools.Explore
                 pmtsFromPhoto(Utilities.ParseId(objectInfo.objId));
                 apogeeFromEq(qra, qdec);
             }
+
+            /*
+                        string cmd = ExplorerQueries.getpmtsFromEq;
+                        cmd = cmd.Replace("@qra", qra.ToString());
+                        cmd = cmd.Replace("@qdec", qdec.ToString());
+                        cmd = cmd.Replace("@searchRadius", (globals.EqSearchRadius).ToString());
+                        //cmd = cmd.Replace("@searchRadius", (0.5 / 60).ToString());
+                        DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
+                        using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+                        {
+                            if (reader.Read())
+                            {
+                               objectInfo.objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
+                               objectInfo.specObjId = reader["specObjId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["specObjId"]);
+                            }
+                        }
+                        if (objectInfo.objId != null && !objectInfo.objId.Equals(""))
+                        {
+                            // This is required to get the primary specObjId (with sciprimary=1). PhotoTag.specObjId is not necessarily primary...
+                            pmtsFromPhoto(Utilities.ParseId(objectInfo.objId));
+                            apogeeFromEq(qra, qdec);
+                        }
+            */
+
+
         }
 
 
@@ -286,88 +399,134 @@ namespace SkyServer.Tools.Explore
         {
             string whatdoiget = null;
             if (sid.StartsWith("apogee")) { whatdoiget = "apstar_id"; } else { whatdoiget = "apogee_id"; }
+            /*
+                        string cmd = ExplorerQueries.getpmtsFromSpecWithApogeeId;
+                        cmd = cmd.Replace("@whatdoiget",whatdoiget);
+                        cmd = cmd.Replace("@sid","'"+sid+"'");
 
-            string cmd = ExplorerQueries.getpmtsFromSpecWithApogeeId;
-            cmd = cmd.Replace("@whatdoiget",whatdoiget);
-            cmd = cmd.Replace("@sid","'"+sid+"'");
-
-            DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+                        DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
+                        using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+                        {
+                            if (reader.Read())
+                            {
+                               objectInfo.apid = reader.GetString(0);
+                               objectInfo.ra = reader.GetDouble(1);
+                               objectInfo.dec = reader.GetDouble(2);
+                            }
+                        } // using DataReader
+            */
+            // direct connection with the database:
+            using (SqlCommand oCmd = oConn.CreateCommand())
             {
-                if (reader.Read())
+                string cmd = ExplorerQueries.getpmtsFromSpecWithApogeeId;
+                cmd = cmd.Replace("@whatdoiget", whatdoiget);
+                cmd = cmd.Replace("@sid", "'" + sid + "'");
+                oCmd.CommandText = cmd;
+                using (SqlDataReader reader = oCmd.ExecuteReader())
                 {
-                   objectInfo.apid = reader.GetString(0);
-                   objectInfo.ra = reader.GetDouble(1);
-                   objectInfo.dec = reader.GetDouble(2);
+                    if (reader.Read())
+                    {
+                        objectInfo.apid = reader.GetString(0);
+                        objectInfo.ra = reader.GetDouble(1);
+                        objectInfo.dec = reader.GetDouble(2);
+                    }
                 }
-            } // using DataReader        
+            }
+
         }
 
         private void pmtsFromSpecWithSpecobjID(long? sid)
         {
-            string cmd = ExplorerQueries.getpmtsFromSpecWithSpecobjID;
-            cmd = cmd.Replace("@sid", sid.ToString());
-            DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            // direct connection with the database:
+            using (SqlCommand oCmd = oConn.CreateCommand())
             {
-                if (reader.Read())
+                string cmd = ExplorerQueries.getpmtsFromSpecWithSpecobjID;
+                cmd = cmd.Replace("@sid", sid.ToString());
+                oCmd.CommandText = cmd;
+                using (SqlDataReader reader = oCmd.ExecuteReader())
                 {
-                   objectInfo.ra = (double)reader["ra"];
-                   objectInfo.dec = (double)reader["dec"];
-                   objectInfo.fieldId = reader["fieldId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["fieldId"]);
-                   objectInfo.objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
-                   objectInfo.specObjId = reader["specObjId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["specObjId"]);
-                   objectInfo.plateId = reader["plateId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["plateId"]);
-                   objectInfo.mjd = (int)reader["mjd"];
-                   objectInfo.fiberId = (short)reader["fiberId"];
-                   objectInfo.plate = (short)reader["plate"];
+                    if (reader.Read())
+                    {
+                        objectInfo.ra = (double)reader["ra"];
+                        objectInfo.dec = (double)reader["dec"];
+                        objectInfo.fieldId = reader["fieldId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["fieldId"]);
+                        objectInfo.objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
+                        objectInfo.specObjId = reader["specObjId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["specObjId"]);
+                        objectInfo.plateId = reader["plateId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["plateId"]);
+                        objectInfo.mjd = (int)reader["mjd"];
+                        objectInfo.fiberId = (short)reader["fiberId"];
+                        objectInfo.plate = (short)reader["plate"];
+                    }
                 }
-            } // using DataReader
+            }
+
+            /*
+                        string cmd = ExplorerQueries.getpmtsFromSpecWithSpecobjID;
+                        cmd = cmd.Replace("@sid", sid.ToString());
+                        DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
+                        using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+                        {
+                            if (reader.Read())
+                            {
+                               objectInfo.ra = (double)reader["ra"];
+                               objectInfo.dec = (double)reader["dec"];
+                               objectInfo.fieldId = reader["fieldId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["fieldId"]);
+                               objectInfo.objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
+                               objectInfo.specObjId = reader["specObjId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["specObjId"]);
+                               objectInfo.plateId = reader["plateId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["plateId"]);
+                               objectInfo.mjd = (int)reader["mjd"];
+                               objectInfo.fiberId = (short)reader["fiberId"];
+                               objectInfo.plate = (short)reader["plate"];
+                            }
+                        } // using DataReader
+            */
+
+
 
         }
 
 
         private void pmtsFromPhoto(long? id)
         {
-            string cmd = ExplorerQueries.getpmtsFromPhoto;
-            cmd = cmd.Replace("@objid", id.ToString());
-
-            DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            // direct connection with the database:
+            using (SqlCommand oCmd = oConn.CreateCommand())
             {
-                if (reader.Read())
-                {
-                   objectInfo.ra = (double)reader["ra"];
-                   objectInfo.dec = (double)reader["dec"];
-                   objectInfo.run = (short)reader["run"];
-                   objectInfo.rerun = (short)reader["rerun"];
-                   objectInfo.camcol = (byte)reader["camcol"];
-                   objectInfo.field = (short)reader["field"];
-                   objectInfo.fieldId = reader["fieldId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["fieldId"]);
-                   objectInfo.objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
-                   objectInfo.specObjId = reader["specObjId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["specObjId"]);
-
-                }
-            }
-
-            // get the plateId and fiberId from the specObj, if it exists
-            if (objectInfo.specObjId != null && !ZERO_ID.Equals(objectInfo.specObjId))
-            {
-                long specId = long.Parse(objectInfo.specObjId.Substring(2), NumberStyles.AllowHexSpecifier);
-                cmd = ExplorerQueries.getPlateFiberFromSpecObj;
-                cmd = cmd.Replace("@specId", specId.ToString());
-                
-                ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
-                using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+                string cmd = ExplorerQueries.getpmtsFromPhoto;
+                cmd = cmd.Replace("@objid", id.ToString());
+                oCmd.CommandText = cmd;
+                using (SqlDataReader reader = oCmd.ExecuteReader())
                 {
                     if (reader.Read())
                     {
-                       objectInfo.plateId = reader["plateId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["plateId"]);
-                       objectInfo.mjd = (int)reader["mjd"];
-                       objectInfo.fiberId = (short) reader["fiberId"];
-                       objectInfo.plate = (short)reader["plate"];
+                        objectInfo.ra = (double)reader["ra"];
+                        objectInfo.dec = (double)reader["dec"];
+                        objectInfo.run = (short)reader["run"];
+                        objectInfo.rerun = (short)reader["rerun"];
+                        objectInfo.camcol = (byte)reader["camcol"];
+                        objectInfo.field = (short)reader["field"];
+                        objectInfo.fieldId = reader["fieldId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["fieldId"]);
+                        objectInfo.objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
+                        objectInfo.specObjId = reader["specObjId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["specObjId"]);
                     }
-                } // using DataReader
+                }
+                // get the plateId and fiberId from the specObj, if it exists
+                if (objectInfo.specObjId != null && !ZERO_ID.Equals(objectInfo.specObjId))
+                {
+                    long specId = long.Parse(objectInfo.specObjId.Substring(2), NumberStyles.AllowHexSpecifier);
+                    cmd = ExplorerQueries.getPlateFiberFromSpecObj;
+                    cmd = cmd.Replace("@specId", specId.ToString());
+                    oCmd.CommandText = cmd;
+                    using (SqlDataReader reader = oCmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            objectInfo.plateId = reader["plateId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["plateId"]);
+                            objectInfo.mjd = (int)reader["mjd"];
+                            objectInfo.fiberId = (short)reader["fiberId"];
+                            objectInfo.plate = (short)reader["plate"];
+                        }
+                    }
+                }
             }
 
             try
@@ -375,101 +534,248 @@ namespace SkyServer.Tools.Explore
                 apogeeFromEq(objectInfo.ra, objectInfo.dec);
             }
             catch { }
+
+            /*
+                        string cmd = ExplorerQueries.getpmtsFromPhoto;
+                        cmd = cmd.Replace("@objid", id.ToString());
+
+                        DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
+                        using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+                        {
+                            if (reader.Read())
+                            {
+                               objectInfo.ra = (double)reader["ra"];
+                               objectInfo.dec = (double)reader["dec"];
+                               objectInfo.run = (short)reader["run"];
+                               objectInfo.rerun = (short)reader["rerun"];
+                               objectInfo.camcol = (byte)reader["camcol"];
+                               objectInfo.field = (short)reader["field"];
+                               objectInfo.fieldId = reader["fieldId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["fieldId"]);
+                               objectInfo.objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
+                               objectInfo.specObjId = reader["specObjId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["specObjId"]);
+
+                            }
+                        }
+
+                        // get the plateId and fiberId from the specObj, if it exists
+                        if (objectInfo.specObjId != null && !ZERO_ID.Equals(objectInfo.specObjId))
+                        {
+                            long specId = long.Parse(objectInfo.specObjId.Substring(2), NumberStyles.AllowHexSpecifier);
+                            cmd = ExplorerQueries.getPlateFiberFromSpecObj;
+                            cmd = cmd.Replace("@specId", specId.ToString());
+                
+                            ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
+                            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+                            {
+                                if (reader.Read())
+                                {
+                                   objectInfo.plateId = reader["plateId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["plateId"]);
+                                   objectInfo.mjd = (int)reader["mjd"];
+                                   objectInfo.fiberId = (short) reader["fiberId"];
+                                   objectInfo.plate = (short)reader["plate"];
+                                }
+                            } // using DataReader
+                        }
+
+                        try
+                        {
+                            apogeeFromEq(objectInfo.ra, objectInfo.dec);
+                        }
+                        catch { }
+            */
+
+
+
         }
 
 
         private void pmtsFrom5PartSDSS(Int16? Run, Int16? Rerun, byte? Camcol, Int16?Field, Int16? Obj)
         {
-            string cmd = ExplorerQueries.getpmtsFrom5PartSDSS;
-            cmd = cmd.Replace("@run", Run == null ? "null" : Run.ToString());
-            cmd = cmd.Replace("@rerun", Rerun == null ? "null" : Rerun.ToString());
-            cmd = cmd.Replace("@camcol", Camcol == null ? "null" : Camcol.ToString());
-            cmd = cmd.Replace("@field", Field == null ? "null" : Field.ToString());
-            cmd = cmd.Replace("@obj", Obj == null ? "null" : Obj.ToString());
 
-            DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            // direct connection with the database:
+            using (SqlCommand oCmd = oConn.CreateCommand())
             {
-                if (reader.Read())
-                {
-                   objectInfo.ra = (double)reader["ra"];
-                   objectInfo.dec = (double)reader["dec"];
-                   objectInfo.run = (short)reader["run"];
-                   objectInfo.rerun = (short)reader["rerun"];
-                   objectInfo.camcol = (byte)reader["camcol"];
-                   objectInfo.field = (short)reader["field"];
-                   objectInfo.fieldId = reader["fieldId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["fieldId"]);
-                   objectInfo.objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
-                   objectInfo.specObjId = reader["specObjId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["specObjId"]);
-
-                }
-            }
-
-            // get the plateId and fiberId from the specObj, if it exists
-            if (objectInfo.specObjId != null && !ZERO_ID.Equals(objectInfo.specObjId))
-            {
-                long specId = long.Parse(objectInfo.specObjId.Substring(2), NumberStyles.AllowHexSpecifier);
-                cmd = ExplorerQueries.getPlateFiberFromSpecObj;
-                cmd = cmd.Replace("@specId", specId.ToString());
-                
-                ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
-                using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+                string cmd = ExplorerQueries.getpmtsFrom5PartSDSS;
+                cmd = cmd.Replace("@run", Run == null ? "null" : Run.ToString());
+                cmd = cmd.Replace("@rerun", Rerun == null ? "null" : Rerun.ToString());
+                cmd = cmd.Replace("@camcol", Camcol == null ? "null" : Camcol.ToString());
+                cmd = cmd.Replace("@field", Field == null ? "null" : Field.ToString());
+                cmd = cmd.Replace("@obj", Obj == null ? "null" : Obj.ToString());
+                oCmd.CommandText = cmd;
+                using (SqlDataReader reader = oCmd.ExecuteReader())
                 {
                     if (reader.Read())
                     {
-                       objectInfo.plateId = reader["plateId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["plateId"]);
-                       objectInfo.mjd = (int)reader["mjd"];
-                       objectInfo.fiberId = (short) reader["fiberId"];
-                       objectInfo.plate = (short)reader["plate"];
+                        objectInfo.ra = (double)reader["ra"];
+                        objectInfo.dec = (double)reader["dec"];
+                        objectInfo.run = (short)reader["run"];
+                        objectInfo.rerun = (short)reader["rerun"];
+                        objectInfo.camcol = (byte)reader["camcol"];
+                        objectInfo.field = (short)reader["field"];
+                        objectInfo.fieldId = reader["fieldId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["fieldId"]);
+                        objectInfo.objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
+                        objectInfo.specObjId = reader["specObjId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["specObjId"]);
                     }
-                } // using DataReader
+                }
+                // get the plateId and fiberId from the specObj, if it exists
+                if (objectInfo.specObjId != null && !ZERO_ID.Equals(objectInfo.specObjId))
+                {
+                    long specId = long.Parse(objectInfo.specObjId.Substring(2), NumberStyles.AllowHexSpecifier);
+                    cmd = ExplorerQueries.getPlateFiberFromSpecObj;
+                    cmd = cmd.Replace("@specId", specId.ToString());
+                    oCmd.CommandText = cmd;
+                    using (SqlDataReader reader = oCmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            objectInfo.plateId = reader["plateId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["plateId"]);
+                            objectInfo.mjd = (int)reader["mjd"];
+                            objectInfo.fiberId = (short)reader["fiberId"];
+                            objectInfo.plate = (short)reader["plate"];
+                        }
+                    }
+                }
             }
-
             try
             {
                 apogeeFromEq(objectInfo.ra, objectInfo.dec);
             }
             catch { }
+
+            /*
+                        string cmd = ExplorerQueries.getpmtsFrom5PartSDSS;
+                        cmd = cmd.Replace("@run", Run == null ? "null" : Run.ToString());
+                        cmd = cmd.Replace("@rerun", Rerun == null ? "null" : Rerun.ToString());
+                        cmd = cmd.Replace("@camcol", Camcol == null ? "null" : Camcol.ToString());
+                        cmd = cmd.Replace("@field", Field == null ? "null" : Field.ToString());
+                        cmd = cmd.Replace("@obj", Obj == null ? "null" : Obj.ToString());
+
+                        DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
+                        using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+                        {
+                            if (reader.Read())
+                            {
+                               objectInfo.ra = (double)reader["ra"];
+                               objectInfo.dec = (double)reader["dec"];
+                               objectInfo.run = (short)reader["run"];
+                               objectInfo.rerun = (short)reader["rerun"];
+                               objectInfo.camcol = (byte)reader["camcol"];
+                               objectInfo.field = (short)reader["field"];
+                               objectInfo.fieldId = reader["fieldId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["fieldId"]);
+                               objectInfo.objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
+                               objectInfo.specObjId = reader["specObjId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["specObjId"]);
+
+                            }
+                        }
+
+                        // get the plateId and fiberId from the specObj, if it exists
+                        if (objectInfo.specObjId != null && !ZERO_ID.Equals(objectInfo.specObjId))
+                        {
+                            long specId = long.Parse(objectInfo.specObjId.Substring(2), NumberStyles.AllowHexSpecifier);
+                            cmd = ExplorerQueries.getPlateFiberFromSpecObj;
+                            cmd = cmd.Replace("@specId", specId.ToString());
+                
+                            ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
+                            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+                            {
+                                if (reader.Read())
+                                {
+                                   objectInfo.plateId = reader["plateId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["plateId"]);
+                                   objectInfo.mjd = (int)reader["mjd"];
+                                   objectInfo.fiberId = (short) reader["fiberId"];
+                                   objectInfo.plate = (short)reader["plate"];
+                                }
+                            } // using DataReader
+                        }
+
+ 
+             */
+
         }
 
 
         private void parseApogeeID(string idstring)
         {
-            double qra =0, qdec=0;
-            objectInfo.apid = apid;
-            string cmd = "";
-            apid = apid.ToLower();
-            if(apid.Contains("apogee"))
-             cmd = ExplorerQueries.getApogee;
-            else
-             cmd = ExplorerQueries.getApogee2;
 
-            cmd = cmd.Replace("@apogeeId",apid);
-            DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            // direct connection with the database:
+            using (SqlCommand oCmd = oConn.CreateCommand())
             {
-                if (reader.Read())
+                double qra = 0, qdec = 0;
+                objectInfo.apid = apid;
+                string cmd = "";
+                apid = apid.ToLower();
+                if (apid.Contains("apogee"))
+                    cmd = ExplorerQueries.getApogee;
+                else
+                    cmd = ExplorerQueries.getApogee2;
+
+                cmd = cmd.Replace("@apogeeId", apid);
+                oCmd.CommandText = cmd;
+                using (SqlDataReader reader = oCmd.ExecuteReader())
                 {
-                    qra = (double)reader["ra"];
-                    qdec =(double)reader["dec"];
+                    if (reader.Read())
+                    {
+                        qra = (double)reader["ra"];
+                        qdec = (double)reader["dec"];
+                    }
+                }
+                cmd = ExplorerQueries.getpmtsFromEq;
+                cmd = cmd.Replace("@qra", qra.ToString());
+                cmd = cmd.Replace("@qdec", qdec.ToString());
+                cmd = cmd.Replace("@searchRadius", (globals.EqSearchRadius).ToString());
+                oCmd.CommandText = cmd;
+                using (SqlDataReader reader = oCmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        objectInfo.objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
+                        objectInfo.specObjId = reader["specObjId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["specObjId"]);
+                    }
+                }
+            }
+
+
+            /*
+                        double qra =0, qdec=0;
+                        objectInfo.apid = apid;
+                        string cmd = "";
+                        apid = apid.ToLower();
+                        if(apid.Contains("apogee"))
+                         cmd = ExplorerQueries.getApogee;
+                        else
+                         cmd = ExplorerQueries.getApogee2;
+
+                        cmd = cmd.Replace("@apogeeId",apid);
+                        DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
+                        using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+                        {
+                            if (reader.Read())
+                            {
+                                qra = (double)reader["ra"];
+                                qdec =(double)reader["dec"];
                     
-                }
-            }
-            cmd = ExplorerQueries.getpmtsFromEq;
-            cmd = cmd.Replace("@qra", qra.ToString());
-            cmd = cmd.Replace("@qdec", qdec.ToString());
-            cmd = cmd.Replace("@searchRadius", (globals.EqSearchRadius).ToString());
-            //cmd = cmd.Replace("@searchRadius", (0.5/60).ToString());
+                            }
+                        }
+                        cmd = ExplorerQueries.getpmtsFromEq;
+                        cmd = cmd.Replace("@qra", qra.ToString());
+                        cmd = cmd.Replace("@qdec", qdec.ToString());
+                        cmd = cmd.Replace("@searchRadius", (globals.EqSearchRadius).ToString());
+                        //cmd = cmd.Replace("@searchRadius", (0.5/60).ToString());
 
-            ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
-            {
-                if (reader.Read())
-                {
-                   objectInfo.objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
-                   objectInfo.specObjId = reader["specObjId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["specObjId"]);                    
-                }
-            }
+                        ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
+                        using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+                        {
+                            if (reader.Read())
+                            {
+                               objectInfo.objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
+                               objectInfo.specObjId = reader["specObjId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["specObjId"]);                    
+                            }
+                        }
+            */
+
+
+
         }
+
     }
 }

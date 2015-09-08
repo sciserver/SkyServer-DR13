@@ -22,6 +22,8 @@
 <a href="../../help/docs/QS_UserGuide.aspx" onmouseover="return escape('Form query for imaging data.  Click to see User Guide.');">
 <div id="title">Spectroscopic Query Form</div></a>
 
+<script language="javascript" src="validate_search.js"></script>
+
 <div id="transp">
 <form method="post" target="search" enctype="multipart/form-data" action="x_results.aspx" id=sqs name="sqs">
     <input type="hidden" name="searchtool" id="searchtool" value="Spectro" />

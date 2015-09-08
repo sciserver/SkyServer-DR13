@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace SkyServer.Tools.Explore
 {
@@ -84,6 +85,9 @@ namespace SkyServer.Tools.Explore
         protected bool isData = false;
 
         protected RunQuery runQuery;
+
+        private SqlConnection oConn = null;
+
       
         /* Visits */
         public List<ApogeeVisit> visits = new List<ApogeeVisit>();
@@ -98,7 +102,10 @@ namespace SkyServer.Tools.Explore
                 if (cookie["token"] != null || !cookie["token"].Equals(""))
                     token = cookie["token"];
             runQuery = new RunQuery(token);
-            
+
+            using (this.oConn = new SqlConnection(globals.ConnectionString))
+            {
+                this.oConn.Open();
                 if (master.apid != null && !master.apid.Equals(""))
                 {
                     try
@@ -108,63 +115,124 @@ namespace SkyServer.Tools.Explore
                         ReadApogeeLinks();
                         ReadVisitsFromDbReader();
                     }
-                    catch (Exception ex) {
+                    catch (Exception ex)
+                    {
+                        this.oConn.Close();
                         throw ex;
                     }
                 }
-            
+                this.oConn.Close();
+            }
         } 
 
         protected void ReadInfoFromDbReader()  
         {
-            DataSet ds  = runQuery.RunCasjobs(command,"Explore: Apogee");
-           
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+
+            // direct connection with the database:
+            using (SqlCommand oCmd = oConn.CreateCommand())
             {
-               //BASE_QUERY + FIND_NEAREST;
-                if (reader.Read()) // Only one row expected
+                oCmd.CommandText = command;
+                using (SqlDataReader reader = oCmd.ExecuteReader())
                 {
-                    ra = reader["ra"] is DBNull?-99.99:(double)reader["ra"];
-                    dec = reader["dec"] is DBNull ? -99.99 : (double)reader["dec"];
-                    apstar_id = reader["apstar_id"] is DBNull ? "-" : (string)reader["apstar_id"];
-                    apogee_id = reader["apogee_id"] is DBNull ? "-" : (string)reader["apogee_id"];
-                    glon = reader["glon"] is DBNull ? -99.99 : (double)reader["glon"];
-                    glat = reader["glat"] is DBNull ? -99.99 : (double)reader["glat"];
-                    location_id = reader["location_id"] is DBNull ? -9999 : (long)reader["location_id"];
-                    commiss = reader["commiss"] is DBNull ? -9999 : (long)reader["commiss"];
-                    vhelio_avg = reader["vhelio_avg"] is DBNull ? -9 : (float)reader["vhelio_avg"];
-                    vscatter = reader["vscatter"] is DBNull ? -9 : (float)reader["vscatter"];
-                    teff = reader["teff"] is DBNull ? -9 : (float)reader["teff"];
-                    teff_err = reader["teff_err"] is DBNull ? -9 : (float)reader["teff_err"];
-                    logg = reader["logg"] is DBNull ? -9 : (float)reader["logg"];
-                    logg_err = reader["logg_err"] is DBNull ? -9 : (float)reader["logg_err"];
-                    param_m_h = reader["param_m_h"] is DBNull ? -9 : (float)reader["param_m_h"];
-                    param_m_h_err = reader["param_m_h_err"] is DBNull ? -9 : (float)reader["param_m_h_err"];
-                    param_alpha_m = reader["param_alpha_m"] is DBNull ? -9 : (float)reader["param_alpha_m"];
-                    param_alpha_m_err = reader["param_alpha_m_err"] is DBNull ? -9 : (float)reader["param_alpha_m_err"];
+                    //BASE_QUERY + FIND_NEAREST;
+                    if (reader.Read()) // Only one row expected
+                    {
+                        ra = reader["ra"] is DBNull ? -99.99 : (double)reader["ra"];
+                        dec = reader["dec"] is DBNull ? -99.99 : (double)reader["dec"];
+                        apstar_id = reader["apstar_id"] is DBNull ? "-" : (string)reader["apstar_id"];
+                        apogee_id = reader["apogee_id"] is DBNull ? "-" : (string)reader["apogee_id"];
+                        glon = reader["glon"] is DBNull ? -99.99 : (double)reader["glon"];
+                        glat = reader["glat"] is DBNull ? -99.99 : (double)reader["glat"];
+                        location_id = reader["location_id"] is DBNull ? -9999 : (long)reader["location_id"];
+                        commiss = reader["commiss"] is DBNull ? -9999 : (long)reader["commiss"];
+                        vhelio_avg = reader["vhelio_avg"] is DBNull ? -9 : (float)reader["vhelio_avg"];
+                        vscatter = reader["vscatter"] is DBNull ? -9 : (float)reader["vscatter"];
+                        teff = reader["teff"] is DBNull ? -9 : (float)reader["teff"];
+                        teff_err = reader["teff_err"] is DBNull ? -9 : (float)reader["teff_err"];
+                        logg = reader["logg"] is DBNull ? -9 : (float)reader["logg"];
+                        logg_err = reader["logg_err"] is DBNull ? -9 : (float)reader["logg_err"];
+                        param_m_h = reader["param_m_h"] is DBNull ? -9 : (float)reader["param_m_h"];
+                        param_m_h_err = reader["param_m_h_err"] is DBNull ? -9 : (float)reader["param_m_h_err"];
+                        param_alpha_m = reader["param_alpha_m"] is DBNull ? -9 : (float)reader["param_alpha_m"];
+                        param_alpha_m_err = reader["param_alpha_m_err"] is DBNull ? -9 : (float)reader["param_alpha_m_err"];
 
-                    j = reader["j"] is DBNull ? -9 : (float)reader["j"];
-                    h = reader["h"] is DBNull ? -9 : (float)reader["h"];
-                    k = reader["k"] is DBNull ? -9 : (float)reader["k"];
-                    j_err = reader["j_err"] is DBNull ? -9 : (float)reader["j_err"];
-                    h_err = reader["h_err"] is DBNull ? -9 : (float)reader["h_err"];
-                    k_err = reader["k_err"] is DBNull ? -9 : (float)reader["k_err"];
-                    mag_4_5 = reader["mag_4_5"] is DBNull ? null : (float?)reader["mag_4_5"];
-                    mag_4_5_err = reader["mag_4_5_err"] is DBNull ? null : (float?)reader["mag_4_5_err"];
-                    src_4_5 = reader["src_4_5"] is DBNull ? "-" : (string)reader["src_4_5"];
+                        j = reader["j"] is DBNull ? -9 : (float)reader["j"];
+                        h = reader["h"] is DBNull ? -9 : (float)reader["h"];
+                        k = reader["k"] is DBNull ? -9 : (float)reader["k"];
+                        j_err = reader["j_err"] is DBNull ? -9 : (float)reader["j_err"];
+                        h_err = reader["h_err"] is DBNull ? -9 : (float)reader["h_err"];
+                        k_err = reader["k_err"] is DBNull ? -9 : (float)reader["k_err"];
+                        mag_4_5 = reader["mag_4_5"] is DBNull ? null : (float?)reader["mag_4_5"];
+                        mag_4_5_err = reader["mag_4_5_err"] is DBNull ? null : (float?)reader["mag_4_5_err"];
+                        src_4_5 = reader["src_4_5"] is DBNull ? "-" : (string)reader["src_4_5"];
 
-                    apogeeTarget1N = reader["apogeeTarget1N"] is DBNull ? "-" : (string)reader["apogeeTarget1N"];
-                    apogeeTarget2N = reader["apogeeTarget2N"] is DBNull ? "-" : (string)reader["apogeeTarget2N"];
-                    apogeeStarFlagN = reader["apogeeStarFlagN"] is DBNull ? "-" : (string)reader["apogeeStarFlagN"];
-                    apogeeAspcapFlagN = reader["apogeeAspcapFlagN"] is DBNull ? "-" : (string)reader["apogeeAspcapFlagN"];
+                        apogeeTarget1N = reader["apogeeTarget1N"] is DBNull ? "-" : (string)reader["apogeeTarget1N"];
+                        apogeeTarget2N = reader["apogeeTarget2N"] is DBNull ? "-" : (string)reader["apogeeTarget2N"];
+                        apogeeStarFlagN = reader["apogeeStarFlagN"] is DBNull ? "-" : (string)reader["apogeeStarFlagN"];
+                        apogeeAspcapFlagN = reader["apogeeAspcapFlagN"] is DBNull ? "-" : (string)reader["apogeeAspcapFlagN"];
 
-                    isData = true;
+                        isData = true;
+                    }
+                    else
+                    {
+                        isData = false;
+                        //throw new Exception("APOGEE data not found"); 
+                    }
                 }
-                else {
-                    isData = false;
-                    //throw new Exception("APOGEE data not found"); 
-                }
-            }        
+            }
+
+            /*
+                        DataSet ds  = runQuery.RunCasjobs(command,"Explore: Apogee");
+           
+                        using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+                        {
+                           //BASE_QUERY + FIND_NEAREST;
+                            if (reader.Read()) // Only one row expected
+                            {
+                                ra = reader["ra"] is DBNull?-99.99:(double)reader["ra"];
+                                dec = reader["dec"] is DBNull ? -99.99 : (double)reader["dec"];
+                                apstar_id = reader["apstar_id"] is DBNull ? "-" : (string)reader["apstar_id"];
+                                apogee_id = reader["apogee_id"] is DBNull ? "-" : (string)reader["apogee_id"];
+                                glon = reader["glon"] is DBNull ? -99.99 : (double)reader["glon"];
+                                glat = reader["glat"] is DBNull ? -99.99 : (double)reader["glat"];
+                                location_id = reader["location_id"] is DBNull ? -9999 : (long)reader["location_id"];
+                                commiss = reader["commiss"] is DBNull ? -9999 : (long)reader["commiss"];
+                                vhelio_avg = reader["vhelio_avg"] is DBNull ? -9 : (float)reader["vhelio_avg"];
+                                vscatter = reader["vscatter"] is DBNull ? -9 : (float)reader["vscatter"];
+                                teff = reader["teff"] is DBNull ? -9 : (float)reader["teff"];
+                                teff_err = reader["teff_err"] is DBNull ? -9 : (float)reader["teff_err"];
+                                logg = reader["logg"] is DBNull ? -9 : (float)reader["logg"];
+                                logg_err = reader["logg_err"] is DBNull ? -9 : (float)reader["logg_err"];
+                                param_m_h = reader["param_m_h"] is DBNull ? -9 : (float)reader["param_m_h"];
+                                param_m_h_err = reader["param_m_h_err"] is DBNull ? -9 : (float)reader["param_m_h_err"];
+                                param_alpha_m = reader["param_alpha_m"] is DBNull ? -9 : (float)reader["param_alpha_m"];
+                                param_alpha_m_err = reader["param_alpha_m_err"] is DBNull ? -9 : (float)reader["param_alpha_m_err"];
+
+                                j = reader["j"] is DBNull ? -9 : (float)reader["j"];
+                                h = reader["h"] is DBNull ? -9 : (float)reader["h"];
+                                k = reader["k"] is DBNull ? -9 : (float)reader["k"];
+                                j_err = reader["j_err"] is DBNull ? -9 : (float)reader["j_err"];
+                                h_err = reader["h_err"] is DBNull ? -9 : (float)reader["h_err"];
+                                k_err = reader["k_err"] is DBNull ? -9 : (float)reader["k_err"];
+                                mag_4_5 = reader["mag_4_5"] is DBNull ? null : (float?)reader["mag_4_5"];
+                                mag_4_5_err = reader["mag_4_5_err"] is DBNull ? null : (float?)reader["mag_4_5_err"];
+                                src_4_5 = reader["src_4_5"] is DBNull ? "-" : (string)reader["src_4_5"];
+
+                                apogeeTarget1N = reader["apogeeTarget1N"] is DBNull ? "-" : (string)reader["apogeeTarget1N"];
+                                apogeeTarget2N = reader["apogeeTarget2N"] is DBNull ? "-" : (string)reader["apogeeTarget2N"];
+                                apogeeStarFlagN = reader["apogeeStarFlagN"] is DBNull ? "-" : (string)reader["apogeeStarFlagN"];
+                                apogeeAspcapFlagN = reader["apogeeAspcapFlagN"] is DBNull ? "-" : (string)reader["apogeeAspcapFlagN"];
+
+                                isData = true;
+                            }
+                            else {
+                                isData = false;
+                                //throw new Exception("APOGEE data not found"); 
+                            }
+                        }
+            */ 
+
+
         }
 
         private void ReadApogeeLinks() {
@@ -188,7 +256,7 @@ namespace SkyServer.Tools.Explore
                 }
             }
             command = command.Replace("@id", "'" + apogee_id + "'");
-
+/*
             DataSet ds = runQuery.RunCasjobs(command, "Explore: Apogee");
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
@@ -204,6 +272,27 @@ namespace SkyServer.Tools.Explore
                     visits.Add(v);
                 }
             }
+*/
+            // direct connection with the database:
+            using (SqlCommand oCmd = oConn.CreateCommand())
+            {
+                oCmd.CommandText = command;
+                using (SqlDataReader reader = oCmd.ExecuteReader())
+                {
+                    while (reader.Read()) // Multiple rows expected
+                    {
+                        ApogeeVisit v = new ApogeeVisit();
+                        v.visit_id = (string)reader["visit_id"];
+                        v.plate = (string)reader["plate"];
+                        v.mjd = (long)reader["mjd"];
+                        v.fiberid = (long)reader["fiberid"];
+                        v.dateobs = (string)reader["dateobs"];
+                        v.vrel = (float)reader["vrel"];
+                        visits.Add(v);
+                    }
+                }
+            }
+
         }
         
         public void apogeeRaDec( double ra, double dec, double radius)

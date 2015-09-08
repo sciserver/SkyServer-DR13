@@ -74,22 +74,22 @@
 	
 
 	<h4>Radial</h4>
-	<pre><a target="api"  class='sml' href="<%=url%>/tools/search/x_radial.aspx?ra=180&dec=-0.2&radius=3&format=csv&limit=20"><%=url%>/tools/search/x_radial.aspx?
+	<pre><a target="api"  class='sml' href="<%=url%>/tools/search/x_results.aspx?searchtool=Radial&ra=180&dec=-0.2&radius=3&format=csv&limit=20"><%=url%>/tools/search/x_results.aspx?searchtool=Radial&
 ra=180&dec=-0.2&radius=3&format=csv&limit=20</a> </pre>
 	where ra is Right Ascension in degrees, dec is Declination in degrees, radius is search radius in arcminutes,
 	format is the format to return, which may be csv, html, or xml,
 	limit is the number of rows to return. If you want all rows, put entries=all instead.
 	<p>
 	Additional parameters may be passed for restricting its range. For each band (x one of r,i,u,g,z)
-	<i>check_x,min_x and max_x </i>may be specified. Hence adding to the above we may restrict the result to rows with 
+	<i>check_x,min_x,max_x and xband </i>may be specified. Hence adding to the above we may restrict the result to rows with 
 	u between 20 and 22 as follows:
-	<pre><a target="api"  class='sml' href="<%=url%>/tools/search/x_radial.aspx?ra=180&dec=-0.2&radius=3&format=xml&limit=20&check_u=u&min_u=20&max_u=22"><%=url%>/tools/search/x_radial.aspx?
-ra=180&dec=-0.2&radius=3&format=xml&limit=20&check_u=u&min_u=20&max_u=22</a> </pre>
+	<pre><a target="api"  class='sml' href="<%=url%>/tools/search/x_results.aspx?searchtool=Radial&ra=180&dec=-0.2&radius=3&format=xml&limit=20&check_u=u&min_u=20&max_u=22&uband=0 20"><%=url%>/tools/search/x_results.aspx?searchtool=Radial&
+ra=180&dec=-0.2&radius=3&format=xml&limit=20&check_u=u&min_u=20&max_u=22&uband=0 20</a> </pre>
 	<p>The same parameters can be also sent using POST. The names forms are the same as the GET parameter names.	<p>
 
 	<hr>
 	<h4>Rectangular</h4>
-	<pre><a target="api" class='sml'  href="<%=url%>/tools/search/x_rect.aspx?min_ra=180.1&max_ra=180.2&min_dec=-0.1&max_dec=0.01&format=xml&limit=20"><%=url%>/tools/search/x_rect.aspx?
+	<pre><a target="api" class='sml'  href="<%=url%>/tools/search/x_results.aspx?searchtool=Rectangular&min_ra=180.1&max_ra=180.2&min_dec=-0.1&max_dec=0.01&format=xml&limit=20"><%=url%>/tools/search/x_results.aspx?searchtool=Rectangular&
 min_ra=180.1&max_ra=180.2&min_dec=-0.1&max_dec=0.01&format=xml&limit=20</a> </pre>
 	where min_ra,min_dec in degrees form one corner, max_ra,max_dec form the other corner,
 	format is the format to return which may be csv, html, or xml,
@@ -98,7 +98,7 @@ min_ra=180.1&max_ra=180.2&min_dec=-0.1&max_dec=0.01&format=xml&limit=20</a> </pr
 	
 	<hr>
 	<h4>SQL</h4>
-	<pre><a target="api"  class='sml' href="<%=url%>/tools/search/x_sql.aspx?format=xml&cmd=select top 10 * from galaxy"><%=url%>/tools/search/x_sql.aspx?
+	<pre><a target="api"  class='sml' href="<%=url%>/tools/search/x_results.aspx?searchtool=SQL&format=xml&cmd=select top 10 * from galaxy"><%=url%>/tools/search/x_results.aspx?searchtool=SQL&
 format=xml&cmd=select top 10 * from galaxy </a> </pre>
 	Where cmd is the sql command to execute and format is the format to return which may be csv, html, or xml.
 	The command should be preferably URL-encoded, like
@@ -216,8 +216,8 @@ Basically you must post to the server a field called "paste" which contains the 
 	where ra is Right Ascension in degrees, dec is declination in degrees, or
 	<pre><a target="api" class='sml'  href="<%=url%>/tools/explore/obj.aspx?sid=299492151346096128"><%=url%>/tools/explore/obj.aspx?sid=299492151346096128</a></pre>
 	where sid is the SpecObjId, or 
-	<pre><a target="api" class='sml'  href="<%=url%>/tools/explore/obj.aspx?plate=266&fiberid=100"><%=url%>/tools/explore/obj.aspx?plate=266&fiberid=100</a></pre>
-	where plate is the plate and fiber is the fiberid.
+	<pre><a target="api" class='sml'  href="<%=url%>/tools/explore/obj.aspx?mjd=51630&plate=266&fiber=100"><%=url%>/tools/explore/obj.aspx?mjd=51630&plate=266&fiber=100</a></pre>
+	where mjd is the modified julian date, plate is the plate and fiber is the fiberid.
 
 <!--
 	<hr>

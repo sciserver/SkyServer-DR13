@@ -13,6 +13,7 @@
     <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
 
     <script type="text/javascript" src="./javascript/master.js"> </script>
+    <script type="text/javascript" src="./javascript/explore.js"> </script>
 
     <asp:contentplaceholder id="OEHead" runat="server" />
 
@@ -30,7 +31,7 @@
         <div id="search" style="display:none;">
           <table>
             <tr>
-              <td width="120px" align="center"><h2>Search by</h2><input type="button" onclick="toggleSearch()" value="Hide"></input></td>
+              <td width="120px" align="center"><h2>Search by</h2><input type="button" onclick="toggleSearch()" value="Hide" ONMOUSEOVER="this.T_WIDTH='140';return escape('Search for specific objects.')"></input></td>
               <td>
                 <table>
                   <tr><td align="right" class="s">Name:</td><td><input type="text" id="searchName" name="searchName" value="ACO  2255"></input></td><td><input type="button" onclick="resolveName()" value="Find"/></td></tr>
@@ -82,11 +83,10 @@
                         %>
 
                         <tr><td align="right"><hr width="90"/></td></tr>
-	                    <tr><td><a class="med" target="_top" href='<%=hrefs.Summary%>#crossidtop' title="Photometric cross-identifications with other surveys, if there are any available.">Cross-ID</a><br></td></tr>
-
+	                    <tr><td><a class="med" target="_top" href='#crossidtop' onclick="javascript:window.location.href='#crossidtop';javascript:showSection('crossid');javascript:showLink('crossid_is_hidden');javascript:hideLink('crossid_is_shown');" title="Photometric cross-identifications with other surveys, if there are any available.">Cross-ID</a><br></td></tr>
                         <tr><td align="right"><hr width="90"/></td></tr>
 
-	                    <tr><td><a class="med" target="_top" href='<%=hrefs.Summary%>#spectro' title="Summary of spectroscopic parameters (if a spectrum was observed).">Spec Summary</a><br></td></tr>
+	                    <tr><td><a class="med" target="_top" href='#spectro' title="Summary of spectroscopic parameters (if a spectrum was observed).">Spec Summary</a><br></td></tr>
                       <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.AllSpec%>" title="Find all the spectra observed for this object in the SpecObjAll table.">All Spectra</a></td></tr>
 	                                            <%
                       if (specId != null)

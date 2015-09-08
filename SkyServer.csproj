@@ -2043,6 +2043,7 @@
     <Content Include="en\tools\search\SearchHome.aspx" />
     <Content Include="en\tools\search\SQL.aspx" />
     <Content Include="en\tools\search\SQS.aspx" />
+    <Content Include="en\tools\search\validate_search.js" />
     <Content Include="en\tools\search\X_Results.aspx" />
     <Content Include="en\tools\STARTBall\FlashJavascriptGateway\FlashJavascriptGateway\docs\license.txt" />
     <Content Include="en\tools\STARTBall\FlashJavascriptGateway\FlashJavascriptGateway\docs\readme.html" />

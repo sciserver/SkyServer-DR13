@@ -23,6 +23,8 @@
 <a href="../../help/docs/QS_UserGuide.aspx" onmouseover="return escape('Form query for imaging data.  Click to see User Guide.');">
 <div id="title">Infrared Spectroscopy Query Form</div></a>
 
+<script language="javascript" src="validate_search.js"></script>
+
 <div id="transp">
 <form method="post" target="search" enctype="multipart/form-data" action="x_results.aspx" id=irqs name="irqs">
     <input type="hidden" name="searchtool" id="searchtool" value="IRSpectra" />

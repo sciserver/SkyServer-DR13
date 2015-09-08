@@ -110,8 +110,8 @@
 				    <td colspan="2" align="middle" bgcolor="skyblue">Parameters</td>
 			    </tr>
                 <%
-	                drawFormBox("ra","ra",ra+"","setra();","deg","R.A. in decimal degrees,<br> HH MM SS, or HH:MM:SS"); 
-	                drawFormBox("dec","dec",dec+"","setdec();","deg","Declination in decimal degrees,<br> DD MM SS, or DD:MM:SS"); 
+                    drawFormBox("ra", "ra", ra + "", "setra();", "deg", "R.A. in decimal degrees,<br> HH MM SS, or HH:MM:SS. Value is wrapped around the sphere.");
+                    drawFormBox("dec", "dec", dec + "", "setdec();", "deg", "Declination in decimal degrees,<br> DD MM SS, or DD:MM:SS. Value is wrapped around the sphere."); 
 	                drawFormBox("scale","scale",qscale+"","setscale(0)","''/pix","Chart scale in arcsec per pixel"); 
 	                drawFormBox("width","width",width+"","setwidth();","pix","Chart width in pixels"); 
 	                drawFormBox("height","height",height+"","setheight();","pix","Chart height in pixels"); 

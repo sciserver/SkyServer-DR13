@@ -25,7 +25,7 @@
 		<table><tr>
 		<td><a href=<%=userguide%>#Redshift
 			onmouseover="return escape('minimum redshift');">redshift</a></td>
-		<td><input type=text name=redshiftMin size=2 class='mag'></td>
+		<td><input type=text id="redshiftMin" name=redshiftMin size=2 class='mag'></td>
 		</tr></table>
 	</td>
 	<td class='q' rowspan=2 align=center>
@@ -55,7 +55,7 @@
 		<table><tr>
 		<td><a href=<%=userguide%>#Redshift
 			onmouseover="return escape('maximum redshift');">redshift</a></td>
-		<td><input type=text name=redshiftMax size=2 class='mag'></td>
+		<td><input type=text id="redshiftMax" name=redshiftMax size=2 class='mag'></td>
 		</tr></table>
 	</td>
   </tr>  
@@ -190,7 +190,8 @@
 
 <table width="100%">
 		<tr>
-			<td align="left"><input id=submit type="submit" value="Submit Request"></td>
+			<!--td align="left"><input id=submit type="submit" value="Submit Request"></td-->
+            <td align="left"><input id=SubmitButton type=button style="width:110px;" onclick="runquery();" value="Submit Request"></input></td>
 			<td colspan="2">&nbsp;</td>
 			<td align="right"><input id=reset  type="reset" value="Reset Form"></td>
 		</tr>

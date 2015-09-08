@@ -198,11 +198,9 @@
       } else {
       v = parseFloat(s_ra);
       if(isNaN(v)) v=180.0;
-      //if (v < 0) v += 360; 
-      if (v < 0) v = v % 360;
-      //if (v > 360) v -= 360;
-      if (v > 360) v = v % 360;
-  }
+      v = v % 360;
+      if (v < 0) v += 360; 
+      }
       }
       document.getElementById('ra').value = v;
       return false;
@@ -219,12 +217,24 @@
         v = fmt(dms2deg(s_dec,':'), 10, 5);
         } else {
         if( s_dec.search(/\d \d/) > -1 ) {
-        v = fmt(dms2deg(s_dec,' '), 10, 5);
+            v = fmt(dms2deg(s_dec,' '), 10, 5);
         } else {
-        v = parseFloat(s_dec);
-        if(isNaN(v)) v=0.0;
-        if (v < -90 ) v= -90;
-        if (v > 90) v= 90;
+            v = parseFloat(s_dec);
+            if(isNaN(v)) v=0.0;
+            //if (v<-90) v= -90;
+            //if (v>90) v= 90;
+				var OldRa = parseFloat(document.getElementById('ra').value)
+				v = v % 360;					// brings dec within the circle
+				if (v < 0) {
+				    v = v + 360     // only allows positive dec values
+				}
+				else if (v > 90 & v < 270) { // if dec is at the other side of the poles
+				    document.getElementById('ra').value = (OldRa + 180) % 360 // go 1/2 way around the globe
+				    v = 180 - v
+				}
+				else if (v >= 270) { // if dec is at this side from the south pole
+				    v = v - 360
+				}
         }
         }
         document.getElementById('dec').value = v;

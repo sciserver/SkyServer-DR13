@@ -9,28 +9,28 @@
 	    <tr>
 		    <td class='q' rowspan=2><a href=<%=userguide%>#Magnitudes onmouseover="return escape('Apply constraints based on 2MASS infrared magnitudes');">IR Magnitudes</a></td>
 		    <td class='q'>min</td>
-		    <td class='q'><table width=100%><tr><td>J</td><td align=right><input class='mag' type=text name=jMin size=2></td></tr></table></td>
-		    <td class='q'><table width=100%><tr><td>H</td><td align=right><input class='mag' type=text name=hMin size=2></td></tr></table></td>
-		    <td class='q'><table width=100%><tr><td>K<sub>s</sub></td><td align=right><input class='mag' type=text name=kMin size=2></td></tr></table></td>
+		    <td class='q'><table width=100%><tr><td>J</td><td align=right><input class='mag' type=text id="jMin" name=jMin size=2></td></tr></table></td>
+		    <td class='q'><table width=100%><tr><td>H</td><td align=right><input class='mag' type=text id="hMin" name=hMin size=2></td></tr></table></td>
+		    <td class='q'><table width=100%><tr><td>K<sub>s</sub></td><td align=right><input class='mag' type=text id="kMin" name=kMin size=2></td></tr></table></td>
 	    </tr>
 	    <tr>
 		    <td class='q'>max</td>
-		    <td class='q'><table width=100%><tr><td>J</td><td align=right><input class='mag' type=text name=jMax size=2></td></tr></table></td>
-		    <td class='q'><table width=100%><tr><td>H</td><td align=right><input class='mag' type=text name=hMax size=2></td></tr></table></td>
-		    <td class='q'><table width=100%><tr><td>K<sub>s</sub></td><td align=right><input class='mag' type=text name=kMax size=2></td></tr></table></td>
+		    <td class='q'><table width=100%><tr><td>J</td><td align=right><input class='mag' type=text id="jMax" name=jMax size=2></td></tr></table></td>
+		    <td class='q'><table width=100%><tr><td>H</td><td align=right><input class='mag' type=text id="hMax" name=hMax size=2></td></tr></table></td>
+		    <td class='q'><table width=100%><tr><td>K<sub>s</sub></td><td align=right><input class='mag' type=text id="kMax" name=kMax size=2></td></tr></table></td>
 	    </tr>
 
         <tr>
 		        <td class='q' rowspan=2><a href=<%=userguide%>#Colors onmouseover="return escape('Apply constraints based on 2MASS infrared colors');">IR Colors</a></td>
 		        <td class='q'>min</td>
-		        <td class='q'><table width=100%><tr><td>J-H</td><td align=right><input class='mag' type=text name=jhMin size=2></td></tr></table></td>
-		        <td class='q'><table width=100%><tr><td>H-K<sub>s</sub></td><td align=right><input class='mag' type=text name=hkMin size=2></td></tr></table></td>
+		        <td class='q'><table width=100%><tr><td>J-H</td><td align=right><input class='mag' type=text id="jhMin" name=jhMin size=2></td></tr></table></td>
+		        <td class='q'><table width=100%><tr><td>H-K<sub>s</sub></td><td align=right><input class='mag' type=text id="hkMin" name=hkMin size=2></td></tr></table></td>
 		        <td class='q'>&nbsp;</td>
 	        </tr>
 	    <tr>
 		    <td class='q'>max</td>
-		        <td class='q'><table width=100%><tr><td>J-H</td><td align=right><input class='mag' type=text name=jhMax size=2></td></tr></table></td>
-		        <td class='q'><table width=100%><tr><td>H-K<sub>s</sub></td><td align=right><input class='mag' type=text name=hkMax size=2></td></tr></table></td>
+		        <td class='q'><table width=100%><tr><td>J-H</td><td align=right><input class='mag' type=text id="jhMax" name=jhMax size=2></td></tr></table></td>
+		        <td class='q'><table width=100%><tr><td>H-K<sub>s</sub></td><td align=right><input class='mag' type=text id="hkMax" name=hkMax size=2></td></tr></table></td>
 		        <td class='q'>&nbsp;</td>
 	    </tr>
     </table>
@@ -42,15 +42,15 @@
 		        Observational Parameters
 	        </td>
 		        <td class='q' width=25>min</td>
-                <td class='q' width=95><table width=100%><tr><td>SNR</sub></td><td align=right><input class='params' type=text name=snrMin size=2></td></tr></table></td>
-                <td class='q' width=95><table width=100%><tr><td>v<sub>Helio</sub></td><td align=right><input class='params' type=text name=vhelioMin size=2></td></tr></table></td>
-                <td class='q' width=95><table width=100%><tr><td>Scatter in v</td><td align=right><input class='params' type=text name=scatterMin size=2></td></tr></table></td>
+                <td class='q' width=95><table width=100%><tr><td>SNR</sub></td><td align=right><input class='params' type=text id="snrMin" name=snrMin size=2></td></tr></table></td>
+                <td class='q' width=95><table width=100%><tr><td>v<sub>Helio</sub></td><td align=right><input class='params' type=text id="vhelioMin" name=vhelioMin size=2></td></tr></table></td>
+                <td class='q' width=95><table width=100%><tr><td>Scatter in v</td><td align=right><input class='params' type=text id="scatterMin" name=scatterMin size=2></td></tr></table></td>
 	        </tr>
             <tr>
 		        <td class='q' width=25>max</td>
-                <td class='q' width=95><table width=100%><tr><td>SNR</sub></td><td align=right><input class='params' type=text name=snrMax size=2></td></tr></table></td>
-                <td class='q' width=95><table width=100%><tr><td>v<sub>Helio</sub></td><td align=right><input class='params' type=text name=vhelioMax size=2></td></tr></table></td>
-                <td class='q' width=95><table width=100%><tr><td>Scatter in v</td><td align=right><input class='params' type=text name=scatterMax size=2></td></tr></table></td>
+                <td class='q' width=95><table width=100%><tr><td>SNR</sub></td><td align=right><input class='params' type=text id="snrMax" name=snrMax size=2></td></tr></table></td>
+                <td class='q' width=95><table width=100%><tr><td>v<sub>Helio</sub></td><td align=right><input class='params' type=text id="vhelioMax" name=vhelioMax size=2></td></tr></table></td>
+                <td class='q' width=95><table width=100%><tr><td>Scatter in v</td><td align=right><input class='params' type=text id="scatterMax" name=scatterMax size=2></td></tr></table></td>
 	        </tr>
       </table>
 
@@ -61,17 +61,17 @@
 		        Stellar Parameters
 	        </td>
 		        <td class='q' width=25>min</td>
-                <td class='q' width=95><table width=100%><tr><td>Temp</td><td align=right><input class='params' type=text name=tempMin size=2></td></tr></table></td>
-                <td class='q' width=95><table width=100%><tr><td>log(g)</td><td align=right><input class='params' type=text name=loggMin size=2></td></tr></table></td>
-                <td class='q' width=95><table width=100%><tr><td>[M/H]</td><td align=right><input class='params' type=text name=fehMin size=2></td></tr></table></td>
-                <td class='q' width=95><table width=100%><tr><td>[&alpha;/Fe]</td><td align=right><input class='abunds' type=text name=afeMin size=2></td></tr></table></td>
+                <td class='q' width=95><table width=100%><tr><td>Temp</td><td align=right><input class='params' type=text id="tempMin" name=tempMin size=2></td></tr></table></td>
+                <td class='q' width=95><table width=100%><tr><td>log(g)</td><td align=right><input class='params' type=text id="loggMin" name=loggMin size=2></td></tr></table></td>
+                <td class='q' width=95><table width=100%><tr><td>[M/H]</td><td align=right><input class='params' type=text id="fehMin" name=fehMin size=2></td></tr></table></td>
+                <td class='q' width=95><table width=100%><tr><td>[&alpha;/Fe]</td><td align=right><input class='abunds' type=text id="afeMin" name=afeMin size=2></td></tr></table></td>
 	        </tr>
             <tr>
 		        <td class='q' width=25>max</td>
-                <td class='q' width=95><table width=100%><tr><td>Temp</td><td align=right><input class='params' type=text name=tempMax size=2></td></tr></table></td>
-                <td class='q' width=95><table width=100%><tr><td>log(g)</td><td align=right><input class='params' type=text name=loggMax size=2></td></tr></table></td>
-                <td class='q' width=95><table width=100%><tr><td>[M/H]</td><td align=right><input class='params' type=text name=fehMax size=2></td></tr></table></td>
-                <td class='q' width=95><table width=100%><tr><td>[&alpha;/Fe]</td><td align=right><input class='abunds' type=text name=afeMax size=2></td></tr></table></td>
+                <td class='q' width=95><table width=100%><tr><td>Temp</td><td align=right><input class='params' type=text id="tempMax" name=tempMax size=2></td></tr></table></td>
+                <td class='q' width=95><table width=100%><tr><td>log(g)</td><td align=right><input class='params' type=text id="loggMax" name=loggMax size=2></td></tr></table></td>
+                <td class='q' width=95><table width=100%><tr><td>[M/H]</td><td align=right><input class='params' type=text id="fehMax" name=fehMax size=2></td></tr></table></td>
+                <td class='q' width=95><table width=100%><tr><td>[&alpha;/Fe]</td><td align=right><input class='abunds' type=text id="afeMax" name=afeMax size=2></td></tr></table></td>
 	        </tr>
       </table>
 
@@ -200,7 +200,8 @@
  
 <table width="100%">
 		<tr>
-			<td align="left"><input id=submit type="submit" value="Submit Request"></td>
+			<!--td align="left"><input id=submit type="submit" value="Submit Request"></td-->
+            <td align="left"><input id=SubmitButton type=button style="width:110px;" onclick="runquery();" value="Submit Request"></input></td>
 			<td colspan="2">&nbsp;</td>
 			<td align="right"><input id=reset  type="reset" value="Reset Form"></td>
 		</tr>

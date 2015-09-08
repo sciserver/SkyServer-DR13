@@ -5,7 +5,8 @@
 
 	<table BORDER=0 WIDTH="100%" >
 		<tr>
-			<td align="left"><input id=submit type="submit" value="Submit Request"></td>
+			<!--td align="left"><input id=submit type="submit" value="Submit Request"></td-->
+            <td align="left"><input id=SubmitButton type=button style="width:110px;" onclick="runquery();" value="Submit Request"></input></td>
 			<td colspan="5">Limit number of output rows (0 for max) to <input type=text name="limit" size=5 value="50"></td>
 			<td align="right"><input id=reset  type="reset" value="Reset Form"></td>
 		</tr>
@@ -94,7 +95,8 @@
 
 <table width="100%">
 		<tr>
-			<td align="left"><input id=submit type="submit" value="Submit Request"></td>
+			<!--td align="left"><input id=submit type="submit" value="Submit Request"></td-->
+            <td align="left"><input id=SubmitButton type=button style="width:110px;" onclick="runquery();" value="Submit Request"></input></td>
 			<td colspan="2">&nbsp;</td>
 			<td align="right"><input id=reset  type="reset" value="Reset Form"></td>
 		</tr>

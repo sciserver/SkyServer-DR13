@@ -79,6 +79,30 @@ if( globals.Access == "public" ) {
 
     }
 
+    function changeQueryType(newtype) {
+
+        if (newtype == 'visible') {
+            hideLink('InfraredMagnitudesConstraints')
+            showLink('VisibleMagnitudesConstraints')
+            this.InfraredMagnitudesConstraints.disabled = true
+            this.VisibleMagnitudesConstraints.disabled = false
+        }
+        else {
+            hideLink('VisibleMagnitudesConstraints')
+            showLink('InfraredMagnitudesConstraints')
+            this.InfraredMagnitudesConstraints.disabled = false
+            this.VisibleMagnitudesConstraints.disabled = true
+        }
+    }
+
+    function showLink(thelink) {
+        document.getElementById(thelink).style.display = "inline";
+    }
+    function hideLink(thelink) {
+        document.getElementById(thelink).style.display = "none";
+    }
+
+
     function goToWindow() {
         var w = window.open("", 'search');
         w.focus();
@@ -114,6 +138,23 @@ if( globals.Access == "public" ) {
         document.getElementById('zband').value = zmin_s + "," + zmax_s;
     }
 
+    function SetJband() {
+        var jmin_s = String(document.getElementById('min_j').value);
+        var jmax_s = String(document.getElementById('max_j').value);
+        document.getElementById('jband').value = jmin_s + "," + jmax_s;
+    }
+
+    function SetHband() {
+        var hmin_s = String(document.getElementById('min_h').value);
+        var hmax_s = String(document.getElementById('max_h').value);
+        document.getElementById('hband').value = hmin_s + "," + hmax_s;
+    }
+
+    function SetKband() {
+        var kmin_s = String(document.getElementById('min_k').value);
+        var kmax_s = String(document.getElementById('max_k').value);
+        document.getElementById('kband').value = kmin_s + "," + kmax_s;
+    }
 
 </script>
 <input type="hidden" name="searchtool" id="searchtool" value="Rectangular" />
@@ -122,6 +163,9 @@ if( globals.Access == "public" ) {
 <input type="hidden" id=rband name=rband />
 <input type="hidden" id=iband name=iband />
 <input type="hidden" id=zband name=zband />
+<input type="hidden" id=jband name=jband />
+<input type="hidden" id=hband name=hband />
+<input type="hidden" id=kband name=kband />
 
 <table BORDER=0 WIDTH="600" bgcolor=#aaaaaa>
 	<tr><td class="frame">
@@ -138,8 +182,24 @@ if( globals.Access == "public" ) {
 	</td></tr>
 	<tr VALIGN=top><td ALIGN=middle>
 		<table BORDER=2 WIDTH="100%" BGCOLOR="#aaaaaa"  cellpadding=1 cellspacing=1>
+
+<%
+	if( globals.ReleaseNumber > 9 ) {
+%>
 			<tr ALIGN=middle VALIGN=center>
                 <td width="30%" class="qtitle">Type of search</td>
+                <td WIDTH="70%" class="q"  colspan="3">
+                    <input type="radio" name="whichphotometry" value="visible" onclick="javascript: changeQueryType('visible');" checked />Visible bands&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="whichphotometry" value="infrared" onclick="javascript: changeQueryType('infrared');" />Infrared bands&nbsp;&nbsp;&nbsp;&nbsp;
+                </td>
+			</tr>
+
+<%
+}
+%>
+
+			<tr ALIGN=middle VALIGN=center>
+                <td width="30%" class="qtitle">Coordinate system</td>
                 <td WIDTH="70%" class="q" colspan="2">
                     <input type="radio" name="whichway" value="equitorial" onclick="javascript: changeSearchType('equitorial');" checked />Equitorial ( RA / Dec )&nbsp;&nbsp;&nbsp;&nbsp;
                     <input type="radio" name="whichway" value="galactic" onclick="javascript: changeSearchType('galactic');" />Galactic (<i>l</i> and <i>b</i>)&nbsp;&nbsp;&nbsp;&nbsp;
@@ -156,7 +216,7 @@ if( globals.Access == "public" ) {
 		</table>
 	</td></tr>
 
-	<tr VALIGN=top><td ALIGN=middle>
+	<tr VALIGN=top><td ALIGN=middle id="VisibleMagnitudesConstraints" >
 <table BORDER=2 WIDTH="100%" BGCOLOR="#aaaaaa" cellpadding=1 cellspacing=1>
  <tr ALIGN=middle VALIGN=center>
   <td class="qtitle">&nbsp;</td>
@@ -196,6 +256,43 @@ if( globals.Access == "public" ) {
   </tr>
 </table>
 	</td></tr>
+
+<%
+	if( globals.ReleaseNumber > 9 ) {
+%>
+
+	<tr VALIGN=top><td ALIGN=middle id="InfraredMagnitudesConstraints" style="display:none">
+<table BORDER=2 WIDTH="100%" BGCOLOR="#aaaaaa" cellpadding=1 cellspacing=1>
+ <tr ALIGN=middle VALIGN=center>
+  <td class="qtitle">&nbsp;</td>
+  <td class="qtitle">Min</td>
+  <td class="qtitle">&nbsp;</td>
+  <td class="qtitle">Max</td>
+  </tr>
+ <tr ALIGN=middle VALIGN=center>
+  <td class="qtitle"><input id=check_j name=check_j type=checkbox class="box" value=j onblur="SetJband()"></td>
+  <td class="q"><input TYPE="FLOAT" id="min_j" NAME="min_j" VALUE="0" SIZE="5"  onblur="SetJband()"  ></td>
+  <td class="qtitle">J</td>
+  <td class="q"><input TYPE="FLOAT" id="max_j" NAME="max_j" VALUE="20" SIZE="5"  onblur="SetJband()" ></td>
+  </tr>
+ <tr ALIGN=middle VALIGN=center>
+  <td class="qtitle"><input id=check_h name=check_h type=checkbox class="box" value=h onblur="SetHband()"></td>
+  <td class="q"><input TYPE="FLOAT" id="min_h" NAME="min_h" VALUE="0" SIZE="5" onblur="SetHband()"></td>
+  <td class="qtitle">H</td>
+  <td class="q"><input TYPE="FLOAT" id="max_h" NAME="max_h" VALUE="20" SIZE="5" onblur="SetHband()"></td>
+  </tr>
+ <tr ALIGN=middle VALIGN=center>
+  <td class="qtitle"><input id=check_k name=check_k type=checkbox class="box" value=k onblur="SetKband()"></td>
+  <td class="q"><input TYPE="FLOAT" id="min_k" NAME="min_k" VALUE="0" SIZE="5" onblur="SetKband()"></td>
+  <td class="qtitle">K<sub>s</td>
+  <td class="q"><input TYPE="FLOAT" id="max_k" NAME="max_k" VALUE="20" SIZE="5" onblur="SetKband()"></td>
+  </tr>
+</table>
+	</td></tr>
+<%
+}
+%>
+
 
 	<tr><td>
 	<table BORDER=0 WIDTH="100%" >

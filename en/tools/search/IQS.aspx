@@ -26,6 +26,10 @@ Imaging Query Form
 
 <div id="transp">
 
+
+<script language="javascript" src="validate_search.js"></script>
+
+
 <form method="post" target="search"  enctype="multipart/form-data" action="x_results.aspx" id=iqs name="iqs">
 <input type="hidden" name="searchtool" id="searchtool" value="Imaging" />
 <!----------------------------------------------------->

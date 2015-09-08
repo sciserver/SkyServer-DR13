@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using  System.Collections.Specialized;
+using System.Data.SqlClient;
 
 namespace SkyServer.Tools.Explore
 {
@@ -60,6 +61,8 @@ namespace SkyServer.Tools.Explore
         protected string flagsLink = "";
 
         protected RunQuery runQuery;
+        private SqlConnection oConn = null;
+
         public void Page_Load(object sender, EventArgs e)
         {
             globals = (Globals)Application[Globals.PROPERTY_NAME];            
@@ -85,74 +88,149 @@ namespace SkyServer.Tools.Explore
 
             if (objId != null && !objId.Equals(""))
             {
-                execQuery();
-                getUnit();
+                using (this.oConn = new SqlConnection(globals.ConnectionString))
+                {
+                    this.oConn.Open();
+                    execQuery();
+                    getUnit();
+                    this.oConn.Close();
+                }
             }
         }
 
         private void execQuery()
         {
-            string cmd = ExplorerQueries.getImagingQuery.Replace("@objId", objId);
-            DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Imaging");
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+
+            using (SqlCommand oCmd = oConn.CreateCommand())
             {
-                if (reader.Read())
+                string cmd = ExplorerQueries.getImagingQuery.Replace("@objId", objId);
+                oCmd.CommandText = cmd;
+                using (SqlDataReader reader = oCmd.ExecuteReader())
                 {
-                    if (reader.HasRows)
+                    if (reader.Read())
                     {
-                        //photoObjall
-                        flag = (string) reader["flags"];
-                        ra =  (double) reader["ra"];
-                        dec = (double) reader["dec"];
-                        run = reader["run"] is DBNull ? -9999 : (short)reader["run"];
-                        rerun = reader["rerun"] is DBNull ? -9999 : (short)reader["rerun"];
-                        camcol = reader["camcol"] is DBNull ? -9999 : (byte)reader["camcol"];
-                        field = reader["field"] is DBNull ? -9999 : (short)reader["field"];
-                        fieldId = reader["fieldId"] is DBNull ? " " : Functions.BytesToHex((byte[])reader["fieldId"]);
-                        objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
-                        clean = reader["clean"] is DBNull ? -99999 : (int)reader["clean"]; ;
-                        otype = reader["clean"] is DBNull ? "" :(string)reader["otype"];
+                        if (reader.HasRows)
+                        {
+                            //photoObjall
+                            flag = (string)reader["flags"];
+                            ra = (double)reader["ra"];
+                            dec = (double)reader["dec"];
+                            run = reader["run"] is DBNull ? -9999 : (short)reader["run"];
+                            rerun = reader["rerun"] is DBNull ? -9999 : (short)reader["rerun"];
+                            camcol = reader["camcol"] is DBNull ? -9999 : (byte)reader["camcol"];
+                            field = reader["field"] is DBNull ? -9999 : (short)reader["field"];
+                            fieldId = reader["fieldId"] is DBNull ? " " : Functions.BytesToHex((byte[])reader["fieldId"]);
+                            objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
+                            clean = reader["clean"] is DBNull ? -99999 : (int)reader["clean"]; ;
+                            otype = reader["clean"] is DBNull ? "" : (string)reader["otype"];
 
-                        ////--- magnitudes
-                        u = reader["u"] is DBNull ? -999.99 : (float)reader["u"];
-                        g = reader["u"] is DBNull ? -999.99 : (float)reader["g"];
-                        r = reader["u"] is DBNull ? -999.99 : (float)reader["r"];
-                        i = reader["u"] is DBNull ? -999.99 : (float)reader["i"];
-                        z = reader["u"] is DBNull ? -999.99 : (float)reader["z"];
+                            ////--- magnitudes
+                            u = reader["u"] is DBNull ? -999.99 : (float)reader["u"];
+                            g = reader["u"] is DBNull ? -999.99 : (float)reader["g"];
+                            r = reader["u"] is DBNull ? -999.99 : (float)reader["r"];
+                            i = reader["u"] is DBNull ? -999.99 : (float)reader["i"];
+                            z = reader["u"] is DBNull ? -999.99 : (float)reader["z"];
 
-                        ////--- mag errors
-                        err_u = reader["err_u"] is DBNull ? -999.99 : (float)reader["err_u"];
-                        err_g = reader["err_g"] is DBNull ? -999.99 : (float)reader["err_g"];
-                        err_r = reader["err_r"] is DBNull ? -999.99 : (float)reader["err_r"];
-                        err_i = reader["err_i"] is DBNull ? -999.99 : (float)reader["err_i"];
-                        err_z = reader["err_z"] is DBNull ? -999.99 : (float)reader["err_z"];
+                            ////--- mag errors
+                            err_u = reader["err_u"] is DBNull ? -999.99 : (float)reader["err_u"];
+                            err_g = reader["err_g"] is DBNull ? -999.99 : (float)reader["err_g"];
+                            err_r = reader["err_r"] is DBNull ? -999.99 : (float)reader["err_r"];
+                            err_i = reader["err_i"] is DBNull ? -999.99 : (float)reader["err_i"];
+                            err_z = reader["err_z"] is DBNull ? -999.99 : (float)reader["err_z"];
 
-                        ////--- PhotoObj
-                        mode = reader["mode"] is DBNull ? " - " : (string)reader["mode"];
+                            ////--- PhotoObj
+                            mode = reader["mode"] is DBNull ? " - " : (string)reader["mode"];
 
-                        mjdNum = reader["mjdNum"] is DBNull ? -99999 :(int) reader["mjdNum"];
-                        if(mjdNum != -99999)
-                            mjdDate = HelperFunctions.ConvertFromJulian(mjdNum).ToString("MM/dd/yyyy");
+                            mjdNum = reader["mjdNum"] is DBNull ? -99999 : (int)reader["mjdNum"];
+                            if (mjdNum != -99999)
+                                mjdDate = HelperFunctions.ConvertFromJulian(mjdNum).ToString("MM/dd/yyyy");
 
-                        otherObs = reader["Other observations"] is DBNull ? -99999 : (int)reader["Other observations"];
+                            otherObs = reader["Other observations"] is DBNull ? -99999 : (int)reader["Other observations"];
 
-                        parentId = reader["parentID"] is DBNull ? -99999 : (long)reader["parentID"];
+                            parentId = reader["parentID"] is DBNull ? -99999 : (long)reader["parentID"];
 
-                        nchild = reader["nChild"] is DBNull ? -99999 : (short)reader["nChild"];
+                            nchild = reader["nChild"] is DBNull ? -99999 : (short)reader["nChild"];
 
-                        extinction_r = reader["extinction_r"] is DBNull ? " - " : (string)reader["extinction_r"];
+                            extinction_r = reader["extinction_r"] is DBNull ? " - " : (string)reader["extinction_r"];
 
-                        petrorad_r = reader["petrorad_r"] is DBNull ? " - " : (string)reader["petrorad_r"];
+                            petrorad_r = reader["petrorad_r"] is DBNull ? " - " : (string)reader["petrorad_r"];
 
-                        ////--- PhotoZ, photoZRF
-                        photoZ_KD = reader["photoZ_KD"] is DBNull ? " - " : (string)reader["photoZ_KD"];
+                            ////--- PhotoZ, photoZRF
+                            photoZ_KD = reader["photoZ_KD"] is DBNull ? " - " : (string)reader["photoZ_KD"];
 
-                        //photoZ_RF = reader["photoZ_KD"] is DBNull ? " - " : (string)reader["photoZ_RF"];
+                            //photoZ_RF = reader["photoZ_KD"] is DBNull ? " - " : (string)reader["photoZ_RF"];
 
-                        galaxyZoo_Morph = reader["photoZ_KD"] is DBNull ? " - " : (string)reader["galaxyZoo_Morph"];
+                            galaxyZoo_Morph = reader["photoZ_KD"] is DBNull ? " - " : (string)reader["galaxyZoo_Morph"];
+                        }
                     }
                 }
             }
+
+            /*
+                        string cmd = ExplorerQueries.getImagingQuery.Replace("@objId", objId);
+                        DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Imaging");
+                        using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+                        {
+                            if (reader.Read())
+                            {
+                                if (reader.HasRows)
+                                {
+                                    //photoObjall
+                                    flag = (string) reader["flags"];
+                                    ra =  (double) reader["ra"];
+                                    dec = (double) reader["dec"];
+                                    run = reader["run"] is DBNull ? -9999 : (short)reader["run"];
+                                    rerun = reader["rerun"] is DBNull ? -9999 : (short)reader["rerun"];
+                                    camcol = reader["camcol"] is DBNull ? -9999 : (byte)reader["camcol"];
+                                    field = reader["field"] is DBNull ? -9999 : (short)reader["field"];
+                                    fieldId = reader["fieldId"] is DBNull ? " " : Functions.BytesToHex((byte[])reader["fieldId"]);
+                                    objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
+                                    clean = reader["clean"] is DBNull ? -99999 : (int)reader["clean"]; ;
+                                    otype = reader["clean"] is DBNull ? "" :(string)reader["otype"];
+
+                                    ////--- magnitudes
+                                    u = reader["u"] is DBNull ? -999.99 : (float)reader["u"];
+                                    g = reader["u"] is DBNull ? -999.99 : (float)reader["g"];
+                                    r = reader["u"] is DBNull ? -999.99 : (float)reader["r"];
+                                    i = reader["u"] is DBNull ? -999.99 : (float)reader["i"];
+                                    z = reader["u"] is DBNull ? -999.99 : (float)reader["z"];
+
+                                    ////--- mag errors
+                                    err_u = reader["err_u"] is DBNull ? -999.99 : (float)reader["err_u"];
+                                    err_g = reader["err_g"] is DBNull ? -999.99 : (float)reader["err_g"];
+                                    err_r = reader["err_r"] is DBNull ? -999.99 : (float)reader["err_r"];
+                                    err_i = reader["err_i"] is DBNull ? -999.99 : (float)reader["err_i"];
+                                    err_z = reader["err_z"] is DBNull ? -999.99 : (float)reader["err_z"];
+
+                                    ////--- PhotoObj
+                                    mode = reader["mode"] is DBNull ? " - " : (string)reader["mode"];
+
+                                    mjdNum = reader["mjdNum"] is DBNull ? -99999 :(int) reader["mjdNum"];
+                                    if(mjdNum != -99999)
+                                        mjdDate = HelperFunctions.ConvertFromJulian(mjdNum).ToString("MM/dd/yyyy");
+
+                                    otherObs = reader["Other observations"] is DBNull ? -99999 : (int)reader["Other observations"];
+
+                                    parentId = reader["parentID"] is DBNull ? -99999 : (long)reader["parentID"];
+
+                                    nchild = reader["nChild"] is DBNull ? -99999 : (short)reader["nChild"];
+
+                                    extinction_r = reader["extinction_r"] is DBNull ? " - " : (string)reader["extinction_r"];
+
+                                    petrorad_r = reader["petrorad_r"] is DBNull ? " - " : (string)reader["petrorad_r"];
+
+                                    ////--- PhotoZ, photoZRF
+                                    photoZ_KD = reader["photoZ_KD"] is DBNull ? " - " : (string)reader["photoZ_KD"];
+
+                                    //photoZ_RF = reader["photoZ_KD"] is DBNull ? " - " : (string)reader["photoZ_RF"];
+
+                                    galaxyZoo_Morph = reader["photoZ_KD"] is DBNull ? " - " : (string)reader["galaxyZoo_Morph"];
+                                }
+                            }
+                        }
+            */
+
+
         }
 
         //protected string u_unit, g_unit, r_unit, i_unit, z_unit, 
@@ -162,7 +240,23 @@ namespace SkyServer.Tools.Explore
         protected NameValueCollection columnUnit = new NameValueCollection();
 
         protected void getUnit(){
-            
+
+
+            using (SqlCommand oCmd = oConn.CreateCommand())
+            {
+                string cmd = ExplorerQueries.unitQuery;
+                oCmd.CommandText = cmd;
+                using (SqlDataReader reader = oCmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        string colName = reader[0] is DBNull ? "" : (string)reader[0];
+                        string colUnit = reader[0] is DBNull ? "" : (string)reader[1];
+                        columnUnit.Add(colName, colUnit);
+                    }
+                }
+            }
+/*
             string cmd = ExplorerQueries.unitQuery;
            
             DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Imaging");
@@ -178,10 +272,32 @@ namespace SkyServer.Tools.Explore
                     }
                  }
              }
-             
+*/             
         }
 
-        protected string getUnit(string tablename, string columname) {
+        protected string getUnit(string tablename, string columname) 
+        {
+            string unit = ""; 
+            using (SqlCommand oCmd = oConn.CreateCommand())
+            {
+                string cmd = ExplorerQueries.getUnit;
+                cmd = cmd.Replace("@tablename", tablename);
+                cmd = cmd.Replace("@name", columname);
+                oCmd.CommandText = cmd;
+                using (SqlDataReader reader = oCmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        if (reader.Read())
+                        {
+                            unit = reader.GetString(0);
+                        }
+                    }
+                }
+            }
+            return unit;
+
+/*
             string unit = "";
             string cmd = ExplorerQueries.getUnit;
             cmd = cmd.Replace("@tablename", tablename);
@@ -199,6 +315,8 @@ namespace SkyServer.Tools.Explore
                  }
              }
              return unit;
+*/ 
+
         }
     }
 }

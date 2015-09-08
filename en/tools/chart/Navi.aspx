@@ -229,9 +229,9 @@
 <table width="160" bgColor="lightblue" border="1" cellspacing=1 cellpadding=1 valign="middle">
     <tr><td colspan="2" align="middle" bgcolor="skyblue">Parameters</td></tr>
     <%
-        drawFormBox("name","objid",objid,"setobj();","<input type='button' value='Resolve' id='resolve' name='resolve'  >","Right ascension as decimal degrees or HH:MM:SS");
-        drawFormBox("ra","ra",""+ra,"setra();","deg","Right ascension as decimal degrees or HH:MM:SS");
-        drawFormBox("dec","dec",""+dec,"setdec();","deg","Declination as decimal degrees or DD:MM:SS"); 
+        drawFormBox("name","objid",objid,"setobj();","<input type='button' value='Resolve' id='resolve' name='resolve'  >","Name of object to be resolved.");
+        drawFormBox("ra","ra",""+ra,"setra();","deg","Right ascension as decimal degrees or HH:MM:SS. Value is wrapped around the sphere.");
+        drawFormBox("dec", "dec", "" + dec, "setdec();", "deg", "Declination as decimal degrees or DD:MM:SS. Value is wrapped around the sphere."); 
         drawFormBox("opt","opt",opt,"setoptstr(1);","","String of drawing options (checkboxes below)"); 
     %>
 </table>
