@@ -154,8 +154,7 @@
 						<tr height="20">
 							<td nowrap class="menulink">
                                 <a class="menulink" href="tools/crossmatch/crossmatch.aspx">
-							     &nbsp;&nbsp;SkyQuery CrossMatch &nbsp;&nbsp;&nbsp;
-							   </a>
+							     &nbsp;&nbsp;SkyQuery CrossMatch</a>
 							 </td>
 						</tr>
 						<tr height="20">
