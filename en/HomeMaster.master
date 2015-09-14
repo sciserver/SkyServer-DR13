@@ -1,5 +1,5 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="HomeMaster.master.cs" Inherits="SkyServer.HomeMaster" %>
-
+<% var migrationAlert = new HtmlString("Within the next few weeks CasJobs user accounts will migrate to the new SciServer Login Portal. At that time, CasJobs users will need to migrate their accounts, and will be given instructions on how to do so. For more information, please refer to the <a href='http://skyserver.sdss.org/CasJobs/migrationInfo.aspx'>CasJobs Account Migration Information</a> page."); %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -7,6 +7,7 @@
 <head runat="server">
   
   <link href="../skyserver.css" rel="stylesheet" type="text/css" />
+  <link href="../alerts.css" rel="stylesheet" type="text/css" />
   <link href="../FavIcon.ICO" rel="SHORTCUT ICON" />
   
   <title>SDSS SkyServer <%= globals.Release %></title>
@@ -21,7 +22,6 @@
 </head>
 
 <body background="<%= imgpath %>new_home_bktile.jpg" style="margin-left:25px;margin-top:0px;margin-right:25px;margin-bottom:0px;">
-
   <div id="div_title">
     <table cellpadding="0" cellspacing="0" border="0" width="200px" style="height:73px">
       <tr>
@@ -64,7 +64,11 @@
       </tr>            
     </table>
   </div>  
-  
+
+    <div class="migrationAlert">
+        <%=migrationAlert%>
+    </div>
+
   <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"></asp:ContentPlaceHolder>
 
   <script language="JavaScript" type="text/javascript" src="<%= url %>wz_tooltip.js"></script>
