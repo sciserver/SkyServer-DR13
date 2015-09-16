@@ -1,4 +1,4 @@
-﻿body > div.migrationAlert {
+﻿body > div#public > div.migrationAlert {
     width:648px;
     padding:10px;
     margin-top:10px;
@@ -10,12 +10,65 @@
     border-radius:5px;
     line-height:1.5em;
 }
-body>div.migrationAlert{
+body > div#public > div.migrationAlert {
     font-size:0.9em;
     font-family:Verdana, Helvetica, sans-serif;
 }
-body>div.migrationAlert>a{
-    font-size:1em;
+body > div#public > div.migrationAlert a{
+    font-size:0.9em;
     font-weight:bold;
     font-family:inherit;
+}
+body > div#public > div.migrationNotice {
+    width:648px;
+    padding:10px;
+    margin-top:10px;
+    margin-bottom:10px;
+    color:white;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
+    line-height:1.5em;
+}
+body > div#public > div.migrationNotice {
+}
+body > div#public > div.migrationNotice p.to-top{
+    text-align:right;
+}
+body > div#public > div.migrationNotice p.to-top a:after{
+    content:" ↑";
+    font-size:1.5em;
+}
+body > div#public > div.migrationNotice a{
+    font-size:0.9em;
+    font-weight:bold;
+    font-family:inherit;
+}
+body > div#public > div.migrationNotice span.new-label {
+    font-size:.5em;
+    text-transform:uppercase;
+    vertical-align:text-top;
+    background-color:goldenrod;
+    color:#333333;
+    padding:3px;
+    border-radius:2px;
+    font-weight:bold;
+}
+body > div#public > div.migrationNotice div.figure .figure-caption {
+    font-weight:bold;
+    margin-bottom:0;
+}
+body > div#public > div.migrationNotice div.figure {
+    text-align:center;
+    background-color:#333333;
+    padding:20px 10px;
+    margin:10px auto;
+}
+body > div#public > div.migrationNotice div.features-menu p{
+    font-weight:bold;
+    text-align:center;
+}
+body > div#public > div.migrationNotice div.features-menu ul{
+    list-style:none;
+    margin-left:25%
 }
