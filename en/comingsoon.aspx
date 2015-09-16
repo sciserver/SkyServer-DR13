@@ -1,13 +1,44 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/en/HomeMaster.master" AutoEventWireup="true" CodeBehind="comingsoon.aspx.cs" Inherits="SkyServer.en.WebForm1" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="HomeMaster.master" AutoEventWireup="true" CodeBehind="comingsoon.aspx.cs" Inherits="SkyServer.Home" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-<title>
-	SDSS SkyServer <%=globals.Release%></title>
-<!-- pics label-->
-<meta http-equiv="pics-label" content='(pics-1.1 "http://www.icra.org/ratingsv02.html" l gen true for "http://skyserver.sdss.org/" r (cz 1 lz 1 nz 1 oz 1 vz 1) "http://www.rsac.org/ratingsv01.html" l gen true for "http://skyserver.fnal.gov/" r (n 0 s 0 v 0 l 0))'>
+    <style type="text/css">
+        #logos  {position:absolute;top:0px;left:0px;visibility:visible}
+    </style>
 </asp:Content>
-
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <h1>Coming Soon!</h1>
+	<div id="logos">
+		<div style="position:absolute;left:<%= logoleftpos%>px;top:108px;z-index:5;">
+            <table width="80" border="0" cellpadding="0" cellspacing="5">
+		        <tr><td align="middle" class="smallbodytext">SDSS-III is <br>supported by</td></tr>
+		        <tr><td align="middle"><a href="http://www.sloan.org"><img src="../images/logo_sloan.jpg" width="48" height="48" border="0"></a></td></tr>
+		        <tr><td align="middle"><a href="http://www.nsf.gov"><img src="../images/logo_nsf.jpg" width="48" height="48" border="0"></a></td></tr>
+		        <tr><td align="middle"><a href="http://www.energy.gov"><img src="../images/logo_energy.jpg" width="48" height="48" border="0"></a></td></tr>
+		        <tr><td>&nbsp;</td></tr>
+		        <tr><td align="middle" class="smallbodytext">Powered by</td></tr>
+		        <tr><td align="middle"><a href="http://research.microsoft.com/"><img src="../images/logo_ms.jpg" width="64" height="21" border="0"></a></td></tr>
+            </table>
+        </div>
+        <div style="position:absolute;left:<%= logoleftpos%>px;top:363px;z-index:5;">
+            <table width="80" border="0" cellpadding="0" cellspacing="0">
+		        <tr><td><hr class="hrule"></td></tr>
+  		        <tr><td>		
+			        <a class="smallbodytext" style="FONT-WEIGHT: normal" 
+				        href="<%= globals.LogUrl %>">
+			        &nbsp;&nbsp;Site Traffic</a>
+		        </td></tr>
+		        <tr><td>	
+			        <a class="smallbodytext" style="FONT-WEIGHT: normal"
+				        href="<%= globals.LogUrl %>privacy.asp">
+			        &nbsp;&nbsp;Privacy Policy</a>
+		        </td></tr>
+		        <tr><td><hr class="hrule"></td></tr>
+		        <tr><td class="hiddentext" align="center"><a class="hiddentext" href=""><%= version %></a></td></tr>
+            </table>
+        </div>
+	</div>
+    
+	<div id="public">
+        <div class="migrationNotice">
+    <h1>SciServer Login Information <span class="new-label">Coming Soon!</span></h1>
 
 <p>Thank you for using the Sloan Digital Sky Survey’s SkyServer and CasJobs systems. We strive to bring you 
         simple yet powerful tools to enable new research techniques and strategies for your science. We are 
@@ -20,7 +51,21 @@
     explore results, upload tables, and share data as you always have. But SciServer will add a number of 
     exciting new features that we hope will allow you to do your science more easily than ever before.</p>
 
-<h1>NEW FEATURE: SciServer Logins</h1>
+<div class="features-menu">
+<p>What's on this page:</p>
+<ul>
+
+    <li><a href="#sciserver-login">SciServer Login</a></li>
+    <li><a href="#scidrive">SciDrive - a new tool for file-based data access</a></li>
+    <li><a href="#casjobs-scratch">CasJobs - Scratch space for Large query results</a></li>
+    <li><a href="#skyserver-integration">SkyServer Integration with CasJobs</a></li>
+    <li><a href="#skyquery">SkyQuery - Astronomy Cross-Matching</a></li>
+    <li><a href="#release">Release Date</a></li>
+    <li><a href="#roadmap">Roadmap for Additional New Features</a></li>
+</ul>
+</div>
+            
+<h2 id="sciserver-login">SciServer Login <span class="new-label">New Feature!</span></h2>
 
 <p>This will be the most prominent change that you will notice. Soon, a new Login widget will appear in the 
     top right corner of the SkyServer site. Clicking it will take you to the new SciServer login portal, 
@@ -43,11 +88,15 @@
     that will always show you your SciServer login status and allow you to log in and out. Here are screenshots 
     of the SciServer login widget showing logged in and out states:</p>
 
-    <img src="images/notloggedin.png" style="float:left;" alt="login widget with login button" />
+<div class="figure"><img src="images/notloggedin.png" alt="login widget with login button" />
+    <p class="figure-caption">User is not logged in.</p>
+</div>
 
-    <img src="images/loggedin.png" style="float:right;" alt="login widget with username" />
+<div class="figure"><img src="images/loggedin.png" alt="login widget with username" />
+        <div class="figure-caption">User is logged in.</div>
+</div>
 
-<h2>Upgrading your existing CasJobs account</h2>
+<h3 id="upgrade-casjobs">Upgrading your existing CasJobs account</h3>
 
 <p>For current users of the CasJobs site (http://skyserver.sdss.org/casjobs/), migrating your CasJobs account to 
     SciServer will be straightforward and easy. If you do not already have a CasJobs account, you can just 
@@ -68,7 +117,7 @@
 <p>Once you have linked your accounts, your MyDB and all the data it contains will be available under the 
     new account. You should stop logging in through CasJobs, and log in only with the SciServer login portal.</p>
     
-<h2>Creating New SciServer Account</h2>
+<h3 id="create-account">Creating New SciServer Account</h3>
 
 <p>If you do not currently have a CasJobs account (and a MyDB), you will need to create a new SciServer 
     single sign-on login account using the Register New Account button:</p>
@@ -81,8 +130,9 @@
     confirmation that you have logged in. There will also be a "Logout" button there so that you may 
     log out of the SciServer system.</p>
 
+<p class="to-top"><a href="#">Back to Top</a></p>
 
-<h1>NEW FEATURE: SciDrive - a new tool for file-based data access</h1> 
+<h2 id="scidrive">SciDrive - a new tool for file-based data access <span class="new-label">New Feature!</span></h2> 
     
 <p>CasJobs offers storage and easy access to database tables, but not everything can be stored in a 
     database. For those times when your science requires flat file access, we are providing SciDrive. 
@@ -92,7 +142,8 @@
     MyDB will be available for easy download via SciDrive. SciDrive will make it easier than ever to 
     manage your research from beginning to end.</p>
 
-<h1>NEW FEATURE: CasJobs - Scratch space for Large query results</h1>
+<p class="to-top"><a href="#">Back to Top</a></p>
+<h2 id="casjobs-scratch">CasJobs - Scratch space for Large query results <span class="new-label">New Feature!</span></h2>
     
 <p>Have you ever started a query, then come back later to find it failed because you had filled up all 
     the space in your MyDB? No more! The new CasJobs will include "MyScratch" space shared among all 
@@ -100,7 +151,9 @@
     space is shared and temporary, but your results are guaranteed to stay for 7 days, during which 
     time you can further explore the data, and transfer any subsets you need into your MyDB.</p>
 
-<h1>NEW FEATURE: SkyServer - Better integration with CasJobs</h1>
+<p class="to-top"><a href="#">Back to Top</a></p>
+
+<h2 id="skyserver-integration">SkyServer - Better integration with CasJobs <span class="new-label">New Feature!</span></h2>
     
 <p>CasJobs grew out of the SkyServer website, which offers quick and easy access to all SDSS data. 
     SkyServer does not allow long asynchronous queries like CasJobs does, but it includes many 
@@ -110,15 +163,18 @@
     be required to log in in order to use SkyServer, if you do then all queries you run on SkyServer 
     will show up in your CasJobs history, and all query results will be available in your MyDB.</p>
 
+<p class="to-top"><a href="#">Back to Top</a></p>
 
-<h1>NEW FEATURE:  SkyQuery - Astronomy Cross-Matching</h1>
+<h2 id="skyquery">SkyQuery - Astronomy Cross-Matching <span class="new-label">New Feature!</span></h2>
 
 <p>SkyQuery is a system that has been developed over the past 5 years to provide a sophisticated and 
     scalable approach to running cross-match queries across distributed databases. The core capability is 
     centered around the SDSS datasets, but it also allows cross-matches between SDSS data and a user's own 
     datasets. SkyQuery is fully integrated with both CASJobs MyDBs and SciDrive!</p>
 
-<h1>RELEASE DATE</h1>
+<p class="to-top"><a href="#">Back to Top</a></p>
+
+<h2 id="release">Release Date</h2>
 
 <p>We haven't yet picked a specific release date for SciServer, but it will be available later on 
     in Fall 2015. All these tools are provided free of charge, and always will be. We will also offer 
@@ -127,9 +183,11 @@
     FAQ page.</p>
 
 
-<h1>ROADMAP for Additional New Features</h1>
+<p class="to-top"><a href="#">Back to Top</a></p>
 
-<h2>Scripting and Compute capability</h2>
+<h2 id="roadmap">Roadmap for Additional New Features</h2>
+
+<h3 id="scripting">Scripting and Compute capability</h3>
     
 <p>Along with the update of all the existing tools, and the 
     integrated release of SciDrive and SkyQuery, the SciServer team have also been busy developing a 
@@ -141,15 +199,15 @@
     We are very excited to bring this online later in 2015 as it will greatly extend the services that 
     SciServer provides.</p>
 
-<h2>Additional Scientific Datasets</h2>
+<h3 id="additional-datasets">Additional Scientific Datasets</h3>
 
 <p>We have been developing SciServer not just with Astronomy, but also with Turbulence and Cosmology groups. 
     SciServer will also start to bring these data sets online over the next six months, and provide them 
     with query and processing capabilities for very large data sets.</p>
 
-<h2>Where to go for more information</h2>
+<p align="center">Please <a href="<%=globals.ContactUrl+"&url="+Server.UrlEncode("http://"+Request.ServerVariables["SERVER_NAME"]+Request.ServerVariables["SCRIPT_NAME"]+Request.ServerVariables["QUERY_STRING"])%>">Contact Us</a> for more information.</p>
+</div>
 
-<p>Questions? E-mail our team at [SCISERVER GENERAL CONTACT EMAIL ACCOUNT].</p>
-
+	</div>
 
 </asp:Content>
