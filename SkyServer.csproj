@@ -431,6 +431,8 @@
     <Content Include="en\images\imageright3.png" />
     <Content Include="en\images\loggedin.png" />
     <Content Include="en\images\mark.gif" />
+    <Content Include="en\images\migrateaccount.png" />
+    <Content Include="en\images\myscratch1.jpg" />
     <Content Include="en\images\new_1px_trans.gif" />
     <Content Include="en\images\new_astronomy_1.jpg" />
     <Content Include="en\images\new_credits_1.jpg" />
@@ -452,6 +454,10 @@
     <Content Include="en\images\notloggedin.png" />
     <Content Include="en\images\offsite.png" />
     <Content Include="en\images\offsite_black.png" />
+    <Content Include="en\images\registerportal.png" />
+    <Content Include="en\images\loginportal.png" />
+    <Content Include="en\images\scidrive.jpg" />
+    <Content Include="en\images\mydb1.jpg" />
     <Content Include="en\images\sdss-background.jpg" />
     <Content Include="en\images\sdss-globe.gif" />
     <Content Include="en\images\sdss-main-banner.gif" />
@@ -465,6 +471,7 @@
     <Content Include="en\images\sdss3_logo.gif" />
     <Content Include="en\images\sdss_logo_73.gif" />
     <Content Include="en\images\sdss_logo_tiny.jpg" />
+    <Content Include="en\images\skyquery1.jpg" />
     <Content Include="en\images\stop.gif" />
     <Content Include="en\images\strip.gif" />
     <Content Include="en\images\titlebar.gif" />

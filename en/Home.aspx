@@ -41,7 +41,7 @@
             Within the next few weeks, SkyServer will be integrated into the <a href="http://www.sciserver.org" target="_blank">SciServer</a> collaborative science 
             framework. At that time you will have the option to log in to SkyServer.  If you choose not to log in, the site will continue to function 
             as it does now.  If you log in with your (new) SciServer account, you can save queries and results to your CasJobs/MyDB account from 
-            SkyServer and seamlessly access other SciServer services. Please see the <a href="comingsoon.aspx">SciServer Login Information</a> for more details.
+            SkyServer and seamlessly access other SciServer services. Please see the <a href="comingsoon.aspx">SciServer Update Information</a> for more details.
         </div>
 
 		<table border="0" cellpadding="0" cellspacing="2" width="668">

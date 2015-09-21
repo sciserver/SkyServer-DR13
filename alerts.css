@@ -8,43 +8,38 @@
     -moz-border-radius:5px;
     -webkit-border-radius:5px;
     border-radius:5px;
-    line-height:1.5em;
-}
-body > div#public > div.migrationAlert {
-    font-size:0.9em;
+    line-height:1.1em;
+    font-size:10pt;
     font-family:Verdana, Helvetica, sans-serif;
 }
 body > div#public > div.migrationAlert a{
-    font-size:0.9em;
+    font-size:10pt;
     font-weight:bold;
     font-family:inherit;
 }
-body > div#public > div.migrationNotice {
+body > div.migrationNotice {
+    width:160px;
+    position:absolute;
+    top:105px;
+    left:200px;
     width:648px;
-    padding:10px;
-    margin-top:10px;
-    margin-bottom:10px;
+    padding:0px;
     color:white;
-    -moz-border-radius:5px;
-    -webkit-border-radius:5px;
-    border-radius:5px;
-    line-height:1.5em;
+    line-height:1.1em;
 }
-body > div#public > div.migrationNotice {
-}
-body > div#public > div.migrationNotice p.to-top{
+body > div.migrationNotice p.to-top{
     text-align:right;
 }
-body > div#public > div.migrationNotice p.to-top a:after{
+body > div.migrationNotice p.to-top a:after{
     content:" ↑";
     font-size:1.5em;
 }
-body > div#public > div.migrationNotice a{
+body > div.migrationNotice a{
     font-size:0.9em;
     font-weight:bold;
     font-family:inherit;
 }
-body > div#public > div.migrationNotice span.new-label {
+body > div.migrationNotice span.new-label {
     font-size:.5em;
     text-transform:uppercase;
     vertical-align:text-top;
@@ -54,21 +49,44 @@ body > div#public > div.migrationNotice span.new-label {
     border-radius:2px;
     font-weight:bold;
 }
-body > div#public > div.migrationNotice div.figure .figure-caption {
+body > div.migrationNotice div.figure .figure-caption {
     font-weight:bold;
     margin-bottom:0;
 }
-body > div#public > div.migrationNotice div.figure {
+body > div.migrationNotice div.figure img {
+        max-width:100%;
+        height:auto;    
+}
+body > div.migrationNotice div.figure {
     text-align:center;
-    background-color:#333333;
+    //background-color:#252525;
     padding:20px 10px;
     margin:10px auto;
 }
-body > div#public > div.migrationNotice div.features-menu p{
-    font-weight:bold;
-    text-align:center;
+body > div.migrationMenu{
+    width:160px;
+    position:absolute;
+    top:105px;
+    left:25px;
+    FONT-FAMILY: Verdana, Palladio, Helvetica,sans-serif;
 }
-body > div#public > div.migrationNotice div.features-menu ul{
-    list-style:none;
-    margin-left:25%
+body > div.migrationMenu h2{
+    background-color:#666666;
+    font-size:12pt;
+    text-align:left;
+    text-indent:2px;
+    font-weight:bold;
+    color:#cde5ad;
+}
+    body > div.migrationMenu ul {
+        font-size: 9pt;
+        list-style: none;
+        margin-left: 0;
+        padding-left: 25px;
+        text-indent:-20px;
+        line-height: 20px;
+}
+body > div.migrationMenu ul>li>a {
+    font-weight: normal;
+    FONT-FAMILY: Verdana, Palladio, Helvetica,sans-serif;
 }
