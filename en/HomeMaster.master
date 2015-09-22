@@ -8,6 +8,8 @@
   <link href="../skyserver.css" rel="stylesheet" type="text/css" />
   <link href="../alerts.css" rel="stylesheet" type="text/css" />
   <link href="../FavIcon.ICO" rel="SHORTCUT ICON" />
+
+    <asp:ContentPlaceHolder id="csscanister" runat="server"></asp:ContentPlaceHolder>  <!-- a place to hold page-specific css files -->
   
   <title>SDSS SkyServer <%= globals.Release %></title>
 
