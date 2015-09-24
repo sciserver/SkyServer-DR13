@@ -458,6 +458,7 @@
     <Content Include="en\images\loginportal.png" />
     <Content Include="en\images\scidrive.jpg" />
     <Content Include="en\images\mydb1.jpg" />
+    <Content Include="en\images\sciserver_icon_bkgd_blk_150px.png" />
     <Content Include="en\images\sdss-background.jpg" />
     <Content Include="en\images\sdss-globe.gif" />
     <Content Include="en\images\sdss-main-banner.gif" />
@@ -476,6 +477,8 @@
     <Content Include="en\images\strip.gif" />
     <Content Include="en\images\titlebar.gif" />
     <Content Include="en\images\titlebar1.jpg" />
+    <Content Include="en\images\turbulence_usecase_3b_300px.png" />
+    <Content Include="en\images\turbulence_usecase_3_300px.png" />
     <Content Include="en\links\Default.aspx" />
     <Content Include="en\links\LinksHome.aspx" />
     <Content Include="en\News.aspx" />

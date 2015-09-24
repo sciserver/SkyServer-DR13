@@ -37,12 +37,19 @@
 	</div>
 
 	<div id="public">
+
         <div class="migrationAlert">
-            Within the next few weeks, SkyServer will be integrated into the <a href="http://www.sciserver.org" target="_blank">SciServer</a> collaborative science 
-            framework. At that time you will have the option to log in to SkyServer.  If you choose not to log in, the site will continue to function 
-            as it does now.  If you log in with your (new) SciServer account, you can save queries and results to your CasJobs/MyDB account from 
-            SkyServer and seamlessly access other SciServer services. Please see the <a href="comingsoon.aspx">SciServer Update Information</a> for more details.
+            <p>Big changes are coming! SkyServer will soon become part of the new
+            <a href="http://www.sciserver.org" target="_blank">SciServer</a> collaborative science framework, which we hope
+            will open up broad new capabilities for research and education. The first new feature you'll see here will be 
+            the option to log in to the new framework. Creating a SciServer account is not required - SkyServer will still
+            work for everyone as it always has. But with a SciServer account, you can save all your queries and results
+            in your MyDB personal database in <a href="scidev03.pha.jhu.edu/CasJobs/">CasJobs</a>, and you can use the
+            new file management and scripting features we will roll out in the near future.</p>
+            
+            <p>Please see <a href="comingsoon.aspx">SciServer Update Information</a> for details.</p>
         </div>
+
 
 		<table border="0" cellpadding="0" cellspacing="2" width="668">
 			<tr><td colspan=5 class="midbodytext" style="color=#ffff00"><b>

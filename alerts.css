@@ -4,7 +4,7 @@
     margin-top:10px;
     margin-bottom:10px;
     background-color:chocolate;
-    color:white;
+    color:aliceblue;
     -moz-border-radius:5px;
     -webkit-border-radius:5px;
     border-radius:5px;
@@ -12,10 +12,14 @@
     font-size:10pt;
     font-family:Verdana, Helvetica, sans-serif;
 }
+    body > div#public > div.migrationAlert p {
+        color:seashell;
+    }
 body > div#public > div.migrationAlert a{
     font-size:10pt;
     font-weight:bold;
     font-family:inherit;
+    color:aqua;
 }
 body > div.migrationNotice {
     width:160px;
