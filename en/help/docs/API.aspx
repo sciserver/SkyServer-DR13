@@ -83,8 +83,8 @@ ra=180&dec=-0.2&radius=3&format=csv&limit=20</a> </pre>
 	Additional parameters may be passed for restricting its range. For each band (x one of r,i,u,g,z)
 	<i>check_x,min_x,max_x and xband </i>may be specified. Hence adding to the above we may restrict the result to rows with 
 	u between 20 and 22 as follows:
-	<pre><a target="api"  class='sml' href="<%=url%>/tools/search/x_results.aspx?searchtool=Radial&ra=180&dec=-0.2&radius=3&format=xml&limit=20&check_u=u&min_u=20&max_u=22&uband=0 20"><%=url%>/tools/search/x_results.aspx?searchtool=Radial&
-ra=180&dec=-0.2&radius=3&format=xml&limit=20&check_u=u&min_u=20&max_u=22&uband=0 20</a> </pre>
+	<pre><a target="api"  class='sml' href="<%=url%>/tools/search/x_results.aspx?searchtool=Radial&ra=180&dec=-0.2&radius=3&format=xml&limit=20&check_u=u&min_u=20&max_u=22&uband=0,20"><%=url%>/tools/search/x_results.aspx?searchtool=Radial&
+ra=180&dec=-0.2&radius=3&format=xml&limit=20&check_u=u&min_u=20&max_u=22&uband=0,20</a> </pre>
 	<p>The same parameters can be also sent using POST. The names forms are the same as the GET parameter names.	<p>
 
 	<hr>

@@ -27,19 +27,71 @@ namespace SkyServer.Tools.QuickLook
         string[] injection = new string[] { "--", ";", "/*", "*/", "'", "\"" };
 
         string requestUri;
+        string WSrequestUri;
 
         public RunQuery() {            
             globals = new Globals();
             requestUri = globals.CasjobsRESTapi;
+            WSrequestUri = globals.DatabaseSearchWS;
         }
 
         public RunQuery(string token) {
 
             globals = new Globals();
             requestUri = globals.CasjobsRESTapi;
+            WSrequestUri = globals.DatabaseSearchWS;
             this.token = token;
 
         }
+
+
+
+        public string GetClientIP()
+        {
+            string clientIP = "unknown";
+            try
+            {
+                if (HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"] != null)
+                {
+                    clientIP = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+                }
+                else
+                {
+                    if (HttpContext.Current.Request.UserHostAddress != null)
+                    {
+                        clientIP = HttpContext.Current.Request.UserHostAddress;
+                    }
+                    else
+                    {
+                        clientIP = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+                    }
+                }
+                if (clientIP == "")
+                    clientIP = "unspecified";
+            }
+            catch { }
+            return clientIP;
+        }
+
+
+
+        public DataSet RunDatabaseSearch(string command, string format, string ClientIP, string TaskName)
+        {
+
+            WebRequest req = WebRequest.Create(WSrequestUri + "?cmd=" + Uri.EscapeDataString(command) + "&format=" + format + "&clientIP=" + ClientIP + "&task=" + TaskName);//select%20top%2010%20ra,dec%20from%20Frame&format=csv"
+            WebResponse resp = req.GetResponse();
+            BinaryFormatter fmt = new BinaryFormatter();
+            DataSet ds = new DataSet();
+            ds = (DataSet)fmt.Deserialize(resp.GetResponseStream());
+            return ds;
+            //Stream s = resp.GetResponseStream();
+            //StreamReader sr = new StreamReader(s, Encoding.ASCII);
+            //string doc = sr.ReadToEnd();
+        }
+
+
+
+
 
          //<summary>
          

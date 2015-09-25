@@ -108,52 +108,15 @@ if( globals.Access == "public" ) {
         w.focus();
     }
 
-    function SetUband() {
-        var umin_s = String(document.getElementById('min_u').value);
-        var umax_s = String(document.getElementById('max_u').value);
-        document.getElementById('uband').value = umin_s + "," + umax_s;
-    }
-
-    function SetGband() {
-        var gmin_s = String(document.getElementById('min_g').value);
-        var gmax_s = String(document.getElementById('max_g').value);
-        document.getElementById('gband').value = gmin_s + "," + gmax_s;
-    }
-
-    function SetRband() {
-        var rmin_s = String(document.getElementById('min_r').value);
-        var rmax_s = String(document.getElementById('max_r').value);
-        document.getElementById('rband').value = rmin_s + "," + rmax_s;
-    }
-
-    function SetIband() {
-        var imin_s = String(document.getElementById('min_i').value);
-        var imax_s = String(document.getElementById('max_i').value);
-        document.getElementById('iband').value = imin_s + "," + imax_s;
-    }
-
-    function SetZband() {
-        var zmin_s = String(document.getElementById('min_z').value);
-        var zmax_s = String(document.getElementById('max_z').value);
-        document.getElementById('zband').value = zmin_s + "," + zmax_s;
-    }
-
-    function SetJband() {
-        var jmin_s = String(document.getElementById('min_j').value);
-        var jmax_s = String(document.getElementById('max_j').value);
-        document.getElementById('jband').value = jmin_s + "," + jmax_s;
-    }
-
-    function SetHband() {
-        var hmin_s = String(document.getElementById('min_h').value);
-        var hmax_s = String(document.getElementById('max_h').value);
-        document.getElementById('hband').value = hmin_s + "," + hmax_s;
-    }
-
-    function SetKband() {
-        var kmin_s = String(document.getElementById('min_k').value);
-        var kmax_s = String(document.getElementById('max_k').value);
-        document.getElementById('kband').value = kmin_s + "," + kmax_s;
+    function SetBands() {
+        if (document.getElementById('check_u').checked == true) { var hmin_s = String(document.getElementById('min_u').value); var hmax_s = String(document.getElementById('max_u').value); document.getElementById('uband').value = hmin_s + "," + hmax_s; }
+        if (document.getElementById('check_g').checked == true) { var hmin_s = String(document.getElementById('min_g').value); var hmax_s = String(document.getElementById('max_g').value); document.getElementById('gband').value = hmin_s + "," + hmax_s; }
+        if (document.getElementById('check_r').checked == true) { var hmin_s = String(document.getElementById('min_r').value); var hmax_s = String(document.getElementById('max_r').value); document.getElementById('rband').value = hmin_s + "," + hmax_s; }
+        if (document.getElementById('check_i').checked == true) { var hmin_s = String(document.getElementById('min_i').value); var hmax_s = String(document.getElementById('max_i').value); document.getElementById('iband').value = hmin_s + "," + hmax_s; }
+        if (document.getElementById('check_z').checked == true) { var hmin_s = String(document.getElementById('min_z').value); var hmax_s = String(document.getElementById('max_z').value); document.getElementById('zband').value = hmin_s + "," + hmax_s; }
+        if (document.getElementById('check_j').checked == true) { var hmin_s = String(document.getElementById('min_j').value); var hmax_s = String(document.getElementById('max_j').value); document.getElementById('jband').value = hmin_s + "," + hmax_s; }
+        if (document.getElementById('check_h').checked == true) { var hmin_s = String(document.getElementById('min_h').value); var hmax_s = String(document.getElementById('max_h').value); document.getElementById('hband').value = hmin_s + "," + hmax_s; }
+        if (document.getElementById('check_k').checked == true) { var hmin_s = String(document.getElementById('min_k').value); var hmax_s = String(document.getElementById('max_k').value); document.getElementById('kband').value = hmin_s + "," + hmax_s; }
     }
 
 </script>
@@ -189,7 +152,7 @@ if( globals.Access == "public" ) {
 			<tr ALIGN=middle VALIGN=center>
                 <td width="30%" class="qtitle">Type of search</td>
                 <td WIDTH="70%" class="q"  colspan="3">
-                    <input type="radio" name="whichphotometry" value="visible" onclick="javascript: changeQueryType('visible');" checked />Visible bands&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="whichphotometry" value="optical" onclick="javascript: changeQueryType('optical');" checked />Optical bands&nbsp;&nbsp;&nbsp;&nbsp;
                     <input type="radio" name="whichphotometry" value="infrared" onclick="javascript: changeQueryType('infrared');" />Infrared bands&nbsp;&nbsp;&nbsp;&nbsp;
                 </td>
 			</tr>
@@ -225,34 +188,34 @@ if( globals.Access == "public" ) {
   <td class="qtitle">Max</td>
   </tr>
  <tr ALIGN=middle VALIGN=center>
-  <td class="qtitle"><input id=query_u name=check_u type=checkbox class="box" value=u onblur="SetUband()"></td>
-  <td class="q"><input TYPE="FLOAT" id="min_u" NAME="min_u" VALUE="0" SIZE="5"  onblur="SetUband()"  ></td>
+  <td class="qtitle"><input id=check_u name=check_u type=checkbox class="box" value=u ></td>
+  <td class="q"><input TYPE="FLOAT" id="min_u" NAME="min_u" VALUE="0" SIZE="5"  onblur="javascript:document.getElementById('check_u').checked = true"  ></td>
   <td class="qtitle">u</td>
-  <td class="q"><input TYPE="FLOAT" id="max_u" NAME="max_u" VALUE="20" SIZE="5"  onblur="SetUband()" ></td>
+  <td class="q"><input TYPE="FLOAT" id="max_u" NAME="max_u" VALUE="20" SIZE="5"  onblur="javascript:document.getElementById('check_u').checked = true" ></td>
   </tr>
  <tr ALIGN=middle VALIGN=center>
-  <td class="qtitle"><input id=check_g name=check_g type=checkbox class="box" value=g onblur="SetGband()"></td>
-  <td class="q"><input TYPE="FLOAT" id="min_g" NAME="min_g" VALUE="0" SIZE="5" onblur="SetGband()"></td>
+  <td class="qtitle"><input id=check_g name=check_g type=checkbox class="box" value=g ></td>
+  <td class="q"><input TYPE="FLOAT" id="min_g" NAME="min_g" VALUE="0" SIZE="5" onblur="javascript:document.getElementById('check_g').checked = true"></td>
   <td class="qtitle">g</td>
-  <td class="q"><input TYPE="FLOAT" id="max_g" NAME="max_g" VALUE="20" SIZE="5" onblur="SetGband()"></td>
+  <td class="q"><input TYPE="FLOAT" id="max_g" NAME="max_g" VALUE="20" SIZE="5" onblur="javascript:document.getElementById('check_g').checked = true"></td>
   </tr>
  <tr ALIGN=middle VALIGN=center>
-  <td class="qtitle"><input id=check_r name=check_r type=checkbox class="box" value=r onblur="SetRband()"></td>
-  <td class="q"><input TYPE="FLOAT" id="min_r" NAME="min_r" VALUE="0" SIZE="5" onblur="SetRband()"></td>
+  <td class="qtitle"><input id=check_r name=check_r type=checkbox class="box" value=r ></td>
+  <td class="q"><input TYPE="FLOAT" id="min_r" NAME="min_r" VALUE="0" SIZE="5" onblur="javascript:document.getElementById('check_r').checked = true"></td>
   <td class="qtitle">r</td>
-  <td class="q"><input TYPE="FLOAT" id="max_r" NAME="max_r" VALUE="20" SIZE="5" onblur="SetRband()"></td>
+  <td class="q"><input TYPE="FLOAT" id="max_r" NAME="max_r" VALUE="20" SIZE="5" onblur="javascript:document.getElementById('check_r').checked = true"></td>
   </tr>
  <tr ALIGN=middle VALIGN=center>
-  <td class="qtitle"><input id=check_i name=check_i type=checkbox class="box" value=i onblur="SetIband()"></td>
-  <td class="q"><input TYPE="FLOAT" id="min_i" NAME="min_i" VALUE="0" SIZE="5" onblur="SetIband()"></td>
+  <td class="qtitle"><input id=check_i name=check_i type=checkbox class="box" value=i ></td>
+  <td class="q"><input TYPE="FLOAT" id="min_i" NAME="min_i" VALUE="0" SIZE="5" onblur="javascript:document.getElementById('check_i').checked = true"></td>
   <td class="qtitle">i</td>
-  <td class="q"><input TYPE="FLOAT" id="max_i" NAME="max_i" VALUE="20" SIZE="5" onblur="SetIband()"></td>
+  <td class="q"><input TYPE="FLOAT" id="max_i" NAME="max_i" VALUE="20" SIZE="5" onblur="javascript:document.getElementById('check_i').checked = true"></td>
   </tr>
  <tr ALIGN=middle VALIGN=center>
-  <td class="qtitle"><input id=check_z name=check_z type=checkbox class="box" value=z onblur="SetZband()"></td>
-  <td class="q"><input TYPE="FLOAT" id="min_z" NAME="min_z" VALUE="0" SIZE="5" onblur="SetZband()"></td>
+  <td class="qtitle"><input id=check_z name=check_z type=checkbox class="box" value=z ></td>
+  <td class="q"><input TYPE="FLOAT" id="min_z" NAME="min_z" VALUE="0" SIZE="5" onblur="javascript:document.getElementById('check_z').checked = true"></td>
   <td class="qtitle">z</td>
-  <td class="q"><input TYPE="FLOAT" id="max_z" NAME="max_z" VALUE="20" SIZE="5" onblur="SetZband()"></td>
+  <td class="q"><input TYPE="FLOAT" id="max_z" NAME="max_z" VALUE="20" SIZE="5" onblur="javascript:document.getElementById('check_z').checked = true"></td>
   </tr>
 </table>
 	</td></tr>
@@ -270,22 +233,22 @@ if( globals.Access == "public" ) {
   <td class="qtitle">Max</td>
   </tr>
  <tr ALIGN=middle VALIGN=center>
-  <td class="qtitle"><input id=check_j name=check_j type=checkbox class="box" value=j onblur="SetJband()"></td>
-  <td class="q"><input TYPE="FLOAT" id="min_j" NAME="min_j" VALUE="0" SIZE="5"  onblur="SetJband()"  ></td>
+  <td class="qtitle"><input id=check_j name=check_j type=checkbox class="box" value=j ></td>
+  <td class="q"><input TYPE="FLOAT" id="min_j" NAME="min_j" VALUE="0" SIZE="5"  onblur="javascript:document.getElementById('check_j').checked = true"  ></td>
   <td class="qtitle">J</td>
-  <td class="q"><input TYPE="FLOAT" id="max_j" NAME="max_j" VALUE="20" SIZE="5"  onblur="SetJband()" ></td>
+  <td class="q"><input TYPE="FLOAT" id="max_j" NAME="max_j" VALUE="20" SIZE="5"  onblur="javascript:document.getElementById('check_j').checked = true" ></td>
   </tr>
  <tr ALIGN=middle VALIGN=center>
-  <td class="qtitle"><input id=check_h name=check_h type=checkbox class="box" value=h onblur="SetHband()"></td>
-  <td class="q"><input TYPE="FLOAT" id="min_h" NAME="min_h" VALUE="0" SIZE="5" onblur="SetHband()"></td>
+  <td class="qtitle"><input id=check_h name=check_h type=checkbox class="box" value=h ></td>
+  <td class="q"><input TYPE="FLOAT" id="min_h" NAME="min_h" VALUE="0" SIZE="5" onblur="javascript:document.getElementById('check_h').checked = true"></td>
   <td class="qtitle">H</td>
-  <td class="q"><input TYPE="FLOAT" id="max_h" NAME="max_h" VALUE="20" SIZE="5" onblur="SetHband()"></td>
+  <td class="q"><input TYPE="FLOAT" id="max_h" NAME="max_h" VALUE="20" SIZE="5" onblur="javascript:document.getElementById('check_h').checked = true"></td>
   </tr>
  <tr ALIGN=middle VALIGN=center>
-  <td class="qtitle"><input id=check_k name=check_k type=checkbox class="box" value=k onblur="SetKband()"></td>
-  <td class="q"><input TYPE="FLOAT" id="min_k" NAME="min_k" VALUE="0" SIZE="5" onblur="SetKband()"></td>
+  <td class="qtitle"><input id=check_k name=check_k type=checkbox class="box" value=k ></td>
+  <td class="q"><input TYPE="FLOAT" id="min_k" NAME="min_k" VALUE="0" SIZE="5" onblur="javascript:document.getElementById('check_k').checked = true"></td>
   <td class="qtitle">K<sub>s</td>
-  <td class="q"><input TYPE="FLOAT" id="max_k" NAME="max_k" VALUE="20" SIZE="5" onblur="SetKband()"></td>
+  <td class="q"><input TYPE="FLOAT" id="max_k" NAME="max_k" VALUE="20" SIZE="5" onblur="javascript:document.getElementById('check_k').checked = true"></td>
   </tr>
 </table>
 	</td></tr>
@@ -306,7 +269,7 @@ if( globals.Access == "public" ) {
       <td nowrap width="13%" ALIGN=middle><input name=format value="fits"  type=radio class="box">FITS</td>
 		</tr>
 		<tr>
-			<td align="left"><input id=submit type="submit" value="Submit Request"></td>
+			<td align="left"><input id=submit type="submit" value="Submit Request" onclick="SetBands()" ></td>
 			<td colspan="5">Limit number of output rows (0 for max) to <input type=text name="limit" size=5 value="10"></td>
 			<td align="right"><input id=reset  type="reset" value="Reset Form"></td>
 		</tr>

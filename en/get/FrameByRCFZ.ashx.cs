@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.SqlClient;
+using SkyServer.Tools.Search;
+using System.Data;
 
 namespace SkyServer.Get
 {
@@ -24,37 +26,27 @@ namespace SkyServer.Get
 
             //	build the SQL query string
 
-            string cmd = "SELECT run,camCol,field,zoom FROM Frame WHERE zoom=@zz AND run=@run AND camCol=@col AND field=@fld";
+            string cmd = "SELECT run,camCol,field,zoom FROM Frame WHERE zoom="+zz.ToString()+" AND run="+run.ToString()+" AND camCol="+col.ToString()+" AND field="+fld.ToString();
 
-            using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
+            ResponseREST runQuery = new ResponseREST();
+            string ClientIP = runQuery.GetClientIP();
+            DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.FrameByRCFZ.getRCFZ");
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
-                oConn.Open();
-                using (SqlCommand oCmd = oConn.CreateCommand())
+                if (!reader.HasRows)
                 {
-                    oCmd.CommandText = cmd;
-                    oCmd.Parameters.AddWithValue("@zz", zz);
-                    oCmd.Parameters.AddWithValue("@run", run);
-                    oCmd.Parameters.AddWithValue("@col", col);
-                    oCmd.Parameters.AddWithValue("@fld", fld);
 
-                    using (SqlDataReader reader = oCmd.ExecuteReader())
-                    {
-                        if (!reader.HasRows)
-                        {
+                    context.Response.Redirect("noimage2.jpg");
 
-                            context.Response.Redirect("noimage2.jpg");
-
-                        }
-                        else
-                        {
-                            reader.Read();
-                            run = reader.GetInt32(0);
-                            col = reader.GetInt32(1);
-                            fld = reader.GetInt32(2);
-                            zz = reader.GetInt32(3);
-                            context.Response.Redirect(globals.WSGetCodecUrl + "?R=" + run + "&C=" + col + "&F=" + fld + "&Z=" + zz);
-                        }
-                    }
+                }
+                else
+                {
+                    reader.Read();
+                    run = reader.GetInt32(0);
+                    col = reader.GetInt32(1);
+                    fld = reader.GetInt32(2);
+                    zz = reader.GetInt32(3);
+                    context.Response.Redirect(globals.WSGetCodecUrl + "?R=" + run + "&C=" + col + "&F=" + fld + "&Z=" + zz);
                 }
             }
 

@@ -59,7 +59,7 @@
            if (queryType == "irspec")
            {
                Response.Write("<tr><td colspan='2' class='q' align='center'>Infrared Spectra</td></tr>");
-               rs.showIRSpecParams(queryType, Response);
+               rs.showIRSpecParams(queryType, Response, "SkyServer.Explore.IRQS.getPhotoObjAll");
                Response.Write("</tr>\n");
            }   
            else     // this else means: show Imaging and Spectroscopy params only if this is not the Infrared Spectro tool
@@ -78,14 +78,14 @@
 <%           
             if (queryType == "spec")
                 {
-                   rs.showSpecParams(queryType, Response);
-                   rs.showImgParams(queryType, Response);
+                    rs.showSpecParams(queryType, Response, "SkyServer.Explore.SQS.getPhotoObjAll");
+                    rs.showImgParams(queryType, Response, "SkyServer.Explore.SQS.getPhotoObjAll");
                }
                else 
                {
-                 
-                 rs.showImgParams(queryType, Response);
-                 rs.showSpecParams(queryType, Response);
+
+                   rs.showImgParams(queryType, Response, "SkyServer.Explore.IQS.getPhotoObjAll");
+                   rs.showSpecParams(queryType, Response, "SkyServer.Explore.IQS.getPhotoObjAll");
                }
            }
        

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.SqlClient;
+using SkyServer.Tools.Search;
+using System.Data;
 
 namespace SkyServer.Get
 {
@@ -20,33 +22,21 @@ namespace SkyServer.Get
             long plateid = long.Parse(context.Request.QueryString["P"]);
             short fiberid = short.Parse(context.Request.QueryString["F"]);
 
-            string cmd = "SELECT img FROM SpecObjAll WHERE plateID=@plateid AND fiberID=@fiberid";
+            string cmd = "SELECT img FROM SpecObjAll WHERE plateID=" + plateid.ToString() + " AND fiberID=" + fiberid.ToString();
 
-            using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
+            ResponseREST runQuery = new ResponseREST();
+            string ClientIP = runQuery.GetClientIP();
+            DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.SpecByPF.getImg");
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
-                oConn.Open();
-                using (SqlCommand oCmd = oConn.CreateCommand())
+                if (!reader.HasRows)
                 {
-                    oCmd.CommandText = cmd;
-                    oCmd.Parameters.AddWithValue("@plateid", plateid);
-                    oCmd.Parameters.AddWithValue("@fiberid", fiberid);
-
-                    using (SqlDataReader reader = oCmd.ExecuteReader())
-                    {
-                        // start writing the image
-                        // if there is no image in the database, redirect the URL to a
-                        // predefined blank image of the same size
-
-                        if (!reader.HasRows)
-                        {
-                            context.Response.Redirect("noimage2.gif");
-                        }
-                        else
-                        {
-                            reader.Read();
-                            context.Response.BinaryWrite(reader.GetSqlBytes(0).Buffer);
-                        }
-                    }
+                    context.Response.Redirect("noimage2.gif");
+                }
+                else
+                {
+                    reader.Read();
+                    context.Response.BinaryWrite((byte[])reader.GetValue(0));
                 }
             }
         }

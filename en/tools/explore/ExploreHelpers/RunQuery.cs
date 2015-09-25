@@ -27,19 +27,101 @@ namespace SkyServer.Tools.Explore
         string[] injection = new string[] { "--", ";", "/*", "*/", "'", "\"" };
 
         string requestUri;
+        string WSrequestUri;
 
         public RunQuery() {            
             globals = new Globals();
             requestUri = globals.CasjobsRESTapi;
+            WSrequestUri = globals.DatabaseSearchWS;
         }
 
         public RunQuery(string token) {
 
             globals = new Globals();
             requestUri = globals.CasjobsRESTapi;
+            WSrequestUri = globals.DatabaseSearchWS;
             this.token = token;
 
         }
+
+        public string GetClientIP()
+        {
+            string clientIP = "unknown";
+            try
+            {
+                if (HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"] != null)
+                {
+                    clientIP = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+                }
+                else
+                {
+                    if (HttpContext.Current.Request.UserHostAddress != null)
+                    {
+                        clientIP = HttpContext.Current.Request.UserHostAddress;
+                    }
+                    else
+                    {
+                        clientIP = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+                    }
+                }
+                if (clientIP == "")
+                    clientIP = "unspecified";
+            }
+            catch { }
+            return clientIP;
+        }
+
+
+
+        public DataSet RunDatabaseSearch(string command, string format, string ClientIP, string TaskName)
+        {
+            /*
+            var request = (HttpWebRequest)WebRequest.Create(WSrequestUri);
+            request.Method = "POST";
+            request.ContentType = "application/json";
+            request.Accept = "application/x-dataset";//format
+
+            StreamWriter streamWriter = new StreamWriter(request.GetRequestStream());
+            StringWriter sw = new StringWriter();
+            JsonWriter jsonWriter = new JsonTextWriter(sw);
+            jsonWriter.WriteStartObject();
+            jsonWriter.WritePropertyName("cmd");
+            jsonWriter.WriteValue(command);
+            jsonWriter.WritePropertyName("task");
+            jsonWriter.WriteValue(TaskName);
+            jsonWriter.WritePropertyName("clientIP");
+            jsonWriter.WriteValue(ClientIP);
+            jsonWriter.WritePropertyName("format");
+            jsonWriter.WriteValue(format);
+            jsonWriter.WriteEndObject();
+            jsonWriter.Close();
+            streamWriter.Write(sw.ToString());
+            streamWriter.Close();
+
+            DataSet ds = null;
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            {
+                BinaryFormatter fmt = new BinaryFormatter();
+                ds = (DataSet)fmt.Deserialize(response.GetResponseStream());
+            }
+            return ds;
+            */
+
+            DataSet ds = new DataSet(); 
+            WebRequest req = WebRequest.Create(WSrequestUri + "?cmd=" + Uri.EscapeDataString(command) + "&format=" + format + "&clientIP=" + ClientIP + "&task=" + TaskName);//select%20top%2010%20ra,dec%20from%20Frame&format=csv"
+            //WebRequest req = WebRequest.Create(WSrequestUri + "?cmd=" + command + "&format=" + format + "&clientIP=" + ClientIP + "&task=" + TaskName);//select%20top%2010%20ra,dec%20from%20Frame&format=csv"
+            using (WebResponse resp = req.GetResponse())
+            {
+                BinaryFormatter fmt = new BinaryFormatter();
+                ds = (DataSet)fmt.Deserialize(resp.GetResponseStream());
+            }
+            return ds;
+            //Stream s = resp.GetResponseStream();
+            //StreamReader sr = new StreamReader(s, Encoding.ASCII);
+            //string doc = sr.ReadToEnd();
+            
+        }
+
 
          //<summary>
          

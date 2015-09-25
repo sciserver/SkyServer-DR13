@@ -88,13 +88,15 @@
 			<tr>
 <%
         ResponseREST rs = new ResponseREST();
+        string ClientIP = rs.GetClientIP();
         
         string cmd = "SELECT [name] FROM DataConstants\n";
         cmd += " WHERE field='ApogeeTarget1' AND [name] != ''\n";
         cmd += " AND [name] NOT IN ('APOGEE_FAINT', 'APOGEE_MEDIUM', 'APOGEE_BRIGHT', 'APOGEE_CHECKED')\n";
         cmd += " ORDER BY field,value";
         
-        DataSet ds = rs.RunCasjobs(cmd, "SkyServer:QS_IRSpec:ApogeeTarget1");
+        //DataSet ds = rs.RunCasjobs(cmd, "SkyServer:QS_IRSpec:ApogeeTarget1");
+        DataSet ds = rs.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.IRQS.getApogeeTarget1");
         using(DataTableReader reader = ds.CreateDataReader(ds.Tables[0]))
         {
                 if (!reader.HasRows)
@@ -151,7 +153,8 @@
         cmd += " WHERE field='ApogeeTarget2' AND [name] != ''\n";
         cmd += " AND [name] NOT IN ('APOGEE_EMBEDDEDCLUSTER_STAR', 'APOGEE_LONGBAR', 'APOGEE_EMISSION_STAR', 'APOGEE_KEPLER_COOLDWARF', 'APOGEE_MIRCLUSTER_STAR', 'APOGEE_CHECKED')\n";
         cmd += " ORDER BY field,value";
-        DataSet data = rs.RunCasjobs(cmd, "SkyServer:QS_IRSpec:ApogeeTarget2");
+        //DataSet data = rs.RunCasjobs(cmd, "SkyServer:QS_IRSpec:ApogeeTarget2");
+        DataSet data = rs.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.IRQS.getApogeeTarget2");
         using (DataTableReader reader = data.CreateDataReader(data.Tables[0]))
         {
                 if (!reader.HasRows)

@@ -42,12 +42,11 @@ namespace SkyServer.Tools.QuickLook
         protected Int16? field = null;
         protected Int16? obj = null;
 
-
-     
+        protected string ClientIP = "";
+        protected string task = "";
         protected void Page_Load(object sender, EventArgs e)
         {
-           
-            
+
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             master = (ObjectQuickLook)Page.Master;
             Session["QuickLookObjectInfo"] = objectInfo;
@@ -131,6 +130,7 @@ namespace SkyServer.Tools.QuickLook
                     }
                 }
                 runQuery = new RunQuery(token);
+                ClientIP = runQuery.GetClientIP();
                 //This is imp function to get all different ids.
                 getObjPmts();
 
@@ -165,7 +165,8 @@ namespace SkyServer.Tools.QuickLook
 
         private void setObjectInfo(string cmd)
         {
-            DataSet ds = runQuery.RunCasjobs(cmd, "QuickLook: Summary");
+            //DataSet ds = runQuery.RunCasjobs(cmd, "QuickLook: Summary");
+            DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Quicklook.Summary." + task);
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
                 if (reader.Read())
@@ -206,7 +207,7 @@ namespace SkyServer.Tools.QuickLook
 
         private void setFromPlateMjdFiber(short? plate, int? mjd, short? fiber)
         {
-            string cmd = QuickLookQueries.getParamsFromPlateFiberMjd;
+            string cmd = QuickLookQueries.getParamsFromPlateFiberMjd; task = "getParamsFromPlateFiberMjd";
             cmd = cmd.Replace("@mjd", mjd.ToString());
             cmd = cmd.Replace("@plate", plate.ToString());
             cmd = cmd.Replace("@fiberId", fiber.ToString());
@@ -221,7 +222,8 @@ namespace SkyServer.Tools.QuickLook
             cmd = cmd.Replace("@qdec", qdec.ToString());
             cmd = cmd.Replace("@searchRadius", (globals.EqSearchRadius).ToString());
             //cmd = cmd.Replace("@searchRadius", (0.5 / 60).ToString());
-            DataSet ds = runQuery.RunCasjobs(cmd, "QuickLook: Summary");
+            //DataSet ds = runQuery.RunCasjobs(cmd, "QuickLook: Summary");
+            DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Quicklook.Summary.getObjIDFromEq");
             string ObjID2 = null;
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
@@ -232,7 +234,7 @@ namespace SkyServer.Tools.QuickLook
             }
             if (ObjID2 != null && !ObjID2.Equals(""))
             {
-                cmd = QuickLookQueries.getParamsFromObjID;
+                cmd = QuickLookQueries.getParamsFromObjID; task = "getParamsFromObjID";
                 cmd = cmd.Replace("@objid", ObjID2);
                 setObjectInfo(cmd);
             }
@@ -241,7 +243,7 @@ namespace SkyServer.Tools.QuickLook
 
         private void setFromSpecObjID(string sid)
         {
-            string cmd = QuickLookQueries.getParamsFromSpecObjID;
+            string cmd = QuickLookQueries.getParamsFromSpecObjID; task = "getParamsFromSpecObjID";
             cmd = cmd.Replace("@sid", sid);
             setObjectInfo(cmd);
         }
@@ -249,7 +251,7 @@ namespace SkyServer.Tools.QuickLook
 
         private void setFrom5PartSDSS(Int16? Run, Int16? Rerun, byte? Camcol, Int16? Field, Int16? Obj)
         {
-            string cmd = QuickLookQueries.getpmtsFrom5PartSDSS;
+            string cmd = QuickLookQueries.getpmtsFrom5PartSDSS; task = "getpmtsFrom5PartSDSS";
             cmd = cmd.Replace("@run", Run == null ? "null" : Run.ToString());
             cmd = cmd.Replace("@rerun", Rerun == null ? "null" : Rerun.ToString());
             cmd = cmd.Replace("@camcol", Camcol == null ? "null" : Camcol.ToString());
@@ -261,7 +263,7 @@ namespace SkyServer.Tools.QuickLook
 
         private void setFromObjID(long? id)
         {
-            string cmd = QuickLookQueries.getParamsFromObjID;
+            string cmd = QuickLookQueries.getParamsFromObjID; task = "getParamsFromObjID";
             cmd = cmd.Replace("@objid", id.ToString());
             setObjectInfo(cmd);
         }
@@ -275,12 +277,17 @@ namespace SkyServer.Tools.QuickLook
             string cmd = "";
             apid = apid.ToLower();
             if (apid.Contains("apogee"))
-                cmd = QuickLookQueries.getApogee;
+            {
+                cmd = QuickLookQueries.getApogee; task = "getApogee";
+            }
             else
-                cmd = QuickLookQueries.getApogee2;
+            {
+                cmd = QuickLookQueries.getApogee2; task = "getApogee2";
+            }
 
             cmd = cmd.Replace("@apogeeId", apid);
-            DataSet ds = runQuery.RunCasjobs(cmd, "QuickLook: Summary");
+            //DataSet ds = runQuery.RunCasjobs(cmd, "QuickLook: Summary");
+            DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Quicklook.Summary." + task);
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
                 if (reader.Read())

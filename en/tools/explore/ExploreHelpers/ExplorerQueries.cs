@@ -171,14 +171,14 @@ namespace SkyServer.Tools.Explore
                         str(loggadopunc,8,3) as 'log<sub>10</sub>(g) error' from sppParams where specObjId=@specId";
                 
 
-        public static string fitsParametersStellarMassStarformingPort  = @"  select logMass as 'Best-fit log<sub>10</sub>(stellar mass)',minLogMass as '1-&sigma; min', maxLogMass as '1-&sigma; max',
-                        age as 'Best-fit age (Gyr)', minAge as '1-&sigma; min Age', maxAge as '1-&sigma; max Age',
-                        SFR as 'Best-fit SFR (M<sub>&#9737;</sub> / yr)', minSFR as '1-&sigma; min SFR', maxSFR as '1-&sigma; max SFR' 
+        public static string fitsParametersStellarMassStarformingPort  = @"  select logMass as 'Best-fit log<sub>10</sub>(stellar mass)',minLogMass as '1-&#963 min', maxLogMass as '1-&#963 max',
+                        age as 'Best-fit age (Gyr)', minAge as '1-&#963 min Age', maxAge as '1-&#963 max Age',
+                        SFR as 'Best-fit SFR (M<sub>&#9737</sub> / yr)', minSFR as '1-&#963 min SFR', maxSFR as '1-&#963 max SFR' 
                         from stellarMassStarformingPort where specObjId=@specId";
 
-        public static string fitsParameterSstellarMassPassivePort = @" select logMass as 'Best-fit log<sub>10</sub>(stellar mass)', minLogMass as '1-&sigma; min', maxLogMass as '1-&sigma; max'
-                         , age as 'Best-fit age (Gyr)', minAge as '1-&sigma; min Age', maxAge as '1-&sigma; max Age', SFR as 'Best-fit SFR (M<sub>&#9737;</sub> / yr)',
-                         minSFR as '1-&sigma; min SFR', maxSFR as '1-&sigma; max SFR' 
+        public static string fitsParameterSstellarMassPassivePort = @" select logMass as 'Best-fit log<sub>10</sub>(stellar mass)', minLogMass as '1-&#963 min', maxLogMass as '1-&#963 max'
+                         , age as 'Best-fit age (Gyr)', minAge as '1-&#963 min Age', maxAge as '1-&#963 max Age', SFR as 'Best-fit SFR (M<sub>&#9737</sub> / yr)',
+                         minSFR as '1-&#963 min SFR', maxSFR as '1-&#963 max SFR' 
                          from stellarMassPassivePort where specObjId=@specId";
 
         public static string fitsParametersEmissionLinesPort  = @" select velstars as 'Stellar velocity (km/s)',sigmaStars as 'Stellar velocity disperson (km/s)', 
@@ -280,30 +280,30 @@ namespace SkyServer.Tools.Explore
                 
 
          /// Imaing Query
-        public static  String getImagingQuery= @" select            
-            --phototag
-             dbo.fPhotoFlagsN(pt.flags) as 'flags',pt.ra, pt.dec, pt.run, pt.rerun, pt.camcol, pt.field, 
-             cast(pt.fieldId as binary(8)) as fieldId, cast(pt.objId as binary(8)) as objId, 
-            --PhotoObjall
-             pa.clean,  dbo.fPhotoTypeN(pa.type) as otype, 
-             pa.u as u, pa.g  as g, pa.r as r, pa.i as i, pa.z as z, 
-             pa.err_u as err_u,  pa.err_g  as err_g,  pa.err_r  as err_r, pa.err_i  as err_i, pa.err_z as err_z, 
-            -- photoObj
-            dbo.fPhotoModeN(po.mode) as mode,po.mjd as 'mjdNum',  (po.nDetect-1) as 'Other observations', po.parentID, po.nChild, str(po.extinction_r,7,2) as extinction_r,
-            str(po.petroRad_r,9,2)+' &plusmn; '+str(po.petroRadErr_r,10,3) as 'petrorad_r',
-            --- photz,photozRF,zoospec 
-            (str(phz.z,7,3)+' &plusmn; '+str(phz.zerr,8,4))as 'photoZ_KD', 
-            ---(str(phzrf.z,7,3)+' &plusmn; '+str(phzrf.zerr,8,4)) as 'photoZ_RF', 
-            case (1*zz.spiral+10*zz.elliptical+100*zz.uncertain) when 1 then 'Spiral' when 10 then 'Elliptical' when 100 then 'Uncertain' else '-' end as 'GalaxyZoo_Morph' 
-            --all joins
-             from PhotoTag pt  
-             left outer join PhotoObj po on po.objid = pt.objid
-             left outer join Photoz phz on pt.objid=phz.objid 
-             ---left outer join PhotozRF phzrf on pt.objid=phzrf.objid 
-             left outer join zooSpec zz on pt.objid=zz.objid 
-             left outer join field f on f.fieldID=pt.fieldID 
-             left outer join photoobjall pa with (nolock)on  pa.objid = pt.objid 
-             where pt.objId= @objId";
+        public static  String getImagingQuery= @" select "+
+            //--phototag
+             "dbo.fPhotoFlagsN(pt.flags) as 'flags',pt.ra, pt.dec, pt.run, pt.rerun, pt.camcol, pt.field, "+
+             "cast(pt.fieldId as binary(8)) as fieldId, cast(pt.objId as binary(8)) as objId, "+
+            //--PhotoObjall
+             "pa.clean,  dbo.fPhotoTypeN(pa.type) as otype, "+
+             "pa.u as u, pa.g  as g, pa.r as r, pa.i as i, pa.z as z, "+
+             "pa.err_u as err_u,  pa.err_g  as err_g,  pa.err_r  as err_r, pa.err_i  as err_i, pa.err_z as err_z, "+
+            //-- photoObj
+            "dbo.fPhotoModeN(po.mode) as mode,po.mjd as 'mjdNum',  (po.nDetect-1) as 'Other observations', po.parentID, po.nChild, str(po.extinction_r,7,2) as extinction_r,"+
+            "str(po.petroRad_r,9,2)+' &plusmn '+str(po.petroRadErr_r,10,3) as 'petrorad_r',"+
+            //--- photz,photozRF,zoospec 
+            "(str(phz.z,7,3)+' &plusmn '+str(phz.zerr,8,4)) as 'photoZ_KD', "+
+            //---(str(phzrf.z,7,3)+' &plusmn; '+str(phzrf.zerr,8,4)) as 'photoZ_RF', 
+            "case (1*zz.spiral+10*zz.elliptical+100*zz.uncertain) when 1 then 'Spiral' when 10 then 'Elliptical' when 100 then 'Uncertain' else '-' end as 'GalaxyZoo_Morph' "+
+            //--all joins
+            " from PhotoTag pt  "+
+            " left outer join PhotoObj po on po.objid = pt.objid "+
+            " left outer join Photoz phz on pt.objid=phz.objid "+
+             //---left outer join PhotozRF phzrf on pt.objid=phzrf.objid 
+            " left outer join zooSpec zz on pt.objid=zz.objid "+
+            " left outer join field f on f.fieldID=pt.fieldID "+
+            " left outer join photoobjall pa with (nolock)on  pa.objid = pt.objid " +
+            " where pt.objId= @objId";
                 
 
         /// Spectral parameters

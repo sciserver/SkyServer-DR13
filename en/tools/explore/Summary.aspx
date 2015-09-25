@@ -35,9 +35,13 @@
    <metadata:MetadataParameters ID="MetadataParameters1" runat="server"/>
    <imaging:ImagingParameters ID="ImagingParameters1" runat="server" /> 
    <crossid:CrossId ID="CrossId1" runat="server" />  
+
+    <!--div id="crossid22"> dd </!--div-->   
+
    <spectral:SpectralControl ID="SpectralControl1" runat="server" /> 
    <apogee:ApogeeControl ID="ApogeeControl1" runat="server" />
    </div>  
+
 
 </asp:Content>
 

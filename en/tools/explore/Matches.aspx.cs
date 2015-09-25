@@ -30,10 +30,12 @@ namespace SkyServer.Tools.Explore
 
         private void executeQueries() {
             string cmd = ExplorerQueries.matches1.Replace("@objId", objId);
-            ds_match1 = runQuery.RunCasjobs(cmd, "Explore: Matches");
-
+            //ds_match1 = runQuery.RunCasjobs(cmd, "Explore: Matches");
+            string ClientIP = runQuery.GetClientIP();
+            ds_match1 = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.Matches.matches1");
             cmd = ExplorerQueries.matches2.Replace("@objId", objId);
-            ds_match2 = runQuery.RunCasjobs(cmd, "Explore: Matches");
+            //ds_match2 = runQuery.RunCasjobs(cmd, "Explore: Matches");
+            ds_match2 = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.Matches.matches2");
         }
     }
 }

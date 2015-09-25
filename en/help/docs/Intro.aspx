@@ -76,10 +76,6 @@ describes the database organization and structure.
 <p><a name="organization"></a>
 <h2> Data Organization </h2>
 <!-------"datamodel.inc"------------->
-<% using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
-   {
-       oConn.Open(); 
-%>
 <p>
 <a name="datamodel"></a>
 <h3>The SDSS Catalog Data Model</h3>
@@ -150,8 +146,8 @@ objects, not just science objects, hence the name PhotoObj<u>All</u>.  The view 
 table that includes only science objects and excludes sky and other unknown objects is
 the <a href="tabledesc.aspx?name=PhotoObj"><b>PhotoObj</b></a> view.  The PhotoObjAll table is there for completeness, but science queries
 are usually done on the PhotoObj view.
-		<h4>PhotoObjAll Views:</h4><% BrowserFunctions.showViews(oConn, "photoobjall", Request, Response, globals); %>
-		<h4>PhotoObjAll Indices:</h4><% BrowserFunctions.showIndices(oConn, "photoobjall",Request,Response,globals); %>
+		<h4>PhotoObjAll Views:</h4><% BrowserFunctions.showViews("photoobjall", Request, Response, globals, "Skyserver.Help.Intro.photoobjallViews"); %>
+		<h4>PhotoObjAll Indices:</h4><% BrowserFunctions.showIndices("photoobjall", Request, Response, globals, "Skyserver.Help.Intro.photoobjallIndices"); %>
 		</li><p>
 <!--
 		<li><a href="tabledesc.aspx?name=PhotoTag"><b>PhotoTag</b></a> - This is a vertical partition of the PhotoObjAll table, and 
@@ -159,26 +155,26 @@ contains only those columns that are most often requested.  Due to the smaller s
 in the table, many more rows can be loaded into the memory cache at one time, hence searches on
 the PhotoTag table are much faster than searches on PhotoObjAll.  Whenever possible, use the
 PhotoTag table instead of PhotoObjAll or PhotoObj.
-		<h4>PhotoTag Indices:</h4><% BrowserFunctions.showIndices( oConn, "phototag" ,Request,Response,globals); %>
+		<h4>PhotoTag Indices:</h4><% BrowserFunctions.showIndices("phototag", Request, Response, globals, "Skyserver.Help.Intro.phototagIndices"); %>
 		</li><p>
 -->
 		<li><a href="tabledesc.aspx?name=Field"><b>Field</b></a> - This table contains all the measured
 parameters of each <a href="<%=globals.SdssUrl%>help/glossary.php#field">imaging field<img src="../../images/offsite.png" alt=" (offsite)" /></a>, along
 with relevant summary statistics, and astrometric and photometric information.
-		<h4>Field Indices:</h4><% BrowserFunctions.showIndices(oConn, "field", Request, Response, globals); %>
+		<h4>Field Indices:</h4><% BrowserFunctions.showIndices("field", Request, Response, globals, "Skyserver.Help.Intro.phototagIndices"); %>
 		</li><p>
 		<li><a href="tabledesc.aspx?name=PhotoProfile"><b>PhotoProfile</b></a> - This table contains the light
 profiles of SDSS photo objects.
-		<h4>PhotoProfile Indices:</h4><% BrowserFunctions.showIndices(oConn, "photoprofile", Request, Response, globals); %>
+		<h4>PhotoProfile Indices:</h4><% BrowserFunctions.showIndices("photoprofile", Request, Response, globals, "Skyserver.Help.Intro.photoprofileIndices"); %>
 		</li><p>
 		<li><a href="tabledesc.aspx?name=FieldProfile"><b>FieldProfile</b></a> - This table contains the light
 profiles of SDSS field objects.
-		<h4>FieldProfile Indices:</h4><% BrowserFunctions.showIndices(oConn, "fieldprofile", Request, Response, globals); %>
+		<h4>FieldProfile Indices:</h4><% BrowserFunctions.showIndices("fieldprofile", Request, Response, globals, "Skyserver.Help.Intro.fieldprofileIndices"); %>
 		</li><p>
 		<li><a href="tabledesc.aspx?name=Neighbors"><b>Neighbors</b></a> - SDSS objects within 0.5 arcmins and
 their match parameters are stored here.  Make sure to filter out unwanted
 PhotoObj, like secondaries.
-		<h4>Neighbors Indices:</h4><% BrowserFunctions.showIndices(oConn, "neighbors", Request, Response, globals); %>
+		<h4>Neighbors Indices:</h4><% BrowserFunctions.showIndices("neighbors", Request, Response, globals, "Skyserver.Help.Intro.neighborsIndices"); %>
 		</li><p>
 		<li><a href="tabledesc.aspx?name=First"><b>First</b></a>,
 		<a href="tabledesc.aspx?name=RC3"><b>RC3</b></a>, <a
@@ -204,40 +200,40 @@ Browser</a>.
 X is for exported) from a given plate used for spectroscopic observations.
 Each plate has 640 observed spectra and hence 640 corresponding entries in
 SpecObjAll.
-		<h4>PlateX Indices:</h4><% BrowserFunctions.showIndices(oConn, "platex", Request, Response, globals); %>
+		<h4>PlateX Indices:</h4><% BrowserFunctions.showIndices("platex", Request, Response, globals, "Skyserver.Help.Intro.platexIndices"); %>
 		</li><p>
 		<li><a href="tabledesc.aspx?name=SpecObjAll"><b>SpecObjAll</b></a> - This is a base table containing
 <b>ALL</b> the spectroscopic information, including a lot of duplicate and bad
 data. Use the <a href="tabledesc.aspx?name=SpecObj"><b>SpecObj</b></a> view instead (see below), which has the data
 properly filtered for cleanliness.
-		<h4>SpecObjAll Views:</h4><% BrowserFunctions.showViews(oConn, "specobjall", Request, Response, globals); %>
-		<h4>SpecObjAll Indices:</h4><% BrowserFunctions.showIndices(oConn, "specobjall", Request, Response, globals); %>
+		<h4>SpecObjAll Views:</h4><% BrowserFunctions.showViews("specobjall", Request, Response, globals, "Skyserver.Help.Intro.specobjallViews"); %>
+		<h4>SpecObjAll Indices:</h4><% BrowserFunctions.showIndices("specobjall", Request, Response, globals, "Skyserver.Help.Intro.specobjallIndices"); %>
 		</li><p>
 		<li><a href="tabledesc.aspx?name=SpecPhotoAll"><b>SpecPhotoAll</b></a> - The combined spectro and photo
 parameters of an object in SpecObjAll.  This is a precomputed join between the
 PhotoObjAll and SpecObjAll tables.  The photo attibutes included cover about
 the same as in the PhotoTag view.  The table also includes certain
 attributes from the Tile table.
-		<h4>SpecPhotoAll Views:</h4><% BrowserFunctions.showViews(oConn, "specphotoall", Request, Response, globals); %>
-		<h4>SpecPhotoAll Indices:</h4><% BrowserFunctions.showIndices(oConn, "specphotoall", Request, Response, globals); %>
+		<h4>SpecPhotoAll Views:</h4><% BrowserFunctions.showViews("specphotoall", Request, Response, globals, "Skyserver.Help.Intro.specphotoallViews"); %>
+		<h4>SpecPhotoAll Indices:</h4><% BrowserFunctions.showIndices("specphotoall", Request, Response, globals, "Skyserver.Help.Intro.specphotoallIndices"); %>
 		</li><p>
 
 		<li><a href="tabledesc.aspx?name=sdssTileAll"><b>sdssTileAll</b></a> - Contains information about individual
 <a href="<%=globals.SdssUrl%>help/glossary.php#tile">tiles<img src="../../images/offsite.png" alt=" (offsite)" /></a> on the sky.
-		<h4>sdssTileAll Views:</h4><% BrowserFunctions.showViews(oConn, "sdsstileall", Request, Response, globals); %>
-		<h4>sdssTileAll Indices:</h4><% BrowserFunctions.showIndices(oConn, "sdsstileall", Request, Response, globals); %>
+		<h4>sdssTileAll Views:</h4><% BrowserFunctions.showViews("sdsstileall", Request, Response, globals, "Skyserver.Help.Intro.sdsstileallViews"); %>
+		<h4>sdssTileAll Indices:</h4><% BrowserFunctions.showIndices("sdsstileall", Request, Response, globals, "Skyserver.Help.Intro.sdsstileallIndices"); %>
 		</li><p>
 		<li><a href="tabledesc.aspx?name=sdssTiledTargetAll"><b>sdssTiledTargetAll</b></a> - This table stores information that
 keeps track of why a <a href="<%=globals.SdssUrl%>help/glossary.php#target">target<img src="../../images/offsite.png" alt=" (offsite)" /></a> 
             was assigned to a <a href="<%=globals.SdssUrl%>help/glossary.php#tile">tile<img src="../../images/offsite.png" alt=" (offsite)" /></a>.
-		<h4>sdssTiledTargetAll Views:</h4><% BrowserFunctions.showViews(oConn, "sdsstiledtargetall", Request, Response, globals); %>
-		<h4>sdssTiledTargetAll Indices:</h4><% BrowserFunctions.showIndices(oConn, "sdsstiledtargetall", Request, Response, globals); %>
+		<h4>sdssTiledTargetAll Views:</h4><% BrowserFunctions.showViews("sdsstiledtargetall", Request, Response, globals, "Skyserver.Help.Intro.sdsstiledtargetallViews"); %>
+		<h4>sdssTiledTargetAll Indices:</h4><% BrowserFunctions.showIndices("sdsstiledtargetall", Request, Response, globals, "Skyserver.Help.Intro.sdsstiledtargetallIndices"); %>
 		</li><p>
 		<li><a href="tabledesc.aspx?name=sdssTilingGeometry"><b>sdssTilingGeometry</b></a> - This table contains geometrical
 information about tiling regions, including tiling boundaries.  The
 TileBoundary view serves up the boundaries.
-		<h4>sdssTilingGeometry Views:</h4><% BrowserFunctions.showViews(oConn, "sdsstilinggeometry", Request, Response, globals); %>
-		<h4>sdssTilingGeometry Indices:</h4><% BrowserFunctions.showIndices(oConn, "sdsstilinggeometry", Request, Response, globals); %>
+		<h4>sdssTilingGeometry Views:</h4><% BrowserFunctions.showViews("sdsstilinggeometry", Request, Response, globals, "Skyserver.Help.Intro.sdsstilinggeometryViews"); %>
+		<h4>sdssTilingGeometry Indices:</h4><% BrowserFunctions.showIndices("sdsstilinggeometry", Request, Response, globals, "Skyserver.Help.Intro.sdsstilinggeometryIndices"); %>
 		</li><p>
 		<li><a href="tabledesc.aspx?name=sdssTilingRun"><b>sdssTilingRun</b></a> - Contains basic information about each
 run of the tiling software.
@@ -254,21 +250,21 @@ to a Target in a run of tiling software.
 		the spectral index measurements, general information
 		about the spectroscopic analysis and the emission line
 		measurements from the MPA-JHU spectroscopic catalog.
-		<h4>galSpecExtra Indices:</h4><% BrowserFunctions.showIndices(oConn, "galspecextra", Request, Response, globals); %>
-		<h4>galSpecIndx Indices:</h4><% BrowserFunctions.showIndices(oConn, "galspeciindx", Request, Response, globals); %>
-		<h4>galSpecInfo Indices:</h4><% BrowserFunctions.showIndices(oConn, "galspecinfo", Request, Response, globals); %>
-		<h4>galSpecLine Indices:</h4><% BrowserFunctions.showIndices(oConn, "galspecline", Request, Response, globals); %>
+		<h4>galSpecExtra Indices:</h4><% BrowserFunctions.showIndices("galspecextra", Request, Response, globals, "Skyserver.Help.Intro.galspecextraIndices"); %>
+		<h4>galSpecIndx Indices:</h4><% BrowserFunctions.showIndices("galspeciindx", Request, Response, globals, "Skyserver.Help.Intro.galspeciindxIndices"); %>
+		<h4>galSpecInfo Indices:</h4><% BrowserFunctions.showIndices("galspecinfo", Request, Response, globals, "Skyserver.Help.Intro.galspecinfoIndices"); %>
+		<h4>galSpecLine Indices:</h4><% BrowserFunctions.showIndices("galspecline", Request, Response, globals, "Skyserver.Help.Intro.galspeclineIndices"); %>
 		</li><p>
 		<li><a href="tabledesc.aspx?name=sppLines"><b>sppLines</b></a>
 		and <a href="tabledesc.aspx?name=sppParams"><b>sppParams</b></a>-
 		These tables contain the line and paramater measurements
 		from the Stellar Parameter Pipeline.
-		<h4>sppLines Indices:</h4><% BrowserFunctions.showIndices(oConn, "sppLines", Request, Response, globals); %>
-		<h4>sppParams Indices:</h4><% BrowserFunctions.showIndices(oConn, "sppParams", Request, Response, globals); %>
+		<h4>sppLines Indices:</h4><% BrowserFunctions.showIndices("sppLines", Request, Response, globals, "Skyserver.Help.Intro.sppLinesIndices"); %>
+		<h4>sppParams Indices:</h4><% BrowserFunctions.showIndices("sppParams", Request, Response, globals, "Skyserver.Help.Intro.sppParamsIndices"); %>
 		</li><p>
 	</ol>
 
-<%  } %>
+
 <p><a name="zootables"></a>
 <h3>Galaxy Zoo Tables <a href="#top"><img src="images/top.gif"
 ALT="Back to Top" NOSAVE BORDER="0" HEIGHT="25" ALIGN="TOP"></a> </h3>

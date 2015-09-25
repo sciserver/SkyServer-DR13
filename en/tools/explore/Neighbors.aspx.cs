@@ -31,10 +31,13 @@ namespace SkyServer.Tools.Explore
 
         private void executeQuery() {
             string cmd = ExplorerQueries.neighbors1.Replace("@objId", objId);
-            ds_neighbor1 = runQuery.RunCasjobs(cmd,"Explore: Neighbors");
+            //ds_neighbor1 = runQuery.RunCasjobs(cmd,"Explore: Neighbors");
+            string ClientIP = runQuery.GetClientIP();
+            ds_neighbor1 = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.Neighbors.neighbors1");
 
             cmd = ExplorerQueries.neighbors2.Replace("@objId", objId);
-            ds_neighbor2 = runQuery.RunCasjobs(cmd,"Explore: Neighbors");
+            //ds_neighbor2 = runQuery.RunCasjobs(cmd,"Explore: Neighbors");
+            ds_neighbor2 = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.Neighbors.neighbors2");
 
         }
     }

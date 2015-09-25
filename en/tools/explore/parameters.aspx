@@ -20,8 +20,10 @@
                 <h3><a href="<%=globals.SdssUrl%>spectro/sspp.php" target='_blank'>SEGUE Stellar Parameters Pipeline (SSPP) <img src='../../images/new_window_black.png' alt=' (new window)' /></a></h3>
                 <%
                     RunQuery runQuery = new RunQuery();
+                    string ClientIP = runQuery.GetClientIP();
                     
-                    DataSet ds = runQuery.RunCasjobs(fitsParametersSppParams, "Explore Tool: Parameters Page");
+                    //DataSet ds = runQuery.RunCasjobs(fitsParametersSppParams, "Explore Tool: Parameters Page");
+                    DataSet ds = runQuery.RunDatabaseSearch(fitsParametersSppParams,globals.ContentDataset, ClientIP, "Skyserver.Explore.Parameters.fitParSppParams");
                     master.showVTable(ds, 300);
                 %>
                  <h3><a href="<%=globals.SdssUrl%>irspec/aspcap.php" target='_blank'>APOGEE Stellar Parameters and Chemical Abundances Pipeline (ASPCAP) <img src='../../images/new_window_black.png' alt=' (new window)' /></a></h3>
@@ -31,53 +33,62 @@
                  <table><tr><td>
                  <h4>Star Forming Model</h4>
                 <%
-                    ds = runQuery.RunCasjobs(fitsParametersStellarMassStarformingPort, "Explore Tool: Parameters Page");
-                     master.showVTable(ds, 250);
+                    //ds = runQuery.RunCasjobs(fitsParametersStellarMassStarformingPort, "Explore Tool: Parameters Page");
+                    ds = runQuery.RunDatabaseSearch(fitsParametersStellarMassStarformingPort, globals.ContentDataset, ClientIP, "Skyserver.Explore.Parameters.fitParStellMassStarformPort");
+                    master.showVTable(ds, 250);
                 %>     
                   </td><td></td><td>
                   <h4>Passive Model</h4>
                 <%
-                    ds = runQuery.RunCasjobs(fitsParameterSstellarMassPassivePort, "Explore Tool: Parameters Page");
-                     master.showVTable(ds, 250);
+                    //ds = runQuery.RunCasjobs(fitsParameterSstellarMassPassivePort, "Explore Tool: Parameters Page");
+                    ds = runQuery.RunDatabaseSearch(fitsParameterSstellarMassPassivePort, globals.ContentDataset, ClientIP, "Skyserver.Explore.Parameters.fitParStellMassPassivePort");
+                    master.showVTable(ds, 250);
                 %>     
                   </td></tr>
                  </table>             
                 <h3><a href="<%=globals.SdssUrl%>spectro/galaxy_portsmouth.php#kinematics" target='_blank'>Stellar Kinematics: Portsmouth group (Emission Line Fluxes) <img src='../../images/new_window_black.png' alt=' (new window)' /></a></h3>
                 <%
-                    ds = runQuery.RunCasjobs(fitsParametersEmissionLinesPort, "Explore Tool: Parameters Page");
+                    //ds = runQuery.RunCasjobs(fitsParametersEmissionLinesPort, "Explore Tool: Parameters Page");
+                    ds = runQuery.RunDatabaseSearch(fitsParametersEmissionLinesPort, globals.ContentDataset, ClientIP, "Skyserver.Explore.Parameters.fitParEmissionLinesPort");
                     master.showHTable(ds,600,"");
                 %>
                 <h3><a href="<%=globals.SdssUrl%>spectro/galaxy_wisconsin.php" target='_blank'>Wisconsin group (Principal Component Analysis) <img src='../../images/new_window_black.png' alt=' (new window)' /></a></h3>
                 <h4>Assuming model spectra from Bruzal &amp; Charlot (2003)</h4>
                 <%
-                    ds = runQuery.RunCasjobs(fitsParametersStellarMassPCAWiscBC03, "Explore Tool: Parameters Page");
+                    //ds = runQuery.RunCasjobs(fitsParametersStellarMassPCAWiscBC03, "Explore Tool: Parameters Page");
+                    ds = runQuery.RunDatabaseSearch(fitsParametersStellarMassPCAWiscBC03, globals.ContentDataset, ClientIP, "Skyserver.Explore.Parameters.fitParStelMassPCAWiscBC03");
                     master.showHTable(ds, 600, "SpecObjAll");
                 %>
                 <h4>Assuming model spectra from Maraston &amp; Str&ouml;mback (2011)</h4>
                 <%
-                    ds = runQuery.RunCasjobs(fitsParametersstellarMassPCAWiscM11, "Explore Tool: Parameters Page");
+                    //ds = runQuery.RunCasjobs(fitsParametersstellarMassPCAWiscM11, "Explore Tool: Parameters Page");
+                    ds = runQuery.RunDatabaseSearch(fitsParametersstellarMassPCAWiscM11, globals.ContentDataset, ClientIP, "Skyserver.Explore.Parameters.fitParStelMassPCAWiscM11");
                     master.showHTable(ds,600,"SpecObjAll");
                  %>
                 <h3><a href="<%=globals.SdssUrl%>spectro/galaxy_granada.php" target='_blank'>Granada group (Flexible Stellar Population Synthesis) <img src='../../images/new_window_black.png' alt=' (new window)' /></a></h3>
                 <h4>Early Galaxy Formation,Dust Attenuation</h4>
                 <%
-                    ds = runQuery.RunCasjobs(fitsParametersStellarmassFSPSGranEarlyDust, "Explore Tool: Parameters Page");
-                     master.showHTable(ds,600,"DUST");
+                    //ds = runQuery.RunCasjobs(fitsParametersStellarmassFSPSGranEarlyDust, "Explore Tool: Parameters Page");
+                    ds = runQuery.RunDatabaseSearch(fitsParametersStellarmassFSPSGranEarlyDust, globals.ContentDataset, ClientIP, "Skyserver.Explore.Parameters.fitParStelMassFSPSGranEarlyDust");
+                    master.showHTable(ds,600,"DUST");
                  %>
                  <h4>Early Galaxy Formation,No Dust Attenuation</h4>
                  <%
-                     ds = runQuery.RunCasjobs(fitsParametersStellarmassFSPSGranEarlyNoDust, "Explore Tool: Parameters Page");
+                     //ds = runQuery.RunCasjobs(fitsParametersStellarmassFSPSGranEarlyNoDust, "Explore Tool: Parameters Page");
+                     ds = runQuery.RunDatabaseSearch(fitsParametersStellarmassFSPSGranEarlyNoDust, globals.ContentDataset, ClientIP, "Skyserver.Explore.Parameters.fitParStelMassFSPSGranEarlyNoDust");
                      master.showHTable(ds, 600, "DUST");
                  %>
                  <h4>Wide Range of Formation Times, Dust Attenuation</h4>
                  <%
-                     ds = runQuery.RunCasjobs(fitsParametersStellarmassFSPSGranWideDust, "Explore Tool: Parameters Page");
-                      master.showHTable(ds, 600,"DUST");
+                     //ds = runQuery.RunCasjobs(fitsParametersStellarmassFSPSGranWideDust, "Explore Tool: Parameters Page");
+                     ds = runQuery.RunDatabaseSearch(fitsParametersStellarmassFSPSGranWideDust, globals.ContentDataset, ClientIP, "Skyserver.Explore.Parameters.fitParStelMassFSPSGranWideDust");
+                     master.showHTable(ds, 600,"DUST");
                  %>
                  <h4>Wide Range of Formation Times,No Dust Attenuation</h4>
                  <%
-                     ds = runQuery.RunCasjobs(fitsParametersStellarmassFSPSGranWideNoDust, "Explore Tool: Parameters Page");
-                      master.showHTable(ds, 600, "DUST");
+                     //ds = runQuery.RunCasjobs(fitsParametersStellarmassFSPSGranWideNoDust, "Explore Tool: Parameters Page");
+                     ds = runQuery.RunDatabaseSearch(fitsParametersStellarmassFSPSGranWideNoDust, globals.ContentDataset, ClientIP, "Skyserver.Explore.Parameters.fitParStelMassFSPSGranWideNoDust");
+                     master.showHTable(ds, 600, "DUST");
                  %>                            
             </td>
          </tr>    

@@ -72,254 +72,132 @@ namespace SkyServer.Tools.Explore
                     token = cookie["token"];
 
             runQuery = new RunQuery(token);
-            using (this.oConn = new SqlConnection(globals.ConnectionString))
-            {
-                this.oConn.Open();
-                if (master.objId != null && !master.objId.Equals(""))
-                    execQuery();
-                this.oConn.Close();
-            }
+            if (master.objId != null && !master.objId.Equals(""))
+                execQuery();
         }
 
         private void execQuery() 
-        { 
-
-            using (SqlCommand oCmd = oConn.CreateCommand())
+        {
+            //USNO Query
+            string cmd = ExplorerQueries.USNO.Replace("@objId", objId);
+            //DataSet ds = runQuery.RunCasjobs(cmd,"Explore: CrossId");
+            string ClientIP = runQuery.GetClientIP();
+            DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.CrossIdControls.USNO");
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
-
-                //USNO Query
-                string cmd = ExplorerQueries.USNO.Replace("@objId", objId); 
-                oCmd.CommandText = cmd;
-                using (SqlDataReader reader = oCmd.ExecuteReader())
+                if (reader.Read())
                 {
-                    if (reader.Read())
+                    if (reader.HasRows)
                     {
-                        if (reader.HasRows)
-                        {
-                            isUSNO = true;
-                            usno = reader.GetString(0);
-                            properMotion = reader.GetString(1);
-                            angle = reader.GetFloat(2);
-                        }
+                        isUSNO = true;
+                        usno = reader.GetString(0);
+                        properMotion = reader.GetString(1);
+                        angle = reader.GetFloat(2);
                     }
                 }
-
-                //FIRST Query   
-                cmd = ExplorerQueries.FIRST.Replace("@objId", objId);
-                oCmd.CommandText = cmd;
-                using (SqlDataReader reader = oCmd.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        if (reader.HasRows)
-                        {
-                            isFIRST = true;
-                            first = reader.GetString(0);
-                            peakflux = reader.GetString(1);
-                            major = reader.GetFloat(2);
-                            minor = reader.GetFloat(3);
-                        }
-                    }
-                }
-
-                //ROSAT Query
-                cmd = ExplorerQueries.ROSAT.Replace("@objId", objId);
-                oCmd.CommandText = cmd;
-                using (SqlDataReader reader = oCmd.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        if (reader.HasRows)
-                        {
-                            isROSAT = true;
-                            rosat = reader.GetString(0);
-                            cps = reader.GetFloat(1);
-                            hr1 = reader.GetFloat(2);
-                            hr2 = reader.GetFloat(3);
-                            ext = reader.GetFloat(4);
-                        }
-                    }
-                }
-
-
-                //RC3
-                cmd = ExplorerQueries.RC3.Replace("@objId", objId);
-                oCmd.CommandText = cmd;
-                using (SqlDataReader reader = oCmd.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        if (reader.HasRows)
-                        {
-                            isRC3 = true;
-                            rc3 = reader.GetString(0);
-                            hubletype = reader.GetString(1);
-                            magnitude = reader.GetString(2);
-                            hydrogenIndex = reader.GetFloat(3);
-                        }
-                    }
-                }
-
-                //WISE
-                linkQuery = ExplorerQueries.wiseLinkCrossId.Replace("@objId", objId);
-                cmd = ExplorerQueries.WISE.Replace("@objId", objId);
-                oCmd.CommandText = cmd;
-                using (SqlDataReader reader = oCmd.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        if (reader.HasRows)
-                        {
-                            isWISE = true;
-                            wise = reader.GetString(0);
-                            wmag1 = reader.GetFloat(1);
-                            wmag2 = reader.GetFloat(2);
-                            wmag3 = reader.GetFloat(3);
-                            wmag4 = reader.GetFloat(4);
-                            wiselink = reader.GetString(5);
-                        }
-                    }
-                }
-
-
-                //TWOMASS
-                cmd = ExplorerQueries.TWOMASS.Replace("@objId", objId);
-                oCmd.CommandText = cmd;
-                using (SqlDataReader reader = oCmd.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        if (reader.HasRows)
-                        {
-                            is2MASS = true;
-                            twomass = reader.GetString(0);
-                            j = reader.GetFloat(1);
-                            h = reader.GetFloat(2);
-                            k = reader.GetFloat(3);
-                            phQual = reader.GetString(4);
-                        }
-                    }
-                }
-
-
             }
 
-            /*            
-                        //USNO Query
-                        string cmd = ExplorerQueries.USNO.Replace("@objId",objId);
-                         DataSet ds = runQuery.RunCasjobs(cmd,"Explore: CrossId");
-                         using (DataTableReader reader = ds.Tables[0].CreateDataReader())
-                         {
-                             if (reader.Read())
-                             {
-                                 if (reader.HasRows)
-                                 {
-                                    isUSNO = true;
-                                    usno = reader.GetString(0);
-                                    properMotion = reader.GetString(1);
-                                    angle = reader.GetFloat(2);
-                                 }
-                             }
-                         }
+            //FIRST Query   
+            cmd = ExplorerQueries.FIRST.Replace("@objId", objId);
+            //ds  = runQuery.RunCasjobs(cmd,"Explore: CrossId");
+            ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.CrossIdControls.FIRST");
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            {
+                if (reader.Read())
+                {
+                    if (reader.HasRows)
+                    {
+                        isFIRST = true;
+                        first = reader.GetString(0);
+                        peakflux = reader.GetString(1);
+                        major = reader.GetFloat(2);
+                        minor = reader.GetFloat(3);
+                    }
+                }
+            }
 
-                         //FIRST Query   
-                         cmd = ExplorerQueries.FIRST.Replace("@objId", objId);
-                         ds  = runQuery.RunCasjobs(cmd,"Explore: CrossId");
-                         using (DataTableReader reader = ds.Tables[0].CreateDataReader())
-                         {
-                             if (reader.Read())
-                             {
-                                 if (reader.HasRows)
-                                 {
-                                    isFIRST = true;
-                                    first = reader.GetString(0);
-                                    peakflux = reader.GetString(1);
-                                    major = reader.GetFloat(2);
-                                    minor = reader.GetFloat(3);
-                                 }
-                             }
-                         }
+            //ROSAT Query
+            cmd = ExplorerQueries.ROSAT.Replace("@objId", objId);
+            //ds  = runQuery.RunCasjobs(cmd,"Explore: CrossId");
+            ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.CrossIdControls.ROSAT");
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            {
+                if (reader.Read())
+                {
+                    if (reader.HasRows)
+                    {
+                        isROSAT = true;
+                        rosat = reader.GetString(0);
+                        cps = reader.GetFloat(1);
+                        hr1 = reader.GetFloat(2);
+                        hr2 = reader.GetFloat(3);
+                        ext = reader.GetFloat(4);
+                    }
+                }
+            }
 
-                         //ROSAT Query
-                         cmd = ExplorerQueries.ROSAT.Replace("@objId", objId);
-                         ds  = runQuery.RunCasjobs(cmd,"Explore: CrossId");
-                         using (DataTableReader reader = ds.Tables[0].CreateDataReader())
-                         {
-                             if (reader.Read())
-                             {
-                                 if (reader.HasRows)
-                                 {
-                                     isROSAT = true;
-                                     rosat = reader.GetString(0);
-                                     cps = reader.GetFloat(1);
-                                     hr1 = reader.GetFloat(2);
-                                     hr2 = reader.GetFloat(3);
-                                     ext = reader.GetFloat(4);
-                                 }
-                             }
-                         }
+            //RC3
+            cmd = ExplorerQueries.RC3.Replace("@objId", objId);
+            //ds  = runQuery.RunCasjobs(cmd,"Explore: CrossId");
+            ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.CrossIdControls.RC3");
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            {
+                if (reader.Read())
+                {
+                    if (reader.HasRows)
+                    {
+                        isRC3 = true;
+                        rc3 = reader.GetString(0);
+                        hubletype = reader.GetString(1);
+                        magnitude = reader.GetString(2);
+                        hydrogenIndex = reader.GetFloat(3);
+                    }
+                }
+            }
 
-                         //RC3
-                         cmd = ExplorerQueries.RC3.Replace("@objId", objId);
-                         ds  = runQuery.RunCasjobs(cmd,"Explore: CrossId");
-                         using (DataTableReader reader = ds.Tables[0].CreateDataReader())
-                         {
-                             if (reader.Read())
-                             {
-                                 if (reader.HasRows)
-                                 {
-                                     isRC3 = true;
-                                     rc3 = reader.GetString(0);
-                                     hubletype = reader.GetString(1);
-                                     magnitude = reader.GetString(2);
-                                     hydrogenIndex = reader.GetFloat(3);
-                                 }
-                             }
-                         }
+            //WISE
+            linkQuery = ExplorerQueries.wiseLinkCrossId.Replace("@objId", objId);
 
-                         //WISE
-                         linkQuery = ExplorerQueries.wiseLinkCrossId.Replace("@objId", objId);
-            
-             
-                         cmd = ExplorerQueries.WISE.Replace("@objId", objId);
-                         ds  = runQuery.RunCasjobs(cmd,"Explore: CrossId");
-                         using (DataTableReader reader = ds.Tables[0].CreateDataReader())
-                         {
-                             if (reader.Read())
-                             {
-                                 if (reader.HasRows)
-                                 {
-                                     isWISE = true;
-                                     wise = reader.GetString(0);
-                                     wmag1 = reader.GetFloat(1);
-                                     wmag2 = reader.GetFloat(2);
-                                     wmag3 = reader.GetFloat(3);
-                                     wmag4 = reader.GetFloat(4);
-                                     wiselink = reader.GetString(5);
-                                 }
-                             }
-                         }
 
-                         //TWOMASS
-                         cmd = ExplorerQueries.TWOMASS.Replace("@objId", objId);
-                         ds = runQuery.RunCasjobs(cmd,"Explore: CrossId");
-                         using (DataTableReader reader = ds.Tables[0].CreateDataReader())
-                         {
-                             if (reader.Read())
-                             {
-                                 if (reader.HasRows)
-                                 {
-                                     is2MASS = true;
-                                     twomass = reader.GetString(0);
-                                     j = reader.GetFloat(1);
-                                     h = reader.GetFloat(2);
-                                     k = reader.GetFloat(3);
-                                     phQual = reader.GetString(4);
-                                 }
-                             }
-                         }
-            */
+            cmd = ExplorerQueries.WISE.Replace("@objId", objId);
+            ds  = runQuery.RunCasjobs(cmd,"Skyserver.Explore.CrossIdControls.WISE");
+            //ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.CrossIdControls.WISE");  
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            {
+                if (reader.Read())
+                {
+                    if (reader.HasRows)
+                    {
+                        isWISE = true;
+                        wise = reader.GetString(0);
+                        wmag1 = reader.GetFloat(1);
+                        wmag2 = reader.GetFloat(2);
+                        wmag3 = reader.GetFloat(3);
+                        wmag4 = reader.GetFloat(4);
+                        wiselink = reader.GetString(5);
+                    }
+                }
+            }
 
+            //TWOMASS
+            cmd = ExplorerQueries.TWOMASS.Replace("@objId", objId);
+            //ds = runQuery.RunCasjobs(cmd,"Explore: CrossId");
+            ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.CrossIdControls.TWOMASS");
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            {
+                if (reader.Read())
+                {
+                    if (reader.HasRows)
+                    {
+                        is2MASS = true;
+                        twomass = reader.GetString(0);
+                        j = reader.GetFloat(1);
+                        h = reader.GetFloat(2);
+                        k = reader.GetFloat(3);
+                        phQual = reader.GetString(4);
+                    }
+                }
+            }
         }
     }
 }

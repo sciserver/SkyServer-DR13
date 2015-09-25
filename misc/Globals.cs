@@ -71,6 +71,7 @@ namespace SkyServer
         /// </summary>
         private string skyserverRESTservice;
         private string casjobsRESTapi;
+        private string contentDataset;
         //private string skyServerWSsql;
 
         public string username
@@ -91,6 +92,10 @@ namespace SkyServer
         public string SQLSearchWS
         {
             get { return skyserverRESTservice + "SearchTools/SqlSearch"; }
+        }
+        public string DatabaseSearchWS
+        {
+            get { return skyserverRESTservice + "SearchTools/DatabaseSearch"; }
         }
 
         public string RectangularSearchWS
@@ -437,9 +442,19 @@ namespace SkyServer
         {
             get { return timeoutSkyserverWS; }
         }
+
+        public string ContentDataset
+        {
+            get { return contentDataset; }
+        }
+
+
+
         public Globals()
         {
             var appSettings = System.Web.Configuration.WebConfigurationManager.AppSettings;
+
+            this.contentDataset = "application/x-dataset";// – serialized .NET DataSet
 
             this.releaseNumber = int.Parse(appSettings["releaseNumber"]);
             //this.dbType = appSettings["dbType"];

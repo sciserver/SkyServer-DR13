@@ -74,12 +74,13 @@
 	</td>
 <%
             ResponseREST  rs = new ResponseREST();
+            string ClientIP = rs.GetClientIP();
   
             string cmd = "SELECT [name] FROM DataConstants WHERE field='PrimTarget' ORDER BY value";
             
-            DataSet ds = rs.RunCasjobs(cmd);
+            //DataSet ds = rs.RunCasjobs(cmd);
+            DataSet ds = rs.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.SQS.getPrimTarget");
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
-            
             {
                 if (!reader.HasRows)
                 {
@@ -138,7 +139,8 @@
 <%  
             string cmd2 = "SELECT [name] FROM DataConstants WHERE field='SecTarget' ORDER BY value";
             
-            DataSet ds2 = rs.RunCasjobs(cmd2);
+            //DataSet ds2 = rs.RunCasjobs(cmd2);
+            DataSet ds2 = rs.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.SQS.getSecTarget");
             using (DataTableReader reader = ds2.Tables[0].CreateDataReader())
             {
             

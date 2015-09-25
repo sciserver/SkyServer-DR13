@@ -9,6 +9,7 @@ using System.Data;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using net.ivoa.VOTable;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 
@@ -21,6 +22,7 @@ using System.Threading;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
 using Newtonsoft.Json.Linq;
+using System.Web.UI;
 
 
 namespace SkyServer.Tools.Search
@@ -33,16 +35,26 @@ namespace SkyServer.Tools.Search
         string token = "";
         string requestUrl = "";
         String requestString = "";
+
+        private Globals globals;
+        String WSrequestUri = "";
+
         public void ProcessRequest()
         {
-
         }
-        public ResponseREST() { }
+        public ResponseREST()
+        {
+            globals = new Globals();
+            WSrequestUri = globals.DatabaseSearchWS;
+        }
         /// <summary>
         /// This method is used to pass all the requests and run rest web service
         /// </summary>
         public void ProcessRequestREST(HttpRequest Request, HttpResponse Response)
         {
+            this.globals = new Globals();
+            WSrequestUri = this.globals.DatabaseSearchWS;
+
             httpResponse = Response;
             
             cookie = Request.Cookies["Keystone"];
@@ -145,6 +157,8 @@ namespace SkyServer.Tools.Search
 
         private void runQuery(String serviceUrl, String requestString, string uploaded, string returnType)
         {
+
+
             Globals globals = new Globals();
             /// Once the authenticated skyserver is ready, we can update the code to retrieve token          
             HttpClient client = new HttpClient();
@@ -199,7 +213,7 @@ namespace SkyServer.Tools.Search
             
         }
 
-        public void setContentType(string format) { 
+        public void setContentType(string format) {
             format  = format.ToLower();
             switch(format){
                 case "csv"    :  httpResponse.ContentType = "text/plain"; break;
@@ -326,6 +340,50 @@ namespace SkyServer.Tools.Search
         // this code can be redesigned and thought after April 15 2015
 
 
+        public string GetClientIP()
+        {
+            string clientIP = "unknown";
+            try
+            {
+                if (HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"] != null)
+                {
+                    clientIP = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+                }
+                else
+                {
+                    if (HttpContext.Current.Request.UserHostAddress != null)
+                    {
+                        clientIP = HttpContext.Current.Request.UserHostAddress;
+                    }
+                    else
+                    {
+                        clientIP = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+                    }
+                }
+                if (clientIP == "")
+                    clientIP = "unspecified";
+            }
+            catch { }
+            return clientIP;
+        }
+
+
+        public DataSet RunDatabaseSearch(string command, string format, string ClientIP, string TaskName)
+        {
+
+            WebRequest req = WebRequest.Create(WSrequestUri + "?cmd=" + Uri.EscapeDataString(command) + "&format=" + format + "&clientIP=" + ClientIP + "&task=" + TaskName);//select%20top%2010%20ra,dec%20from%20Frame&format=csv"
+            WebResponse resp = req.GetResponse();
+            BinaryFormatter fmt = new BinaryFormatter();
+            DataSet ds = new DataSet();
+            ds = (DataSet)fmt.Deserialize(resp.GetResponseStream());
+            return ds;
+            //Stream s = resp.GetResponseStream();
+            //StreamReader sr = new StreamReader(s, Encoding.ASCII);
+            //string doc = sr.ReadToEnd();
+        }
+
+
+
         public DataSet RunCasjobs(string command, string taskname)
         {
             // throw new IndexOutOfRangeException("There is an invalid argument");
@@ -423,13 +481,14 @@ namespace SkyServer.Tools.Search
         /// this is a hack  for some of QS_parameter functions
         /// </summary>
 
-        public void showImgParams(string type, HttpResponse response)
+        public void showImgParams(string type, HttpResponse response, string Task)
         {
 
             string cmd = "SELECT [name] FROM DBColumns WHERE tableName='PhotoObjAll'";
 
             response.Write("<td class='q' width='100'>");
-            DataSet ds = RunCasjobs(cmd, "SkyServer:showImgParams");
+            //DataSet ds = RunCasjobs(cmd, "SkyServer:showImgParams");
+            DataSet ds = RunDatabaseSearch(cmd, globals.ContentDataset, GetClientIP(), Task);
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {   
                 if (!reader.HasRows)
@@ -472,11 +531,12 @@ namespace SkyServer.Tools.Search
 
         }
 
-        public  void showSpecParams( string type, HttpResponse response)
+        public void showSpecParams(string type, HttpResponse response, string Task)
         {
             
              string cmd = "SELECT [name] FROM DBColumns WHERE tableName='SpecObjAll'";
-             DataSet ds = RunCasjobs(cmd,"SkyServer:showSpecParams");
+             //DataSet ds = RunCasjobs(cmd,"SkyServer:showSpecParams");
+             DataSet ds = RunDatabaseSearch(cmd, globals.ContentDataset, GetClientIP(), Task);
              using (DataTableReader reader = ds.Tables[0].CreateDataReader())
              {
                 response.Write("<td class='q' width='100'>");
@@ -509,11 +569,12 @@ namespace SkyServer.Tools.Search
             
         }
 
-        public  void showIRSpecParams( string type, HttpResponse response)
+        public  void showIRSpecParams( string type, HttpResponse response, string Task)
         {            
             //string cmd = "SELECT [name] FROM DBColumns WHERE tableName='apogeeStar'";
             string cmd = "SELECT CASE WHEN [name] = 'file' then '['+[name]+']' else [name] END FROM DBColumns WHERE tableName='apogeeStar'";
-            DataSet ds = RunCasjobs(cmd,"SkyServer:showIRSpecParams");
+            //DataSet ds = RunCasjobs(cmd,"SkyServer:showIRSpecParams");
+            DataSet ds = RunDatabaseSearch(cmd, globals.ContentDataset, GetClientIP(), Task);
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
                
             {

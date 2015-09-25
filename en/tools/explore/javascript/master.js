@@ -168,6 +168,8 @@ function press_ok(kind) {
             window.location = windowPage+'?id=' + f.searchObjID.value;
             break;
         case "radec":
+            setra()
+            setdec()
             window.location = windowPage+'?ra=' + f.searchRA.value + '&dec=' + f.searchDec.value;
             break;
         case "sdss":
@@ -224,4 +226,47 @@ function toggleSearch() {
     }
 }
 
+
+function setra() {
+    var s_ra = String(document.getElementById('searchRA').value);
+    var v;
+    if ($.isNumeric(s_ra)) {
+        v = s_ra;
+        v = v % 360;
+        if (v < 0) v += 360;
+
+        document.getElementById('searchRA').value = v;
+    }
+    return false;
+}
+
+//------------------------------------
+// set and validate the dec value
+//------------------------------------
+function setdec() {
+
+    var s_dec = String(document.getElementById('searchDec').value);
+    var v;
+    if ($.isNumeric(s_dec)) {
+        v = parseFloat(s_dec);
+        if (isNaN(v)) v = 0.0;
+        //if (v<-90) v= -90;
+        //if (v>90) v= 90;
+        var OldRa = parseFloat(document.getElementById('searchRA').value)
+        v = v % 360;					// brings dec within the circle
+        if (v < 0) {
+            v = v + 360     // only allows positive dec values
+        }
+        else if (v > 90 & v < 270) { // if dec is at the other side of the poles
+            document.getElementById('searchRA').value = (OldRa + 180) % 360 // go 1/2 way around the globe
+            v = 180 - v
+        }
+        else if (v >= 270) { // if dec is at this side from the south pole
+            v = v - 360
+        }
+
+        document.getElementById('searchDec').value = v;
+    }
+    return false;
+}
 

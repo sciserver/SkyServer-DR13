@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
+using SkyServer.Tools.Search;
+using System.Data;
 
 namespace SkyServer.Help.Browser
 {
@@ -166,51 +168,50 @@ namespace SkyServer.Help.Browser
     }
 }
 
-        public static void showViews(SqlConnection oConn, string name, HttpRequest Request, HttpResponse Response, Globals globals)
+        public static void showViews(string name, HttpRequest Request, HttpResponse Response, Globals globals, string TaskName)
         {
             string cmd;
 
             cmd = "select distinct v.viewname, o.description, o.[text] from dbviewcols v,";
             cmd += "dbobjects o where v.parent = '" + name + "' and o.[type] = 'V' ";
             cmd += "and v.viewname = o.[name]";
-            using (SqlCommand oCmd = oConn.CreateCommand())
+
+            ResponseREST runQuery = new ResponseREST();
+            string ClientIP = runQuery.GetClientIP();
+            DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, TaskName);
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
-                oCmd.CommandText = cmd;
-                using (SqlDataReader reader = oCmd.ExecuteReader())
+                if (!reader.HasRows)
                 {
-                    if (!reader.HasRows)
-                    {
-                        Response.Write("<dd>None found\n");
-                        return;
-                    }
-
-                    string td, val;
-
-                    Response.Write("<p>\n<TABLE border=0 bgcolor=#888888 cellspacing=3 cellpadding=3>\n");
-                    Response.Write("<tr>");
-                    Response.Write("<td class='h'>View Name</td>");
-                    Response.Write("<td class='h'>Contents</td>");
-                    Response.Write("<td class='h'>Description</td>");
-                    Response.Write("</tr>\n");
-                    td = "<td class='v'>";
-                    while (reader.Read())
-                    {
-                        Response.Write("<tr>");
-                        val = reader.GetSqlValue(0).ToString();
-                        Response.Write(td + val + "</td>\n");
-                        val = reader.GetSqlValue(1).ToString();
-                        Response.Write(td + val + "</td>");
-                        val = reader.GetSqlValue(2).ToString();
-                        Response.Write(td + val + "</td></tr>\n");
-
-                    }
-                    Response.Write("</TABLE>\n");
-
+                    Response.Write("<dd>None found\n");
+                    return;
                 }
+
+                string td, val;
+
+                Response.Write("<p>\n<TABLE border=0 bgcolor=#888888 cellspacing=3 cellpadding=3>\n");
+                Response.Write("<tr>");
+                Response.Write("<td class='h'>View Name</td>");
+                Response.Write("<td class='h'>Contents</td>");
+                Response.Write("<td class='h'>Description</td>");
+                Response.Write("</tr>\n");
+                td = "<td class='v'>";
+                while (reader.Read())
+                {
+                    Response.Write("<tr>");
+                    val = reader.GetValue(0).ToString();
+                    Response.Write(td + val + "</td>\n");
+                    val = reader.GetValue(1).ToString();
+                    Response.Write(td + val + "</td>");
+                    val = reader.GetValue(2).ToString();
+                    Response.Write(td + val + "</td></tr>\n");
+                }
+                Response.Write("</TABLE>\n");
             }
         }
 
-        public static void showIndices(SqlConnection oConn, string name, HttpRequest Request, HttpResponse Response, Globals globals)
+
+        public static void showIndices(string name, HttpRequest Request, HttpResponse Response, Globals globals, string TaskName)
         {
 
             string cmd;
@@ -228,65 +229,66 @@ namespace SkyServer.Help.Browser
             }
             //	oCmd.CommandText = cmd;
             //	var oRs = oCmd.Execute();	
-            using (SqlCommand oCmd = oConn.CreateCommand())
+
+            ResponseREST runQuery = new ResponseREST();
+            string ClientIP = runQuery.GetClientIP();
+            DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, TaskName);
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
-
-                using (SqlDataReader reader = execCmd(oCmd, cmd, Request, Response, globals))
+                if (!reader.HasRows)
                 {
-                    if (!reader.HasRows)
-                    {
-                        Response.Write("<b>No indices defined on this table</b>\n");
-                        return;
-                    }
-
-                    string td, val, icode;
-
-                    Response.Write("<p>\n<TABLE border=0 bgcolor=#888888 ");
-                    if (name == "")
-                    {
-                        Response.Write("width=720 ");
-                    }
-                    Response.Write("cellspacing=3 cellpadding=3>\n");
-                    Response.Write("<tr>");
-                    if (name == "")
-                    {
-                        Response.Write("<td class='h'>Table Name</td>");
-                    }
-                    Response.Write("<td class='h'>Index Type</td>");
-                    Response.Write("<td class='h'>Key or Field List</td>");
-                    Response.Write("</tr>\n");
-                    td = "<td class='v'>";
-                    while (reader.Read())
-                    {
-                        Response.Write("<tr>");
-                        icode = reader.GetSqlValue(1).ToString();
-                        if (name == "")
-                        {
-                            val = reader.GetSqlValue(3).ToString();
-                            Response.Write(td + val + "</td>\n");
-                        }
-                        val = reader.GetSqlValue(2).ToString();
-                        if (icode == "I")
-                        {
-                            Response.Write(td + "covering " + val + "</td>");
-                        }
-                        else
-                        {
-                            Response.Write(td + val + "</td>");
-                        }
-                        if (icode == "F")
-                        {
-                            val = reader.GetSqlValue(5).ToString();
-                        }
-                        else
-                        {
-                            val = reader.GetSqlValue(4).ToString();
-                            val = val.Replace(",", ", ");
-                        }
-                        Response.Write(td + val + "</td></tr>\n");
-                    }
-                    Response.Write("</TABLE>\n");
+                    Response.Write("<b>No indices defined on this table</b>\n");
+                    return;
                 }
+
+                string td, val, icode;
+
+                Response.Write("<p>\n<TABLE border=0 bgcolor=#888888 ");
+                if (name == "")
+                {
+                    Response.Write("width=720 ");
+                }
+                Response.Write("cellspacing=3 cellpadding=3>\n");
+                Response.Write("<tr>");
+                if (name == "")
+                {
+                    Response.Write("<td class='h'>Table Name</td>");
+                }
+                Response.Write("<td class='h'>Index Type</td>");
+                Response.Write("<td class='h'>Key or Field List</td>");
+                Response.Write("</tr>\n");
+                td = "<td class='v'>";
+                while (reader.Read())
+                {
+                    Response.Write("<tr>");
+                    icode = reader.GetValue(1).ToString();
+                    if (name == "")
+                    {
+                        val = reader.GetValue(3).ToString();
+                        Response.Write(td + val + "</td>\n");
+                    }
+                    val = reader.GetValue(2).ToString();
+                    if (icode == "I")
+                    {
+                        Response.Write(td + "covering " + val + "</td>");
+                    }
+                    else
+                    {
+                        Response.Write(td + val + "</td>");
+                    }
+                    if (icode == "F")
+                    {
+                        val = reader.GetValue(5).ToString();
+                    }
+                    else
+                    {
+                        val = reader.GetValue(4).ToString();
+                        val = val.Replace(",", ", ");
+                    }
+                    Response.Write(td + val + "</td></tr>\n");
+                }
+                Response.Write("</TABLE>\n");
+
             }
         }
 

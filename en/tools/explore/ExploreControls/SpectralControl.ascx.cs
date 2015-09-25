@@ -36,7 +36,6 @@ namespace SkyServer.Tools.Explore
         protected long? specObjId;
 
         protected RunQuery runQuery;
-        private SqlConnection oConn = null;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -61,69 +60,18 @@ namespace SkyServer.Tools.Explore
                 specObjId = null;
             }
 
-            using (this.oConn = new SqlConnection(globals.ConnectionString))
-            {
-                this.oConn.Open();
-
-                if (specId != null && !specId.Equals(""))
-                    executeQuery();
-                this.oConn.Close();
-            }
+            if (specId != null && !specId.Equals(""))
+                executeQuery();
 
         }
 
         private void executeQuery()
         {
-            // direct connection with the database:
-            using (SqlCommand oCmd = oConn.CreateCommand())
-            {
-                string cmd = ExplorerQueries.getSpectroQuery.Replace("@objId", objId).Replace("@specId", master.specId.ToString());
-                oCmd.CommandText = cmd;
-                using (SqlDataReader reader = oCmd.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        if (reader.HasRows)
-                        {
-                            plate = reader["plate"] is DBNull ? -99999 : (short)reader["plate"];
 
-                            mjd = reader["mjd"] is DBNull ? -99999 : (int)reader["mjd"];
-
-                            fiberid = reader["fiberid"] is DBNull ? -99999 : (short)reader["fiberid"];
-
-                            instrument = reader["instrument"] is DBNull ? "" : (string)reader["instrument"];
-
-                            objclass = reader["objclass"] is DBNull ? "" : (string)reader["objclass"];
-
-                            redshift_z = reader["redshift_z"] is DBNull ? -999.99 : (float)reader["redshift_z"];
-
-                            redshift_err = reader["redshift_err"] is DBNull ? -999.99 : (float)reader["redshift_err"];
-
-                            redshift_flags = reader["redshift_flags"] is DBNull ? "" : (string)reader["redshift_flags"];
-
-                            survey = reader["survey"] is DBNull ? "" : (string)reader["survey"];
-
-                            programname = reader["programname"] is DBNull ? "" : (string)reader["programname"];
-
-                            primary = reader["primary"] is DBNull ? -99999 : (short)reader["primary"];
-
-                            otherspec = reader["otherspec"] is DBNull ? -99999 : (int)reader["otherspec"];
-
-                            sourcetype = reader["sourcetype"] is DBNull ? "" : (string)reader["sourcetype"];
-
-                            veldisp = reader["veldisp"] is DBNull ? -999.99 : (float)reader["veldisp"];
-
-                            veldisp_err = reader["veldisp_err"] is DBNull ? -999.99 : (float)reader["veldisp_err"];
-
-                            targeting_flags = reader["targeting_flags"] is DBNull ? "" : (string)reader["targeting_flags"];
-                        }
-                    }
-                }
-            }
-
-/*
             string cmd = ExplorerQueries.getSpectroQuery.Replace("@objId", objId).Replace("@specId", master.specId.ToString());
-            DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Spectral");
+            //DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Spectral");
+            string ClientIP = runQuery.GetClientIP();
+            DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.SpectralControl.getSpectroQuery");
 
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
@@ -131,7 +79,7 @@ namespace SkyServer.Tools.Explore
                 {
                     if (reader.HasRows)
                     {
-                        plate = reader["plate"] is DBNull ? -99999 : (short)reader["plate"]; 
+                        plate = reader["plate"] is DBNull ? -99999 : (short)reader["plate"];
 
                         mjd = reader["mjd"] is DBNull ? -99999 : (int)reader["mjd"];
 
@@ -165,7 +113,6 @@ namespace SkyServer.Tools.Explore
                     }
                 }
             }
-*/
         }
     }
 }
