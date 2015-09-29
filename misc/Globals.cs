@@ -24,6 +24,7 @@ namespace SkyServer
         private double visualScale;
         private long exploreDefault;
         private string sdssUrlBase;
+        private string sciserverLink;
         private string siteName;
         private string siteIcon;
         private string logURL;
@@ -220,6 +221,10 @@ namespace SkyServer
         {
             get { return sdssUrlBase; }
         }
+        public string SciServerLink
+        {
+            get { return sciserverLink; }
+        }
 
         public int ReleaseNumber
         {
@@ -356,6 +361,8 @@ namespace SkyServer
             this.visualScale = double.Parse(appSettings["visualScale"]);
             this.exploreDefault = long.Parse(appSettings["exploreDefault"]);
             this.sdssUrlBase = appSettings["sdssUrlBase"];
+            this.sciserverLink = appSettings["sciserverLink"];
+
             this.siteName = appSettings["siteName"];
             this.siteIcon = appSettings["siteIcon"];
             this.logURL = appSettings["logURL"];

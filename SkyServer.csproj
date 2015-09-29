@@ -477,8 +477,6 @@
     <Content Include="en\images\strip.gif" />
     <Content Include="en\images\titlebar.gif" />
     <Content Include="en\images\titlebar1.jpg" />
-    <Content Include="en\images\turbulence2.png" />
-    <Content Include="en\images\turbulence3.png" />
     <Content Include="en\links\Default.aspx" />
     <Content Include="en\links\LinksHome.aspx" />
     <Content Include="en\News.aspx" />
