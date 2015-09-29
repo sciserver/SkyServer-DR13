@@ -39,15 +39,21 @@
 	<div id="public">
 
         <div class="migrationAlert">
-            <p>Big changes are coming! SkyServer will soon become part of the new
-            <a href="http://www.sciserver.org" target="_blank">SciServer</a> collaborative science framework, which we hope
-            will open up broad new capabilities for research and education. The first new feature you'll see here will be 
-            the option to log in to the new framework. Creating a SciServer account is not required - SkyServer will still
-            work for everyone as it always has. But with a SciServer account, you can save all your queries and results
-            in your MyDB personal database in <a href="scidev03.pha.jhu.edu/CasJobs/">CasJobs</a>, and you can use the
-            new file management and scripting features we will roll out in the near future.</p>
-            
-            <p>Please see <a href="comingsoon.aspx">SciServer Update Information</a> for details.</p>
+
+
+
+
+            <p>Within the next few weeks, we will roll out a new collaborative science framework called 
+                <a href="http://www.sciserver.org" target="_blank">SciServer</a>. SciServer will integrate the 
+                current SkyServer and CasJobs systems, as well as add several new features. The main feature is 
+                a Single Sign-On system across all SciServer applications. SkyServer will still support anonymous 
+                access, but if you log in with your new SciServer account, you can save queries and results to 
+                your MyDB personal database in CasJobs. You can also seamlessly access other SciServer services.</p>
+                
+                <p>For more information 
+                on all upcoming new features, please see our 
+                <a href="http://test.sciserver.org/building-blocks/skyserver/">SciServer Update Information</a>.</p>
+
         </div>
 
 

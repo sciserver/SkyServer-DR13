@@ -210,7 +210,7 @@
                 offer for SDSS data, but customized to meet the needs of those fields.</p>
 
             <h3 id="scripting">Scripting and Compute capability</h3>
-    
+   
             <p>SciServer tools offer many flexible ways to find scientific data, but most data processing must 
                 still be done locally. Future relesaes of SciServer will offer the ability to post-process 
                 large datasets so that intermediate steps occur online, with fast processing and enough storage 
@@ -230,18 +230,36 @@
                 with SciServer's Turbulence and Cosmology Simulation datasets, and has also been used as part of a 
                 data processing workshop. An example of the problems that will be enabled can be seen in a use 
                 case from Turbulence Simulation: filtering a large dataset. The figure below shows a schematic 
-                diagram of how the filtering can be done, along with the Python code to perform the filtering. 
+                diagram of how the filtering can be done, along with the Matlab code to perform the filtering. 
                 The code is shown in a SciScript notebook that can be executed online.
             </p>
 
-    <div class="figure" style="float:left;">
-            <img src="images/turbulence_usecase_3_300px.png" alt="diagram of use case with descriptive boxes and connecting lines" />
-            <p class="figure-caption">A schematic of data filtering</p>
-    </div>
-    <div class="figure" style="float:right;">
-            <img src="images/turbulence_usecase_3b_300px.png" alt="Python code shown in an online SciScipt notebook" />
-            <p class="figure-caption">SciScript Python code to filter data</p>
-    </div>
+            <div style="width:300px;float:left;" class="usecase">
+                <h3>Filtering turbulence data</h3>
+                <ol>
+                    <li><p>Log in and get single sign-on token</p></li>
+                    <li><p>Extract 3D velocity field from Turbuelnce database into MyDB</p></li>
+                    <li><p>Execute Gaussian filtering script online using SciScript</p></li>
+                    <li><p>Intermediate results stored in MyScratch database</p></li>
+                    <li><p>Filtered data written to a table in MyDB</p></li>
+                    <li><p>User returns to see results</p></li>
+                </ol>
+            </div>
+            <div class="figure" style="width:300px;float:right;">
+                <img src="images/turbulence2.png" 
+                    alt="A window with Matlab code" 
+                    width="100%" />
+            <p class="figure-caption">A user's Matlab code, to be executed online with SciScript</p>
+            </div>
+
+
+            <div class="figure">
+                <img src="images/turbulence3.png" 
+                    alt="A colored plot of filtered turbulence data. Red shows fast-moving areas and blue shows slow-moving areas" 
+                    width="600px" />
+                <p class="figure-caption">The result of the user's code: velocity data before and after filtering</p>
+            </div>
+
 
             <h2 id="questions" style="clear:both;">Questions?</h2>
 
