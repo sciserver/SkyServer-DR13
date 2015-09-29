@@ -52,8 +52,8 @@
                 
                 <p>For more information 
                 on all upcoming new features, please see our 
-                    <a href="<%=globals.SciServerLink%>building-blocks/skyserver/" target="_blank">SciServer Update Information
-                        <img src="images/new_window.png" alt=" (new window)" /></a>.</p>
+                    <a href="<%=globals.SciServerLink%>building-blocks/updates/" target="_blank">New Features
+                        <img src="images/new_window.png" alt=" (new window)" /></a> section on the SciServer website.</p>
 
         </div>
 
