@@ -33,6 +33,12 @@ function quicklook(id) {
 	w.focus();
 }
 
+function quicklookAPOGEE(id) {
+    var url = "../quicklook/quickobj.aspx?apid=" + id;
+    var w = window.open(url, '_blank');
+    w.focus();
+}
+
 function explore(id) {
 	var url = "../explore/obj.aspx?id="+id;
 	var w = window.open(url,'_blank');
@@ -101,25 +107,22 @@ function recenter(ra_, dec_) {
 	<div id='check' ><img src='images/checkmark.gif' width="12" height="10"></div>
 
 <%
-    using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
-    {
-        oConn.Open();
         if (ra.HasValue)
         {
-            makeTable(oConn);
+            makeTable("Skyserver.chart.ShowNearest.MakeTable");
             if (oRa != "")
             {
                 makeGlass(oRa, oDec);
                 makeLinks();
 
-                long? specObjId = getSpecObjId(oConn, objId);
+                long? specObjId = getSpecObjId(objId, "Skyserver.chart.ShowNearest.getSpecObjId");
                 if (specObjId.HasValue && specObjId != 0)
                 {
-                    makeThumbnail(specObjId??0);
+                    makeThumbnail(specObjId ?? 0);
                 }
             }
         }
-    }
+
 %>
  <!--Iframe for shownearest test-->
 <iframe id="test" name='test' width ="0" height="0" scrolling="no"  src="blank.html"/>	

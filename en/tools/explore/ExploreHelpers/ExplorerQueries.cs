@@ -117,14 +117,14 @@ namespace SkyServer.Tools.Explore
         //AllSpec Queries
         public  static string AllSpec1= @"select s.specObjId, s.plate as plate, s.mjd as MJD, s.fiberID as fiber, 
                             str(t.ra,10,5) as ra, str(t.dec,10,5) as dec, str(s.ra,10,5) as specRa, str(s.dec,10,5) as specDec, s.sciencePrimary, 
-                            str(dbo.fDistanceArcMinEq(t.ra,t.dec,s.ra,s.dec),10,8) as distanceArcMin, s.class as class 
+                            str(dbo.fDistanceArcMinEq(t.ra,t.dec,s.ra,s.dec),10,8) as distanceArcMin, s.class as class  
                             from SpecObjAll s, photoobjall t
                             where t.objid=@objId  and s.bestobjid=t.objid  order by scienceprimary desc, plate, MJD, fiber";
                 
         
         public static string AllSpec2  = @"select s.specObjId, s.plate as plate, s.mjd as MJD, s.fiberID as fiber, str(t.ra,10,5) as ra, str(t.dec,10,5) as dec, 
                             str(s.ra,10,5) as specRa, str(s.dec,10,5) as specDec,  s.sciencePrimary, 
-                            str(dbo.fDistanceArcMinEq(t.ra,t.dec,s.ra,s.dec),10,8) as distanceArcMin, s.class as class 
+                            str(dbo.fDistanceArcMinEq(t.ra,t.dec,s.ra,s.dec),10,8) as distanceArcMin, s.class as class  
                             from SpecObjAll s, photoobjall t 
                             where t.objid=@objId  and s.fluxobjid=t.objid order by  plate, MJD, fiber, 
                             scienceprimary desc, distanceArcMin asc";                
@@ -339,7 +339,7 @@ namespace SkyServer.Tools.Explore
                                hi as 'Neutral Hydrogen Index' from RC3 where objId=@objId";
 
         public static string WISE = @" select 'WISE' as Catalog,w.w1mag,w.w2mag,w.w3mag,w.w4mag,'link' as 'Full WISE data' 
-                            from WISE_xmatch x join WISE_allsky w on x.wise_cntr=w.cntr where x.sdss_objid=@objId";
+                            from WISE_xmatch x join WISE_allsky as w WITH(INDEX(pk_WISE_allsky_cntr)) on x.wise_cntr=w.cntr where x.sdss_objid=@objId";
                        //cmd = cmd.Replace("@wiselink", wiseLinkCrossId);
                
         
@@ -395,7 +395,8 @@ namespace SkyServer.Tools.Explore
         public static string getpmtsFromEq = @" select top 1 cast(p.objId as binary(8)) as objId, cast(p.specObjId as binary(8)) as specObjId 
                             from PhotoTag p, dbo.fGetNearbyObjAllEq(@qra , @qdec , @searchRadius) n
                             where p.objId=n.objId order by n.mode asc, n.distance asc";
-                
+
+        public static string getSkyversion = "select top 1 skyversion from run";
 
         public static string getpmtsFromSpecWithApogeeId= @" select st.apstar_id, st.ra, st.dec
                                                             from apogeeStar st
@@ -420,7 +421,7 @@ namespace SkyServer.Tools.Explore
                      where p.objId=dbo.fObjId(@objid)";
 
 
-        public static string getpmtsFrom5PartSDSS = @"declare @skyversion int;select top 1 @skyversion=skyversion from run;select p.ra, p.dec, p.run, p.rerun, p.camcol, p.field,
+        public static string getpmtsFrom5PartSDSS = @"select p.ra, p.dec, p.run, p.rerun, p.camcol, p.field,
                      cast(p.fieldId as binary(8)) as fieldId,
                      cast(s.specobjid as binary(8)) as specObjId,
                      cast(p.objId as binary(8)) as objId 

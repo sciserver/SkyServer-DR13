@@ -68,10 +68,7 @@ Useful spectroscopy parameter combinations:
 <p>
 <a href="http://www.sdss.org/<%=globals.Release.ToLower()%>/dm/flatFiles/spSpec.html">Individual spectroscopy parameters (see also the spSpec Data Model):</a><br>
 <%
-  using (System.Data.SqlClient.SqlConnection oConn = new System.Data.SqlClient.SqlConnection(globals.ConnectionString))
-  {
-    oConn.Open();
-    showTable( oConn, "SpecObj");
+    showTable("SpecObj", "Skyserver.help.QS_UserGuide.getSpeObj");
 %>
 
 <p>
@@ -121,7 +118,7 @@ designation</a> for the object, in the format:<dd> SDSS JHHMMSS.ss+DDMMSS.s.<br>
 <a href="http://www.sdss.org/<%=globals.Release.ToLower()%>/dm/flatFiles/tsObj.html"> Individual imaging parameters (see also the tsObj Data Model):</a>
 
 <%
-    showTable(oConn, "PhotoObj");
+    showTable("PhotoObj", "Skyserver.help.QS_UserGuide.getPhotoObj");
 
     Response.Write("<hr><p><a name= \"SAS\"> <h3> Getting FITS files from the SAS (Science Archive Server) </h3> </a> \n");
     Response.Write("<p>\n");
@@ -259,7 +256,7 @@ you want returned from your query?
         <p>
 The options are:
 <%
-    showEnumQS(oConn, "class");
+    showEnumQS("class", "Skyserver.help.QS_UserGuide.getClass");
 %>
 
         <hr>
@@ -283,7 +280,7 @@ then the <u>bit-wise AND</u> of all those bits is computed and it must be <u>equ
         <p>
             The bits are defined as:
 <%
-    showEnumQS(oConn, "PrimTarget");
+    showEnumQS("PrimTarget", "Skyserver.help.QS_UserGuide.getPrimTarget");
 %>
 
         <hr>
@@ -307,7 +304,7 @@ then the <u>bit-wise AND</u> of all those bits is computed and it must be <u>equ
         <p>
             The bits are defined as:
 <%
-    showEnumQS(oConn, "SecTarget");
+    showEnumQS("SecTarget", "Skyserver.help.QS_UserGuide.getSectarget");
 %>
 
 
@@ -434,8 +431,8 @@ it must be <u>equal to 0</u>.
         <p>
 The object photo flags are:<br>
 <%
-    showEnumQS(oConn, "PhotoFlags");
-  }
+    showEnumQS("PhotoFlags", "Skyserver.help.QS_UserGuide.getPhotoFlags");
+  
 %>
 
   </div>

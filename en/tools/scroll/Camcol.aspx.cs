@@ -27,9 +27,9 @@ namespace SkyServer.Tools.Scroll
         protected void Page_Load(object sender, EventArgs e)
         {
             globals = (Globals)Application[Globals.PROPERTY_NAME];
-            run = int.Parse(Request.QueryString["R"]);
-            camcol = int.Parse(Request.QueryString["C"]);
-            zoom = int.Parse(Request.QueryString["Z"]);
+            run = Request.QueryString["R"] == null ? 5052 : int.Parse(Request.QueryString["R"]);
+            camcol = Request.QueryString["C"] == null ? 4 : int.Parse(Request.QueryString["C"]);
+            zoom = Request.QueryString["Z"] == null ? 50 : int.Parse(Request.QueryString["Z"]);
 
             url = ResolveClientUrl("~/en");
             imgurl = url + "/get/FrameByRCFZ.ashx?";
@@ -41,7 +41,7 @@ namespace SkyServer.Tools.Scroll
             else if (zoom == 50) { height /= 2; stride /= 2; }
         }
 
-        protected void show(SqlConnection oConn)
+        protected void show()
         {
 
             string cmd = "SELECT stripe, startField, (endField-startField+1) as nFields FROM Run";

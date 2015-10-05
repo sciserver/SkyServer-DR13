@@ -24,11 +24,7 @@
 <tr><td colspan=2>
 	<table WIDTH=600 border=0 cellspacing="3" cellpadding="3">
 <%
-    using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
-    {
-        oConn.Open();
-        writeAll(oConn);
-    }
+        writeAll();
 %>
 	</table>
 </td></tr>

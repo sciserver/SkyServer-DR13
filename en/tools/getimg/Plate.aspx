@@ -52,14 +52,10 @@
 	<td class='b'>
         <select name="P" onfocus="javascript:radiogo('radiosdss');">
         <%
-            using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
-            {
-                oConn.Open();
-            
                 string cmd = "SELECT CAST(plateID as VARCHAR(20)), plate, mjd ";
                 cmd += " from PlateX where survey='sdss'";
                 cmd += " order by plateID";            
-                writeOptions(oConn, cmd);
+                writeOptions(cmd, "Skyserver.getimg.Plate.getPlateFromSDSS");
         
         %>
 	    </select>
@@ -70,7 +66,7 @@
                 cmd = "SELECT CAST(plateID as VARCHAR(20)), plate, mjd ";
                 cmd += " from PlateX where survey='segue1' or survey='segue2'";
                 cmd += " order by plateID";
-                writeOptions(oConn, cmd);
+                writeOptions(cmd, "Skyserver.getimg.Plate.getPlateFromSEGUE2");
              %>
         </select>
     <td class="b">
@@ -79,7 +75,7 @@
                 cmd = "SELECT CAST(plateID as VARCHAR(20)), plate, mjd ";
                 cmd += " from PlateX where survey='boss'";
                 cmd += " order by plateID";
-                writeOptions(oConn, cmd);
+                writeOptions(cmd, "Skyserver.getimg.Plate.getPlateFromBOSS");
              %>
         </select>
 
@@ -91,7 +87,7 @@
                 cmd = "SELECT plate_visit_id as plateID, plate, mjd ";
                 cmd += " from apogeePlate";
                 cmd += " order by plate,mjd";
-                writeOptions(oConn, cmd); 
+                writeOptions(cmd , "Skyserver.getimg.Plate.getPlateFromAPOGEE"); 
              %>
         </select>
         </td>
@@ -113,9 +109,9 @@
 <tr>
 <%
 	    // generate the options list right out of the database
-            if (survey == "apogee") writePlateAPOGEE(oConn);
-            else  writePlate(oConn);
-        }
+            if (survey == "apogee") writePlateAPOGEE();
+            else  writePlate();
+        
 %></tr>
 </table>
 <!------------------------------------<end fiber table-------------->

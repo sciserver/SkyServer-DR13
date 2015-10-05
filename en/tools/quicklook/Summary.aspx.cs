@@ -158,7 +158,7 @@ namespace SkyServer.Tools.QuickLook
             else if (qra.HasValue && qdec.HasValue) setFromEq(qra, qdec);
             else if (specId.HasValue || !String.IsNullOrEmpty(sidstring)) setFromSpecObjID(sidstring);
             else if (id.HasValue && !specId.HasValue) setFromObjID(id);
-            else if (!id.HasValue && !specId.HasValue && (run.HasValue || rerun.HasValue || camcol.HasValue || field.HasValue || obj.HasValue)) setFrom5PartSDSS(run, rerun, camcol, field, obj);
+            else if (!id.HasValue && !specId.HasValue && (run.HasValue && rerun.HasValue && camcol.HasValue && field.HasValue && obj.HasValue)) setFrom5PartSDSS(run, rerun, camcol, field, obj);
             else if (!String.IsNullOrEmpty(apid)) parseApogeeID(apid);
         }
 
@@ -177,7 +177,7 @@ namespace SkyServer.Tools.QuickLook
                     objectInfo.dec = reader["dec"] is DBNull ? null : (double?)reader["dec"];
 
                     objectInfo.mjd = reader["mjd"] is DBNull ? null : (int?)reader["mjd"];
-                    objectInfo.plate = reader["plate"] is DBNull ? null : (short?)reader["plate"]; 
+                    objectInfo.plate = reader["plate"] is DBNull ? null : (short?)reader["plate"];
                     objectInfo.plateId = reader["plateId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["plateId"]);
                     objectInfo.fiberId = reader["fiberid"] is DBNull ? null : (short?)reader["fiberid"];
                     objectInfo.fieldId = reader["fieldId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["fieldId"]);
@@ -200,7 +200,7 @@ namespace SkyServer.Tools.QuickLook
                     objectInfo.otype = reader["otype"] is DBNull ? "" : (string)reader["otype"];
                     objectInfo.spectralClass = reader["spectralClass"] is DBNull ? "" : (string)reader["spectralClass"];
                     objectInfo.flags = reader["flags"] is DBNull ? "" : (string)reader["flags"];
-                    objectInfo.redshift = reader["redshift"] is DBNull ? null : (float?)reader["redshift"];  
+                    objectInfo.redshift = reader["redshift"] is DBNull ? null : (float?)reader["redshift"];
                 }
             } // using DataTableReader
         }
@@ -251,7 +251,19 @@ namespace SkyServer.Tools.QuickLook
 
         private void setFrom5PartSDSS(Int16? Run, Int16? Rerun, byte? Camcol, Int16? Field, Int16? Obj)
         {
-            string cmd = QuickLookQueries.getpmtsFrom5PartSDSS; task = "getpmtsFrom5PartSDSS";
+            string Skyversion = "";
+            string cmd = QuickLookQueries.getSkyversion; task = "getSkyversion";
+            DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Quicklook.Summary." + task);
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            {
+                if (reader.Read())
+                {
+                    Skyversion = reader["skyversion"] is DBNull ? Skyversion : reader["skyversion"].ToString();
+                }
+            }
+
+            cmd = QuickLookQueries.getpmtsFrom5PartSDSS; task = "getpmtsFrom5PartSDSS";
+            cmd = cmd.Replace("@skyversion", Skyversion);
             cmd = cmd.Replace("@run", Run == null ? "null" : Run.ToString());
             cmd = cmd.Replace("@rerun", Rerun == null ? "null" : Rerun.ToString());
             cmd = cmd.Replace("@camcol", Camcol == null ? "null" : Camcol.ToString());
@@ -297,7 +309,7 @@ namespace SkyServer.Tools.QuickLook
 
                 }
             }
-            cmd = QuickLookQueries.getObjIDFromEq;
+            cmd = QuickLookQueries.getParamsFromEq;
             cmd = cmd.Replace("@qra", qra.ToString());
             cmd = cmd.Replace("@qdec", qdec.ToString());
             cmd = cmd.Replace("@searchRadius", (globals.EqSearchRadius).ToString());

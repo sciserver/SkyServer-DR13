@@ -24,11 +24,7 @@
 	src="../images/stop.gif" alt="Start/stop scrolling" /></a></div>
 
 <%
-    using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
-    {
-        oConn.Open();
-        show(oConn);
-    } 
+        show();
 %>
 
 <div id="s0" class="scroll"><img name="img0" src="<%=img%>"/></div>

@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
+using SkyServer.Tools.Search;
+using System.Data;
 
 namespace SkyServer.Tools.GetImg
 {
@@ -14,8 +16,15 @@ namespace SkyServer.Tools.GetImg
         protected string getimgurl;
         protected Globals globals;
         ToolsMaster master;
+
+        ResponseREST runQuery;
+        string ClientIP = "";
+        
         protected void Page_Load(object sender, EventArgs e)
         {
+            runQuery = new ResponseREST();
+            ClientIP = runQuery.GetClientIP();
+
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             master = (ToolsMaster)Page.Master;
             master.gselect = 4.3;
@@ -24,26 +33,23 @@ namespace SkyServer.Tools.GetImg
             getimgurl = url + "/get/SpecByPF.ashx";
         }
 
-        protected void writeOptions(SqlConnection oConn)
+        protected void writeOptions()
         {
-            using (SqlCommand oCmd = oConn.CreateCommand())
-            {
                 string cmd = "SELECT CAST(plateID as VARCHAR(64)), plate, mjd ";
                 cmd += " from PlateX order by plateID";
-                oCmd.CommandText = cmd;
-                using (SqlDataReader reader = oCmd.ExecuteReader())
+                DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.getimg.Spectra.getPlateID");
+                using (DataTableReader reader = ds.Tables[0].CreateDataReader())
                 {
                     string v = "";
 
                         while (reader.Read())
                         {
-                            v = "<OPTION VALUE='" + reader.GetSqlValue(0).ToString() + "'>";
-                            v += reader.GetSqlValue(1).ToString() + "/" + reader.GetSqlValue(2).ToString() + "</OPTION>\n";
+                            v = "<OPTION VALUE='" + reader.GetValue(0).ToString() + "'>";
+                            v += reader.GetValue(1).ToString() + "/" + reader.GetValue(2).ToString() + "</OPTION>\n";
                             Response.Write(v);
                            
                         }
                 } // using SqlDataReader
-            } // using SqlCommand
         }
     } 
 }

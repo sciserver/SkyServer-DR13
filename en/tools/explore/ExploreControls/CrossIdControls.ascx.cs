@@ -160,8 +160,8 @@ namespace SkyServer.Tools.Explore
 
 
             cmd = ExplorerQueries.WISE.Replace("@objId", objId);
-            ds  = runQuery.RunCasjobs(cmd,"Skyserver.Explore.CrossIdControls.WISE");
-            //ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.CrossIdControls.WISE");  
+            //ds  = runQuery.RunCasjobs(cmd,"Skyserver.Explore.CrossIdControls.WISE");
+            ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.CrossIdControls.WISE");  
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
                 if (reader.Read())

@@ -15,11 +15,9 @@
 <div id="title">Table Descriptions</div>
 <div id="transp">
 <%
-    using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
-    {
-        oConn.Open();
-        BrowserFunctions.showTableDesc(oConn, name, search, url, Request, Response, globals);
-    }
+
+    BrowserFunctions.showTableDesc(name, search, url, Request, Response, globals, "Skyserver.help.docs.getTableDescriptions");
+
 %>
 </div>
 </asp:Content>

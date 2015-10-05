@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
+using SkyServer.Tools.Search;
+using System.Data;
 
 namespace SkyServer.Tools.Chart
 {
@@ -18,9 +20,14 @@ namespace SkyServer.Tools.Chart
         protected string format = "";
         protected string newbook = "";
         protected Globals globals;
+        protected string ClientIP = "";
+        protected ResponseREST runQuery;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            runQuery = new ResponseREST();
+            ClientIP = runQuery.GetClientIP();
+
             globals = (Globals)Application[Globals.PROPERTY_NAME];
 
             url = ResolveClientUrl("~/en");
@@ -41,111 +48,111 @@ namespace SkyServer.Tools.Chart
                     format = Request.QueryString["FORMAT"];
             }
 
-            using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
+
+            string cmd = "SELECT objid,type,ra,dec,u,g,r,i,z,redshift FROM (SELECT *,ROW_NUMBER() OVER(PARTITION BY objid ORDER BY objid) AS rn";
+            cmd += " FROM (select cast(objId as varchar(32)) as objId,";
+            cmd += " dbo.fPhotoTypeN(type) as type, p.ra, p.dec, p.u, p.g, p.r, p.i, p.z, s.z as redshift";
+            cmd += " from PhotoObj p left outer join SpecObjAll s ON s.bestobjid=p.objid";
+            cmd += " where objId in (";
+
+            string unicmd = " UNION (select apstar_id as apstar_id, 'apogee' as type, ra as ra,dec as dec,  '' as u,'' as g,'' as r, '' as i,'' as z,'' as redshift  ";
+            unicmd += " from apogeeStar where apstar_id in (";
+
+            if (del != "")
             {
-                oConn.Open();
-
-                string cmd = "SELECT objid,type,ra,dec,u,g,r,i,z,redshift FROM (SELECT *,ROW_NUMBER() OVER(PARTITION BY objid ORDER BY objid) AS rn";
-                cmd += " FROM (select cast(objId as varchar(32)) as objId,";
-                cmd += " dbo.fPhotoTypeN(type) as type, p.ra, p.dec, p.u, p.g, p.r, p.i, p.z, s.z as redshift";
-                cmd += " from PhotoObj p left outer join SpecObjAll s ON s.bestobjid=p.objid";
-                cmd += " where objId in (";
-
-                string unicmd = " UNION select apstar_id as apstar_id, 'apogee' as type, ra as ra,dec as dec,  '' as u,'' as g,'' as r, '' as i,'' as z,'' as redshift  ";
-                unicmd += " from apogeeStar where apstar_id in (";
-
-                
-
-                if (del != "")
-                {
-                    newbook = deleteFrom(book, "'"+del+"'");
-                    HttpCookie cookie = new HttpCookie("sdssbook");
-                    Response.Cookies.Add(cookie);
-                    Response.Cookies["sdssbook"].Value = newbook;
-                    //Response.Cookies["sdssbook"].Domain = host;
-                    Response.Cookies["sdssbook"].Expires = new DateTime(2037, 1, 1);
-                    Response.Expires = 0;
-                    // only display if there is no add command
-                    if (add == "") Response.Redirect("book.aspx");
-                }
-
-                if (add != "")
-                {
-
-                    newbook = addTo(book, "'"+add+"'");
-                   
-                    try { 
-                        
-                        string pcmd = "select cast(objId as varchar(32)) as objId ";
-                        pcmd += " from PhotoObj where objId in (" + getObjId(newbook) + ")";
-                        newbook = pruneBook(oConn, pcmd);
-                        cmd += getObjId(newbook) + ")";
-                        unicmd += newbook + ")";
-                    }catch(Exception exp){
-                        try
-                        {
-                            newbook = newbook.Replace(' ','+');
-                            
-                            string pcmd = "select  apstar_id ";
-                            pcmd += " from apogeeStar where apstar_id in ('" + newbook + "')";
-                            newbook = pruneBook(oConn, pcmd);
-                            unicmd +=   newbook + ")";
-                            cmd += getObjId(newbook) +")";
-                        }
-                        catch (Exception ex) {
-                           
-                        }
-                    }
-                    
-                   
-                    HttpCookie cookie = new HttpCookie("sdssbook");
-                    Response.Cookies.Add(cookie);
-                    Response.Cookies["sdssbook"].Value = newbook;
-                    //Response.Cookies["sdssbook"].Domain = host;
-                    Response.Cookies["sdssbook"].Expires = new DateTime(2037, 1, 1);
-                    Response.Expires = 0;
-                    
-
-                    // if there was a delete as well, or more than one object inserted, then show the result
-                    //if (del != "" || String(add).indexOf(",")>-1 ) Response.Redirect("book.aspx");
-                    //else donothing();
-
-                    Response.Redirect("book.aspx");
-                }
-
-                // export the book
-
-                if (del == "" && add == "" && format != "")
-                {
-                    cmd += getObjId(book) + ")) res1) res2 WHERE rn = 1";
-                    cmd += unicmd +""+book+")";
-                    
-                    //Response.Headers["Content-Disposition"] = "attachment; filename=\"notebook." + format+"\"";
-                    Response.AddHeader("content-disposition", "attachment; filename=notebook." + format);
-                    if (format == "xml") ResponseAux.writeXML(oConn, cmd, cmd, Response, globals, globals.DefTimeout);
-                    if (format == "csv") ResponseAux.writeBookCSV(oConn, cmd, Response, globals, globals.DefTimeout);
-                    if (format == "html") showBook(oConn, cmd, 0);
-                }
-
-                if (del == "" && add == "" && format == "")
-                {
-                    cmd += getObjId(book) + ")) res1) res2 WHERE rn = 1";
-                    cmd += unicmd + book +")";
-                    
-                    if (book != "") showBook(oConn, cmd, 1);
-                    else isEmpty();
-                }
+                newbook = deleteFrom(book, "'" + del + "'");
+                HttpCookie cookie = new HttpCookie("sdssbook");
+                Response.Cookies.Add(cookie);
+                Response.Cookies["sdssbook"].Value = newbook;
+                //Response.Cookies["sdssbook"].Domain = host;
+                Response.Cookies["sdssbook"].Expires = new DateTime(2037, 1, 1);
+                Response.Expires = 0;
+                // only display if there is no add command
+                if (add == "") Response.Redirect("book.aspx");
             }
+
+            if (add != "")
+            {
+
+                newbook = addTo(book, "'" + add + "'");
+
+                try
+                {
+
+                    string pcmd = "select cast(objId as varchar(32)) as objId ";
+                    pcmd += " from PhotoObj where objId in (" + getObjId(newbook) + ")";
+                    newbook = pruneBook(pcmd, "Skyserver.chart.book.getObjId");
+                    cmd += getObjId(newbook) + ")";
+                    unicmd += getObjIdforApogee(newbook) + ")";
+                }
+                catch (Exception exp)
+                {
+                    try
+                    {
+                        newbook = newbook.Replace(' ', '+');
+
+                        string pcmd = "select  apstar_id ";
+                        pcmd += " from apogeeStar where apstar_id in ('" + newbook + "')";
+                        newbook = pruneBook(pcmd, "Skyserver.chart.book.getApstar_id");
+                        unicmd += getObjIdforApogee(newbook) + ")";
+                        cmd += getObjId(newbook) + ")";
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                }
+
+
+                HttpCookie cookie = new HttpCookie("sdssbook");
+                Response.Cookies.Add(cookie);
+                Response.Cookies["sdssbook"].Value = newbook;
+                //Response.Cookies["sdssbook"].Domain = host;
+                Response.Cookies["sdssbook"].Expires = new DateTime(2037, 1, 1);
+                Response.Expires = 0;
+
+
+                // if there was a delete as well, or more than one object inserted, then show the result
+                //if (del != "" || String(add).indexOf(",")>-1 ) Response.Redirect("book.aspx");
+                //else donothing();
+
+                Response.Redirect("book.aspx");
+            }
+
+            // export the book
+
+            if (del == "" && add == "" && format != "")
+            {
+                cmd += getObjId(book) + ")) res1) res2 WHERE rn = 1";
+                cmd += unicmd + "" + getObjIdforApogee(book) + "))";
+                //DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.chart.book.showBook1");
+                DataSet ds = runQuery.RunCasjobs(cmd, ClientIP, "Skyserver.chart.book.showBook1");
+
+                //Response.Headers["Content-Disposition"] = "attachment; filename=\"notebook." + format+"\"";
+                Response.AddHeader("content-disposition", "attachment; filename=notebook." + format);
+                if (format == "xml") ResponseAux.writeXML(ds, cmd, cmd, Response, globals);
+                if (format == "csv") ResponseAux.writeBookCSV(ds, cmd, Response, globals);
+                if (format == "html") showBook(ds, 0);
+            }
+
+            if (del == "" && add == "" && format == "")
+            {
+                cmd += getObjId(book) + ")) res1) res2 WHERE rn = 1";
+                cmd += unicmd + getObjIdforApogee(book) + "))";
+                //DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.chart.book.showBook2");
+                DataSet ds = runQuery.RunCasjobs(cmd, ClientIP, "Skyserver.chart.book.showBook2");
+
+                if (book != "") showBook(ds, 1);
+                else isEmpty();
+            }
+
         }
 
-        protected void showBook(SqlConnection oConn, string cmd, int flag)
+        protected void showBook(DataSet ds, int flag)
         {
 
-            using (SqlCommand oCmd = oConn.CreateCommand())
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
-                oCmd.CommandText = cmd;
-                using (SqlDataReader reader = oCmd.ExecuteReader())
-                {
 
                     if (!reader.HasRows)
                     {
@@ -195,14 +202,14 @@ namespace SkyServer.Tools.Chart
                     while (reader.Read())
                     {
                         Response.Write("    <tr>");
-                        string id = reader.GetSqlValue(0).ToString();
-                        string ra = reader.GetSqlValue(2).ToString();
-                        string dec = reader.GetSqlValue(3).ToString();
+                        string id = reader.GetValue(0).ToString();
+                        string ra = reader.GetValue(2).ToString();
+                        string dec = reader.GetValue(3).ToString();
                         paste += id + "," + ra.Substring(0, 8) + "," + dec.Substring(0, 7) + ";";
 
                         for (int i = 0; i < (reader.FieldCount); i++)
                         {
-                            val = reader.GetSqlValue(i).ToString();
+                            val = reader.GetValue(i).ToString();
                             if ("null".Equals(val, StringComparison.InvariantCultureIgnoreCase))
                             {
                                 val = "-";
@@ -235,7 +242,7 @@ namespace SkyServer.Tools.Chart
                     }
                 }
                 Response.Write("  </table>\n");
-            }
+            
             // write the control buttons for the exported notebook
             if (flag == 0)
             {
@@ -305,27 +312,25 @@ namespace SkyServer.Tools.Chart
         }
 
 
-        protected string pruneBook(SqlConnection oConn, string cmd)
+        protected string pruneBook(string cmd, string TaskName)
         {
             string str = "";
 
-            using (SqlCommand oCmd = oConn.CreateCommand())
+            //DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, TaskName);
+            DataSet ds = runQuery.RunCasjobs(cmd, ClientIP, TaskName);
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
-                oCmd.CommandText = cmd;
-                using (SqlDataReader reader = oCmd.ExecuteReader())
+                if (!reader.HasRows) return "";
+
+
+                while (reader.Read())
                 {
-                    if (!reader.HasRows) return "";
-
-
-                    while (reader.Read())
-                    {
-                        str += "'"+reader.GetSqlValue(0).ToString() + "',";
-                    }
-
+                    str += "'" + reader.GetValue(0).ToString() + "',";
                 }
-                // get rid of trailing comma
-                return str.Substring(0, str.Length - 1);
+
             }
+            // get rid of trailing comma
+            return str.Substring(0, str.Length - 1);
         }
 
         protected string getObjId(String book) {
@@ -350,7 +355,15 @@ namespace SkyServer.Tools.Chart
 
             if (objids.Equals("")) objids = "0";
                 return objids;
-        }      
+        }
+
+        protected string getObjIdforApogee(String book)
+        {
+            if (book == "")
+                return "''";
+            else
+                return book;
+        }
 
 
     }

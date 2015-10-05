@@ -59,7 +59,7 @@ namespace SkyServer.Tools.Scroll
                 writeRun(r[i], ((i % 2) == 0 ? "bsml" : "tsml"));
         }
 
-        protected void writeAll(SqlConnection oConn)
+        protected void writeAll()
         {
             string cmd = "select distinct stripe, run from Run order by stripe, run";
             int stripe, run, oldstripe;

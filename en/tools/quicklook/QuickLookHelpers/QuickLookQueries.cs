@@ -17,7 +17,7 @@ namespace SkyServer.Tools.QuickLook
                             s.mjd,s.plate,cast(s.plateId as binary(8)) as plateId,s.fiberid,cast(p.fieldId as binary(8)) as fieldId,p.run,p.rerun,p.camcol,p.field,
                             str(p.modelMag_u,7,2) as u, str(p.modelMag_g,7,2) as g, str(p.modelMag_r,7,2) as r, str(p.modelMag_i,7,2) as i, str(p.modelMag_z,7,2) as z, 
                             str(modelMagErr_u,7,2) as err_u, str(modelMagErr_g,7,2) as err_g, str(modelMagErr_r,7,2) as err_r, str(modelMagErr_i,7,2) as err_i, str(modelMagErr_z,7,2) as err_z,
-                            dbo.fPhotoFlagsN(flags) as flags, class as spectralClass, dbo.fPhotoTypeN(type) as otype, s.z as redshift "; 
+                            dbo.fPhotoFlagsN(flags) as flags, class as spectralClass, dbo.fPhotoTypeN(p.type) as otype, s.z as redshift "; 
 
 
         public static string getParamsFromPlateFiberMjd = QueryHeader + " from PhotoTag p JOIN SpecObjAll s ON s.bestobjid=p.objid where s.mjd = @mjd and s.fiberId = @fiberId  and s.plate = @plate";
@@ -25,8 +25,10 @@ namespace SkyServer.Tools.QuickLook
 
         public static string getParamsFromObjID =  QueryHeader + " from PhotoTag p LEFT JOIN SpecObjAll s ON (s.bestobjid=p.objid AND s.scienceprimary=1) where p.objId=dbo.fObjId(@objid)";
 
-        public static string getpmtsFrom5PartSDSS = @"declare @skyversion int;select top 1 @skyversion=skyversion from run;" + QueryHeader + " from PhotoTag p LEFT JOIN SpecObjAll s ON (s.bestobjid=p.objid AND s.scienceprimary=1) where p.objId=dbo.fObjidFromSDSS(@skyversion,@run,@rerun,@camcol,@field,@obj);";
+        //public static string getpmtsFrom5PartSDSS = @"declare @skyversion int;select top 1 @skyversion=skyversion from run;" + QueryHeader + " from PhotoTag p LEFT JOIN SpecObjAll s ON (s.bestobjid=p.objid AND s.scienceprimary=1) where p.objId=dbo.fObjidFromSDSS(@skyversion,@run,@rerun,@camcol,@field,@obj);";
+        public static string getpmtsFrom5PartSDSS = QueryHeader + " from PhotoTag p LEFT JOIN SpecObjAll s ON (s.bestobjid=p.objid AND s.scienceprimary=1) where p.objId=dbo.fObjidFromSDSS(@skyversion,@run,@rerun,@camcol,@field,@obj)";
 
+        public static string getSkyversion = "select top 1 skyversion from run";
 
 
 
@@ -34,6 +36,7 @@ namespace SkyServer.Tools.QuickLook
 
         public static string getObjIDFromEq = @" select top 1 p.objId from PhotoTag p join dbo.fGetNearbyObjAllEq(@qra , @qdec , @searchRadius) n on (p.objId=n.objId) order by n.mode asc, n.distance asc";
 
+        public static string getParamsFromEq = QueryHeader + " from PhotoTag p JOIN SpecObjAll s ON s.bestobjid=p.objid, dbo.fGetNearbyObjAllEq(@qra , @qdec , @searchRadius) n where p.objId=n.objId order by n.mode asc, n.distance asc";
 
 
 

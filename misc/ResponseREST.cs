@@ -370,18 +370,76 @@ namespace SkyServer.Tools.Search
 
         public DataSet RunDatabaseSearch(string command, string format, string ClientIP, string TaskName)
         {
+            try
+            {
+                WebRequest req = WebRequest.Create(WSrequestUri + "?cmd=" + Uri.EscapeDataString(command) + "&format=" + format + "&clientIP=" + ClientIP + "&task=" + TaskName);//select%20top%2010%20ra,dec%20from%20Frame&format=csv"
+                WebResponse resp = req.GetResponse();
+                BinaryFormatter fmt = new BinaryFormatter();
+                DataSet ds = new DataSet();
+                ds = (DataSet)fmt.Deserialize(resp.GetResponseStream());
+                return ds;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("There is an error running this Query.\n Query:" + command + " ");
+            }
 
-            WebRequest req = WebRequest.Create(WSrequestUri + "?cmd=" + Uri.EscapeDataString(command) + "&format=" + format + "&clientIP=" + ClientIP + "&task=" + TaskName);//select%20top%2010%20ra,dec%20from%20Frame&format=csv"
-            WebResponse resp = req.GetResponse();
-            BinaryFormatter fmt = new BinaryFormatter();
-            DataSet ds = new DataSet();
-            ds = (DataSet)fmt.Deserialize(resp.GetResponseStream());
-            return ds;
             //Stream s = resp.GetResponseStream();
             //StreamReader sr = new StreamReader(s, Encoding.ASCII);
             //string doc = sr.ReadToEnd();
         }
 
+
+
+        public DataSet RunCasjobs(string command, string ClientIP, string taskname)
+        {
+            // throw new IndexOutOfRangeException("There is an invalid argument");
+
+            try
+            {
+
+                var request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(ConfigurationManager.AppSettings["casjobsRESTapi"]);
+                request.Method = "POST";
+                request.ContentType = "application/json";
+                request.Accept = "application/x-dataset";
+
+                if (!token.Equals("") && token != null)
+                    request.Headers.Add("X-Auth-Token", token);
+
+                StreamWriter streamWriter = new StreamWriter(request.GetRequestStream());
+                StringWriter sw = new StringWriter();
+                JsonWriter jsonWriter = new JsonTextWriter(sw);
+                jsonWriter.WriteStartObject();
+                jsonWriter.WritePropertyName("Query");
+                jsonWriter.WriteValue(command);
+                jsonWriter.WritePropertyName("TaskName");
+                jsonWriter.WriteValue(taskname);
+                jsonWriter.WritePropertyName("ClientIP");
+                jsonWriter.WriteValue(ClientIP);
+                //jsonWriter.WritePropertyName("ReturnDataSet");
+                //jsonWriter.WriteValue(true);
+                jsonWriter.WriteEndObject();
+                jsonWriter.Close();
+                streamWriter.Write(sw.ToString());
+                streamWriter.Close();
+
+                DataSet ds = null;
+                using (System.Net.HttpWebResponse response = (System.Net.HttpWebResponse)request.GetResponse())
+                {
+                    BinaryFormatter fmt = new BinaryFormatter();
+                    ds = (DataSet)fmt.Deserialize(response.GetResponseStream());
+                }
+                return ds;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("There is an error running this Query.\n Query:" + command + " ");
+
+            }
+
+
+
+        }
 
 
         public DataSet RunCasjobs(string command, string taskname)

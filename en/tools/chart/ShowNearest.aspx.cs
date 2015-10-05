@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
+using SkyServer.Tools.Search;
+using System.Data;
 
 namespace SkyServer.Tools.Chart
 {
@@ -38,26 +40,26 @@ namespace SkyServer.Tools.Chart
             }
         }
 
-        protected long? getSpecObjId(SqlConnection oConn, long objId)
+        protected long? getSpecObjId(long objId, string TaskName)
         {
             long? specObjId = null;
 
             string cmd = "select s.specObjId as specObjId ";
             cmd += " from PhotoObjAll p LEFT OUTER JOIN SpecObj s ON s.bestobjid=p.objid where p.objId=@objid";
-            using (SqlCommand oCmd = oConn.CreateCommand())
-            {
-                oCmd.CommandText = cmd;
-                oCmd.Parameters.AddWithValue("@objid", objId);
+            cmd = cmd.Replace("@objid", objId.ToString());
 
-                using (SqlDataReader reader = oCmd.ExecuteReader())
+            ResponseREST runQuery = new ResponseREST();
+            string ClientIP = runQuery.GetClientIP();
+            DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, TaskName);
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            {
+                if (reader.Read())
                 {
-                    if (reader.Read())
-                    {
-                        if (!reader.IsDBNull(0))
-                            specObjId = reader.GetInt64(0);
-                    }
+                    if (!reader.IsDBNull(0))
+                        specObjId = reader.GetInt64(0);
                 }
             }
+
             return specObjId;
         }
 
@@ -67,7 +69,7 @@ namespace SkyServer.Tools.Chart
         }
 
 
-        protected void makeTable(SqlConnection oConn)
+        protected void makeTable(string TaskName)
         {
             // build the SQL query string to search for the nearest Primary Object
 
@@ -75,63 +77,65 @@ namespace SkyServer.Tools.Chart
             cmd += "  LTRIM(STR(P.ra,10,5))as 'ra', LTRIM(STR(P.dec,8,5)) as 'dec', ";
             cmd += "  dbo.fPhotoTypeN(P.type) as 'type', LTRIM(STR(P.u,6,2)) AS 'u', LTRIM(STR(P.g,6,2)) AS 'g', ";
             cmd += "  LTRIM(STR(P.r,6,2)) AS 'r', LTRIM(STR(P.i,6,2)) AS 'i', LTRIM(STR(P.z,6,2)) AS 'z'";
-            cmd += "  FROM dbo.fGetNearestObjEq (@ra,@dec,@radius) as N, ";
+            cmd += "  FROM dbo.fGetNearestObjEq (@ra,@dec,@Radius) as N, ";
             cmd += "  PhotoObjAll as P";
             cmd += "  WHERE N.objID = P.objID AND P.i>0 ";
 
-            SqlCommand oCmd = oConn.CreateCommand();
-             oCmd.CommandText = cmd;
-             oCmd.Parameters.AddWithValue("@ra", ra);
-             oCmd.Parameters.AddWithValue("@dec", dec);
-             oCmd.Parameters.AddWithValue("@radius", radius);
+            cmd = cmd.Replace("@ra", ra.ToString());
+            cmd = cmd.Replace("@dec", dec.ToString());
+            cmd = cmd.Replace("@Radius", radius.ToString());
 
-            SqlDataReader reader = oCmd.ExecuteReader();
+
+            ResponseREST runQuery = new ResponseREST();
+            string ClientIP = runQuery.GetClientIP();
+            DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, TaskName);
+            DataTableReader reader = ds.Tables[0].CreateDataReader();
             string str = "<div id='query'>\n";
             str += "<table width='100' border='0' cellspacing='1' bgcolor='#000000'>\n";
             var args = "";
-                    if (!reader.HasRows)
+            if (!reader.HasRows)
+            {
+                reader.Close();
+                var norows = checkApogee(str, args, TaskName);
+
+                if (!norows)
+                {
+                    str += "<tr align='center'><td valign='top' class='c'>No objects have been found within ";
+                    str += Math.Floor(1000 * radius ?? 0) / 1000.0 + " arcmins</td></tr>\n";
+                    Response.Write(str);
+                }
+
+            }
+            else
+            {
+                Response.Write(str);
+                int count = (reader.FieldCount);
+                while (reader.Read())
+                {
+                    objId = reader.GetInt64(0);
+                    oRa = reader.GetString(1);
+                    oDec = reader.GetString(2);
+
+                    for (int Index = 0; Index < count; Index++)
                     {
-                        reader.Close();
-                        var norows = checkApogee(oConn, str, args);
+                        string n = reader.GetName(Index);
+                        string d = reader.GetValue(Index).ToString();
 
-                        if (!norows)
-                        {
-                            str += "<tr align='center'><td valign='top' class='c'>No objects have been found within ";
-                            str += Math.Floor(1000 * radius ?? 0) / 1000.0 + " arcmins</td></tr>\n";
-                            Response.Write(str);
-                        }
-                        
+                        //The switch statement here sets the values for the text that appears in the tooltip mouseover boxes. -Jordan Raddick 6/20/06                                
+                        string tooltip_text = getInfo(n);
+
+
+                        str = "<tr valign='top' ONMOUSEOVER=\"this.T_TEMP=\'2000\';this.T_WIDTH=\'140\';return escape(\'" + tooltip_text + "\')\">";
+                        str += "<td width='20' align='left' class='c'>" + n + "</td>";
+                        str += "<td align='right' class='c'>" + d + "</td></tr>\n";
+                        if (Index > 0) Response.Write(str);
+                        if (Index < count - 1) args += d + ',';
                     }
-                    else
-                    {
-                        Response.Write(str);                        
-                        int count = (reader.FieldCount);
-                        while (reader.Read())
-                        {
-                            objId = reader.GetInt64(0);
-                            oRa = reader.GetString(1);
-                            oDec = reader.GetString(2);
+                    //Response.Write("</tr>\n");
 
-                            for (int Index = 0; Index < count; Index++)
-                            {
-                                string n = reader.GetName(Index);
-                                string d = reader.GetSqlValue(Index).ToString();
-
-                                //The switch statement here sets the values for the text that appears in the tooltip mouseover boxes. -Jordan Raddick 6/20/06                                
-                                string tooltip_text = getInfo(n);
-                                                               
-
-                                str = "<tr valign='top' ONMOUSEOVER=\"this.T_TEMP=\'2000\';this.T_WIDTH=\'140\';return escape(\'" + tooltip_text + "\')\">";
-                                str += "<td width='20' align='left' class='c'>" + n + "</td>";
-                                str += "<td align='right' class='c'>" + d + "</td></tr>\n";
-                                if (Index > 0) Response.Write(str);
-                                if (Index < count - 1) args += d + ',';
-                            }
-                            //Response.Write("</tr>\n");
-
-                        }
-                    }
-                    if(reader != null)  reader.Close();
+                }
+            }
+            if(reader != null)  reader.Close();
                    
             
             Response.Write("</table>\n</div>\n");
@@ -171,7 +175,7 @@ namespace SkyServer.Tools.Chart
             str += "<tr ONMOUSEOVER=\"this.T_TEMP=\'2000\';this.T_WIDTH=\'140\';return escape(\'See this object&rsquo;s basic data in the Quick Look tool\')\"><td width=20><a href=\"javascript:quicklook('" + objId + "')\">\n";
             str += "    <img src='images/button.gif' width=20 height=20 border=0></a></td>\n";
             if (isApogee) {
-                str += "<td width=80><a href=\"javascript:quicklook('" + apogeeid + "')\">";
+                str += "<td width=80><a href=\"javascript:quicklookAPOGEE('" + apogeeid + "')\">";
             }
             else
             {
@@ -260,54 +264,55 @@ namespace SkyServer.Tools.Chart
             return tooltip_text;
         }
 
-        protected bool checkApogee(SqlConnection oConn, String str, string args) {
+        protected bool checkApogee(String str, string args, string TaskName)
+        {
             string newcmd = " SELECT TOP 1 P.apstar_id AS 'apogee_Id',   LTRIM(STR(P.ra,10,5))as 'ra', LTRIM(STR(P.dec,8,5)) as 'dec' ,  'apogee' as 'type',";
             newcmd += " '' AS 'u', '' AS 'g',   '' AS 'r', '' AS 'i', '' AS 'z' ";
-            newcmd += " FROM dbo.fGetNearestApogeeStarEq (@ra,@dec,@radius) as N,   ApogeeStar as P  WHERE N.apogee_id = P.apogee_id  ";
+            newcmd += " FROM dbo.fGetNearestApogeeStarEq (@ra,@dec,@Radius) as N,   ApogeeStar as P  WHERE N.apogee_id = P.apogee_id  ";
+            newcmd = newcmd.Replace("@ra", ra.ToString());
+            newcmd = newcmd.Replace("@dec", dec.ToString());
+            newcmd = newcmd.Replace("@Radius", radius.ToString());
 
-            SqlCommand nCmd = oConn.CreateCommand();
-            nCmd.CommandText = newcmd;
-            nCmd.Parameters.AddWithValue("@ra", ra);
-            nCmd.Parameters.AddWithValue("@dec", dec);
-            nCmd.Parameters.AddWithValue("@radius", radius);
-
-            SqlDataReader reader = nCmd.ExecuteReader();
-            if (!reader.HasRows) {
+            ResponseREST runQuery = new ResponseREST();
+            string ClientIP = runQuery.GetClientIP();
+            DataSet ds = runQuery.RunDatabaseSearch(newcmd, globals.ContentDataset, ClientIP, TaskName);
+            DataTableReader reader = ds.Tables[0].CreateDataReader();
+            if (!reader.HasRows)
+            {
                 reader.Close();
-                return false; 
-            } 
-            else {
+                return false;
+            }
+            else
+            {
 
-                        Response.Write(str);                        
-                        int count = (reader.FieldCount);
-                        while (reader.Read())
-                        {
-                            objId = 0;
-                            apogeeid = reader.GetString(0);
-                            oRa = reader.GetString(1);
-                            oDec = reader.GetString(2);
+                Response.Write(str);
+                int count = (reader.FieldCount);
+                while (reader.Read())
+                {
+                    objId = 0;
+                    apogeeid = reader.GetString(0);
+                    oRa = reader.GetString(1);
+                    oDec = reader.GetString(2);
 
-                            for (int Index = 0; Index < count; Index++)
-                            {
-                                string n = reader.GetName(Index);
-                                string d = reader.GetSqlValue(Index).ToString();
+                    for (int Index = 0; Index < count; Index++)
+                    {
+                        string n = reader.GetName(Index);
+                        string d = reader.GetValue(Index).ToString();
 
-                                //The switch statement here sets the values for the text that appears in the tooltip mouseover boxes. -Jordan Raddick 6/20/06                                
-                                string tooltip_text = getInfo(n);
+                        //The switch statement here sets the values for the text that appears in the tooltip mouseover boxes. -Jordan Raddick 6/20/06                                
+                        string tooltip_text = getInfo(n);
 
-
-                                str = "<tr valign='top' ONMOUSEOVER=\"this.T_TEMP=\'2000\';this.T_WIDTH=\'140\';return escape(\'" + tooltip_text + "\')\">";
-                                str += "<td width='20' align='left' class='c'>" + n + "</td>";
-                                str += "<td align='right' class='c'>" + d + "</td></tr>\n";
-                                if (Index > 0) Response.Write(str);
-                                if (Index < count - 1) args += d + ',';
-                            }
-                        }
-                        isApogee = true;
+                        str = "<tr valign='top' ONMOUSEOVER=\"this.T_TEMP=\'2000\';this.T_WIDTH=\'140\';return escape(\'" + tooltip_text + "\')\">";
+                        str += "<td width='20' align='left' class='c'>" + n + "</td>";
+                        str += "<td align='right' class='c'>" + d + "</td></tr>\n";
+                        if (Index > 0) Response.Write(str);
+                        if (Index < count - 1) args += d + ',';
+                    }
+                }
+                isApogee = true;
                 reader.Close();
                 return true;
             }
-
         }
     }
 }

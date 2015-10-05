@@ -6,6 +6,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using SkyServer;
+using SkyServer.Tools.Search;
+using System.Data;
 
 namespace SkyServer.Tools.Chart
 {
@@ -26,59 +28,42 @@ namespace SkyServer.Tools.Chart
 
             //c = c.Replace("'","''");
 
-            string windows_name = System.Environment.MachineName;
-
-	        string server_name = Request.ServerVariables["SERVER_NAME"];
-	        string remote_addr = Request.ServerVariables["REMOTE_ADDR"];
-
-	        string cmd = "EXEC spExecuteSQL @c, @row_limit, @server_name, @windows_name, @remote_addr, @access";
+	        string cmd = c;
 
             string res = "";
 
             try
             {
-                using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
+                ResponseREST runQuery = new ResponseREST();
+                string ClientIP = runQuery.GetClientIP();
+                DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.chart.F_SQL.UsersQuery");
+                using (DataTableReader reader = ds.Tables[0].CreateDataReader())
                 {
-                    oConn.Open();
-                    using (SqlCommand oCmd = oConn.CreateCommand())
+                    if (reader.HasRows)
                     {
-                        oCmd.CommandText = cmd;
-                        oCmd.Parameters.AddWithValue("@c", c);
-                        oCmd.Parameters.AddWithValue("@row_limit", globals.RowLimit);
-                        oCmd.Parameters.AddWithValue("@server_name", server_name);
-                        oCmd.Parameters.AddWithValue("@windows_name", windows_name);
-                        oCmd.Parameters.AddWithValue("@remote_addr", remote_addr);
-                        oCmd.Parameters.AddWithValue("@access", globals.Access);
 
-                        using (SqlDataReader reader = oCmd.ExecuteReader())
+                        for (int index = 0; index < (reader.FieldCount); index++)
                         {
-                            if (reader.HasRows)
+                            res += (reader.GetName(index));
+                            res += ((index != reader.FieldCount - 1) ? "," : "\n");
+                        }
+                        while (reader.Read())
+                        {
+                            for (int index = 0; index < (reader.FieldCount); index++)
                             {
-
-                                for (int index = 0; index < (reader.FieldCount); index++)
-                                {
-                                    res += (reader.GetName(index));
-                                    res += ((index != reader.FieldCount - 1) ? "," : "\n");
-                                }
-                                while (reader.Read())
-                                {
-                                    for (int index = 0; index < (reader.FieldCount); index++)
-                                    {
-                                        res += reader.GetSqlValue(index).ToString();
-                                        res += ((index != (reader.FieldCount - 1)) ? "," : "\n");
-                                    }
-                                    count++;
-                                }
+                                res += reader.GetValue(index).ToString();
+                                res += ((index != (reader.FieldCount - 1)) ? "," : "\n");
                             }
-                        } // using SqlDataReader
-                    } // using SqlCommand
-                } // using SqlConnection
+                            count++;
+                        }
+                    }
+                } // using DataTableReader
             }
             catch (Exception ex)
             {
-		        Response.Write("ERROR\n\nSQL returned the following error message:\n" + ex.Message +"\n");
-		        Response.Write("Your SQL command was:\n" + cmd+"\n");
- 		        //format = "error";
+                Response.Write("ERROR\n\nSQL returned the following error message:\n" + ex.Message + "\n");
+                Response.Write("Your SQL command was:\n" + cmd + "\n");
+                //format = "error";
             }
 
             result = res;

@@ -406,7 +406,22 @@ namespace SkyServer.Tools.Explore
 
         private void pmtsFrom5PartSDSS(Int16? Run, Int16? Rerun, byte? Camcol, Int16?Field, Int16? Obj)
         {
-            string cmd = ExplorerQueries.getpmtsFrom5PartSDSS;
+
+
+            string Skyversion = "";
+            string cmd = ExplorerQueries.getSkyversion;
+            DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.Summary.getSkyversion");
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            {
+                if (reader.Read())
+                {
+                    Skyversion = reader["skyversion"] is DBNull ? Skyversion : reader["skyversion"].ToString();
+                }
+            }
+
+
+            cmd = ExplorerQueries.getpmtsFrom5PartSDSS;
+            cmd = cmd.Replace("@skyversion", Skyversion);
             cmd = cmd.Replace("@run", Run == null ? "null" : Run.ToString());
             cmd = cmd.Replace("@rerun", Rerun == null ? "null" : Rerun.ToString());
             cmd = cmd.Replace("@camcol", Camcol == null ? "null" : Camcol.ToString());
@@ -414,7 +429,7 @@ namespace SkyServer.Tools.Explore
             cmd = cmd.Replace("@obj", Obj == null ? "null" : Obj.ToString());
 
             //DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Summary");
-            DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.Summary.getpmtsFrom5PartSDSS");
+            ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.Summary.getpmtsFrom5PartSDSS");
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
                 if (reader.Read())

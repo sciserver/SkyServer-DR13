@@ -21,11 +21,8 @@
 	<td class='b'>
     <select name="P">
     <%
-        using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
-        {
-            oConn.Open();
-            writeOptions(oConn);
-        }
+            writeOptions();
+
     %>
     </select>
 	</td></tr>
