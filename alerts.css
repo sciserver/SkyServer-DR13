@@ -94,3 +94,68 @@ body > div.migrationMenu ul>li>a {
     font-weight: normal;
     FONT-FAMILY: Verdana, Palladio, Helvetica,sans-serif;
 }
+
+#headerAlert {
+    margin:0;
+    width: 350px;
+    height: 73px;
+    background-color:#003366;
+/*    background-image: url('en/images/imageright2.png');*/
+}
+
+    #headerAlert > .imgwithlink {
+        float:right;
+    }
+
+    #headerAlert > h2
+    {
+        margin-top:5px;
+        margin-left:10px;
+        font-size:small;
+    }
+
+    #headerAlert > p 
+    {
+        margin-left:10px;
+        font-size:smaller;
+    }
+
+  /* 
+      Header alerts get formatted differently in the tools pages (e.g. Finding Chart) than in other pages.
+      This is probably an inefficient way of doing that.
+        -Jordan 10/5/2015
+  */
+
+#headerAlertTools
+{
+    background-color:#003366;
+}
+
+    #headerAlertTools > .imgwithlink {
+        float:left;
+    }
+
+    #headerAlertTools > h2
+    {
+        margin-top:5px;
+        padding-top:11px;
+        margin-left:10px;
+        font-size:small;
+        color:white;
+        height:100%;
+        vertical-align:central;
+    }
+
+    #headerAlertTools > p 
+    {
+        margin-top:15px;
+        margin-left:10px;
+        font-size:smaller;
+        clear:both;
+    }
+
+    #headerAlertTools > p >  a
+    {
+        color:cyan;
+        padding-right:10px;
+    }

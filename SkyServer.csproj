@@ -47,6 +47,10 @@
       <HintPath>lib\CSharpFITS_v1.1.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\Newtonsoft.Json.6.0.6\lib\net40\Newtonsoft.Json.dll</HintPath>
@@ -2092,6 +2096,7 @@
     <Content Include="images\logo_sloan.jpg" />
     <Content Include="images\pdf_icon.gif" />
     <Content Include="images\sciserver_icon_bkgd_blue_64px.png" />
+    <Content Include="images\sciserver_icon_bkgd_blue_73px.png" />
     <Content Include="images\swf_icon.jpg" />
     <Content Include="images\tick.GIF" />
     <Content Include="images\tick.jpg" />
@@ -6426,6 +6431,7 @@
     <None Include="en\tools\STARTBall\images\crosshairsLayers.psd" />
     <None Include="en\tools\STARTBall\STARTBall.dcr" />
     <Content Include="packages.config" />
+    <None Include="ViewPage1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="en\tools\chart\ChartBase.Master" />
