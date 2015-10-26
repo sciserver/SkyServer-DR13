@@ -96,10 +96,13 @@ body > div.migrationMenu ul>li>a {
 }
 
 #headerAlert {
-    margin:0;
-    width: 350px;
+    padding-left:0px;
+    padding-right:10px;
+    width: 200px;
     height: 73px;
-    background-color:#003366;
+    background-color:#fc6f03;
+    border-radius:5px;
+    z-index:500;
 /*    background-image: url('en/images/imageright2.png');*/
 }
 
@@ -107,17 +110,16 @@ body > div.migrationMenu ul>li>a {
         float:right;
     }
 
-    #headerAlert > h2
+    #headerAlert > p
     {
         margin-top:5px;
         margin-left:10px;
-        font-size:small;
+        font-size:large;
     }
 
-    #headerAlert > p 
+    #headerAlert > p > a
     {
-        margin-left:10px;
-        font-size:smaller;
+        color:#00ffff;
     }
 
   /* 

@@ -452,10 +452,14 @@
     <Content Include="en\images\new_tools_2.jpg" />
     <Content Include="en\images\new_window.png" />
     <Content Include="en\images\new_window_black.png" />
+    <Content Include="en\images\new_window_cyan.png" />
     <Content Include="en\images\offsite.png" />
     <Content Include="en\images\offsite_black.png" />
     <Content Include="en\images\loginportal.png" />
+    <Content Include="en\images\sciserverlogo.png" />
     <Content Include="en\images\sciserver_icon_bkgd_blk_150px.png" />
+    <Content Include="en\images\sciserver_logo_inverted.png" />
+    <Content Include="en\images\sciserver_logo_usermsg.png" />
     <Content Include="en\images\sdss-background.jpg" />
     <Content Include="en\images\sdss-globe.gif" />
     <Content Include="en\images\sdss-main-banner.gif" />

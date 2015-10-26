@@ -46,12 +46,9 @@
 
                   <div id="headerAlert">
                         <a href="<%=globals.SciServerLink%>updates/" class="imgwithlink" target="_blank">
-                        <img src="<%= imgpath %>sciserver_icon_bkgd_blue_73px.png" alt="logo" class="imgnoborder" />
+                        <img src="<%= imgpath %>sciserver_logo_usermsg.png" alt="logo" width="190" />
                         </a>
-                            <h2>SciServer is coming!</h2>
-                            <p><a href="<%=globals.SciServerLink%>updates/">Read about the new features in our next release!
-                                 <img src="<%=imgpath%>new_window.png" alt=" (new window)" /></a>
-                            </p>
+                            <p><a href="<%=globals.SciServerLink%>updates/" target="_blank">Coming soon!<img src="<%=imgpath%>new_window_cyan.png" alt=" (new window)" style="max-width:95%;margin:2%" /></a></p>
                   </div>
         </td>
           

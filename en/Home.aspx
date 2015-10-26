@@ -48,11 +48,8 @@
 
         <div class="migrationAlert">
 
-
-
-
             <p>Within the next few weeks, we will roll out a new collaborative science framework called 
-                <a href="<%=globals.SciServerLink%>" target="_blank">SciServer&nbsp;<img src="images/new_window.png" alt=" (new window)" /></a>. 
+                <a href="<%=globals.SciServerLink%>" target="_blank">SciServer&nbsp;<img src="images/new_window_cyan.png" alt=" (new window)" /></a>. 
                 SciServer will integrate the current SkyServer and CasJobs systems, as well as add several new features. The main feature is 
                 a Single Sign-On system across all SciServer applications. SkyServer will still support anonymous 
                 access, but if you log in with your new SciServer account, you can save queries and results to 
@@ -61,7 +58,7 @@
                 <p>For more information 
                 on all upcoming new features, please see our 
                     <a href="<%=globals.SciServerLink%>building-blocks/updates/" target="_blank">New Features
-                        <img src="images/new_window.png" alt=" (new window)" /></a> section on the SciServer website.</p>
+                        <img src="images/new_window_cyan.png" alt=" (new window)" /></a> section on the SciServer website.</p>
 
         </div>
 
