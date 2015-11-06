@@ -1,5 +1,4 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="HomeMaster.master.cs" Inherits="SkyServer.HomeMaster" %>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -7,7 +6,10 @@
 <head runat="server">
   
   <link href="../skyserver.css" rel="stylesheet" type="text/css" />
+  <link href="../alerts.css" rel="stylesheet" type="text/css" />
   <link href="../FavIcon.ICO" rel="SHORTCUT ICON" />
+
+    <asp:ContentPlaceHolder id="csscanister" runat="server"></asp:ContentPlaceHolder>  <!-- a place to hold page-specific css files -->
   
   <title>SDSS SkyServer <%= globals.Release %></title>
 
@@ -21,7 +23,6 @@
 </head>
 
 <body background="<%= imgpath %>new_home_bktile.jpg" style="margin-left:25px;margin-top:0px;margin-right:25px;margin-bottom:0px;">
-
   <div id="div_title">
     <table cellpadding="0" cellspacing="0" border="0" width="200px" style="height:73px">
       <tr>
@@ -40,13 +41,20 @@
           </table>
         </td>       
         <td >
-            <img alt="" src="<%= imgpath %>imageright2.png" />
+
+<!--   <img alt="" src="<%= imgpath %>imageright2.png" />-->
+
+                  <div id="headerAlert">
+                        <a href="<%=globals.SciServerLink%>updates/" class="imgwithlink" target="_blank">
+                        <img src="<%= imgpath %>sciserver_logo_usermsg.png" alt="logo" width="190" />
+                        </a>
+                            <p><a href="<%=globals.SciServerLink%>updates/" target="_blank">Coming soon!<img src="<%=imgpath%>new_window_cyan.png" alt=" (new window)" style="max-width:95%;margin:2%" /></a></p>
+                  </div>
         </td>
           
       </tr>
     </table>
   </div>
-
   <div id="div_nav">
     <table border="1" cellpadding="0" cellspacing="0" width="100%" style="height:25px;border-collapse:collapse;">
       <tr bgcolor="#313131" style="height:23px">
@@ -64,7 +72,7 @@
       </tr>            
     </table>
   </div>  
-  
+
   <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"></asp:ContentPlaceHolder>
 
   <script language="JavaScript" type="text/javascript" src="<%= url %>wz_tooltip.js"></script>

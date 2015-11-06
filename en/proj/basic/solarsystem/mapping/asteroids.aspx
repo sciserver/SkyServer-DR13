@@ -34,7 +34,8 @@
             
             Click the link below to open the Solar System Search Form. It will open in a new window.</p>
             
-            <p><a href="../form/form.asp" target="tools">Solar System Search Form</a></p>
+            <!--<p><a href="../form/form.asp" target="tools">Solar System Search Form</a></p>-->
+              <p><a href="http://sdssorgdev.pha.jhu.edu/solarsystem/form/form.asp" target="tools">Solar System Search Form</a></p>
             
             <p>You have two choices on the form, shown in two drop-down menus. You can select the number of asteroids to return data for 
             [10, 50, 100, 500, 1000, 5000, 10000, or 30000], and you can select two different ways of returning the data. Stick with "RA and Dec" for now.</p>

@@ -1719,8 +1719,8 @@ Some hints on searching SkyServer:</p>
 	cmd += "SELECT TOP 100<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;s.apogee_id,s.ra, s.dec, s.glon, s.glat,<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;s.vhelio_avg,s.vscatter,<br>\r\n";
-	cmd += "&nbsp;&nbsp;&nbsp;a.teff, a.teff_err, a.logg, a.logg_err, a.metals, a.metals_err,<br>\r\n";
-	cmd += "&nbsp;&nbsp;&nbsp;a.alphafe,  a.alphafe_err,<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;a.teff, a.teff_err, a.logg, a.logg_err, a.param_m_h, a.param_m_h_err,<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;a.param_alpha_m,  a.param_alpha_m_err,<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;<a href=\""+url+"/help/browser/browser.aspx?cmd=description+fApogeeAspcapFlagN+F\">dbo.fApogeeAspcapFlagN</a>(a.aspxcapflag),<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;<a href=\""+url+"/help/browser/browser.aspx?cmd=description+fApogeeAspcapFlagN+F\">dbo.fApogeeStarFlagN</a>(s.starflag)<br>\r\n";
 	cmd += "FROM apogeeStar s<br>\r\n";
@@ -1747,13 +1747,13 @@ Some hints on searching SkyServer:</p>
 	cmd += "SELECT TOP 100<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;s.apogee_id,s.ra, s.dec, s.glon, s.glat,<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;s.vhelio_avg,s.vscatter,<br>\r\n";
-	cmd += "&nbsp;&nbsp;&nbsp;a.teff,a.logg, a.metals, a.alphafe,<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;a.teff,a.logg, a.param_m_h, a.param_alpha_m,<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;<a href=\""+url+"/help/browser/browser.aspx?cmd=description+fApogeeAspcapFlagN+F\">dbo.fApogeeAspcapFlagN</a>(a.aspxcapflag),<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;<a href=\""+url+"/help/browser/browser.aspx?cmd=description+fApogeeStarFlagN+F\">dbo.fApogeeStarFlagN</a>(s.starflag)<br>\r\n";
 	cmd += "FROM apogeeStar s<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;JOIN <a href=\""+url+"/help/browser/browser.aspx?cmd=description+aspcapStar+U\">aspcapStar</a> a on a.apstar_id = s.apstar_id<br>\r\n";
 	cmd += "WHERE (a.aspxcapflag & <a href=\""+url+"/help/browser/browser.aspx?cmd=description+fApogeeAspcapFlag+F\">dbo.fApogeeAspcapFlag</a>('STAR_BAD')) = 0 <br>\r\n";
-	cmd += "&nbsp;&nbsp;&nbsp;and a.teff > 0 and a.metals < -2<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;and a.teff > 0 and a.param_m_h < -2<br>\r\n";
 	cmd += "<br></td></tr>\r\n";
 	cmd += "</table>\r\n<br><br>";
 	showQuery( qName, qry, cmd, cmd );
@@ -1771,8 +1771,8 @@ Some hints on searching SkyServer:</p>
 	cmd += "SELECT TOP 100<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;s.apogee_id,s.ra, s.dec, s.glon, s.glat,<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;s.vhelio_avg,s.vscatter,<br>\r\n";
-	cmd += "&nbsp;&nbsp;&nbsp;a.teff, a.teff_err, a.logg, a.logg_err, a.metals, a.metals_err,<br>\r\n";
-	cmd += "&nbsp;&nbsp;&nbsp;a.alphafe,  a.alphafe_err,<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;a.teff, a.teff_err, a.logg, a.logg_err, a.param_m_h, a.param_m_h_err,<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;a.param_alpha_m,  a.param_alpha_m_err,<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;<a href=\""+url+"/help/browser/browser.aspx?cmd=description+fApogeeAspcapFlagN+F\">dbo.fApogeeAspcapFlagN</a>(a.aspxcapflag),<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;<a href=\""+url+"/help/browser/browser.aspx?cmd=description+fApogeeStarFlagN+F\">dbo.fApogeeStarFlagN</a>(s.starflag)<br>\r\n";
 	cmd += "FROM <a href=\""+url+"/help/browser/browser.aspx?cmd=description+apogeeStar+U\">apogeeStar</a> s<br>\r\n";
@@ -1800,7 +1800,7 @@ Some hints on searching SkyServer:</p>
 	cmd += "&nbsp;&nbsp;&nbsp;star.apogee_id, star.ra, star.dec, star.glon, star.glat, <br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;star.vhelio_avg, star.vscatter,<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;obj.j, obj.h, obj.k, obj.ak_targ, obj.ak_targ_method, obj.ak_wise,<br>\r\n";
-	cmd += "&nbsp;&nbsp;&nbsp;aspcap.teff, aspcap.logg, aspcap.metals<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;aspcap.teff, aspcap.logg, aspcap.param_m_h<br>\r\n";
 	cmd += "FROM <a href=\""+url+"/help/browser/browser.aspx?cmd=description+apogeeStar+U\">apogeeStar</a> star<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;JOIN <a href=\""+url+"/help/browser/browser.aspx?cmd=description+aspcapStar+U\">aspcapStar</a> aspcap on aspcap.apstar_id = star.apstar_id<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;JOIN <a href=\""+url+"/help/browser/browser.aspx?cmd=description+apogeeObject+U\">apogeeObject</a> obj on aspcap.target_id = obj.target_id<br>\r\n";
@@ -1824,7 +1824,7 @@ Some hints on searching SkyServer:</p>
 	cmd += "SELECT star.apstar_id,<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;star.apogee_id, star.ra, star.dec, star.glon, star.glat,<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;star.apogee_target1, star.apogee_target2, <br>\r\n";
-	cmd += "&nbsp;&nbsp;&nbsp;aspcap.teff,aspcap.logg,aspcap.metals<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;aspcap.teff,aspcap.logg,aspcap.param_m_h<br>\r\n";
 	cmd += "FROM <a href=\""+url+"/help/browser/browser.aspx?cmd=description+apogeeStar+U\">apogeeStar</a> star<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;JOIN <a href=\""+url+"/help/browser/browser.aspx?cmd=description+fGetNearbyApogeeStarEq+F\">dbo.fGetNearbyApogeeStarEq</a>(250.423458,36.461306,60) near on<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;star.apstar_id=near.apstar_id<br>\r\n";
@@ -1854,7 +1854,7 @@ Some hints on searching SkyServer:</p>
 	cmd += "-- with <a href=\""+url+"/help/browser/browser.aspx?cmd=description+apogeeStarAllVisit+U\">apogeeStarAllVisit</a> and visit_pk with all_visit_pk.<br>\r\n";
 	cmd += "<br>\r\n";
 	cmd += "SELECT  top 100<br>\r\n";
-	cmd += "  visit.*, aspcap.teff, aspcap.logg, aspcap.metals<br>\r\n";
+	cmd += "  visit.*, aspcap.teff, aspcap.logg, aspcap.param_m_h<br>\r\n";
 	cmd += "FROM apogeeVisit visit<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;JOIN <a href=\""+url+"/help/browser/browser.aspx?cmd=description+apogeeStarVisit+U\">apogeeStarVisit</a> starvisit on visit.visit_id = starvisit.visit_id<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;JOIN <a href=\""+url+"/help/browser/browser.aspx?cmd=description+aspcapStar+U\">aspcapStar</a> aspcap on aspcap.apstar_id = starvisit.apstar_id<br>\r\n";
@@ -1910,7 +1910,7 @@ Some hints on searching SkyServer:</p>
 	cmd += "&nbsp;&nbsp;&nbsp;  photoobj.psfmag_i, photoobj.psfmag_z, <br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;  photoobj.ra as photoobj_ra, photoobj.dec as photoobj_dec, <br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;  star.apstar_id, star.ra as star_ra, star.dec as star_dec, <br>\r\n";
-	cmd += "&nbsp;&nbsp;&nbsp;  aspcap.teff, aspcap.metals, aspcap.logg<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;  aspcap.teff, aspcap.param_m_h, aspcap.logg<br>\r\n";
 	cmd += "FROM <a href=\""+url+"/help/browser/browser.aspx?cmd=description+apogeeStar+U\">apogeeStar</a> AS star <br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;   CROSS APPLY <a href=\""+url+"/help/browser/browser.aspx?cmd=description+fGetNearestObjEq+F\">dbo.fGetNearestObjEq</a>( star.ra, star.dec, 0.05) AS near <br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;   JOIN <a href=\""+url+"/help/browser/browser.aspx?cmd=description+PhotoObj+U\">photoobj</a> ON near.objid=photoobj.objid <br>\r\n";

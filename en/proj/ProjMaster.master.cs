@@ -42,7 +42,6 @@ namespace SkyServer.Proj
             gutter += "2.5,Galaxies,/proj/advanced/galaxies/;";
             gutter += "2.6,Sky Surveys,/proj/advanced/skysurveys/;";
             gutter += "2.7,Quasars,/proj/advanced/quasars/;";
-            gutter += "2.8,Image Processing,/proj/advanced/processing/;";
             gutter += "3,Research Challenges,/proj/challenges/;";
             gutter += "3.1,The Milky Way,/proj/challenges/milkyway/;";
             gutter += "3.2,Small Galaxies,/proj/challenges/galaxies/;";
