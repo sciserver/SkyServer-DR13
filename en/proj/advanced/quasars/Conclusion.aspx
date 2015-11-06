@@ -56,7 +56,7 @@
           SkyServer's <a href="../../../help/howto/search" target="help">Searching for 
           Data</a> tutorial, or do a web search for SQL. For other 
           tutorials on SQL, see <a href="http://www.sqlcourse.com/" target="help">here</a>
-          and <http://www.1keydata.com/sql/sql.html>here</a>.</font></td>
+          and <a href="http://www.1keydata.com/sql/sql.html" target="help">here</a>.</td>
         </tr>
       </table>
       <p></p>

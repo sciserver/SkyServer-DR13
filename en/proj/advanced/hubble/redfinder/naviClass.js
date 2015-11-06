@@ -17,8 +17,20 @@ function Div(id,left,top) {
 	this.moveTo(left,top);
 }
 
-if (navigator.appName.indexOf("Netscape") != -1) {        
-	// Here are methods for moving, hiding, stacking, and manipulating
+// This function was added by Manuchehr Taghizadeh-Popp (06/01/2015) in order to take into account the change in the "navigator.appName" name for Microsoft Internet explorer versions 11 and above.
+function IsInternetExplorer() { // TESTS WETHER IT IS EITHER (IE10 or below) OR (IE11 or above)
+    if ((navigator.userAgent.indexOf('MSIE') != -1) || (navigator.userAgent.indexOf('Trident') != -1 && navigator.userAgent.indexOf('MSIE') == -1)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+
+//if (navigator.appName.indexOf("Netscape") != -1) {        
+if (navigator.appName.indexOf("Netscape") != -1  && !IsInternetExplorer()   ) {        
+        // Here are methods for moving, hiding, stacking, and manipulating
 	Div.prototype.initialize = function() {this.layer = this.window.document[this.id];}
 	Div.prototype.moveTo = function(x,y) { this.layer.moveTo(x,y);}
 	Div.prototype.moveBy = function(x,y) { this.layer.moveBy(x,y);}
@@ -85,8 +97,10 @@ if (navigator.appName.indexOf("Netscape") != -1) {
 
 // Now define methods for Internet Explorer.
 
-if (navigator.appName.indexOf("Microsoft") != -1) {
-	// Methods to move the dynamic object
+//if (navigator.appName.indexOf("Microsoft ") != -1) {
+if (IsInternetExplorer()) {
+    
+    // Methods to move the dynamic object
 	Div.prototype.initialize = function() {
 		this.element = this.window.document.all[this.id];
 		this.style = this.element.style;

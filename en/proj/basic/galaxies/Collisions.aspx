@@ -31,12 +31,13 @@
       a burst of star formation in interacting galaxies, leaving a 
       new generation of stars in a galaxy where normal star formation may have 
       ceased long ago.</p>
+          <!--
       <p>Galaxy collisions take hundreds of millions of years, so we can't watch 
       them happen. Instead, we use computer simulations to show us what 
       would happen if two galaxies collided in a certain way. If you are 
       interested in learning about galaxy collisions, you can use a 
       <a href="supplemental.aspx">web-based simulation tool</a> to model 
-      them.</a></p>
+      them.</a></p>-->
       <p></p>
       <p></td>
     </tr>

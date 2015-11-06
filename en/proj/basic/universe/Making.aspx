@@ -17,7 +17,10 @@ Explore 4 and 5. Put magnitude on the x-axis and redshift on the y-axis. What do
 Graphing and Analyzing Data</a> tutorial.</p>
 </td></tr></table>
 
-<p>The points in your diagram should roughly connect to form a straight line. If you want to quantify how close your graph is to being a straight line, see how to <a href="trendline.aspx">Add a Trendline</a> to your Hubble diagram.</p>
+<p>The points in your diagram should roughly connect to form a straight line. If you want to 
+    quantify how close your graph is to being a straight line, see how to 
+    <a href="../../../help/howto/graph/trendline.aspx" target="help">add a trendline</a> 
+    to your Hubble diagram.</p>
 <p></p>
 
 <table class=question width=600 cellpadding=5 cellspacing=0><tr>

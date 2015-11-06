@@ -79,7 +79,7 @@
               1237648705114603547</a></p></td>
               <td align=right><p>184.848788</p></td>
               <td align=right><p>0.562199</p></td>
-            </tr
+            </tr>
             <tr>
               <td align=center><p><a href="../../../tools/explore/obj.aspx?id=1237671128589336718" target="tools">
               1237671128589336718</a></p></td>

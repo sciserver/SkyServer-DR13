@@ -6423,6 +6423,9 @@
     <Content Include="en\tools\Resolver.ashx" />
     <Content Include="en\skyserver\paper\SkyServer-ACM-SIGMOD-2002.pdf" />
     <Content Include="en\tools\explore\ObjectExplorer.Master" />
+    <Content Include="en\tools\places\abell.csv" />
+    <Content Include="en\tools\places\messier.csv" />
+    <Content Include="en\tools\places\ngc.xls" />
     <None Include="en\tools\STARTBall\FlashJavascriptGateway\FlashJavascriptGateway\.DS_Store" />
     <None Include="en\tools\STARTBall\FlashJavascriptGateway\FlashJavascriptGateway\installation\.DS_Store" />
     <None Include="en\tools\STARTBall\FlashJavascriptGateway\FlashJavascriptGateway\source\flash\actionscript\com\macromedia\javascript\JavaScriptProxy.as" />

@@ -56,12 +56,12 @@ submit SQL queries to extract the data that you need from these
 databases.  However, you do not usually need to specify which database
 your query is run on, since the SkyServer is configured by default to
 submit your queries to a particular database.  This site is configured
-to submit your queries to the <%=globals.Database%> database, which contains the
-best data and most recent processings for the entire released sky area. 
+to submit your queries to the <b><%=globals.Database%></b> database, which contains the
+best data and most recent processing for the entire released sky area. 
 <p>
-The <%=globals.Database%> database contains a large number of tables, some of which contain photometric measurements (such as PhotoObj), spectroscopic measurements (such as SpecObj), or information about the observing conditions (Field) or survey geometry(TileBoundary). See the <a href="datamodel.aspx">data model page</a> for more details.</p>
+The <%=globals.Database%> database contains a large number of tables, some of which contain photometric measurements (such as PhotoObj), spectroscopic measurements (such as SpecObj), or information about the observing conditions (Field) or survey geometry(TileBoundary). See the <a href="http://data.sdss3.org/datamodel/">data model page</a> for more details.</p>
 
-<p>In addition to the tables, we have defined <b>Views</b>, which are subsets or combinations of the data stored in the tables. Views are queried the same way Tables are; they exist just to make your life easier. For instance, the view <b>Galaxy</b> can be used to get photometric data on objects we classify as galaxies, without having to specify the classification in your query.<br><p>
+<p>In addition to the tables, we have defined <b>Views</b>, which can be thought of as virtual tables and are subsets or combinations of the data stored in the tables. Views are queried the same way Tables are; they exist just to make your life easier. For instance, the view <b>Galaxy</b> can be used to get photometric data on objects we classify as galaxies, without having to specify the classification in your query.<br><p>
 Both the Skyserver and CasJobs interfaces have a <b>Schema Browser</b>. It shows you all of the available databases, the tables in each database, and the quantities stored in each column of the tables.
 </p>
 
@@ -79,7 +79,14 @@ that return a large number of objects.</b>
 </h3>
 
 
-<p>Now that we have an overview of the database structure, how do we actually get data out? You will have to write a query using SQL. The most basic query consists of three parts:</p>
+<p>Now that you have an overview of the database structure, how can you actually get data out? You can either used one of the webform-based tools
+on the <a href="<%=url%>/tools/search/searchhome.aspx">Data/Search</a> page, or you can choose to write your own query using SQL 
+using the <a href="<%=url%>/tools/search/sql.aspx">SQL Search</a> tool. Running a SQL query is the most direct and powerful way to
+interact with the database. The following is a brief introduction to writing SkyServer SQL queries. You can view other help pages 
+like <a href="<%=url%>/help/cooking/">Cooking With Sloan</a> and <a href="<%=url%>/help/howto/search/">SQL Tutorial</a> for additional help
+on writing SQL queries in SkyServer.
+<br>
+The most basic query consists of three parts:</p>
 <ol>
 <li>A <b>SELECT</b> clause, which specifies the parameters you wish to retrieve;
 <li>A <b>FROM</b> clause, which specifies the database tables you want to extract the data from;
@@ -197,23 +204,20 @@ Finally, the MATHEMATICAL operators (both numeric and bitwise) are:</p>
 <p>
 Several SDSS tables contain bit-encoded flags to indicate various types of
 information about the object or quantity in question (e.g., the
-PhotoObjAll table and the PhotoTag view each have the <b>flags</b> field, SpecObj has
-<b>zWarning</b> flags etc.).  
+PhotoObjAll table and the PhotoTag view each have the <b>flags</b> column, SpecObj has
+<b>zWarning</b> and various targeting flags etc.).  
 
 <p>One of the most important uses of bit flags is to indicate why an object was 
-targeted for spectroscopy. A list of spectroscopic target flags is available on the 
-<a href="http://www.sdss3.org/dr9/spectro/targets.php">DR9 Spectroscopic 
-Target Flags</a> page.</p>
+targeted for spectroscopy. A list of spectroscopic target flags is available on the
+<a href="<%=globals.SdssUrl%>spectro/targets.php">Spectroscopic Target Flags</a> page.</p>
 
 This section describes how you can test 
 for flag values in your query.  For sample queries that demonstrate the use of
-flags, see the <a href="<%=url%>/help/docs/realquery.aspx#errflag"> Errors using
-flags</a>, <a href="<%=url%>/help/docs/realquery.aspx#egal"> Elliptical
-galaxies with model fits</a>, <a
-href="<%=url%>/help/docs/realquery.aspx#diamlim"> Diameter limited sample</a>, 
-<a href="<%=url%>/help/docs/realquery.aspx#lrg"> LRG sample</a>, and <a
-href="<%=url%>/help/docs/realquery.aspx#flags"> Clean photometry with flags</a>
-sample queries for examples on how to use flags.
+flags, see the <a href="<%=url%>/help/docs/realquery.aspx#starflag"> Using
+flags</a>, <a href="<%=url%>/help/docs/realquery.aspx#diamlim"> Diameter limited sample</a>, 
+<a href="<%=url%>/help/docs/realquery.aspx#lrg"> LRG sample</a>, <a href="<%=url%>/help/docs/realquery.aspx#cleanStars"> 
+Clean photometry with flags - Stars</a>, and <a href="<%=url%>/help/docs/realquery.aspx#cleanGals"> Clean photometry with flags
+- Galaxies</a> sample queries for examples on how to use flags.
 
 <h4>Checking a single flag
 &nbsp;&nbsp;&nbsp;<a href="#top"><img src="images/top.gif" ALT="Back to Top" NOSAVE BORDER="0" HEIGHT="25" ALIGN="TOP"></a>
@@ -314,6 +318,11 @@ WHERE
 </pre>
 </td></tr></table>
 <p>
+As mentioned above, if you are running a query that is expected to match a large number of rows (millions), it is better
+to first obtain the binary bitmask resulting from the multiple flag arithmetic and using that single bitmask instead of
+repeated function calls to the flag functions, as described in the <a href="#functions"> Using dbo
+functions in your query</a> subsection of the <a href="#optquery">Optimizing Queries</a> section below.
+
 
 <a name="clean"></a>
 <br>
@@ -329,8 +338,13 @@ yourself in your query.  This is not done automatically for you (e.g. with a vie
 is that the flag constraints that are required for this filtering often impose a significant performance penalty on your query
 </a>.
 <p>
-Please see the <a href="realquery.aspx#flags">Clean Photometry</a> sample query for help on how to use the photometry
-flags to select only objects with clean photometry.
+There is a single up or down flag that is available in the PhotoObjAll table (and its views) called "clean" that is
+set to 1 if the photometry meets our definition of good photometry, and the use of this shorthand flag is illustrated
+in the <a href="realquery.aspx#clean">Clean Photometry</a> sample query. This is meant to provide a simple way to select
+objects with clean photometry. However, if you do not trust this or you want to be more specific and use the
+individual photo flags to select objects that meet your criteria for "clean photometry", this is illustrated in two other
+sample queries: the <a href="<%=url%>/help/docs/realquery.aspx#cleanStars"> Clean photometry with flags - Stars</a>, and 
+the <a href="<%=url%>/help/docs/realquery.aspx#cleanGals"> Clean photometry with flags - Galaxies</a> sample queries.
 
 <a name="invalid"></a>
 <br>
@@ -795,7 +809,33 @@ WHERE
 </pre></td></tr></table>
 <p>
 This will avoid the wastefully repeated function call for each and every photobj
-in the table.
+in the table.This is even more important when you are using multiple flags and you can
+reduce the comparison to a single bitmask using flag arithmetic.  In the final example
+above in the <a href="">Querying Bit Flags</a> section, you can replace the original query:
+<pre>
+SELECT top 10 objid, flags FROM PhotoTag
+WHERE 
+    ( flags & (dbo.fPhotoFlags('NODEBLEND')
+               + dbo.fPhotoFlags('BINNED1')
+               + dbo.fPhotoFlags('BINNED2')) ) = 0
+</pre>
+with a more efficient version by first running the following pre-query:
+<pre>
+SELECT (dbo.fPhotoFlags('NODEBLEND')
+               + dbo.fPhotoFlags('BINNED1')
+               + dbo.fPhotoFlags('BINNED2'))
+</pre>
+which returns the bitmask value <b>805306432</b>, which can in turn be substituted back in the 
+original query as follows:
+<pre>
+SELECT top 10 objid, flags FROM PhotoTag
+WHERE 
+    ( flags & 805306432 ) = 0
+</pre>
+so as to save 3 function calls and make the query significantly more efficient. (In this particular example it does 
+not matter because we are only asking for 10 rows, but if the "TOP 10" were to be removed and the query was run
+on millions of rows, it would make a difference).
+
 <p>
 
 <hr>
