@@ -112,6 +112,7 @@
 <table width=720 border=0>
 <tr>
 <%
+        writePlateHeader(oConn);
 	    // generate the options list right out of the database
             if (survey == "apogee") writePlateAPOGEE(oConn);
             else  writePlate(oConn);

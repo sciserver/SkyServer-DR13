@@ -8,16 +8,24 @@
 	<div id="logos">
 		<div style="position:absolute;left:<%= logoleftpos%>px;top:108px;z-index:5;">
             <table width="80" border="0" cellpadding="0" cellspacing="5">
-		        <tr><td align="middle" class="smallbodytext">SDSS-III is <br>supported by</td></tr>
+		        <tr><td align="middle" class="smallbodytext">SDSS is <br>supported by</td></tr>
 		        <tr><td align="middle"><a href="http://www.sloan.org"><img src="../images/logo_sloan.jpg" width="48" height="48" border="0"></a></td></tr>
 		        <tr><td align="middle"><a href="http://www.nsf.gov"><img src="../images/logo_nsf.jpg" width="48" height="48" border="0"></a></td></tr>
 		        <tr><td align="middle"><a href="http://www.energy.gov"><img src="../images/logo_energy.jpg" width="48" height="48" border="0"></a></td></tr>
 		        <tr><td>&nbsp;</td></tr>
 		        <tr><td align="middle" class="smallbodytext">Powered by</td></tr>
+                <tr>
+                    <td align="middle">
+                        <a href="<%=globals.SciServerLink%>">
+                            <img src="../images/sciserver_icon_bkgd_blue_64px.png" alt="SciServer logo" /><br />
+                            <span class="smallbodytext">SciServer</span>
+                        </a>
+                    </td>
+                </tr>
 		        <tr><td align="middle"><a href="http://research.microsoft.com/"><img src="../images/logo_ms.jpg" width="64" height="21" border="0"></a></td></tr>
             </table>
         </div>
-        <div style="position:absolute;left:<%= logoleftpos%>px;top:363px;z-index:5;">
+        <div style="position:absolute;left:<%= logoleftpos%>px;top:450px;z-index:5;">
             <table width="80" border="0" cellpadding="0" cellspacing="0">
 		        <tr><td><hr class="hrule"></td></tr>
   		        <tr><td>		
@@ -37,6 +45,24 @@
 	</div>
 
 	<div id="public">
+
+        <div class="migrationAlert">
+
+            <p>Within the next few weeks, we will roll out a new collaborative science framework called 
+                <a href="<%=globals.SciServerLink%>" target="_blank">SciServer&nbsp;<img src="images/new_window_cyan.png" alt=" (new window)" /></a>. 
+                SciServer will integrate the current SkyServer and CasJobs systems, as well as add several new features. The main feature is 
+                a Single Sign-On system across all SciServer applications. SkyServer will still support anonymous 
+                access, but if you log in with your new SciServer account, you can save queries and results to 
+                your MyDB personal database in CasJobs. You can also seamlessly access other SciServer services.</p>
+                
+                <p>For more information 
+                on all upcoming new features, please see our 
+                    <a href="<%=globals.SciServerLink%>building-blocks/updates/" target="_blank">New Features
+                        <img src="images/new_window_cyan.png" alt=" (new window)" /></a> section on the SciServer website.</p>
+
+        </div>
+
+
 		<table border="0" cellpadding="0" cellspacing="2" width="668">
 			<tr><td colspan=5 class="midbodytext" style="color=#ffff00"><b>
 			<!-- motd.inc" -->
