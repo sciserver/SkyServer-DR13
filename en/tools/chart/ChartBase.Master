@@ -53,6 +53,14 @@
     </asp:ContentPlaceHolder>
 </head>
 <body>
+   <asp:ContentPlaceHolder ID="Content1"  runat="server">
+        <div id="headerAlert">
+            <a href="<%=globals.SciServerLink%>updates/" class="imgwithlink" target="_blank">
+                <img src="../../images/sciserver_logo_usermsg.png" alt="logo" width="190" />
+            </a>
+            <p><a href="<%=globals.SciServerLink%>updates/" target="_blank">Coming soon!<img src="../../images/new_window_cyan.png" alt=" (new window)" style="max-width:95%;margin:2%" /></a></p>
+        </div>    
+   </asp:ContentPlaceHolder> 
     <script type="text/javascript">
         var branchname = "<%=name%>";
     </script>
@@ -66,19 +74,6 @@
 		    <td class='title' align="left" width="<%= (tabwidth-40)%>">&nbsp;&nbsp;<%= globals.Release%><br />
 		    </td>
 	    </tr>
-        <tr>
-            <td width="100%" colspan="2">
-                <div id="headerAlertTools">
-                    <a href="<%=globals.SciServerLink%>updates/" class="imgwithlink" target="_blank">
-                    <img src="../../images/sciserver_icon_bkgd_blue_73px.png" alt="logo" class="imgnoborder" width="40" />
-                    </a>
-                        <h2>SciServer is coming!</h2>
-                        <p><a href="<%=globals.SciServerLink%>updates/">Read about the new features in our next release!
-                                <img src="../../images/new_window.png" alt=" (new window)" /></a>
-                        </p>
-                </div>
-            </td> 
-        </tr>
         </table>
         <table border="0" cellspacing="0" cellpadding="0" >
 	        <tr>
@@ -205,14 +200,14 @@
 	<tr><td bgColor="lightblue" ONMOUSEOVER="this.T_TEMP='2000';this.T_WIDTH='140';return escape('Shows masks (pink) around bright objects and data artifacts')"><INPUT type="checkbox" onclick="setopt(this,'M')" name="Masks" id="Masks">SDSS Masks</td></tr>
 	<tr><td bgColor="lightblue" ONMOUSEOVER="this.T_TEMP='2000';this.T_WIDTH='140';return escape('Shows plates (lavender) used to collect spectra')"><INPUT type="checkbox" onclick="setopt(this,'Q')" name="Plates" id="Plates">SDSS Plates</td></tr>		
 
-           
            </table>
     </div>
-        <div id="content">
+        <div id="content">               
             <asp:ContentPlaceHolder ID="FCContent" runat="server">
-        
             </asp:ContentPlaceHolder>
         </div>
+
+
     </form>
     <script type="text/javascript">init('<%=def%>');</script>
     <script language="JavaScript" type="text/javascript" src="../../wz_tooltip.js"></script>
