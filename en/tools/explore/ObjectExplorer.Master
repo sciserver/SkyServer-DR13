@@ -7,6 +7,7 @@
 <head runat="server">
   
     <link href="../../tools.css" rel="stylesheet" type="text/css" />
+    <link href="../../../alerts.css" rel="stylesheet" type="text/css" />
     
     <title>Object Explorer</title>
 
@@ -19,6 +20,14 @@
 </head>
 
 <body>
+   <asp:ContentPlaceHolder ID="Content1"  runat="server">
+        <div id="headerAlert">
+            <a href="<%=globals.SciServerLink%>updates/" class="imgwithlink" target="_blank">
+                <img src="../../images/sciserver_logo_usermsg.png" alt="logo" width="190" />
+            </a>
+            <p><a href="<%=globals.SciServerLink%>updates/" target="_blank">Coming soon!<img src="../../images/new_window_cyan.png" alt=" (new window)" style="max-width:95%;margin:2%" /></a></p>
+        </div>    
+   </asp:ContentPlaceHolder> 
     <form id="form1" runat="server">
     <div>        
       <table border="0" cellspacing="0" cellpadding="2" bgcolor="black">

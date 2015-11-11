@@ -19,7 +19,9 @@
 
     </script>
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
 	<table border='0' width='640' class="content">
 	<tr>	
 	<td colspan=2 align='center'>
