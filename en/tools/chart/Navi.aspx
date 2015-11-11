@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>SDSS <%=globals.Release%> Navigate Tool</title>
     <link href="../../tools.css" rel="stylesheet" type="text/css">
+    <link href="../../../alerts.css" rel="stylesheet" type="text/css" />
     <style>
 	     /* a		 {font-family:sans-serif;font-size:8pt;color:#aaaaff; text-decoration:none;} */
 	    .i		 {font-family:sans-serif;font-size:8pt;color:#00ff00;}
@@ -147,6 +148,13 @@
 </head>
 
 <body onload="init();">
+       <div id="headerAlert">
+            <a href="<%=globals.SciServerLink%>updates/" class="imgwithlink" target="_blank">
+                <img src="../../images/sciserver_logo_usermsg.png" alt="logo" width="190" />
+            </a>
+            <p><a href="<%=globals.SciServerLink%>updates/" target="_blank">Coming soon!<img src="../../images/new_window_cyan.png" alt=" (new window)" style="max-width:95%;margin:2%" /></a></p>
+        </div>    
+
     <form id="form1" runat="server">
     <div>
     
@@ -289,6 +297,7 @@
 
 <td id='main' valign="top">
 <!--This Contains Canvas-->
+
         <div name="toggeleImage" id="mtoggle">  <span class='snavi'><b> Select Image Source :  </b></span>
         <input type="radio" name="rad" id="sdss"  value="sdss" checked="checked" onclick="setImageSource(this,'Z')"/><span class='s'>SDSS</span>
         <input type="radio" name="rad" id="twomass" value="twomass" onclick="setImageSource(this,'X')" /><span class='s'>2MASS</span>
@@ -318,6 +327,5 @@
 <!--Iframe for shownearest-->
 <script language="JavaScript" type="text/javascript" src="../../wz_tooltip.js"></script>
 <iframe id="near" name='near' width ="160px" height="600px" scrolling="no" frameborder="0" src="blank.html"/>
-
 </body>
 </html>

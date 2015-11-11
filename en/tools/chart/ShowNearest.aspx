@@ -90,6 +90,7 @@ function recenter(ra_, dec_) {
 
 </head>
 <body onload="init()">
+
     <form id="form1" runat="server">
     <div>
     

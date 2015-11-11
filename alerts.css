@@ -96,6 +96,8 @@ body > div.migrationMenu ul>li>a {
 }
 
 #headerAlert {
+    position:relative;
+    float:right;
     padding-left:0px;
     padding-right:10px;
     width: 200px;
@@ -130,7 +132,14 @@ body > div.migrationMenu ul>li>a {
 
 #headerAlertTools
 {
-    background-color:#003366;
+    padding-left:0px;
+    padding-right:10px;
+    width: 200px;
+    height: 73px;
+    background-color:#fc6f03;
+    border-radius:5px;
+    z-index:500;
+    float:right;
 }
 
     #headerAlertTools > .imgwithlink {
