@@ -1,9 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="../../ToolsMaster.master" AutoEventWireup="true" CodeBehind="SearchForm.aspx.cs" Inherits="SkyServer.Tools.Search.SearchForm" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ToolsContent" runat="server">
 <script language="javascript" src="validate.js"></script>
-
 	<div id="transp">
-		<TABLE height="500" cellSpacing="0" cellPadding="0" width="640" border="0" ms_2d_layout="TRUE">
+        <TABLE height="500" cellSpacing="0" cellPadding="0" width="640" border="0" ms_2d_layout="TRUE">
 			<TR vAlign="top">
 				<TD width="640" height="500">
 					<form id="Form1" method="post" runat="server">

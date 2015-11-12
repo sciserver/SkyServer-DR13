@@ -6,11 +6,9 @@
     <div id="transp">
 
 <script type="text/javascript" language="javascript">
-    function radiogo(x)
-        {
-            document.getElementById(x).checked = true;
-        }
-
+    function radiogo(x) {
+        document.getElementById(x).checked = true;
+    }
 </script>
 
 <form method="get" action="plate.aspx"  id="form1" name="form1">
@@ -52,10 +50,14 @@
 	<td class='b'>
         <select name="P" onfocus="javascript:radiogo('radiosdss');">
         <%
+            using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
+            {
+                oConn.Open();
+            
                 string cmd = "SELECT CAST(plateID as VARCHAR(20)), plate, mjd ";
                 cmd += " from PlateX where survey='sdss'";
                 cmd += " order by plateID";            
-                writeOptions(cmd, "Skyserver.getimg.Plate.getPlateFromSDSS");
+                writeOptions(oConn, cmd);
         
         %>
 	    </select>
@@ -66,7 +68,7 @@
                 cmd = "SELECT CAST(plateID as VARCHAR(20)), plate, mjd ";
                 cmd += " from PlateX where survey='segue1' or survey='segue2'";
                 cmd += " order by plateID";
-                writeOptions(cmd, "Skyserver.getimg.Plate.getPlateFromSEGUE2");
+                writeOptions(oConn, cmd);
              %>
         </select>
     <td class="b">
@@ -75,7 +77,7 @@
                 cmd = "SELECT CAST(plateID as VARCHAR(20)), plate, mjd ";
                 cmd += " from PlateX where survey='boss'";
                 cmd += " order by plateID";
-                writeOptions(cmd, "Skyserver.getimg.Plate.getPlateFromBOSS");
+                writeOptions(oConn, cmd);
              %>
         </select>
 
@@ -87,7 +89,7 @@
                 cmd = "SELECT plate_visit_id as plateID, plate, mjd ";
                 cmd += " from apogeePlate";
                 cmd += " order by plate,mjd";
-                writeOptions(cmd , "Skyserver.getimg.Plate.getPlateFromAPOGEE"); 
+                writeOptions(oConn, cmd); 
              %>
         </select>
         </td>
@@ -111,7 +113,7 @@
 	    // generate the options list right out of the database
             if (survey == "apogee") writePlateAPOGEE();
             else  writePlate();
-        
+        }
 %></tr>
 </table>
 <!------------------------------------<end fiber table-------------->

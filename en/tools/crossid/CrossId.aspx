@@ -4,6 +4,14 @@
 <script type="text/javascript">
 //window.onload = alert('OK');
 
+
+function goToWindow() {
+        var w = window.open("", 'search');
+        w.focus();
+
+}
+
+
 function disableFields(photo,spectro,apogee) {
 	document.getElementById("photoScope1").disabled = photo;
 	document.getElementById("photoScope2").disabled = photo;
@@ -92,7 +100,7 @@ function doSpecQuery(join, pmf) {
 
 function doApogeeQuery() {
 	var joinClause, selectClause;
-  selectClause = "SELECT *";
+  selectClause = "SELECT s.*";
   joinClause = "      JOIN #x x ON x.up_id = u.up_id\n      JOIN apogeestar s ON s.apstar_id = x.apstar_id\n";
 	document.crossid.uquery.value = selectClause + "\nFROM #upload u\n" + joinClause;
 }
@@ -228,8 +236,10 @@ function resetRadio() {
 <span class='frame'><font size=-1><a class="qtitle" href="#help">Scroll down for Help</a></font></span></div>
 
 <div id="transp">
-<FORM METHOD="post" ENCTYPE="multipart/form-data" ACTION="x_crossid.aspx" id="crossid" name="crossid">
+<FORM METHOD="post" ENCTYPE="multipart/form-data" ACTION="../search/X_Results.aspx" id="crossid" name="crossid" target="search">
 
+<input type="hidden" name="searchtool" id="searchtool" value="CrossID" />
+<input type="hidden" name="TaskName" id="TaskName" value="Skyserver.tools.CrossId.CrossId"/>
 
 <table BORDER=1 WIDTH=540 cellpadding=3 cellspacing=3 BGCOLOR="#aaaaaa"><tr><td class="q">
 <table border="0" width="100%">
@@ -389,7 +399,7 @@ ORDER BY x.up_id
 	    <td colspan="2"><table width="100%">
 		<tr>
 		    <td width="10%" align="left">
-			<input id=submit type=submit value=Submit class="button">
+			<input id=submit type="submit" value="Submit" class="button">
 	    	    </td>
 		    <td width="30%" align="center" class="q">
 			<table BORDER=0 width="100%">

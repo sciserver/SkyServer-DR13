@@ -5,8 +5,6 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
-using SkyServer.Tools.Search;
-using System.Data;
 
 namespace SkyServer.Tools.Scroll
 {
@@ -59,35 +57,35 @@ namespace SkyServer.Tools.Scroll
                 writeRun(r[i], ((i % 2) == 0 ? "bsml" : "tsml"));
         }
 
-        protected void writeAll()
+        protected void writeAll(SqlConnection oConn)
         {
-            string cmd = "select distinct stripe, run from Run order by stripe, run";
-            int stripe, run, oldstripe;
-            oldstripe = -1;
-            string runs = "";
-
-            writeHead();
-
-            ResponseREST runQuery = new ResponseREST();
-            string ClientIP = runQuery.GetClientIP();
-            DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Scroll.ScrollHome.getStripeRun");
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            using (SqlCommand oCmd = oConn.CreateCommand())
             {
-                while (reader.Read())
-                {
-                    stripe = reader.GetInt32(0);
-                    run = reader.GetInt16(1);
-                    if (stripe != oldstripe)
-                    {
-                        if (oldstripe != -1) writeRow(runs);
-                        runs = "" + stripe;
-                        oldstripe = stripe;
-                    }
-                    runs += "," + run;
-                }
-                writeRow(runs);
-            }
+                string cmd = "select distinct stripe, run from Run order by stripe, run";
+                int stripe, run, oldstripe;
+                oldstripe = -1;
+                string runs = "";
 
+                writeHead();
+
+                oCmd.CommandText = cmd;
+                using (SqlDataReader reader = oCmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        stripe = reader.GetInt32(0);
+                        run = reader.GetInt16(1);
+                        if (stripe != oldstripe)
+                        {
+                            if (oldstripe != -1) writeRow(runs);
+                            runs = "" + stripe;
+                            oldstripe = stripe;
+                        }
+                        runs += "," + run;
+                    }
+                    writeRow(runs);
+                }
+            }
         }
     }
 }

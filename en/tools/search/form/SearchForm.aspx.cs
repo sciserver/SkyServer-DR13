@@ -210,7 +210,7 @@ namespace SkyServer.Tools.Search
             //this if statement takes care of count(*) case
             if (NumObjs.SelectedItem.Value.CompareTo("count") == 0)
             {
-                s += "count(*)";
+                s += "count(*) as count";
             }
             else
             {
@@ -343,7 +343,7 @@ namespace SkyServer.Tools.Search
             }
 
             //			next line selects quasars
-            if (objecttype.SelectedItem.Text.CompareTo("quasars") == 0) l.Add("(s.class = 3 or s.class = 4)");
+            if (objecttype.SelectedItem.Text.CompareTo("quasars") == 0) l.Add("(s.class = 'QSO')");
 
             if (allorspectra.SelectedItem.Text.CompareTo("only objects with spectra") == 0)
             {
@@ -500,7 +500,7 @@ namespace SkyServer.Tools.Search
         protected void runSql(object sender, System.EventArgs e)
         {
             prevText = SqlBox.Text;
-            string query = SkyServer + "?searchtool=SearchForm&format=";
+            string query = SkyServer + "?searchtool=SearchForm&TaskName=Skyserver.tools.search.SearchForm&format=";
             query += RadioButtonList1.SelectedItem.Value;
             query += "&cmd=";
             string cmd = SqlBox.Text.Replace("\n", "%0A");
@@ -512,7 +512,7 @@ namespace SkyServer.Tools.Search
         protected void runSqlSyntaxCheck(object sender, System.EventArgs e)
         {
             prevText = SqlBox.Text;
-            string query = SkyServer + "?searchtool=SearchForm&syntax=Syntax&format=";
+            string query = SkyServer + "?searchtool=SearchForm&TaskName=Skyserver.tools.search.SearchForm&syntax=Syntax&format=";
             query += RadioButtonList1.SelectedItem.Value;
             query += "&cmd=";
             string cmd = SqlBox.Text.Replace("\n", "%0A");

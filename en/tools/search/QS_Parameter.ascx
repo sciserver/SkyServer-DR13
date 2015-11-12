@@ -53,18 +53,18 @@
 	</tr></table></td>
   </tr>
 
-    <% 
-        ResponseREST rs = new ResponseREST();
-
+<%     using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
+       {
+           oConn.Open();
            if (queryType == "irspec")
            {
                Response.Write("<tr><td colspan='2' class='q' align='center'>Infrared Spectra</td></tr>");
-               rs.showIRSpecParams(queryType, Response, "SkyServer.Explore.IRQS.getPhotoObjAll");
+               ResponseAux.showIRSpecParams(oConn, queryType, Response);
                Response.Write("</tr>\n");
            }   
            else     // this else means: show Imaging and Spectroscopy params only if this is not the Infrared Spectro tool
            {        
-%>           
+%>  
 
   <tr>
 	<td class='q' align='middle'>
@@ -76,19 +76,18 @@
     </tr>    
                     
 <%           
-            if (queryType == "spec")
-                {
-                    rs.showSpecParams(queryType, Response, "SkyServer.Explore.SQS.getPhotoObjAll");
-                    rs.showImgParams(queryType, Response, "SkyServer.Explore.SQS.getPhotoObjAll");
-               }
-               else 
+               if (queryType == "spec")
                {
-
-                   rs.showImgParams(queryType, Response, "SkyServer.Explore.IQS.getPhotoObjAll");
-                   rs.showSpecParams(queryType, Response, "SkyServer.Explore.IQS.getPhotoObjAll");
+                   ResponseAux.showSpecParams(oConn, queryType, Response);
+                   ResponseAux.showImgParams(oConn, queryType, Response);
+               }
+               else
+               {
+                   ResponseAux.showImgParams(oConn, queryType, Response);
+                   ResponseAux.showSpecParams(oConn, queryType, Response);
                }
            }
-       
+       }
     %>
     </tr>
   </table>

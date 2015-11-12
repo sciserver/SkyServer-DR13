@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data;
 
 namespace SkyServer.Tools.QuickLook
 {
@@ -45,6 +46,8 @@ namespace SkyServer.Tools.QuickLook
         public string spectralClass = null;
         public string flags = null;
         public float? redshift = null;
+
+        public DataSet LoadExplore = new DataSet();// contains the main info concerning the resolved object. Filled up the first time the explore page loads.
 
     }
 }

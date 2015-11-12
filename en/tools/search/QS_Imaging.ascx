@@ -111,13 +111,16 @@
 		  <table>
 			<tr>
 <%
-        ResponseREST rs = new ResponseREST();
+    using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
+    {
+        oConn.Open();
         
         string cmd = "SELECT [name] FROM DataConstants WHERE field='PhotoFlags' ORDER BY value";
-
-        DataSet ds = rs.RunCasjobs(cmd, "SkyServer.Explore.QS_Imaging.getPhotoFlags");
-        using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+        using (SqlCommand oCmd = oConn.CreateCommand())
         {
+            oCmd.CommandText = cmd;
+            using (SqlDataReader reader = oCmd.ExecuteReader())
+            {
                 if (!reader.HasRows)
                 {
                     Response.Write("<td><b>No PhotoFlags found in DataConstants table</b></td>\n");
@@ -155,6 +158,8 @@
                     Response.Write("\t</OPTION></SELECT></td>\n");
                 }
             } // using DataReader
+        } // using SqlCommand
+    } // using SqlConnection            
 %>
 			</tr>
 		  </table>

@@ -464,19 +464,16 @@ namespace SkyServer.Tools.Explore
                  dbo.fGetUrlFitsCFrame(@fieldId,'r'),
                  dbo.fGetUrlFitsCFrame(@fieldId,'i'),
                  dbo.fGetUrlFitsCFrame(@fieldId,'z'),
-
                  dbo.fGetUrlFitsBin(@fieldId,'u'),
                  dbo.fGetUrlFitsBin(@fieldId,'g'),
                  dbo.fGetUrlFitsBin(@fieldId,'r'),
                  dbo.fGetUrlFitsBin(@fieldId,'i'),
                  dbo.fGetUrlFitsBin(@fieldId,'z'),
-
                  dbo.fGetUrlFitsMask(@fieldId,'u'),
                  dbo.fGetUrlFitsMask(@fieldId,'g'),
                  dbo.fGetUrlFitsMask(@fieldId,'r'),
                  dbo.fGetUrlFitsMask(@fieldId,'i'),
                  dbo.fGetUrlFitsMask(@fieldId,'z'),
-
                  dbo.fGetUrlFitsAtlas(@fieldId),
                  dbo.fGetUrlFitsField(@fieldId)";
 

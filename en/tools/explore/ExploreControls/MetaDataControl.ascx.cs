@@ -20,8 +20,8 @@ namespace SkyServer.Tools.Explore
     {
         protected Globals globals;
 
-        protected double ra ;
-        protected double dec ;
+        protected double ra;
+        protected double dec;
 
         protected long? specObjId = null;
         protected int? clean = null;
@@ -40,8 +40,13 @@ namespace SkyServer.Tools.Explore
         protected RunQuery runQuery;
         private SqlConnection oConn = null;
 
+        DataSet ds = new DataSet();
+
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            //ds = (DataSet)Session["objectDataSet"];
+
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             master = (ObjectExplorer)Page.Master;
             string token = "";
@@ -57,11 +62,12 @@ namespace SkyServer.Tools.Explore
 
         private void executeQuery()
         {
-            string Cmd = ExplorerQueries.getObjParamaters.Replace("@objId", master.objId);
-            string ClientIP = runQuery.GetClientIP();
-            DataSet ds = runQuery.RunDatabaseSearch(Cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.MetaDataControl.getObjParamaters");
+            //string Cmd = ExplorerQueries.getObjParamaters.Replace("@objId", master.objId);
+            //string ClientIP = runQuery.GetClientIP();
+            //DataSet ds = runQuery.RunDatabaseSearch(Cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.MetaDataControl.getObjParamaters");
 
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            //using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            using (DataTableReader reader = ((DataSet)Session["LoadExplore"]).Tables["MetaData"].CreateDataReader())
             {
                 if (reader.Read())
                 {
@@ -83,7 +89,6 @@ namespace SkyServer.Tools.Explore
                         obj = (Int16)reader["obj"];
                     }
                 }
-
             }
 
 

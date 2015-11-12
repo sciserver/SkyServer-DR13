@@ -5,8 +5,10 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
-using SkyServer.Tools.Search;
 using System.Data;
+using SkyServer.Tools.Search;
+
+
 
 namespace SkyServer.Tools.GetImg
 {
@@ -22,15 +24,10 @@ namespace SkyServer.Tools.GetImg
 
         protected Globals globals;
         ToolsMaster master;
-
-        ResponseREST runQuery;
-        string ClientIP = "";
+        ResponseREST rs;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            runQuery = new ResponseREST();
-            ClientIP = runQuery.GetClientIP();
-
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             master = (ToolsMaster)Page.Master;
             master.gselect = 4.4;
@@ -58,30 +55,33 @@ namespace SkyServer.Tools.GetImg
                     s = "";
                     break;
             }
-                
-            if (s!=null && !"".Equals(s)) 
+
+            if (s != null && !"".Equals(s))
             {
                 if (survey == "apogee") apogeeplateid = s;
                 else plateid = long.Parse(s);
             }
         }
 
-        protected void writeOptions(string cmd, string TaskName)
+        protected void writeOptions(SqlConnection oConn, string cmd)
         {
-            DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, TaskName);
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            using (SqlCommand oCmd = oConn.CreateCommand())
             {
-                string v = "";
-
-                while (reader.Read())
+                oCmd.CommandText = cmd;
+                using (SqlDataReader reader = oCmd.ExecuteReader())
                 {
-                    v = "<OPTION VALUE='" + reader.GetValue(0).ToString() + "'";
-                    if (plateid.HasValue && ("" + plateid).Equals(reader.GetValue(0).ToString()))
-                        v += " selected";
-                    v += ">" + reader.GetValue(1).ToString() + "/" + reader.GetValue(2).ToString() + "</OPTION>\n";
-                    Response.Write(v);
-                }
-            } // using SqlDataReader
+                    string v = "";
+
+                    while (reader.Read())
+                    {
+                        v = "<OPTION VALUE='" + reader.GetSqlValue(0).ToString() + "'";
+                        if (plateid.HasValue && ("" + plateid).Equals(reader.GetSqlValue(0).ToString()))
+                            v += " selected";
+                        v += ">" + reader.GetSqlValue(1).ToString() + "/" + reader.GetSqlValue(2).ToString() + "</OPTION>\n";
+                        Response.Write(v);
+                    }
+                } // using SqlDataReader
+            } // using SqlCommand
         }
 
         protected void writePlate()
@@ -89,8 +89,8 @@ namespace SkyServer.Tools.GetImg
             if (plateid.HasValue)
             {
                     // generate the options list right out of the database
-                    string cmd = "SELECT 1 EXEC spGetFiberList @plateid";// the (semi-useless) select statement is created to assure that cmd is going to pass the checkings in spExecuteSQL. The usefull data comes in the second datatable from the resultset.
-                    cmd = cmd.Replace("@plateid", plateid.ToString());
+                    //string cmd = "SELECT 1 EXEC spGetFiberList @plateid";// the (semi-useless) select statement is created to assure that cmd is going to pass the checkings in spExecuteSQL. The usefull data comes in the second datatable from the resultset.
+                    //cmd = cmd.Replace("@plateid", plateid.ToString());
 
                     string u = "<a href='" + getimgurl + "?ID=";
                     string uphoto = "<a href='" + url + "/tools/explore/obj.aspx?id=";
@@ -99,8 +99,11 @@ namespace SkyServer.Tools.GetImg
                     string c = "";
                     int fiber = 0;
                     string fid = "";
-                    DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.getimg.Plate.spGetFiberList");
-                    using (DataTableReader reader = ds.Tables[1].CreateDataReader())
+                    rs = new ResponseREST();
+                    string URIparams = "?plateId=" + plateid.ToString() + "&query=FiberList&TaskName=Skyserver.getimg.Plate.FiberList";
+                    DataSet ds = rs.GetObjectInfoFromWebService(globals.ExploreWS, URIparams);
+                    //DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.getimg.Plate.spGetFiberList");
+                    using (DataTableReader reader = ds.Tables[0].CreateDataReader())
                     {
                         while (reader.Read())
                         {
@@ -145,7 +148,11 @@ namespace SkyServer.Tools.GetImg
 
                 cmd = cmd.Replace("@apogeeplateid", "'"+apogeeplateid+"'");
 
-                DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.getimg.Plate.spGetFiberList");
+                
+                rs = new ResponseREST();
+                string URIparams = "?plateIdApogee=" + apogeeplateid.ToString() + "&query=PlateAPOGEE&TaskName=Skyserver.getimg.Plate.PlateAPOGEE";
+                DataSet ds = rs.GetObjectInfoFromWebService(globals.ExploreWS, URIparams);
+                //DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.getimg.Plate.spGetFiberList");
                 using (DataTableReader reader = ds.Tables[0].CreateDataReader())
                 {
                     while (reader.Read())

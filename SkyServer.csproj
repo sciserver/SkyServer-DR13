@@ -1748,7 +1748,6 @@
     <Content Include="en\tools\chart\images\zoombar9.jpg" />
     <Content Include="en\tools\chart\javascript\Control.js" />
     <Content Include="en\tools\chart\javascript\Coord.js" />
-    <Content Include="en\tools\chart\javascript\naviClass.js" />
     <Content Include="en\tools\chart\javascript\ShowCanvas.js" />
     <Content Include="en\tools\chart\js\ctrlscript.js" />
     <Content Include="en\tools\chart\List.aspx" />
@@ -1763,7 +1762,6 @@
     <Content Include="en\tools\chart\SqlToForm.aspx" />
     <Content Include="en\tools\crossid\CrossId.aspx" />
     <Content Include="en\tools\crossid\Default.aspx" />
-    <Content Include="en\tools\crossid\X_CrossId.aspx" />
     <Content Include="en\tools\crossmatch\CrossMatch.aspx" />
     <Content Include="en\tools\crossmatch\css\bootstrap-theme.css" />
     <Content Include="en\tools\crossmatch\css\bootstrap-theme.min.css" />
@@ -1999,10 +1997,6 @@
     <Content Include="en\tools\quicklook\QuickLookControls\MetaDataControl.ascx" />
     <Content Include="en\tools\quicklook\quickobj.aspx" />
     <Content Include="en\tools\quicklook\Search.aspx" />
-    <Content Include="en\tools\quicklook\SetEq.aspx" />
-    <Content Include="en\tools\quicklook\SetId.aspx" />
-    <Content Include="en\tools\quicklook\SetPlfib.aspx" />
-    <Content Include="en\tools\quicklook\SetSDSS.aspx" />
     <Content Include="en\tools\quicklook\Summary.aspx" />
     <Content Include="en\tools\scroll\Camcol.aspx" />
     <Content Include="en\tools\scroll\Default.aspx" />
@@ -5607,13 +5601,6 @@
     <Compile Include="en\tools\crossid\CrossId.aspx.designer.cs">
       <DependentUpon>CrossId.aspx</DependentUpon>
     </Compile>
-    <Compile Include="en\tools\crossid\X_CrossId.aspx.cs">
-      <DependentUpon>X_CrossId.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="en\tools\crossid\X_CrossId.aspx.designer.cs">
-      <DependentUpon>X_CrossId.aspx</DependentUpon>
-    </Compile>
     <Compile Include="en\tools\crossmatch\CrossMatch.aspx.cs">
       <DependentUpon>CrossMatch.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -5861,34 +5848,6 @@
     </Compile>
     <Compile Include="en\tools\quicklook\Search.aspx.designer.cs">
       <DependentUpon>Search.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="en\tools\quicklook\SetEq.aspx.cs">
-      <DependentUpon>SetEq.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="en\tools\quicklook\SetEq.aspx.designer.cs">
-      <DependentUpon>SetEq.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="en\tools\quicklook\SetId.aspx.cs">
-      <DependentUpon>SetId.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="en\tools\quicklook\SetId.aspx.designer.cs">
-      <DependentUpon>SetId.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="en\tools\quicklook\SetPlfib.aspx.cs">
-      <DependentUpon>SetPlfib.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="en\tools\quicklook\SetPlfib.aspx.designer.cs">
-      <DependentUpon>SetPlfib.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="en\tools\quicklook\SetSDSS.aspx.cs">
-      <DependentUpon>SetSDSS.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="en\tools\quicklook\SetSDSS.aspx.designer.cs">
-      <DependentUpon>SetSDSS.aspx</DependentUpon>
     </Compile>
     <Compile Include="en\tools\quicklook\Summary.aspx.cs">
       <DependentUpon>Summary.aspx</DependentUpon>

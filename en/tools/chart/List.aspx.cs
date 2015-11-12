@@ -36,6 +36,8 @@ namespace SkyServer.Tools.Chart
         int nimages;
         Form u;
         protected ListBase master;
+        public bool HasCorrectUploadFormat = true;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             master = (ListBase)Page.Master;
@@ -54,7 +56,7 @@ namespace SkyServer.Tools.Chart
                 for (int i = 0; i < Request.Params.Keys.Count; i++)
                 {
                     key = Request.Params.Keys[i];
-                    //key = key.ToLower();
+                    //key = key.ToLow();
                     if ("scale".Equals(key)) { qscale = double.Parse(Request.Params[key]); }
                     if ("opt".Equals(key)) { opt = Request.Params[key]; }
                     if ("page".Equals(key)) { master.page = int.Parse(Request.Params[key]); }
@@ -87,18 +89,7 @@ namespace SkyServer.Tools.Chart
 
 
         protected void parseLine(string[] n, string line) {
-            string[] v = Regex.Split(line, reSplit, RegexOptions.ExplicitCapture).Where(str => !str.Equals(String.Empty)).ToArray();
-	        string name = "";
-	        string ra   = "";
-	        string dec  = "";
-
-	        for (int i=0;i<n.Length;i++) {
-		        if ("ra".Equals(n[i]))   ra   = v[i];
-		        if ("dec".Equals(n[i]))  dec  = v[i];
-		        if ("name".Equals(n[i])) name = v[i];		
-	        }
-	        //showNextImage(double.Parse(ra),double.Parse(dec),name);
-            showNextImage(Utilities.parseRA(ra), Utilities.parseDec(dec), name);
+            showNextImage(n, line);
         }
 
         protected string pad(double val) {
@@ -179,37 +170,72 @@ namespace SkyServer.Tools.Chart
 		    return "J"+ s_ra + c + s_dec;
 	    }
 
+        protected void showNextImage(string[] n, string line)
+        {
+            try
+            {
+                string[] v = Regex.Split(line, reSplit, RegexOptions.ExplicitCapture).Where(str => !str.Equals(String.Empty)).ToArray();
+                string name = "";
+                string Ra = "";
+                string Dec = "";
+                for (int i = 0; i < n.Length; i++)
+                {
+                    if ("ra".Equals(n[i])) Ra = v[i];
+                    if ("dec".Equals(n[i])) Dec = v[i];
+                    if ("name".Equals(n[i])) name = v[i];
+                }
+                double ra = Utilities.parseRA(Ra);
+                double dec = Utilities.parseDec(Dec);
 
-	    protected void showNextImage(double ra, double dec, string name) {
-		    string s = "";
-		    if (count++ < img1) return;
-		    if (count   > img2) return;
+                string s = "";
+                if (count++ < img1) return;
+                if (count > img2) return;
 
-		    if (column==0) s += "</tr>\n<tr>\n";
-		    s += "    <td class='i'>";
-		    s += "<a class='i' target='EXPLORE' ";
-		    s += "onClick=\"goToWindow('../explore/obj.aspx?ra="+ra+"&dec="+dec+"','EXPLORE')\" ";
-		    s += "href='../explore/obj.aspx?ra="+ra+"&dec="+dec+"'>";
-		    s += ""+name+"&nbsp;&nbsp;<br>"+sname(ra,dec)+"</a><br> ";
-		
-		    if (islink==1) {
-			    s += "<a target='NAVIGATE' ";
-			    s += "onClick=\"goToWindow('navi.aspx?ra="+ra+"&dec="+dec+"','NAVIGATE')\" ";
-			    s += " href='navi.aspx?ra="+ra+"&dec="+dec+"'>";
-		    }
-		
-		    s += "<img ";
-		    s += "src='"+ globals.WSGetJpegUrl + "?ra="+ra+"&dec="+dec+"&scale="+qscale;
-		    s += "&width="+width+"&height="+height+"&opt="+opt+"' ";
-		    s += " width="+width+" height="+height+">";
-		    if (islink==1) s += "</a>";
-		    s += "</td>\n";
+                if (column == 0) s += "</tr>\n<tr>\n";
+                s += "    <td class='i'>";
+                s += "<a class='i' target='EXPLORE' ";
+                s += "onClick=\"goToWindow('../explore/obj.aspx?ra=" + ra + "&dec=" + dec + "','EXPLORE')\" ";
+                s += "href='../explore/obj.aspx?ra=" + ra + "&dec=" + dec + "'>";
+                s += "" + name + "&nbsp;&nbsp;<br>" + sname(ra, dec) + "</a><br> ";
 
-		    if (column++==ncols-1) column = 0;
-		    Response.Write(s);
+                if (islink == 1)
+                {
+                    s += "<a target='NAVIGATE' ";
+                    s += "onClick=\"goToWindow('navi.aspx?ra=" + ra + "&dec=" + dec + "&scale=" + 0.5 * qscale + "&width=" + width + "&height=" + height + "&opt=" + opt + "','NAVIGATE')\" ";
+                    s += " href='navi.aspx?ra=" + ra + "&dec=" + dec + "&scale=" + 0.5 * qscale + "&width=" + width + "&height=" + height + "&opt=" + opt + "'>";
+                }
+
+                s += "<img ";
+                s += "src='" + globals.WSGetJpegUrl + "?ra=" + ra + "&dec=" + dec + "&scale=" + qscale;
+                s += "&width=" + width + "&height=" + height + "&opt=" + opt + "' ";
+                s += " width=" + width + " height=" + height + ">";
+                if (islink == 1) s += "</a>";
+                s += "</td>\n";
+
+                if (column++ == ncols - 1) column = 0;
+                Response.Write(s);
+            }
+            catch
+            {
+
+                string s = "";
+                if (count++ < img1) return;
+                if (count > img2) return;
+
+                if (column == 0) s += "</tr>\n<tr>\n";
+                s += "    <td class='i' align=\"center\">";
+
+
+                s += "Error:<br>wrong row format</td>\n";
+
+                if (column++ == ncols - 1) column = 0;
+                Response.Write(s);
+
+            }
+
 	    }
 
-	    protected void pagecounters() {
+        protected void pagecounters() {
             img1 = ncols * nrows * (master.page - 1);
             img2 = ncols * nrows * master.page;
 
@@ -283,7 +309,8 @@ namespace SkyServer.Tools.Chart
         }
 
         protected new string Error(string msg) {
-	        Response.Write("<h2>Error: "+msg+"</h2>\n");
+            this.HasCorrectUploadFormat = false;
+	        //Response.Write("<h2>Error: "+msg+"</h2>\n");
 	        return null;
         }
     }

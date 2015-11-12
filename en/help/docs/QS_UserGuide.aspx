@@ -68,7 +68,10 @@ Useful spectroscopy parameter combinations:
 <p>
 <a href="http://www.sdss.org/<%=globals.Release.ToLower()%>/dm/flatFiles/spSpec.html">Individual spectroscopy parameters (see also the spSpec Data Model):</a><br>
 <%
-    showTable("SpecObj", "Skyserver.help.QS_UserGuide.getSpeObj");
+  using (System.Data.SqlClient.SqlConnection oConn = new System.Data.SqlClient.SqlConnection(globals.ConnectionString))
+  {
+    oConn.Open();
+    showTable( oConn, "SpecObj");
 %>
 
 <p>
@@ -118,8 +121,7 @@ designation</a> for the object, in the format:<dd> SDSS JHHMMSS.ss+DDMMSS.s.<br>
 <a href="http://www.sdss.org/<%=globals.Release.ToLower()%>/dm/flatFiles/tsObj.html"> Individual imaging parameters (see also the tsObj Data Model):</a>
 
 <%
-    showTable("PhotoObj", "Skyserver.help.QS_UserGuide.getPhotoObj");
-
+    showTable(oConn, "PhotoObj");
     Response.Write("<hr><p><a name= \"SAS\"> <h3> Getting FITS files from the SAS (Science Archive Server) </h3> </a> \n");
     Response.Write("<p>\n");
     Response.Write("After you press <b>Submit</b>, the page that displays the results of the query will include the appropriate button(s) to upload\n");
@@ -129,7 +131,6 @@ designation</a> for the object, in the format:<dd> SDSS JHHMMSS.ss+DDMMSS.s.<br>
     Response.Write("displayed on the results page (below the query results table).  If you request spectroscopic data, and include the columns \n");
     Response.Write("<i>plate</i>, <i>mjd</i> and <i>fiberid</i> in the output (included in the <b>minimal</b> and <b>typical</b> column lists), then the\n");
     Response.Write("<b>Upload list of spectra to SAS</b> button will be displayed on the results page so you can retrieve FITS files for the spectra. \n");
-
 %>
 
 <hr><p><a name= "PositionConstraint"> <h3> Position Constraints </h3> </a> 
@@ -186,12 +187,12 @@ Valid formats (J2000):
         the default is 1 arcminute. 
         </P>
         <P>
-        Valid formats for positions are:  
+        Valid formats for positions are:  
         </p>
         <ul>
-            <li>ra in decimal degrees (D.ddddd); or in sexagesimal hours, minutes, seconds (HH:MM:SS.ss or HH MM SS.ss)  
+            <li>ra in decimal degrees (D.ddddd); or in sexagesimal hours, minutes, seconds (HH:MM:SS.ss or HH MM SS.ss)  
             </li>
-            <li>dec in decimal degrees (+/-DD.ddddd); or in sexagesimal degrees, arcminutes, arcseconds (+/-DD:MM:SS.s or +/-DD MM SS.s)  
+            <li>dec in decimal degrees (+/-DD.ddddd); or in sexagesimal degrees, arcminutes, arcseconds (+/-DD:MM:SS.s or +/-DD MM SS.s)  
             </li>
             <li>sep in decimal arcminutes (S.ssss...) </li>
         </ul>
@@ -256,7 +257,7 @@ you want returned from your query?
         <p>
 The options are:
 <%
-    showEnumQS("class", "Skyserver.help.QS_UserGuide.getClass");
+    showEnumQS(oConn, "class");
 %>
 
         <hr>
@@ -280,7 +281,7 @@ then the <u>bit-wise AND</u> of all those bits is computed and it must be <u>equ
         <p>
             The bits are defined as:
 <%
-    showEnumQS("PrimTarget", "Skyserver.help.QS_UserGuide.getPrimTarget");
+    showEnumQS(oConn, "PrimTarget");
 %>
 
         <hr>
@@ -304,7 +305,7 @@ then the <u>bit-wise AND</u> of all those bits is computed and it must be <u>equ
         <p>
             The bits are defined as:
 <%
-    showEnumQS("SecTarget", "Skyserver.help.QS_UserGuide.getSectarget");
+    showEnumQS(oConn, "SecTarget");
 %>
 
 
@@ -431,8 +432,8 @@ it must be <u>equal to 0</u>.
         <p>
 The object photo flags are:<br>
 <%
-    showEnumQS("PhotoFlags", "Skyserver.help.QS_UserGuide.getPhotoFlags");
-  
+    showEnumQS(oConn, "PhotoFlags");
+  }
 %>
 
   </div>

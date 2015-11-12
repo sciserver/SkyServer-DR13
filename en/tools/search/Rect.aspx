@@ -60,10 +60,10 @@ if( globals.Access == "public" ) {
         if (newtype == 'galactic') {
             document.getElementById('labelRaOrL').innerHTML = "Galactic Longitude (<i>l</i>)";
             document.getElementById('labelDecOrB').innerHTML = "Galactic Latitude (<i>b</i>)";
-            document.getElementById('min_ra').value = "89.98";
-            document.getElementById('max_ra').value = "90.03";
-            document.getElementById('min_dec').value = "-7.03";
-            document.getElementById('max_dec').value = "-6.98";
+            document.getElementById('min_ra').value = "10";
+            document.getElementById('max_ra').value = "10.1";
+            document.getElementById('min_dec').value = "0.2";
+            document.getElementById('max_dec').value = "0.3";
             document.getElementById('galactic').checked = "checked";
         }
         else {
@@ -81,7 +81,7 @@ if( globals.Access == "public" ) {
 
     function changeQueryType(newtype) {
 
-        if (newtype == 'visible') {
+        if (newtype == 'optical') {
             hideLink('InfraredMagnitudesConstraints')
             showLink('VisibleMagnitudesConstraints')
             this.InfraredMagnitudesConstraints.disabled = true
@@ -130,6 +130,9 @@ if( globals.Access == "public" ) {
 <input type="hidden" id=hband name=hband />
 <input type="hidden" id=kband name=kband />
 
+<input type="hidden" name="TaskName" id="TaskName" value="Skyserver.tools.search.Rectangular"/>
+
+
 <table BORDER=0 WIDTH="600" bgcolor=#aaaaaa>
 	<tr><td class="frame">
 	NOTE: To be fair to other users, queries run from SkyServer search
@@ -152,8 +155,8 @@ if( globals.Access == "public" ) {
 			<tr ALIGN=middle VALIGN=center>
                 <td width="30%" class="qtitle">Type of search</td>
                 <td WIDTH="70%" class="q"  colspan="3">
-                    <input type="radio" name="whichphotometry" value="optical" onclick="javascript: changeQueryType('optical');" checked />Optical bands&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="radio" name="whichphotometry" value="infrared" onclick="javascript: changeQueryType('infrared');" />Infrared bands&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="whichphotometry" value="optical" onclick="javascript:changeQueryType('optical');" checked />Optical bands&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="whichphotometry" value="infrared" onclick="javascript:changeQueryType('infrared');" />Infrared bands&nbsp;&nbsp;&nbsp;&nbsp;
                 </td>
 			</tr>
 
@@ -164,8 +167,8 @@ if( globals.Access == "public" ) {
 			<tr ALIGN=middle VALIGN=center>
                 <td width="30%" class="qtitle">Coordinate system</td>
                 <td WIDTH="70%" class="q" colspan="2">
-                    <input type="radio" name="whichway" value="equitorial" onclick="javascript: changeSearchType('equitorial');" checked />Equitorial ( RA / Dec )&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="radio" name="whichway" value="galactic" onclick="javascript: changeSearchType('galactic');" />Galactic (<i>l</i> and <i>b</i>)&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="coordtype" value="equitorial" onclick="javascript:changeSearchType('equitorial');" checked />Equitorial ( RA / Dec )&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="coordtype" value="galactic" onclick="javascript:changeSearchType('galactic');" />Galactic (<i>l</i> and <i>b</i>)&nbsp;&nbsp;&nbsp;&nbsp;
                 </td>
 			</tr>
 			<tr ALIGN=middle VALIGN=center>

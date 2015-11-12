@@ -8,6 +8,7 @@ using System.Globalization;
 using SkyServer;
 using System.Data;
 using System.Data.SqlClient;
+using SkyServer.Tools.Search;
 
 namespace SkyServer.Tools.Explore
 {
@@ -17,7 +18,10 @@ namespace SkyServer.Tools.Explore
         protected Globals globals;
         protected ObjectExplorer master;
         protected RunQuery runQuery;
-        protected DataSet ds;
+        protected DataSet ds = new DataSet();
+        string ClientIP = "";
+        DataSet PlateTables = new DataSet();
+        ResponseREST rs = new ResponseREST();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -26,19 +30,33 @@ namespace SkyServer.Tools.Explore
             string s = Request.QueryString["plateId"];            
             plateId = Utilities.ParseId(s);                      
             runQuery = new RunQuery();
+            ClientIP = runQuery.GetClientIP();
             executeQuery();
         }
 
         private void executeQuery() {
             string cmd = ExplorerQueries.Plate.Replace("@plateId",plateId.ToString());
-            ds = runQuery.RunCasjobs(cmd,"Explore: Plates");
+            //ds = runQuery.RunCasjobs(cmd,"Explore: Plates");
+            //ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.Plate.getPlate");
+
+            if (Session["Plate"] != null)
+                PlateTables = (DataSet)Session["Plate"];
+            else
+            {
+                string URIparams = "?plateId=" + plateId.ToString() + "&query=Plate&TaskName=Skyserver.Explore.Plate.getPlate";
+                PlateTables = rs.GetObjectInfoFromWebService(globals.ExploreWS, URIparams);
+                Session["Plate"] = PlateTables;
+            }
+            ds.Merge(PlateTables.Tables["Plate"]);
         }
 
         public void showFTable()
         {
             string cmd = ExplorerQueries.PlateShow.Replace("@plateId", plateId.ToString());
-            DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Plates");
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            //DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Plates");
+            //DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.Plate.PlateShow");
+            //using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            using (DataTableReader reader = PlateTables.Tables["PlateShow"].CreateDataReader())
             {
                 string u = "<a class='content' target='_top' href='summary.aspx?sid=";
                 string sid;

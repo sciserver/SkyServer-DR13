@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using SkyServer;
 using System.Data;
+using SkyServer.Tools.Search;
 
 namespace SkyServer.Tools.Explore
 {
@@ -17,6 +18,8 @@ namespace SkyServer.Tools.Explore
 
         protected RunQuery runQuery;
         protected DataSet ds_neighbor1, ds_neighbor2;
+        DataSet NeighborsTables = new DataSet();
+        ResponseREST rs = new ResponseREST();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -30,14 +33,29 @@ namespace SkyServer.Tools.Explore
         }
 
         private void executeQuery() {
-            string cmd = ExplorerQueries.neighbors1.Replace("@objId", objId);
-            //ds_neighbor1 = runQuery.RunCasjobs(cmd,"Explore: Neighbors");
-            string ClientIP = runQuery.GetClientIP();
-            ds_neighbor1 = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.Neighbors.neighbors1");
 
-            cmd = ExplorerQueries.neighbors2.Replace("@objId", objId);
+            if (Session["Neighbors"] != null)
+                NeighborsTables = (DataSet)Session["Neighbors"];
+            else
+            {
+                string URIparams = "?id=" + objId + "&query=Neighbors&TaskName=Skyserver.Explore.Neighbors.Neighbors";
+                NeighborsTables = rs.GetObjectInfoFromWebService(globals.ExploreWS, URIparams);
+                Session["Neighbors"] = NeighborsTables;
+            }
+            ds_neighbor1 = new DataSet();
+            ds_neighbor2 = new DataSet();
+            ds_neighbor1.Merge(NeighborsTables.Tables["neighbors1"]);
+            ds_neighbor2.Merge(NeighborsTables.Tables["neighbors2"]);
+            
+            //string cmd = ExplorerQueries.neighbors1.Replace("@objId", objId);
+            //ds_neighbor1 = runQuery.RunCasjobs(cmd,"Explore: Neighbors");
+            //string ClientIP = runQuery.GetClientIP();
+
+            //ds_neighbor1 = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.Neighbors.neighbors1");
+
+            //cmd = ExplorerQueries.neighbors2.Replace("@objId", objId);
             //ds_neighbor2 = runQuery.RunCasjobs(cmd,"Explore: Neighbors");
-            ds_neighbor2 = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.Neighbors.neighbors2");
+            //ds_neighbor2 = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.Neighbors.neighbors2");
 
         }
     }

@@ -12,7 +12,6 @@ namespace SkyServer.Help.Docs
         protected string url;
         protected Globals globals;
         HelpMaster master;
-        
         protected void Page_Load(object sender, EventArgs e)
         {
             url = ResolveClientUrl("~/en");

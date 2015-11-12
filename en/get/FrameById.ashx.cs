@@ -22,9 +22,12 @@ namespace SkyServer.Get
             int zoom = int.Parse(context.Request.QueryString["zoom"]);
 
             string cmd = "SELECT run,camCol,field,zoom FROM Frame WHERE fieldID="+id.ToString()+" AND zoom="+zoom.ToString();
-            ResponseREST runQuery = new ResponseREST();
-            string ClientIP = runQuery.GetClientIP(); 
-            DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.FrameById.getRCFZ");
+            ResponseREST rs = new ResponseREST();
+            //string ClientIP = rs.GetClientIP(); 
+            //DataSet ds = rs.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.FrameById.getRCFZ");
+            string URIparams = "?fieldId=" + id.ToString() + "&zoom=" + zoom.ToString() + "&query=FrameById&TaskName=Skyserver.Explore.FrameById.getRCFZ";
+            DataSet ds = rs.GetObjectInfoFromWebService(globals.ExploreWS, URIparams);
+
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
                 if (!reader.HasRows)
@@ -41,7 +44,6 @@ namespace SkyServer.Get
                     context.Response.Redirect(globals.WSGetCodecUrl + "?R=" + run + "&C=" + col + "&F=" + fld + "&Z=" + zz);
                 }
             }
-
         }
 
         public bool IsReusable

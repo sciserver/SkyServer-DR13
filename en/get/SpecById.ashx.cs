@@ -24,7 +24,10 @@ namespace SkyServer.Get
             ResponseREST rs = new ResponseREST();
 
             string ClientIP = rs.GetClientIP();
-            DataSet ds = rs.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.SpecById.getImg");
+            //DataSet ds = rs.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.SpecById.getImg");
+            string URIparams = "?spec=" + specid + "&query=SpecById&TaskName=Skyserver.Explore.SpecById.getImg";
+            DataSet ds = rs.GetObjectInfoFromWebService(globals.ExploreWS, URIparams);
+
             using (DataTableReader reader = ds.CreateDataReader(ds.Tables[0]))
             {
                 // start writing the image

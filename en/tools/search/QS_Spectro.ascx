@@ -1,6 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="QS_Spectro.ascx.cs" Inherits="SkyServer.Tools.Search.QS_Spectro" %>
 <%@ Import Namespace="System.Data" %>
 <%@ Import Namespace=" SkyServer.Tools.Search" %>
+<%@ Import Namespace="System.Data.SqlClient" %>
 
 <table cellspacing='3' cellpadding='3' class='frame'>
 <tr><td align=middle>
@@ -73,14 +74,15 @@
 		Target Flags<br>(PRIMTARGET)</a>
 	</td>
 <%
-            ResponseREST  rs = new ResponseREST();
-            string ClientIP = rs.GetClientIP();
-  
+    using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
+    {
+        oConn.Open();
+        
+        using (SqlCommand oCmd = oConn.CreateCommand())
+        {
             string cmd = "SELECT [name] FROM DataConstants WHERE field='PrimTarget' ORDER BY value";
-            
-            //DataSet ds = rs.RunCasjobs(cmd);
-            DataSet ds = rs.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.SQS.getPrimTarget");
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            oCmd.CommandText = cmd;
+            using (SqlDataReader reader = oCmd.ExecuteReader())
             {
                 if (!reader.HasRows)
                 {
@@ -99,7 +101,7 @@
                     List<string> values = new List<string>();
                     while (reader.Read())
                     {
-                        values.Add(reader.GetValue(0).ToString());
+                        values.Add(reader.GetSqlValue(0).ToString());
                     }
                     foreach (string v in values)
                     {
@@ -126,7 +128,8 @@
                     </td>
         <%
                 }
-            } // using  DataReader
+            } // using SqlDataReader
+        } // using SqlCommand
     
 %>
   </tr>
@@ -137,14 +140,13 @@
 		Target Flags<br>(SECTARGET)</a>
 	</td>
 <%  
-            string cmd2 = "SELECT [name] FROM DataConstants WHERE field='SecTarget' ORDER BY value";
-            
-            //DataSet ds2 = rs.RunCasjobs(cmd2);
-            DataSet ds2 = rs.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.SQS.getSecTarget");
-            using (DataTableReader reader = ds2.Tables[0].CreateDataReader())
+      using (SqlCommand oCmd = oConn.CreateCommand())
+        {
+            string cmd = "SELECT [name] FROM DataConstants WHERE field='SecTarget' ORDER BY value";
+            oCmd.CommandText = cmd;
+            using (SqlDataReader reader = oCmd.ExecuteReader())
             {
-            
-                if (!reader.HasRows)
+                 if (!reader.HasRows)
                 {
       %>
                    <td colspan=4><b>No SecTarget flags found in DataConstants table</b></td>
@@ -185,7 +187,9 @@
              %>      </OPTION></SELECT></td>
       <%
                 }
-            } // using DataReader
+            } // using SqlDataReader
+        } // using SqlCommand
+    } // using SqlConnection
 %>
   </tr>
   </table>

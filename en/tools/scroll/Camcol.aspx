@@ -19,12 +19,16 @@
 
 
 <div id="logo"><img border="0" 
-	src="../../images/sdss-main-logo.gif" /></div>
+	src="../../images/sdssIVlogo.png" height="60"/></div>
 <div id="stop"><a href="#" onclick="toggle();"><img border="0" 
 	src="../images/stop.gif" alt="Start/stop scrolling" /></a></div>
 
 <%
-        show();
+    using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
+    {
+        oConn.Open();
+        show(oConn);
+    } 
 %>
 
 <div id="s0" class="scroll"><img name="img0" src="<%=img%>"/></div>
@@ -38,10 +42,8 @@
     var is = new Is();
     var DELTA_T = 150;
     var EXT = "";
-
     function getFileName(s) { return PATH + s + EXT; }
     function resetStripe() { next = FIELD_MAX; }
-
     init(1);
 </script>
 

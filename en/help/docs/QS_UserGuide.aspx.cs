@@ -6,8 +6,6 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using System.IO;
-using SkyServer.Tools.Search;
-using System.Data;
 
 namespace SkyServer.Help.Docs
 {
@@ -16,72 +14,72 @@ namespace SkyServer.Help.Docs
         protected string url;
         protected Globals globals;
         HelpMaster master;
-        string ClientIP = "";
-        ResponseREST runQuery;
-
-
         protected void Page_Load(object sender, EventArgs e)
         {
             url = ResolveClientUrl("~/en");
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             master = (HelpMaster)Page.Master;
             master.gselect = 11;
-            runQuery = new ResponseREST();
-            ClientIP = runQuery.GetClientIP();
         }
 
-        protected void showTable(string name, string TaskName)
+        protected void showTable(SqlConnection oConn, string name)
         {
             string cmd = "select * from dbo.fDocColumns('" + name + "')";
-            DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, TaskName);
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+
+            using (SqlCommand oCmd = oConn.CreateCommand())
             {
-                if (!reader.HasRows)
+                using (SqlDataReader reader = execCmd(oCmd, cmd))
                 {
-                    notFound(); return;
-                }
-
-                string td, val;
-                headline(reader, 1);
-                while (reader.Read())
-                {
-                    string objname = reader.GetValue(0).ToString();
-                    string args = "enum " + objname + " " + 'E';
-                    string link = "<a href=\"../browser/browser.aspx?cmd=" + args + "\"><img src='images/info.gif' border=0 alt='Link to '></a>";
-
-                    td = "<td class='v'>";
-                    Response.Write("<tr>");
-                    for (int i = 1; i < (reader.FieldCount); i++)
+                    if (!reader.HasRows)
                     {
-                        val = reader.GetValue(i).ToString();
-                        if (objname != "" && i == 1) val += link;
-                        Response.Write(td + (val == "" ? "&nbsp;" : val) + "</td>");
+                        notFound(); return;
                     }
-                    Response.Write("</tr>\n");
-                }
-                Response.Write("</TABLE>\n");
-            }
 
+                    string td, val;
+                    headline(reader, 1);
+                    while (reader.Read())
+                    {
+                        string objname = reader.GetSqlValue(0).ToString();
+                        string args = "enum " + objname + " " + 'E';
+                        string link = "<a href=\"../browser/browser.aspx?cmd="+args+"\"><img src='images/info.gif' border=0 alt='Link to '></a>";
+
+                        td = "<td class='v'>";
+                        Response.Write("<tr>");
+                        for (int i = 1; i < (reader.FieldCount); i++)
+                        {
+                            val = reader.GetSqlValue(i).ToString();
+                            if (objname != "" && i == 1) val += link;
+                            Response.Write(td + (val == "" ? "&nbsp;" : val) + "</td>");
+                        }
+                        Response.Write("</tr>\n");
+                    }
+                    Response.Write("</TABLE>\n");
+                }
+            }
         }
 
-        protected void showEnumQS(string name, string TaskName)
+        protected void showEnumQS(SqlConnection oConn, string name)
         {
 	        string cmd  = "exec spDocEnum @name";
-            cmd = cmd.Replace("@name", name);
-            DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, TaskName);
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            using (SqlCommand oCmd = oConn.CreateCommand())
             {
+                oCmd.CommandText = cmd;
+                oCmd.Parameters.AddWithValue("@name",name);
 
-                if (!reader.Read())
+                using (SqlDataReader reader = oCmd.ExecuteReader())
                 {
-                    notFound();
-                    return;
+
+                    if (!reader.Read())
+                    {
+                        notFound();
+                        return;
+                    }
+                    loop(reader, "");
                 }
-                loop(reader, "");
             }
         }
 
-        private void loop(DataTableReader reader, string text)
+        private void loop(SqlDataReader reader, string text)
         {
             if (text != "") Response.Write("<h2>" + text + "</h2>\n");
 
@@ -93,13 +91,13 @@ namespace SkyServer.Help.Docs
             Response.Write("</TABLE>\n");
         }
 
-        private void innerLoop(DataTableReader reader, string link, string tclass)
+        private void innerLoop(SqlDataReader reader, string link, string tclass)
         {
             Response.Write("<tr>");
             string val;
             for (int i = 0; i < (reader.FieldCount); i++)
             {
-                val = Utilities.getSqlString(reader.GetValue(i));
+                val = Utilities.getSqlString(reader.GetSqlValue(i));
                 if (val.Contains(".aspx?n="))
                 {
                     int n1 = val.IndexOf("\"");
@@ -132,7 +130,7 @@ namespace SkyServer.Help.Docs
             oCmd.Parameters.AddWithValue("@server_name", server_name);
             oCmd.Parameters.AddWithValue("@windows_name", windows_name);
             oCmd.Parameters.AddWithValue("@remote_addr", remote_addr);
-            oCmd.Parameters.AddWithValue("@access", globals.Access);
+            oCmd.Parameters.AddWithValue("@access", "Skyserver.Help.Docs.QS_UserGuide");
 
             SqlDataReader reader = oCmd.ExecuteReader();
             return reader;
@@ -145,7 +143,7 @@ namespace SkyServer.Help.Docs
             Response.Write("</TABLE>");
         }
 
-        private void headline(DataTableReader reader, int j)
+        private void headline(SqlDataReader reader, int j)
         {
             Response.Write("<p>\n<TABLE border=0 bgcolor=#888888 width=720 cellspacing=3 cellpadding=3>\n");
             Response.Write("<tr>");

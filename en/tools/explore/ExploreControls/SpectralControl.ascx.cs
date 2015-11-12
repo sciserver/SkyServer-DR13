@@ -37,8 +37,13 @@ namespace SkyServer.Tools.Explore
 
         protected RunQuery runQuery;
 
+        DataSet ds = new DataSet();
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            //ds = (DataSet)Session["objectDataSet"];
+            
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             master = (ObjectExplorer)Page.Master;
 
@@ -70,10 +75,11 @@ namespace SkyServer.Tools.Explore
 
             string cmd = ExplorerQueries.getSpectroQuery.Replace("@objId", objId).Replace("@specId", master.specId.ToString());
             //DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Spectral");
-            string ClientIP = runQuery.GetClientIP();
-            DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.SpectralControl.getSpectroQuery");
+            //string ClientIP = runQuery.GetClientIP();
+            //DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.SpectralControl.getSpectroQuery");
 
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            //using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            using (DataTableReader reader = ((DataSet)Session["LoadExplore"]).Tables["SpectralData"].CreateDataReader())
             {
                 if (reader.Read())
                 {

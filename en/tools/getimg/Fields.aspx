@@ -22,7 +22,11 @@
 <tr><td class='b'>Run</td>
 	<td class='b'><select NAME="R">
 	<%
-            writeOptions();
+        using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
+        {
+            oConn.Open();
+            writeOptions(oConn);
+        
     %>
     </select></td></tr>
 	<tr><td class='b'>Camcol</td>
@@ -52,7 +56,9 @@
     <table width="300" border="0" cellspacing="3" cellpadding="3">
     <%  
             ResponseAux.writeHead("Run,Field min,Field max",Response);
-            writeFields();
+            writeFields(oConn);
+        }
+        
     %>
     </table>
 

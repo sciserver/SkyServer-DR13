@@ -1,6 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="QS_IRSpec.ascx.cs" Inherits="SkyServer.Tools.Search.QS_IRSpec" %>
 <%@ Import Namespace="System.Data" %>
 <%@ Import Namespace=" SkyServer.Tools.Search" %>
+<%@ Import Namespace="System.Data.SqlClient" %>
 
 <table cellspacing='3' cellpadding='3' class='frame' width='640'>
 <tr><td align=middle class="qtitle">Infrared Spectroscopy Constraints</td>
@@ -87,18 +88,21 @@
 		  <table>
 			<tr>
 <%
-        ResponseREST rs = new ResponseREST();
-        string ClientIP = rs.GetClientIP();
+    using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
+    {
+        oConn.Open();
+
         
         string cmd = "SELECT [name] FROM DataConstants\n";
         cmd += " WHERE field='ApogeeTarget1' AND [name] != ''\n";
         cmd += " AND [name] NOT IN ('APOGEE_FAINT', 'APOGEE_MEDIUM', 'APOGEE_BRIGHT', 'APOGEE_CHECKED')\n";
         cmd += " ORDER BY field,value";
-        
-        //DataSet ds = rs.RunCasjobs(cmd, "SkyServer:QS_IRSpec:ApogeeTarget1");
-        DataSet ds = rs.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.IRQS.getApogeeTarget1");
-        using(DataTableReader reader = ds.CreateDataReader(ds.Tables[0]))
+        using (SqlCommand oCmd = oConn.CreateCommand())
         {
+            oCmd.CommandText = cmd;
+            using (SqlDataReader reader = oCmd.ExecuteReader())
+            {
+
                 if (!reader.HasRows)
                 {
     %>
@@ -137,7 +141,9 @@
         <%            }
         %>            </OPTION></SELECT></td>
         <%      }
-            } // using DataReader   
+            } // using SqlDataReader
+        } // using SqlCommand
+    } // using SqlConnection
 %>
 			</tr>
 		  </table>
@@ -149,14 +155,21 @@
 		  <table>
 			<tr>
 <%
-        cmd = "SELECT [name] FROM DataConstants\n";
+        using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
+    {
+        oConn.Open();
+
+        string cmd = "SELECT [name] FROM DataConstants\n";
         cmd += " WHERE field='ApogeeTarget2' AND [name] != ''\n";
         cmd += " AND [name] NOT IN ('APOGEE_EMBEDDEDCLUSTER_STAR', 'APOGEE_LONGBAR', 'APOGEE_EMISSION_STAR', 'APOGEE_KEPLER_COOLDWARF', 'APOGEE_MIRCLUSTER_STAR', 'APOGEE_CHECKED')\n";
         cmd += " ORDER BY field,value";
-        //DataSet data = rs.RunCasjobs(cmd, "SkyServer:QS_IRSpec:ApogeeTarget2");
-        DataSet data = rs.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.IRQS.getApogeeTarget2");
-        using (DataTableReader reader = data.CreateDataReader(data.Tables[0]))
+
+        using (SqlCommand oCmd = oConn.CreateCommand())
         {
+            oCmd.CommandText = cmd;
+            using (SqlDataReader reader = oCmd.ExecuteReader())
+            {
+
                 if (!reader.HasRows)
                 {
  %>                  
@@ -192,7 +205,9 @@
 <%                  }
 %>                  </OPTION></SELECT></td>
 <%                }
-            } // using DataReader  
+            } // using SqlDataReader
+        } // using SqlCommand
+    } // using SqlConnection
 %>
 			</tr>
 		  </table>

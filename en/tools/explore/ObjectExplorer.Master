@@ -7,6 +7,9 @@
 <head runat="server">
   
     <link href="../../tools.css" rel="stylesheet" type="text/css" />
+    <style>
+      #check  {position: absolute; left:  0px; top: 0px;visibility:hidden;width:12px;}
+    </style>
     
     <title>Object Explorer</title>
 
@@ -14,8 +17,15 @@
 
     <script type="text/javascript" src="./javascript/master.js"> </script>
     <script type="text/javascript" src="./javascript/explore.js"> </script>
+    <script type="text/javascript" src="../chart/naviClass.js"></script>
 
-    <script>
+    <script type="text/javascript">
+        var check;
+        function init() {
+            check = new Div("check", 124, 730);
+            //check.show();
+            check.hide();
+        }
         function getPage() {
             alert('ferrf')
             $("#crossid22").load("parameters.aspx")
@@ -27,8 +37,11 @@
 
 </head>
 
-<body>
+<body onload="init()">
     <form id="form1" runat="server">
+
+    <div id='check' ><img src='../chart/images/checkmark.gif' width="12" height="10"></div>
+
     <div>        
       <table border="0" cellspacing="0" cellpadding="2" bgcolor="black">
 	  <tr>
@@ -160,7 +173,7 @@
 	            <tr><td><a class="med" target="_top" href='<%=hrefs.ADS%>' title="Astrophysical Data System literature search results for this RA,dec."> ADS search</a></td></tr>
 	            <tr><td align="right"><hr width="90"/></td></tr>
 	            <tr><td><a class="med" href='<%=hrefs.ShowBook%>' title="Save and view notepad data on Explore objects.">Notes</a></td></tr>
-	            <tr><td class="s" align="right" ><a href='<%=hrefs.SaveBook%>' title="Save this object in notepad."> Save in Notes</a></td></tr>
+	            <tr><td class="s" align="right" ><div id='check2' style="display: none;"><img src='../chart/images/checkmark.gif' alt="Added to notebook" /></div><a href='<%=hrefs.SaveBook%>' title="Save this object in notepad."> Save in Notes</a></td></tr>
 	            <tr><td class="s" align="right" ><a href='<%=hrefs.ShowBook%>' title="View your saved notes, if any.">Show Notes</a></td></tr>
 	            <tr><td align="right"><hr width="90"/></td></tr>
 	            <tr><td><a class="med" href=# onclick="<%=hrefs.Print%>"> Print </a></td></tr>

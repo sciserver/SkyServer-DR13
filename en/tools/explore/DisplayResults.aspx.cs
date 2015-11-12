@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using SkyServer;
 using System.Data;
+using SkyServer.Tools.Search;
 
 namespace SkyServer.Tools.Explore
 {
@@ -24,13 +25,16 @@ namespace SkyServer.Tools.Explore
         protected RunQuery runQuery = new RunQuery();
         protected DataSet ds;
         protected string task = "";
-        
+        DataSet objectDataSet3;        
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            ds = new DataSet();
+            objectDataSet3 = new DataSet();
+
+            ResponseREST rs = new ResponseREST();
             master = (ObjectExplorer)Page.Master;
             globals = (Globals)Application[Globals.PROPERTY_NAME];
-
             foreach (string key in Request.QueryString.Keys)
             {
                 if(key == "apid")
@@ -38,17 +42,21 @@ namespace SkyServer.Tools.Explore
                 objId = Request.QueryString["id"];
                 specId = Request.QueryString["spec"];
                 
-                fieldId = Request.QueryString["field"];
+                fieldId = Request.QueryString["fieldId"];
 
-                cmd = Request.QueryString["cmd"];
+                //cmd = Request.QueryString["cmd"];
                 name = Request.QueryString["name"];
                 url = Request.QueryString["url"];
             }
-           
-            if(cmd == null || cmd.Equals(""))
-                getQuery();
 
-            executeQuery();
+            string URIparams = "?id=" + objId + "&spec=" + specId + "&apid=" + apid + "&fieldId=" + fieldId + "&query=" + name + "&TaskName=Skyserver.Explore.DisplayResults." + name;
+            ds = rs.GetObjectInfoFromWebService(globals.ExploreWS, URIparams);
+
+
+            //if(cmd == null || cmd.Equals(""))
+            //    getQuery();
+
+            //executeQuery();
         }
 
         private void executeQuery() {
@@ -63,6 +71,65 @@ namespace SkyServer.Tools.Explore
             }
 
         }
+
+
+        private void SetTable()
+        {
+            switch (name)
+            {
+                case "PhotoObj":
+                    ds.Merge(objectDataSet3.Tables["PhotoObjQuery"]); break;
+                case "PhotoTag":
+                    ds.Merge(objectDataSet3.Tables["PhotoTagQuery"]); break;
+                case "photoZ":
+                    ds.Merge(objectDataSet3.Tables["PhotoZ"]); break;
+                //case "photozRF":
+                //        cmd = ExplorerQueries.PhotozRF.Replace("@objId", objId); break;
+
+                case "Field":
+                    ds.Merge(objectDataSet3.Tables["FieldQuery"]); break;
+                case "Frame":
+                    ds.Merge(objectDataSet3.Tables["FrameQuery"]); break;
+                case "SpecObj":
+                    ds.Merge(objectDataSet3.Tables["SpecObjQuery"]); break;
+                case "sppLines":
+                    ds.Merge(objectDataSet3.Tables["sppLinesQuery"]); break;
+                case "sppParams":
+                    ds.Merge(objectDataSet3.Tables["sppParamsQuery"]); break;
+                case "galSpecLine":
+                    ds.Merge(objectDataSet3.Tables["galSpecLineQuery"]); break;
+                case "galSpecIndx":
+                    ds.Merge(objectDataSet3.Tables["galSpecIndexQuery"]); break;
+                case "galSpecInfo":
+                    ds.Merge(objectDataSet3.Tables["galSpecInfoQuery"]); break;
+                case "stellarMassStarFormingPort":
+                    ds.Merge(objectDataSet3.Tables["stellarMassStarformingPortQuery"]); break;
+                case "stellarMassPassivePort":
+                    ds.Merge(objectDataSet3.Tables["stellarMassPassivePortQuery"]); break;
+                case "emissionlinesPort":
+                    ds.Merge(objectDataSet3.Tables["emissionLinesPortQuery"]); break;
+                case "stellarMassPCAWiscBC03":
+                    ds.Merge(objectDataSet3.Tables["stellarMassPCAWiscBC03Query"]); break;
+                case "stellarMassPCAWiscM11":
+                    ds.Merge(objectDataSet3.Tables["stellarMassPCAWiscM11Query"]); break;
+                case "stellarMassFSPSGranEarlyDust":
+                    ds.Merge(objectDataSet3.Tables["stellarMassFSPSGranEarlyDust"]); break;
+                case "stellarMassFSPSGranEarlyNoDust":
+                    ds.Merge(objectDataSet3.Tables["stellarMassFSPSGranEarlyNoDust"]); break;
+                case "stellarMassFSPSGranWideDust":
+                    ds.Merge(objectDataSet3.Tables["stellarMassFSPSGranWideDust"]); break;
+                case "stellarMassFSPSGranWideNoDust":
+                    ds.Merge(objectDataSet3.Tables["stellarMassFSPSGranWideNoDust"]); break;
+                case "apogeeStar":
+                    ds.Merge(objectDataSet3.Tables["apogeeStar"]); break;
+                case "aspcapStar":
+                    ds.Merge(objectDataSet3.Tables["aspcapStar"]); break;
+
+                default: cmd = ""; break;
+            }
+        }
+
+
 
         private void getQuery() {
 

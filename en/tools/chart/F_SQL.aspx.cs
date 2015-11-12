@@ -34,9 +34,10 @@ namespace SkyServer.Tools.Chart
 
             try
             {
-                ResponseREST runQuery = new ResponseREST();
-                string ClientIP = runQuery.GetClientIP();
-                DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.chart.F_SQL.UsersQuery");
+                ResponseREST rs = new ResponseREST();
+                string URIparams = "?cmd=" + cmd + "&format=dataset&TaskName=Skyserver.chart.F_SQL.UsersQuery";
+                DataSet ds = rs.GetObjectInfoFromWebService(globals.SQLSearchWS, URIparams);
+                //DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.chart.F_SQL.UsersQuery");
                 using (DataTableReader reader = ds.Tables[0].CreateDataReader())
                 {
                     if (reader.HasRows)
@@ -61,9 +62,10 @@ namespace SkyServer.Tools.Chart
             }
             catch (Exception ex)
             {
-                Response.Write("ERROR\n\nSQL returned the following error message:\n" + ex.Message + "\n");
-                Response.Write("Your SQL command was:\n" + cmd + "\n");
+                //Response.Write("ERROR\n\nSQL returned the following error message:\n" + ex.Message + "\n");
+                //Response.Write("Your SQL command was:\n" + cmd + "\n");
                 //format = "error";
+                res = "Error in running the SQL query.\n\n" + ex.Message + "\n" + "Your SQL command was:\n" + cmd + "\n";
             }
 
             result = res;

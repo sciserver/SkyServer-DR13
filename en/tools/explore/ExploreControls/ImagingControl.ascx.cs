@@ -63,8 +63,13 @@ namespace SkyServer.Tools.Explore
         protected RunQuery runQuery;
         protected string ClientIP = "";
 
+        DataSet ds = new DataSet();
+
         public void Page_Load(object sender, EventArgs e)
         {
+
+            //ds = (DataSet)Session["objectDataSet"];
+
             globals = (Globals)Application[Globals.PROPERTY_NAME];            
             master  = (ObjectExplorer)Page.Master;
             string token = "";
@@ -99,8 +104,9 @@ namespace SkyServer.Tools.Explore
         {
             string cmd = ExplorerQueries.getImagingQuery.Replace("@objId", objId);
             //DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Imaging");
-            DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.ImagingControl.getImagingQuery");
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            //DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.ImagingControl.getImagingQuery");
+            //using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            using (DataTableReader reader = ((DataSet)Session["LoadExplore"]).Tables["ImagingData"].CreateDataReader())
             {
                 if (reader.Read())
                 {
@@ -176,8 +182,9 @@ namespace SkyServer.Tools.Explore
             string cmd = ExplorerQueries.unitQuery;
 
             //DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Imaging");
-            DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.ImagingControl.unitQuery");
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            //DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.ImagingControl.unitQuery");
+            //using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            using (DataTableReader reader = ((DataSet)Session["LoadExplore"]).Tables["ImagingDataUnits"].CreateDataReader())
             {
                 if (reader.HasRows)
                 {

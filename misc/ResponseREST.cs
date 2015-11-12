@@ -44,9 +44,17 @@ namespace SkyServer.Tools.Search
         }
         public ResponseREST()
         {
-            globals = new Globals();
+            this.globals = new Globals();
             WSrequestUri = globals.DatabaseSearchWS;
         }
+
+        public ResponseREST(string WSrequestUri)
+        {
+            this.WSrequestUri = WSrequestUri;
+        }
+        
+        
+        
         /// <summary>
         /// This method is used to pass all the requests and run rest web service
         /// </summary>
@@ -70,7 +78,7 @@ namespace SkyServer.Tools.Search
             {
                     requestString += key + "=" + Uri.EscapeDataString(inputForm[key]) + "&";
             }
-
+            requestString += "clientIP=" + GetClientIP() +"&";
 
             String searchTool = inputForm["searchtool"];
 
@@ -84,6 +92,8 @@ namespace SkyServer.Tools.Search
                 case "SQL": requestUrl = globals.SQLSearchWS; break;
                 case "Radial": requestUrl = globals.RadialSearchWS; break;
                 case "Rectangular": requestUrl = globals.RectangularSearchWS; break;
+                case "CrossID": 
+                    temp = true; requestUrl = globals.CrossIdWS; break;
                 case "Imaging":
                     switch (inputForm["positionType"])
                     {
@@ -130,34 +140,52 @@ namespace SkyServer.Tools.Search
                     }
                 } 
                  */
+                bool HasFile = false;
+                bool HasTextList = false;
                 if (Request.Files.Count > 0 && Request.Files[0].ContentLength > 0)
                 {
                     radecText = (new StreamReader(Request.Files[0].InputStream)).ReadToEnd();
+                    HasFile = true;
                 }
                 else
                 {
                     try
                     {
-                        radecText = inputForm["radecTextArea"];
-                        if(radecText.Length == 0)
-                            throw new ApplicationException("ERROR: No (RA,DEC) list specified for Proximity search.");
+                        if (searchTool == "CrossID")
+                            radecText = inputForm["paste"];
+                        if (inputForm["positionType"] == "proximity")
+                            radecText = inputForm["radecTextArea"];
+
+                        if (radecText.Length > 0)
+                        {
+                            HasTextList = true;
+                            //throw new ApplicationException("ERROR: No (RA,DEC) list specified for CrossID tool.");
+                        }
                     }
                     catch
                     {
-                        throw new ApplicationException("ERROR: Neither upload file nor list specified for Proximity search.");
+                        //throw new ApplicationException("ERROR: Neither upload file nor list specified for search.");
+                        httpResponse.Write(getErrorMessageHTMLresult("Not able to parse file or list."));
+                        httpResponse.End();
+                        return;
                     }
-
                 }
-
+                if(!HasTextList && !HasFile)
+                {
+                    httpResponse.Write(getErrorMessageHTMLresult("Not able to read input file or list."));
+                    httpResponse.End();
+                    return;
+                }
             }
 
             runQuery(requestUrl, requestString, radecText, inputForm["format"]);
         }
+
         
+
 
         private void runQuery(String serviceUrl, String requestString, string uploaded, string returnType)
         {
-
 
             Globals globals = new Globals();
             /// Once the authenticated skyserver is ready, we can update the code to retrieve token          
@@ -199,7 +227,7 @@ namespace SkyServer.Tools.Search
             }
 
             setContentType(returnType);
-            if (returnType=="fits")
+            if (returnType=="fits" || returnType=="dataset")
                 httpResponse.BinaryWrite(queryResultByte);
             else
                 httpResponse.Write(queryResult);
@@ -212,6 +240,7 @@ namespace SkyServer.Tools.Search
             //    httpResponse.Write(queryResult);
             
         }
+
 
         public void setContentType(string format) {
             format  = format.ToLower();
@@ -284,7 +313,7 @@ namespace SkyServer.Tools.Search
                 }
 
             }
-            catch { message = ""; }
+            catch { message = ErrorMessage; }
 
             
             StringBuilder sb = new StringBuilder();
@@ -345,9 +374,12 @@ namespace SkyServer.Tools.Search
             string clientIP = "unknown";
             try
             {
-                if (HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"] != null)
+                if (!string.IsNullOrEmpty(HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"]))
                 {
                     clientIP = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+                    string[] addresses = clientIP.Split(',');
+                    if (addresses.Length != 0)
+                        clientIP = addresses[0];
                 }
                 else
                 {
@@ -387,6 +419,65 @@ namespace SkyServer.Tools.Search
             //Stream s = resp.GetResponseStream();
             //StreamReader sr = new StreamReader(s, Encoding.ASCII);
             //string doc = sr.ReadToEnd();
+        }
+
+
+
+        public DataSet GetObjectInfoFromWebService(HttpRequest Request)
+        {
+            this.globals = new Globals();
+            string serviceURI = globals.ExploreWS;
+            string requestString = GetURIparameters(Request);
+            return GetObjectInfoFromWebService(serviceURI, requestString);
+        }
+
+
+        public string GetURIparameters(HttpRequest Request)
+        {
+            string URIparameters = "?";
+            NameValueCollection inputForm = Request.Form;
+            if (inputForm.Count == 0)
+                inputForm = Request.QueryString;
+
+            foreach (string key in inputForm.Keys)
+            {
+                URIparameters += key + "=" + inputForm[key] + "&";
+            }
+            URIparameters = URIparameters.EndsWith("&") ? URIparameters.Substring(0, URIparameters.Length - 1) : URIparameters;
+            return URIparameters;
+        }
+
+        public DataSet GetObjectInfoFromWebService(String serviceURI, string URIparameters)
+        {
+            string URI = "";
+            string ErrorMessage = "";
+            try
+            {
+                if (!URIparameters.ToLower().Contains("&clientip="))
+                    URIparameters += "&clientIP=" + GetClientIP();
+                if (!URIparameters.ToLower().Contains("&format="))
+                    URIparameters += "&format=dataset";
+                if (URIparameters.StartsWith("?"))
+                    URIparameters = URIparameters.Substring(1);
+
+                WebRequest req = WebRequest.Create(serviceURI + "?" + Uri.EscapeUriString(URIparameters));
+                URI = req.RequestUri.ToString();
+                WebResponse resp = req.GetResponse();
+                BinaryFormatter fmt = new BinaryFormatter();
+                DataSet ds = new DataSet();
+                ds = (DataSet)fmt.Deserialize(resp.GetResponseStream());
+                return ds;
+            }
+            catch (WebException e)
+            {
+                WebResponse resp = e.Response;
+                using (StreamReader reader = new StreamReader(resp.GetResponseStream()))
+                {
+                    ErrorMessage = reader.ReadToEnd();
+                }
+                throw new Exception("Web Service error.\n\n" + e.Message + "\n" + ErrorMessage);
+                //throw new Exception(e.Message + "\nThere is an error in getting results from this URI:\n" + URI);
+            }
         }
 
 

@@ -91,8 +91,12 @@ namespace SkyServer.Tools.Explore
         /* Visits */
         public List<ApogeeVisit> visits = new List<ApogeeVisit>();
 
+        DataSet ds = new DataSet();
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            //ds = (DataSet)Session["objectDataSet"];
+
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             master = (ObjectExplorer)Page.Master;
             string token = "";
@@ -126,8 +130,9 @@ namespace SkyServer.Tools.Explore
 
 
             //DataSet ds  = runQuery.RunCasjobs(command,"Explore: Apogee");
-            DataSet ds = runQuery.RunDatabaseSearch(command, globals.ContentDataset, ClientIP, "Skyserver.Explore.ApogeeControl." + task);
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            //DataSet ds = runQuery.RunDatabaseSearch(command, globals.ContentDataset, ClientIP, "Skyserver.Explore.ApogeeControl." + task);
+            //using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            using (DataTableReader reader = ((DataSet)Session["LoadExplore"]).Tables["ApogeeData"].CreateDataReader())
             {
                 //BASE_QUERY + FIND_NEAREST;
                 if (reader.Read()) // Only one row expected
@@ -187,7 +192,6 @@ namespace SkyServer.Tools.Explore
 
         protected void ReadVisitsFromDbReader()
         {
-
             string command = ExplorerQueries.APOGEEVISITS_BASE_QUERY;
             foreach (string s in injection)
             {  
@@ -199,8 +203,9 @@ namespace SkyServer.Tools.Explore
             command = command.Replace("@id", "'" + apogee_id + "'");
 
             //DataSet ds = runQuery.RunCasjobs(command, "Explore: Apogee");
-            DataSet ds = runQuery.RunDatabaseSearch(command, globals.ContentDataset, ClientIP, "Skyserver.Explore.ApogeeControl.APOGEEVISITS_BASE_QUERY");
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            //DataSet ds = runQuery.RunDatabaseSearch(command, globals.ContentDataset, ClientIP, "Skyserver.Explore.ApogeeControl.APOGEEVISITS_BASE_QUERY");
+            //using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            using (DataTableReader reader = ((DataSet)Session["LoadExplore"]).Tables["ApogeeVisits"].CreateDataReader())
             {
                 while (reader.Read()) // Multiple rows expected
                 {
@@ -214,7 +219,6 @@ namespace SkyServer.Tools.Explore
                     visits.Add(v);
                 }
             }
-
         }
         
         public void apogeeRaDec( double ra, double dec, double radius)

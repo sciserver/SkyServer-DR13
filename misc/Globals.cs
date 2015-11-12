@@ -103,6 +103,16 @@ namespace SkyServer
             get { return skyserverRESTservice + "SearchTools/RectangularSearch"; }
         }
 
+        public string CrossIdWS
+        {
+            get { return skyserverRESTservice + "SearchTools/CrossIdSearch"; }
+        }
+
+        public string ExploreWS
+        {
+            get { return skyserverRESTservice + "SearchTools/ObjectSearch"; }
+        }
+
         public string RadialSearchWS
         {
             get { return skyserverRESTservice + "SearchTools/RadialSearch"; }

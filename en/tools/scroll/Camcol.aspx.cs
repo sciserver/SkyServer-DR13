@@ -5,8 +5,6 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
-using SkyServer.Tools.Search;
-using System.Data;
 
 namespace SkyServer.Tools.Scroll
 {
@@ -27,9 +25,9 @@ namespace SkyServer.Tools.Scroll
         protected void Page_Load(object sender, EventArgs e)
         {
             globals = (Globals)Application[Globals.PROPERTY_NAME];
-            run = Request.QueryString["R"] == null ? 5052 : int.Parse(Request.QueryString["R"]);
-            camcol = Request.QueryString["C"] == null ? 4 : int.Parse(Request.QueryString["C"]);
-            zoom = Request.QueryString["Z"] == null ? 50 : int.Parse(Request.QueryString["Z"]);
+            run = int.Parse(Request.QueryString["R"]);
+            camcol = int.Parse(Request.QueryString["C"]);
+            zoom = int.Parse(Request.QueryString["Z"]);
 
             url = ResolveClientUrl("~/en");
             imgurl = url + "/get/FrameByRCFZ.ashx?";
@@ -41,62 +39,8 @@ namespace SkyServer.Tools.Scroll
             else if (zoom == 50) { height /= 2; stride /= 2; }
         }
 
-        protected void show()
+        protected void show(SqlConnection oConn)
         {
-
-            string cmd = "SELECT stripe, startField, (endField-startField+1) as nFields FROM Run";
-            cmd += " WHERE run="+run.ToString();
-            
-            ResponseREST runQuery = new ResponseREST();
-            string ClientIP = runQuery.GetClientIP();
-            DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Scroll.Camcol.getStripeStartField");
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
-            {
-
-                string msg;
-
-                // get variables out, and set defaults
-
-                int stripe, fcount, fmin, fmax, def;
-
-                stripe = 0;
-                fmin = 200;
-                fmax = 300;
-
-                if (!reader.Read())
-                {
-                    msg = "Illegal parameters";
-                    // handle the error here
-                }
-                else
-                {
-                    stripe = reader.GetInt32(0);
-                    fmin = reader.GetInt32(1);
-                    fcount = reader.GetInt32(2);
-                    fmax = fmin + fcount - 1;
-                    img = imgurl + fmin;
-                    Response.Write("<script>\n");
-                    Response.Write("  var FIELD_MIN,FIELD_MAX,PATH,HEIGHT,STRIDE;\n");
-                    Response.Write("  FIELD_MIN  = " + fmin + ";\n");
-                    Response.Write("  FIELD_MAX  = " + fmax + ";\n");
-                    Response.Write("  HEIGHT = " + height + ";\n");
-                    Response.Write("  STRIDE = " + stride + ";\n");
-                    Response.Write("  PATH   = '" + imgurl + "';\n");
-                    Response.Write("</script>\n");
-                    msg = "<table border=0 cellpadding=0 cellspacing=0 >\n";
-                    msg += "<tr><td class='t'>Stripe</td><td class='t' align=right>" + stripe + "</td></tr>\n";
-                    msg += "<tr><td class='t'>Run</td><td class='t' align=right>" + run + "</td></tr>\n";
-                    msg += "<tr><td class='t'>Camcol</td><td class='t' align=right>" + camcol + "</td></tr>\n</table>\n";
-                }
-                // create the default load image
-                url += fmin;
-
-                Response.Write("<div id='disp'>\n");
-                Response.Write(msg);
-                Response.Write("</div>\n");
-            }
-
-            /*
             using (SqlCommand oCmd = oConn.CreateCommand())
             {
                 string cmd = "SELECT stripe, startField, (endField-startField+1) as nFields FROM Run";
@@ -149,7 +93,6 @@ namespace SkyServer.Tools.Scroll
                     Response.Write("</div>\n");
                 } // using SqlDataReader
             } // using SqlCommand
-             */ 
         }
     }
 }

@@ -19,35 +19,18 @@ namespace SkyServer.Get
             context.Response.ContentType = "image/jpeg";
             Globals globals = (Globals)context.Application[Globals.PROPERTY_NAME];
 
-            int run = int.Parse(context.Request.QueryString["R"]);
-            int col = int.Parse(context.Request.QueryString["C"]);
-            int fld = int.Parse(context.Request.QueryString["F"]);
-            int zz = int.Parse(context.Request.QueryString["Z"]);
-
-            //	build the SQL query string
-
-            string cmd = "SELECT run,camCol,field,zoom FROM Frame WHERE zoom="+zz.ToString()+" AND run="+run.ToString()+" AND camCol="+col.ToString()+" AND field="+fld.ToString();
-
-            ResponseREST runQuery = new ResponseREST();
-            string ClientIP = runQuery.GetClientIP();
-            DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.FrameByRCFZ.getRCFZ");
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            try
             {
-                if (!reader.HasRows)
-                {
-
-                    context.Response.Redirect("noimage2.jpg");
-
-                }
-                else
-                {
-                    reader.Read();
-                    run = reader.GetInt32(0);
-                    col = reader.GetInt32(1);
-                    fld = reader.GetInt32(2);
-                    zz = reader.GetInt32(3);
-                    context.Response.Redirect(globals.WSGetCodecUrl + "?R=" + run + "&C=" + col + "&F=" + fld + "&Z=" + zz);
-                }
+                int run = int.Parse(context.Request.QueryString["R"]);
+                int col = int.Parse(context.Request.QueryString["C"]);
+                int fld = int.Parse(context.Request.QueryString["F"]);
+                int zz = int.Parse(context.Request.QueryString["Z"]);
+                string URI = globals.WSGetCodecUrl + "/?R=" + run.ToString() + "&C=" + col.ToString() + "&F=" + fld.ToString() + "&Z=" + zz.ToString();
+                context.Response.Redirect(URI, false);
+            }
+            catch(Exception e)
+            { 
+                context.Response.Redirect("noimage2.jpg");
             }
 
         }

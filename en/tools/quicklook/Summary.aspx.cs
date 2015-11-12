@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Globalization;
 using SkyServer;
 using System.Data;
+using SkyServer.Tools.Search;
 
 
 namespace SkyServer.Tools.QuickLook
@@ -44,100 +45,45 @@ namespace SkyServer.Tools.QuickLook
 
         protected string ClientIP = "";
         protected string task = "";
+
+        public ResponseREST rs;
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
+            runQuery = new RunQuery();
+            ClientIP = runQuery.GetClientIP();
             globals = (Globals)Application[Globals.PROPERTY_NAME];
-            master = (ObjectQuickLook)Page.Master;
+            Session["objectInfo"] = objectInfo;
+
+            rs = new ResponseREST();
+            string requestURI = globals.ExploreWS;
+
+            ClientIP = rs.GetClientIP();
+            globals = (Globals)Application[Globals.PROPERTY_NAME];
+
+            string AllParameters = rs.GetURIparameters(Request);
+            bool CanResolve = false;
+            string[] NecessaryParams = new string[] { "id", "objid", "sid", "spec", "specobjid", "apid", "ra", "dec", "plate", "mjd", "fiber", "run", "rerun", "camcol", "field", "obj" };
+            foreach (string key in Request.QueryString.AllKeys)
+            {
+                if (NecessaryParams.Contains(key.ToLower()))
+                    CanResolve = true;
+            }
+            if (Request.QueryString.AllKeys.Length == 0 || !CanResolve)
+                AllParameters = "id=" + globals.ExploreDefault.ToString();
+            AllParameters += "&query=LoadExplore&TaskName=Skyserver.tools.QuickLook.LoadExplore";
+            objectInfo.LoadExplore = rs.GetObjectInfoFromWebService(globals.ExploreWS, AllParameters);
+
+            Session["LoadExplore"] = objectInfo.LoadExplore;
+
+            objectInfo.objId = objectInfo.LoadExplore.Tables["objectInfo"].Rows[0]["objId"].ToString();
+            objectInfo.specObjId = objectInfo.LoadExplore.Tables["objectInfo"].Rows[0]["specObjId"].ToString();
+            objectInfo.apid = objectInfo.LoadExplore.Tables["objectInfo"].Rows[0]["apid"].ToString();
+            setObjectInfo("");
+            parseIds();
             Session["QuickLookObjectInfo"] = objectInfo;
-          
-            if (Request.QueryString.Keys.Count == 0)
-            {
-                id = globals.ExploreDefault;
-            }
-
-            try
-            {
-                foreach (string key in Request.QueryString.Keys)
-                {
-                    if (key == "id")
-                    {
-                        string s = Request.QueryString["id"];
-                        id = Utilities.ParseId(s);
-                    }
-                    if (key == "sid")
-                    {
-                        string s = Request.QueryString["sid"].Trim().ToUpper();
-                        if (s.StartsWith("2M")) sidstring = s;
-                        else
-                            sidstring = (string.Equals(s, "")) ? s : Utilities.ParseId(s).ToString();
-                    }
-                    if (key == "spec")
-                    {
-                        string s = Request.QueryString["spec"];
-                        sidstring = (string.Equals(s, "")) ? s : Utilities.ParseId(s).ToString();
-                    }
-                    if (key == "apid")
-                    {
-                        string s = HttpUtility.UrlEncode(Request.QueryString["apid"]);
-                        if (s != null & !"".Equals(s))
-                        {
-                            apid = s;
-                        }
-                    }
-                    if (key == "ra") qra = Utilities.parseRA(Request.QueryString["ra"]); // need to parse J2000
-                    if (key == "dec") qdec = Utilities.parseDec(Request.QueryString["dec"]); // need to parse J2000
-                    if (key == "plate") plate = short.Parse(Request.QueryString["plate"]);
-                    if (key == "mjd") mjd = int.Parse(Request.QueryString["mjd"]);
-                    if (key == "fiber") fiber = short.Parse(Request.QueryString["fiber"]);
-
-                    if (key == "run")
-                    {
-                        try { string s = Request.QueryString["run"]; run = string.Equals(s, "") ? run : Convert.ToInt16(s); }
-                        catch { }
-                    }
-                    if (key == "rerun")
-                    {
-                        try { string s = Request.QueryString["rerun"]; rerun = string.Equals(s, "") ? rerun : Convert.ToInt16(s); }
-                        catch { }
-                    }
-                    if (key == "camcol")
-                    {
-                        try { string s = Request.QueryString["camcol"]; camcol = string.Equals(s, "") ? camcol : Convert.ToByte(s); }
-                        catch { }
-                    }
-                    if (key == "field")
-                    {
-                        try { string s = Request.QueryString["field"]; field = string.Equals(s, "") ? field : Convert.ToInt16(s); }
-                        catch { }
-                    }
-                    if (key == "obj")
-                    {
-                        try { string s = Request.QueryString["obj"]; obj = string.Equals(s, "") ? obj : Convert.ToInt16(s); }
-                        catch { }
-                    }
-
-                }
-
-                ///Check for authenticated token
-                cookie = Request.Cookies["Keystone"];
-                if (cookie != null)
-                {
-                    if (cookie["token"] != null || !cookie["token"].Equals(""))
-                    {
-                        token = cookie["token"];
-
-                    }
-                }
-                runQuery = new RunQuery(token);
-                ClientIP = runQuery.GetClientIP();
-                //This is imp function to get all different ids.
-                getObjPmts();
-
-                //parseId and store ObjectInfo in session
-                parseIds();
-            }
-            catch { }
+            //Session["objectInfo"] = objectInfo;            
 
         }
 
@@ -147,9 +93,6 @@ namespace SkyServer.Tools.QuickLook
 
             if (objectInfo.specObjId != null && !objectInfo.specObjId.Equals(""))
                 objectInfo.specId = Utilities.ParseId(objectInfo.specObjId);
-
-            Session["QuickLookObjectInfo"] = objectInfo;
-
         }
 
         private void getObjPmts()
@@ -166,8 +109,8 @@ namespace SkyServer.Tools.QuickLook
         private void setObjectInfo(string cmd)
         {
             //DataSet ds = runQuery.RunCasjobs(cmd, "QuickLook: Summary");
-            DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Quicklook.Summary." + task);
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            //DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Quicklook.Summary." + task);
+            using (DataTableReader reader = objectInfo.LoadExplore.Tables["QuickLookMetaData"].CreateDataReader())
             {
                 if (reader.Read())
                 {

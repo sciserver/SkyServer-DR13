@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Globalization;
 using SkyServer;
 using System.Data;
+using SkyServer.Tools.Search;
 
 namespace SkyServer.Tools.Explore
 {
@@ -34,12 +35,18 @@ namespace SkyServer.Tools.Explore
             hrefsSpec = getFits(specObjId);
         }
 
-        string[] getFits(long? specObjId) {
-	        string[] result = null;
+        string[] getFits(long? specObjId)
+        {
+            string[] result = null;
             string cmd = "select dbo.fGetUrlFitsSpectrum(@specObjId)";
             cmd = cmd.Replace("@specObjId", specObjId == null ? "" : specObjId.ToString());
+            //DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.FitsSpec.getUrlFitsSpectrum");
 
-            DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.FitsSpec.getUrlFitsSpectrum");
+            ResponseREST rs = new ResponseREST();
+            string URIparams = "?spec=" + specObjId.ToString() + "&query=fitsspec&TaskName=Skyserver.Explore.FitsSpec.getUrlFitsSpectrum";
+            DataSet ds = rs.GetObjectInfoFromWebService(globals.ExploreWS, URIparams);
+
+
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
                 if (reader.HasRows)
@@ -52,7 +59,7 @@ namespace SkyServer.Tools.Explore
                         result[i] = reader.GetValue(i).ToString();
                 }
             }
-	        return result;
+            return result;
         }
     }  
 }

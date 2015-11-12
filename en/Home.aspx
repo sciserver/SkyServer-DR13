@@ -228,7 +228,7 @@
 							</td>
 						</tr>
 						<tr height="20">
-							<td nowrap class="menulink"><a class="menulink" target="offsite" href="<%=globals.SdssUrlBase%>">&nbsp;&nbsp;sdss3.org &nbsp;</a><img src="images/new_window.png" />&nbsp;&nbsp;</td>
+							<td nowrap class="menulink"><a class="menulink" target="offsite" href="<%=globals.SdssUrlBase%>">&nbsp;&nbsp;sdss.org &nbsp;</a><img src="images/new_window.png" />&nbsp;&nbsp;</td>
 						</tr>
 						<tr height="20">
 							<td nowrap class="menulink"><a class="menulink" target="offsite" href="<%=globals.SdssUrlBase%>dr<%=globals.ReleaseNumber%>/"> &nbsp;&nbsp;Data Release <%=globals.ReleaseNumber%> &nbsp;</a><img src="images/new_window.png" />&nbsp;&nbsp;</td>

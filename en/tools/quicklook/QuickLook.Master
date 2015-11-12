@@ -12,14 +12,24 @@
       .aa    { color: #aaaaff; font-weight: bold; font-size:12pt;}
       .bb    { color: #aaaaff; font-weight: bold; font-size:10pt;}
       td	 {font-size:10pt;}
+      #check  {position: absolute; left:  0px; top: 0px;visibility:hidden;width:12px;}
       #toc   {position:absolute;top:70px;left:10px;}
-      #check {visibility:hidden; }
       #content {position:absolute;top:0px;left:135px;background-color:White;}
     </style>
+    
+<script type="text/javascript" src="../chart/naviClass.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" language="javascript">
-
+    //#check {visibility:hidden; }
     var search = false;
+    var check;
+
+    function init() {
+        check = new Div("check", 124, 186);
+        //check.show();
+        check.hide();
+    }
+
     function gotochart(ra, dec) {
         var s = "../chart/chart.aspx?ra=" + ra + "&dec=" + dec;
         var w = window.open(s, "NAVIGATE");
@@ -82,9 +92,11 @@
         top.frames.HIDDEN.location.href = url;
         toggleElement('check', 1);
         */
+        document.getElementById('check2').style.display = "inline";
         var url = "../chart/book.aspx?add=" + id;
         var frame = document.getElementById("test");
         frame.src = url;
+        //check.show();
     }
 
     function getid(id) {
@@ -223,11 +235,11 @@
                 if (v < 0) {
                     v = v + 360     // only allows positive dec values
                 }
-                else if (v > 90 & v < 270) { // if dec is at the other side of the poles
+                if (v > 90 & v < 270) { // if dec is at the other side of the poles
                     document.getElementById('searchRA').value = (OldRa + 180) % 360 // go 1/2 way around the globe
                     v = 180 - v
                 }
-                else if (v >= 270) { // if dec is at this side from the south pole
+                if (v >= 270) { // if dec is at this side from the south pole
                     v = v - 360
                 }
             }
@@ -266,7 +278,7 @@
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
-<body leftmargin="8" topmargin="8" class="quicklook">
+<body onload="init()" leftmargin="8" topmargin="8" class="quicklook">
     <form id="form2" runat="server">
 
       <table border="0" cellspacing="0" cellpadding="2" bgcolor="black">
@@ -275,6 +287,8 @@
 		<td class="title" align="left" width="<%= tabwidth-60 %>">&nbsp;&nbsp;<%= globals.Release %></td>
 	  </tr>
       </table>
+
+        <div id='check' ><img src='../chart/images/checkmark.gif' width="12" height="10"></div>
 
         <div id="search" style="display:none;">
           <table>
@@ -320,10 +334,10 @@
 	    <tr><td class="s" align="right"><hr width="90"></td></tr>
             -->
 	    <tr><td><a class="quicklook" href='<%=hrefs.ShowBook%>' ONMOUSEOVER="this.T_WIDTH='140';return escape('Save or view objects using your SkyServer notebook.')">Notes</a></td></tr>
-	    <tr><td class="s" align="right" ><a class="quicklook" href='<%=hrefs.SaveBook%>' ONMOUSEOVER="this.T_WIDTH='140';return escape('Save this object in your SkyServer notebook.')"> Add to Notes</a><!--<div id='check'><!--<img src='../images/checkmark.gif' alt="Added to notebook" /></div>--></td></tr>
-	    <tr><td class="s" align="right" ><a class="quicklook" href='<%=hrefs.ShowBook%>' ONMOUSEOVER="this.T_WIDTH='140';return escape('View data for any objects you have saved in your SkyServer notebook.')">Show Notes</a></td></tr>
+	    <tr><td class="s" align="right" ><div id='check2' style="display: none;"><img src='../chart/images/checkmark.gif' alt="Added to notebook" /></div><a class="quicklook" href='<%=hrefs.SaveBook%>' ONMOUSEOVER="this.T_WIDTH='140';return escape('Save this object in your SkyServer notebook.')"> Add to Notes</a></td></tr>
+        <tr><td class="s" align="right" ><a class="quicklook" href='<%=hrefs.ShowBook%>' ONMOUSEOVER="this.T_WIDTH='140';return escape('View data for any objects you have saved in your SkyServer notebook.')">Show Notes</a></td></tr>
 	    <tr><td class="s" align="right"><hr width="90"></td></tr>
-	    <tr><td align="left"><a class="quicklook" target="_blank" href='<%=hrefs.FindingChart %>' ONMOUSEOVER="this.T_WIDTH='140';return escape('Make a Finding Chart to help you view this object in a telescope.')">Finding Chart</a></td></tr>	
+	    <tr><td align="left"><a class="quicklook" target="_blank" href='<%=hrefs.FindingChart %>' ONMOUSEOVER="this.T_WIDTH='140';return escape('Make a Finding Chart to help you view this object in a telescope.')">Finding Chart</a></td></tr>
 	    <tr><td align="right"><hr width="90"></td></tr>
 	    <tr><td><a class="quicklook" href=# onClick="<%=hrefs.Print%>"> Print </a></td></tr>
 	    <tr><td align="right"><hr width="90"></td></tr>
@@ -332,14 +346,6 @@
 	    <tr><td align="right" class="s"><a class="quicklook" target="OMAIN" href='<%=hrefs.Examples%>' ONMOUSEOVER="this.T_WIDTH='140';return escape('See some more examples of what you can see in Quick Look.')">Examples</a></td></tr>		
 	    <tr><td align="right"><hr width="90"></td></tr>
 
-	    <tr>
-	      <td>
-	        <div id="check">
-	           <span style="font-style:italic">Added to notebook</span>
-	           <img src='../images/checkmark.gif' alt="Added to notebook" />
-	        </div>
-	      </td>
-	    </tr>
       </table>
     </div>
     <div id="content">

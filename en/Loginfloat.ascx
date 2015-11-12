@@ -23,7 +23,7 @@
 		<asp:Div style="float:left; padding:5px 15px;font-family:sans-serif;color:#eee" id="sc1s3rv3r_uname" >
             <%= Session["userid"] == null ? "Not logged in": Session["userid"] %>
 		</asp:Div>
-		<asp:Div style="float:right; background-color:#eee;margin-right:15px;border-radius:5px;border:solid 1px #444;padding:5px;"><asp:a style="font-weight:bold;font-family:sans-serif;color:#003366"  id="sc1s3rv3r_login" href="#" onclick="keystone_login(<%= Session["userid"] == null ? "false": "true" %>);return false;">
+		<asp:Div style="float:right; background-color:#eee;margin-right:15px;border-radius:5px;border:solid 1px #444;padding:5px;"><asp:a style="font-weight:bold;font-family:sans-serif;color:#003366"  id="sc1s3rv3r_login" href="#" onmouseover="this.style.cursor='pointer'"  onclick="keystone_login(<%= Session["userid"] == null ? "false": "true" %>);return false;">
             <%= Session["userid"] == null ? "Login": "Logout" %>
 	    </asp:a></asp:Div>
 	</div>

@@ -18,15 +18,22 @@ namespace SkyServer.Get
         {
             context.Response.ContentType = "image/gif";
             Globals globals = (Globals)context.Application[Globals.PROPERTY_NAME];
-
-            long plateid = long.Parse(context.Request.QueryString["P"]);
-            short fiberid = short.Parse(context.Request.QueryString["F"]);
-
+            long? plateid = null;
+            short? fiberid = null; 
+            try
+            {
+                plateid = long.Parse(context.Request.QueryString["P"]);
+                fiberid = short.Parse(context.Request.QueryString["F"]);
+            }
+            catch {  }
             string cmd = "SELECT img FROM SpecObjAll WHERE plateID=" + plateid.ToString() + " AND fiberID=" + fiberid.ToString();
 
-            ResponseREST runQuery = new ResponseREST();
-            string ClientIP = runQuery.GetClientIP();
-            DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.SpecByPF.getImg");
+            ResponseREST rs = new ResponseREST();
+            //string ClientIP = rs.GetClientIP();
+            //DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.SpecByPF.getImg");
+            string URIparams = "?plateId=" + plateid.ToString() + "&fiber=" + fiberid.ToString() + "&query=SpecByPF&TaskName=Skyserver.Explore.SpecByPF.getImg";
+            DataSet ds = rs.GetObjectInfoFromWebService(globals.ExploreWS, URIparams);
+
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
                 if (!reader.HasRows)
