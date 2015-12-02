@@ -10,8 +10,8 @@
   #logo		{position:absolute;top:0px;left:0px;}
   #title	{position:absolute;top:10px;left:100px;z-index:1;
 			 color: #8877ff;font-size:24pt;font-weight:bold;font-family: arial,helvetica,sans-serif;}
-  #spectrum	{position:absolute; top:180; left:120;z-index:0;}
-  #template	{position:absolute; top:180; left:120;z-index:1;}
+  #spectrum	{position:absolute; top:180px; left:120px;z-index:0;}
+  #template	{position:absolute; top:180px; left:120px;z-index:1;}
   #select	{position:absolute; top:70px;left:100px;width:600px;}
   #ctrl 	{position:absolute; top:620px;left:328px;}
   #display 	{position:absolute; top:500px;left:0px;}
@@ -20,6 +20,7 @@
 
 </style>
 <script src="naviClass.js"></script>
+
 </head>
 
 <body style="COLOR: #ffffff; OVERFLOW-X: hidden; OVERFLOW-Y: scroll; WIDTH: 100%;" bgColor="#000030">
@@ -30,45 +31,46 @@
 <div id="spectrum"><IMG name="simg" src="images/spSpec-51943-0284-447.gif" width="596" height="388" ></div>
 <div id="template"><IMG name="timg" src="images/template1.gif" width="596" height="388" ></div>
 
-<script>
 
-    function declareSrc(parent,obj) {
-        return eval( (document.layers)? 
-	    (parent==''? '': 'document.'+parent+'.')+'document.'+obj :
-	    'document.all.'+obj);
-    }
+    <script>
 
-	function showZ(shift) {
-		var scale = 0.001313;
-		var z	= Math.floor( 1000.* (Math.exp(shift*scale) - 1.0))/1000;
-		display.setBody("<span class='i'>Redshift is "+z+"</span>");
-	}
-		
-    function moveTemplate(d) {
-		shift += d;
-		template.moveBy(d,0);
-		showZ(shift);
-    }
+        function declareSrc(parent, obj) {
+            return eval((document.layers) ?
+            (parent == '' ? '' : 'document.' + parent + '.') + 'document.' + obj :
+            'document.all.' + obj);
+        }
 
-	function loadSimg(o) {
-		var s = "images/spSpec-51943-0284-";
-		simg.src = s + o.options[o.selectedIndex].value + ".gif";
-	}
-	
-	function loadTimg(o) {
-		var s = "images/template";
-		timg.src = s + o.options[o.selectedIndex].value + ".gif";
-	}
-	
-	var spectrum	= new Div('spectrum',100,220);
-	var template	= new Div('template',100,220);
-	var display		= new Div('display' ,360,190);
-    var simg	    = declareSrc('spectrum','simg');
-    var timg	    = declareSrc('template','timg');
-	var shift		= 0;
+        function showZ(shift) {
+            var scale = 0.001313;
+            var z = Math.floor(1000. * (Math.exp(shift * scale) - 1.0)) / 1000;
+            display.setBody("<span class='i'>Redshift is " + z + "</span>");
+        }
 
-	showZ(shift);
-	
+        function moveTemplate(d) {
+            shift += d;
+            template.moveBy(d, 0);
+            showZ(shift);
+        }
+
+        function loadSimg(o) {
+            var s = "images/spSpec-51943-0284-";
+            simg.src = s + o.options[o.selectedIndex].value + ".gif";
+        }
+
+        function loadTimg(o) {
+            var s = "images/template";
+            timg.src = s + o.options[o.selectedIndex].value + ".gif";
+        }
+
+        var spectrum = new Div('spectrum', 100, 220);
+        var template = new Div('template', 100, 220);
+        var display = new Div('display', 360, 190);
+        var simg = declareSrc('spectrum', 'simg');
+        var timg = declareSrc('template', 'timg');
+        var shift = 0;
+
+        showZ(shift);
+
 </script>
 
 <div id="select">
