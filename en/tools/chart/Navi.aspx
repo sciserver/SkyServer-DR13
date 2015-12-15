@@ -182,6 +182,8 @@
     <form id="form1" runat="server">
     <div>
     
+        <input type="hidden" name="TaskName" id="TaskName" value="Skyserver.tools.Navigate"/>    
+
     </div>
     </form>
         <div id="toc">

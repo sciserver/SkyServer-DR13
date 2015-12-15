@@ -52,7 +52,11 @@ namespace SkyServer.Tools.Search
         {
             this.WSrequestUri = WSrequestUri;
         }
-        
+
+        public ResponseREST(HttpResponse Response)
+        {
+            this.httpResponse = Response;
+        }
         
         
         /// <summary>
@@ -88,6 +92,7 @@ namespace SkyServer.Tools.Search
             Globals globals = new Globals();
 
             switch(searchTool){
+                case "UserHistory": requestUrl = globals.UserHistoryWS; break;
                 case "SearchForm": requestUrl = globals.SQLSearchWS; break;
                 case "SQL": requestUrl = globals.SQLSearchWS; break;
                 case "Radial": requestUrl = globals.RadialSearchWS; break;
@@ -184,7 +189,7 @@ namespace SkyServer.Tools.Search
         
 
 
-        private void runQuery(String serviceUrl, String requestString, string uploaded, string returnType)
+        public void runQuery( String serviceUrl, String requestString, string uploaded, string returnType)
         {
 
             Globals globals = new Globals();
@@ -193,16 +198,23 @@ namespace SkyServer.Tools.Search
             client.BaseAddress = new Uri(serviceUrl);
             client.Timeout = new TimeSpan(0, 0, 0, globals.TimeoutSkyserverWS);// default is 100000ms
             string requestUri = client.BaseAddress + "?" + requestString;
-
+            
             string queryResult = "";
             byte[]  queryResultByte = null;
             HttpResponseMessage respMessage = null;
             StringContent content = null;
+
             if (uploaded == null || uploaded.Equals(""))
                 content = new StringContent("");
             else 
                 content = new StringContent(uploaded);
-             
+
+            //bool success = client.DefaultRequestHeaders.TryAddWithoutValidation("Referer", HttpContext.Current.Request.UrlReferrer.ToString());
+            //string gg = REQUEST.UrlReferrer.AbsoluteUri;
+            //client.DefaultRequestHeaders.Add("Referer", gg);
+
+            client.DefaultRequestHeaders.Referrer = HttpContext.Current.Request.UrlReferrer;
+
             if (!(token == null || token == String.Empty))
             {
                 content.Headers.Add("X-Auth-Token", token);
@@ -301,7 +313,7 @@ namespace SkyServer.Tools.Search
                 }
                 if (message == "")
                 {
-                    message = "Query did not return results successfully, check input and try again later.";
+                    message = "Query did not return results successfully, check the input and try again.";
 
                     string errmessage = ErrorMessage.ToLower();
                     if (errmessage.Contains("<html"))
@@ -460,7 +472,22 @@ namespace SkyServer.Tools.Search
                 if (URIparameters.StartsWith("?"))
                     URIparameters = URIparameters.Substring(1);
 
-                WebRequest req = WebRequest.Create(serviceURI + "?" + Uri.EscapeUriString(URIparameters));
+                //HttpRequest request = HttpContext.Current.Request;
+                cookie = HttpContext.Current.Request.Cookies["Keystone"];
+                if (cookie != null)
+                    if (cookie["token"] != null || !cookie["token"].Equals(""))
+                        token = cookie["token"];
+
+                
+                HttpWebRequest req = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(serviceURI + "?" + Uri.EscapeUriString(URIparameters));
+
+                //WebRequest req = WebRequest.Create(serviceURI + "?" + Uri.EscapeUriString(URIparameters));
+
+                if (!token.Equals("") && token != null)
+                    req.Headers.Add("X-Auth-Token", token);
+
+                req.Referer = HttpContext.Current.Request.Url.ToString();
+
                 URI = req.RequestUri.ToString();
                 WebResponse resp = req.GetResponse();
                 BinaryFormatter fmt = new BinaryFormatter();
@@ -757,6 +784,72 @@ namespace SkyServer.Tools.Search
                 }
                 response.Write("</td>\n");
             } // using DataReader           
-        }       
+        }
+
+
+
+        public string getTableHTMLresult(DataSet ds)
+        {
+
+            string ColumnName = "";
+
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat("<html><head>\n");
+            sb.AppendFormat("<title>SDSS Query Results</title>\n");
+            sb.AppendFormat("</head><body bgcolor=white>\n");
+            int NumTables = ds.Tables.Count;
+
+            for (int t = 0; t < NumTables; t++)
+            {
+
+                int NumRows = ds.Tables[t].Rows.Count;
+                if (NumRows == 0)
+                {
+                    sb.AppendFormat("<h3><br><font color=red>No entries have been found</font> </h3>");
+                }
+                else
+                {
+                    if (ds.Tables[0].Rows[0][0].ToString().StartsWith("error: limit is") || ds.Tables[0].Rows[0][0].ToString().Contains("Maximum number of rows allowed"))
+                    {
+                    }
+                    else
+                    {
+                        for (int r = 0; r < NumRows; r++)
+                        {
+                            int NumColumns = ds.Tables[t].Columns.Count;
+                            if (r == 0)// filling the first row with the names of the columns
+                            {
+                                sb.AppendFormat("<table border='1' BGCOLOR=cornsilk>\n");
+                                sb.AppendFormat("<tr align=center>");
+                                for (int c = 0; c < NumColumns; c++)
+                                {
+                                    ColumnName = ds.Tables[t].Columns[c].ColumnName;
+                                    sb.AppendFormat("<td><font size=-1>{0}</font></td>", ColumnName);
+                                }
+                                sb.AppendFormat("</tr>");
+                            }
+
+                            sb.AppendFormat("<tr align=center BGCOLOR=#eeeeff>");
+                            for (int c = 0; c < NumColumns; c++)
+                                sb.AppendFormat("<td nowrap><font size=-1>{0}</font></td>", ds.Tables[t].Rows[r][c].ToString());
+                            sb.AppendFormat("</tr>");
+                        }
+                        sb.AppendFormat("</TABLE>");
+                    }
+                }
+                sb.AppendFormat("<hr>");
+            }
+            sb.AppendFormat("</BODY></HTML>\n");
+            return sb.ToString();
+
+
+        }
+
+
+
+
+
+
+
     }
 }

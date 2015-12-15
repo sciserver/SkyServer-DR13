@@ -32,7 +32,6 @@ namespace SkyServer.Tools.Explore
         public DataSet LoadExplore = new DataSet();
         //public DataSet dataSet1 = new DataSet();// contains the main info concerning the resolved object. Filled up the first time the explore page loads.
         //public DataSet dataSet2 = new DataSet();// contain secondary info concerning the resolved object. Filled up the first time the user clicks on particular links of the left hand side menu. 
-
     }
 
         

@@ -89,8 +89,6 @@ namespace SkyServer.Tools.GetImg
             if (plateid.HasValue)
             {
                     // generate the options list right out of the database
-                    //string cmd = "SELECT 1 EXEC spGetFiberList @plateid";// the (semi-useless) select statement is created to assure that cmd is going to pass the checkings in spExecuteSQL. The usefull data comes in the second datatable from the resultset.
-                    //cmd = cmd.Replace("@plateid", plateid.ToString());
 
                     string u = "<a href='" + getimgurl + "?ID=";
                     string uphoto = "<a href='" + url + "/tools/explore/obj.aspx?id=";

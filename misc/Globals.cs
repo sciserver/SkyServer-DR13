@@ -113,6 +113,11 @@ namespace SkyServer
             get { return skyserverRESTservice + "SearchTools/ObjectSearch"; }
         }
 
+        public string UserHistoryWS
+        {
+            get { return skyserverRESTservice + "SearchTools/UserHistory"; }
+        }
+
         public string RadialSearchWS
         {
             get { return skyserverRESTservice + "SearchTools/RadialSearch"; }

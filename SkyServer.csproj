@@ -2024,6 +2024,7 @@
     <Content Include="en\tools\search\form\images\update.jpg" />
     <Content Include="en\tools\search\form\SearchForm.aspx" />
     <Content Include="en\tools\search\form\validate.js" />
+    <Content Include="en\tools\search\UserHistory.aspx" />
     <Content Include="en\tools\search\IQS.aspx" />
     <Content Include="en\tools\search\IRQS.aspx" />
     <Content Include="en\tools\search\naviClass.js" />
@@ -5886,6 +5887,13 @@
     </Compile>
     <Compile Include="en\tools\search\form\SearchForm.aspx.designer.cs">
       <DependentUpon>SearchForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\tools\search\UserHistory.aspx.cs">
+      <DependentUpon>UserHistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\tools\search\UserHistory.aspx.designer.cs">
+      <DependentUpon>UserHistory.aspx</DependentUpon>
     </Compile>
     <Compile Include="en\tools\search\IQS.aspx.cs">
       <DependentUpon>IQS.aspx</DependentUpon>

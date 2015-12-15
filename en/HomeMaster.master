@@ -92,6 +92,7 @@
         <td style="border:1px solid black" nowrap="nowrap" class="navlink" align="center" width="75px"><a class="navlink" href="<%= url %>help/download/" target="_top" onmouseover="return escape('Download SkyServer tools and papers')">&nbsp;&nbsp;Download&nbsp;&nbsp;</a></td>
         <td style="border:1px solid black" nowrap="nowrap" class="navlink" align="center" width="85px"><a class="navlink" href="<%= url %>gsearch.aspx" onmouseover="return escape('Use Google to search this site')">&nbsp;Site Search&nbsp;</a></td>
         <td style="border:1px solid black" nowrap="nowrap" class="navlink" align="center" width="60px"><a class="navlink" href="<%= url %>help/" target="_top" onmouseover="return escape('Help pages')">&nbsp;&nbsp;Help&nbsp;&nbsp;</a></td>
+        <td style="border:1px solid black" nowrap="nowrap" class="navlink" align="center" width="110px"><a class="navlink" href="<%= url %>tools/search/UserHistory.aspx" target="_top" onmouseover="return escape('User History')">&nbsp;&nbsp;My Query History&nbsp;&nbsp;</a></td>
         <td style="border:1px solid black" width="*">&nbsp;</td>
       </tr>            
     </table>

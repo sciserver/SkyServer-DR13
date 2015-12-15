@@ -26,10 +26,10 @@ namespace SkyServer
             //		var s = "<tr><td>\n";
             //		s+="  <hr>\n";
             string s = "";
-            s += "  <form target='search' method='post' name='sql' action='" + url + "/tools/search/x_sql.aspx'>\n";
+            s += "  <form target='search' method='post' name='sql' action='" + url + "/tools/search/x_results.aspx" +"'>\n";
             s += "     <table BORDER=0 WIDTH='440' cellpadding=1 cellspacing=1>\n";
             s += "       <tr VALIGN='top'><td>\n";
-            s += "			<textarea cols=64 name=cmd rows=12 wrap=virtual>";
+            s += "			<textarea cols=64 name=cmd rows=12 wrap=virtual>"; 
             s += query;
             s += "</textarea>\n";
             s += "		</td></tr>\n";
@@ -47,6 +47,7 @@ namespace SkyServer
             s += "			<p>\n";
             s += "			<input id=submit type=submit value=Submit>\n";
             s += "			<input TYPE='reset' VALUE='Reset ' id='reset' name='reset'>\n";
+            s += "			<input type=\"hidden\" name=\"searchtool\" id=\"searchtool\" value=\"SQL\" /> \n";
 
             Response.Write(s);
 
@@ -587,7 +588,7 @@ namespace SkyServer
 
                         if (!reader.HasRows)
                         {
-                            response.Write("<h3><br><font color=red>No objects have been found</font> </h3>");
+                            response.Write("<h3><br><font color=red>No entries have been found</font> </h3>");
                         }
                         else
                         {
@@ -942,7 +943,7 @@ namespace SkyServer
                 {
                     if (!reader.HasRows)
                     {
-                        response.Write("No objects have been found");
+                        response.Write("No entries have been found");
                     }
                     else
                     {
@@ -1002,7 +1003,7 @@ namespace SkyServer
             {
                 if (!reader.HasRows)
                 {
-                    response.Write("No objects have been found");
+                    response.Write("No entries have been found");
                 }
                 else
                 {

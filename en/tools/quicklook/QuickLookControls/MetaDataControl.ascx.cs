@@ -58,7 +58,7 @@ namespace SkyServer.Tools.QuickLook
 
         public ObjectQuickLook master;
         protected RunQuery runQuery;
-
+        public string token = "";
       
 
 
@@ -66,7 +66,6 @@ namespace SkyServer.Tools.QuickLook
         {
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             master = (ObjectQuickLook)Page.Master;
-            string token = "";
             HttpCookie cookie = Request.Cookies["Keystone"];
             if (cookie != null)
                 if (cookie["token"] != null || !cookie["token"].Equals(""))
