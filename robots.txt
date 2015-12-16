@@ -14,3 +14,4 @@ Disallow: /jp/get/
 Disallow: /en/tools/
 Disallow: /en/help/
 Disallow: /en/
+Disallow: /Skyserver/
