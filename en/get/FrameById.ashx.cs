@@ -21,11 +21,8 @@ namespace SkyServer.Get
             long id = long.Parse(context.Request.QueryString["id"]);
             int zoom = int.Parse(context.Request.QueryString["zoom"]);
 
-            string cmd = "SELECT run,camCol,field,zoom FROM Frame WHERE fieldID="+id.ToString()+" AND zoom="+zoom.ToString();
             ResponseREST rs = new ResponseREST();
-            //string ClientIP = rs.GetClientIP(); 
-            //DataSet ds = rs.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.FrameById.getRCFZ");
-            string URIparams = "?fieldId=" + id.ToString() + "&zoom=" + zoom.ToString() + "&query=FrameById&TaskName=Skyserver.Explore.FrameById.getRCFZ";
+            string URIparams = "?fieldId=" + id.ToString() + "&zoom=" + zoom.ToString() + "&query=FrameById&TaskName=Skyserver.get.FrameById.getRCFZ";
             DataSet ds = rs.GetObjectInfoFromWebService(globals.ExploreWS, URIparams);
 
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())

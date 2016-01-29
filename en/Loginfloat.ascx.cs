@@ -19,7 +19,7 @@ namespace SkyServer.en
             TryKeystoneLogin();
         }
 
-        private void TryKeystoneLogin()
+        public void TryKeystoneLogin()
         {
             try
             {

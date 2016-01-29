@@ -26,12 +26,9 @@ namespace SkyServer.Get
                 fiberid = short.Parse(context.Request.QueryString["F"]);
             }
             catch {  }
-            string cmd = "SELECT img FROM SpecObjAll WHERE plateID=" + plateid.ToString() + " AND fiberID=" + fiberid.ToString();
 
             ResponseREST rs = new ResponseREST();
-            //string ClientIP = rs.GetClientIP();
-            //DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.SpecByPF.getImg");
-            string URIparams = "?plateId=" + plateid.ToString() + "&fiber=" + fiberid.ToString() + "&query=SpecByPF&TaskName=Skyserver.Explore.SpecByPF.getImg";
+            string URIparams = "?plateId=" + plateid.ToString() + "&fiber=" + fiberid.ToString() + "&query=SpecByPF&TaskName=Skyserver.get.SpecByPF.getImg";
             DataSet ds = rs.GetObjectInfoFromWebService(globals.ExploreWS, URIparams);
 
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())

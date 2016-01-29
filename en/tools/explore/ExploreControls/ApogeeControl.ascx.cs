@@ -84,9 +84,7 @@ namespace SkyServer.Tools.Explore
 
         protected bool isData = false;
 
-        protected RunQuery runQuery;
         protected string task;
-        protected string ClientIP = "";
      
         /* Visits */
         public List<ApogeeVisit> visits = new List<ApogeeVisit>();
@@ -99,13 +97,6 @@ namespace SkyServer.Tools.Explore
 
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             master = (ObjectExplorer)Page.Master;
-            string token = "";
-            HttpCookie cookie = Request.Cookies["Keystone"];
-            if (cookie != null)
-                if (cookie["token"] != null || !cookie["token"].Equals(""))
-                    token = cookie["token"];
-            runQuery = new RunQuery(token);
-            ClientIP = runQuery.GetClientIP();
 
             if (master.apid != null && !master.apid.Equals(""))
             {
@@ -128,10 +119,6 @@ namespace SkyServer.Tools.Explore
         protected void ReadInfoFromDbReader()
         {
 
-
-            //DataSet ds  = runQuery.RunCasjobs(command,"Explore: Apogee");
-            //DataSet ds = runQuery.RunDatabaseSearch(command, globals.ContentDataset, ClientIP, "Skyserver.Explore.ApogeeControl." + task);
-            //using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             using (DataTableReader reader = ((DataSet)Session["LoadExplore"]).Tables["ApogeeData"].CreateDataReader())
             {
                 //BASE_QUERY + FIND_NEAREST;
@@ -202,9 +189,6 @@ namespace SkyServer.Tools.Explore
             }
             command = command.Replace("@id", "'" + apogee_id + "'");
 
-            //DataSet ds = runQuery.RunCasjobs(command, "Explore: Apogee");
-            //DataSet ds = runQuery.RunDatabaseSearch(command, globals.ContentDataset, ClientIP, "Skyserver.Explore.ApogeeControl.APOGEEVISITS_BASE_QUERY");
-            //using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             using (DataTableReader reader = ((DataSet)Session["LoadExplore"]).Tables["ApogeeVisits"].CreateDataReader())
             {
                 while (reader.Read()) // Multiple rows expected

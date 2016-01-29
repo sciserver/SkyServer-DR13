@@ -10,7 +10,7 @@ namespace SkyServer.Tools.Search
     public partial class Radial : System.Web.UI.Page
     {
 
-        //protected string whichway = "equitorial";
+        //protected string whichway = "equatorial";
         // the values below have been replaced by (visualRa, visualDec)
 
 //        protected double searchRA1 = 197.61;		// radial RA and first rect RA

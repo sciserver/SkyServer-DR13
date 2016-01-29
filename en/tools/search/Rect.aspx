@@ -73,7 +73,7 @@ if( globals.Access == "public" ) {
             document.getElementById('max_ra').value = "258.3";
             document.getElementById('min_dec').value = "64";
             document.getElementById('max_dec').value = "64.1";
-            document.getElementById('equitorial').checked = "checked";
+            document.getElementById('equatorial').checked = "checked";
 
         }
 
@@ -167,7 +167,7 @@ if( globals.Access == "public" ) {
 			<tr ALIGN=middle VALIGN=center>
                 <td width="30%" class="qtitle">Coordinate system</td>
                 <td WIDTH="70%" class="q" colspan="2">
-                    <input type="radio" name="coordtype" value="equitorial" onclick="javascript:changeSearchType('equitorial');" checked />Equitorial ( RA / Dec )&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="coordtype" value="equatorial" onclick="javascript:changeSearchType('equatorial');" checked />Equatorial ( RA / Dec )&nbsp;&nbsp;&nbsp;&nbsp;
                     <input type="radio" name="coordtype" value="galactic" onclick="javascript:changeSearchType('galactic');" />Galactic (<i>l</i> and <i>b</i>)&nbsp;&nbsp;&nbsp;&nbsp;
                 </td>
 			</tr>

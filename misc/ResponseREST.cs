@@ -214,6 +214,7 @@ namespace SkyServer.Tools.Search
             //client.DefaultRequestHeaders.Add("Referer", gg);
 
             client.DefaultRequestHeaders.Referrer = HttpContext.Current.Request.UrlReferrer;
+            client.DefaultRequestHeaders.Add("X-Forwarded-For", "");
 
             if (!(token == null || token == String.Empty))
             {

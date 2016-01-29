@@ -22,7 +22,6 @@ namespace SkyServer.Tools.Explore
         protected Globals globals;
 
         protected ObjectExplorer master;
-        protected RunQuery runQuery = new RunQuery();
         protected DataSet ds;
         protected string task = "";
         DataSet objectDataSet3;        
@@ -57,19 +56,6 @@ namespace SkyServer.Tools.Explore
             //    getQuery();
 
             //executeQuery();
-        }
-
-        private void executeQuery() {
-            
-            try {
-                //ds = runQuery.RunCasjobs(cmd,"Explore: Display Results");
-                string ClientIP = runQuery.GetClientIP();
-                ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.DisplayResults."+task);
-            }
-            catch (Exception e) {
-                throw new Exception(e.Message);
-            }
-
         }
 
 

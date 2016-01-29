@@ -18,14 +18,11 @@ namespace SkyServer.Get
             context.Response.ContentType = "image/gif";
 
             long specid = long.Parse(context.Request.QueryString["ID"]);
-            string cmd = "SELECT img FROM SpecObjAll WHERE specobjID=" + specid;
 
             Globals globals = (Globals)context.Application[Globals.PROPERTY_NAME];
             ResponseREST rs = new ResponseREST();
 
-            string ClientIP = rs.GetClientIP();
-            //DataSet ds = rs.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.SpecById.getImg");
-            string URIparams = "?spec=" + specid + "&query=SpecById&TaskName=Skyserver.Explore.SpecById.getImg";
+            string URIparams = "?spec=" + specid + "&query=SpecById&TaskName=Skyserver.get.SpecById.getImg";
             DataSet ds = rs.GetObjectInfoFromWebService(globals.ExploreWS, URIparams);
 
             using (DataTableReader reader = ds.CreateDataReader(ds.Tables[0]))
