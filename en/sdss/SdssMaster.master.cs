@@ -54,7 +54,7 @@ namespace SkyServer.SDSS
             gutter += "5.6,Gunn-Peterson,/sdss/discoveries/discoveries.aspx#gunn;";
             gutter += "5.7,Structure,/sdss/discoveries/discoveries.aspx#lss;";
             gutter += "7,Data Releases,/sdss/release/;";
-            gutter += "8,Publications," + globals.SdssUrlBase + "publications.php;";
+            gutter += "8,Publications," + globals.SdssUrlBase + "publications/;";
             gutter += "9,Credits,/credits/;";
 
             SdssGutter = new Gutter(imgpath, url, Response);
