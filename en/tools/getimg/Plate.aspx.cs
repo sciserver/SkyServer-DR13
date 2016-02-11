@@ -98,7 +98,7 @@ namespace SkyServer.Tools.GetImg
                     int fiber = 0;
                     string fid = "";
                     rs = new ResponseREST();
-                    string URIparams = "?plateId=" + plateid.ToString() + "&query=FiberList&TaskName=Skyserver.getimg.Plate.FiberList";
+                    string URIparams = "?plateId=" + plateid.ToString() + "&query=FiberList&TaskName=Skyserver.GetImg.Plate";
                     DataSet ds = rs.GetObjectInfoFromWebService(globals.ExploreWS, URIparams);
                     //DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.getimg.Plate.spGetFiberList");
                     using (DataTableReader reader = ds.Tables[0].CreateDataReader())
@@ -148,7 +148,7 @@ namespace SkyServer.Tools.GetImg
 
                 
                 rs = new ResponseREST();
-                string URIparams = "?plateIdApogee=" + apogeeplateid.ToString() + "&query=PlateAPOGEE&TaskName=Skyserver.getimg.Plate.PlateAPOGEE";
+                string URIparams = "?plateIdApogee=" + apogeeplateid.ToString() + "&query=PlateAPOGEE&TaskName=Skyserver.GetImg.PlateAPOGEE";
                 DataSet ds = rs.GetObjectInfoFromWebService(globals.ExploreWS, URIparams);
                 //DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.getimg.Plate.spGetFiberList");
                 using (DataTableReader reader = ds.Tables[0].CreateDataReader())

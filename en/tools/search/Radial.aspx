@@ -140,7 +140,7 @@ if( globals.Access == "public" ) {
 <input type="hidden" id=hband name=hband />
 <input type="hidden" id=kband name=kband />
 
-<input type="hidden" name="TaskName" id="TaskName" value="Skyserver.tools.search.Radial"/>
+<input type="hidden" name="TaskName" id="TaskName" value="Skyserver.Search.Radial"/>
 
 
 <table BORDER=0 WIDTH="600"  BGCOLOR="#aaaaaa" >
@@ -287,7 +287,7 @@ if( globals.Access == "public" ) {
       <td nowrap width="13%" ALIGN=middle><input name=format value="fits"  type=radio class="box">FITS</td>
 		</tr>
 		<tr>
-			<td align="left"><input id=submit type="submit" value="Submit Request" onclick="SetBands()" ></td>
+			<td align="left"><input id=submit type="submit" value="Submit Request" onclick="SetBands(); goToWindow()" ></td>
 			<td colspan="5">Limit number of output rows (0 for max) to <input type=text name="limit" size=5 value="10"></td>
 			<td align="right"><input id=reset  type="reset" value="Reset Form"></td>
 		</tr>

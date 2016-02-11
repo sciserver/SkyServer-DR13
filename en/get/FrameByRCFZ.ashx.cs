@@ -25,7 +25,7 @@ namespace SkyServer.Get
                 int col = int.Parse(context.Request.QueryString["C"]);
                 int fld = int.Parse(context.Request.QueryString["F"]);
                 int zz = int.Parse(context.Request.QueryString["Z"]);
-                string URI = globals.WSGetCodecUrl + "/?R=" + run.ToString() + "&C=" + col.ToString() + "&F=" + fld.ToString() + "&Z=" + zz.ToString();
+                string URI = globals.WSGetCodecUrl + "/?R=" + run.ToString() + "&C=" + col.ToString() + "&F=" + fld.ToString() + "&Z=" + zz.ToString() + "&TaskName=Skyserver.FrameByRCFZ";
                 context.Response.Redirect(URI, false);
             }
             catch(Exception e)

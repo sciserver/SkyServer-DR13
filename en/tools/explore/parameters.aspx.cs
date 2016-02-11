@@ -55,7 +55,7 @@ namespace SkyServer.Tools.Explore
                         SpecFitParameters = (DataSet)Session["SpecFitParameters"];
                     else
                     {
-                        string URIparams = "?spec=" + specId + "&query=SpecFitParameters&TaskName=Skyserver.Explore.parameters.SpecFitParameters";
+                        string URIparams = "?spec=" + specId + "&query=SpecFitParameters&TaskName=Skyserver.Explore.Parameters";
                         SpecFitParameters = rs.GetObjectInfoFromWebService(globals.ExploreWS, URIparams);
                         Session["SpecFitParameters"] = SpecFitParameters;
                     }

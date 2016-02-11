@@ -500,7 +500,7 @@ namespace SkyServer.Tools.Search
         protected void runSql(object sender, System.EventArgs e)
         {
             prevText = SqlBox.Text;
-            string query = SkyServer + "?searchtool=SearchForm&TaskName=Skyserver.tools.search.SearchForm&format=";
+            string query = SkyServer + "?searchtool=SearchForm&TaskName=Skyserver.Search.SearchForm&format=";
             query += RadioButtonList1.SelectedItem.Value;
             query += "&cmd=";
             string cmd = SqlBox.Text.Replace("\n", "%0A");
@@ -512,7 +512,7 @@ namespace SkyServer.Tools.Search
         protected void runSqlSyntaxCheck(object sender, System.EventArgs e)
         {
             prevText = SqlBox.Text;
-            string query = SkyServer + "?searchtool=SearchForm&TaskName=Skyserver.tools.search.SearchForm&syntax=Syntax&format=";
+            string query = SkyServer + "?searchtool=SearchForm&TaskName=Skyserver.Search.SearchForm&syntax=Syntax&format=";
             query += RadioButtonList1.SelectedItem.Value;
             query += "&cmd=";
             string cmd = SqlBox.Text.Replace("\n", "%0A");

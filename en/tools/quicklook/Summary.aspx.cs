@@ -43,7 +43,6 @@ namespace SkyServer.Tools.QuickLook
         protected Int16? field = null;
         protected Int16? obj = null;
 
-        protected string ClientIP = "";
         protected string task = "";
 
         public ResponseREST rs;
@@ -52,27 +51,30 @@ namespace SkyServer.Tools.QuickLook
         {
 
             runQuery = new RunQuery();
-            ClientIP = runQuery.GetClientIP();
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             Session["objectInfo"] = objectInfo;
 
             rs = new ResponseREST();
             string requestURI = globals.ExploreWS;
 
-            ClientIP = rs.GetClientIP();
             globals = (Globals)Application[Globals.PROPERTY_NAME];
 
-            string AllParameters = rs.GetURIparameters(Request);
+            //string AllParameters = rs.GetURIparameters(Request);
+            string AllParameters = "";
             bool CanResolve = false;
             string[] NecessaryParams = new string[] { "id", "objid", "sid", "spec", "specobjid", "apid", "ra", "dec", "plate", "mjd", "fiber", "run", "rerun", "camcol", "field", "obj" };
             foreach (string key in Request.QueryString.AllKeys)
             {
                 if (NecessaryParams.Contains(key.ToLower()))
+                {
                     CanResolve = true;
+                    AllParameters += key + "=" + Request.QueryString.GetValues(key)[0].ToString() + "&";
+                }
             }
             if (Request.QueryString.AllKeys.Length == 0 || !CanResolve)
-                AllParameters = "id=" + globals.ExploreDefault.ToString();
-            AllParameters += "&query=LoadExplore&TaskName=Skyserver.tools.QuickLook.LoadExplore";
+                AllParameters = "id=" + globals.ExploreDefault.ToString() + "&";
+            AllParameters += "query=LoadExplore&TaskName=Skyserver.QuickLook.Summary";
+            //objectInfo.LoadExplore = rs.GetObjectInfoFromWebService(Request, globals.ExploreWS, AllParameters);
             objectInfo.LoadExplore = rs.GetObjectInfoFromWebService(globals.ExploreWS, AllParameters);
 
             Session["LoadExplore"] = objectInfo.LoadExplore;
@@ -93,16 +95,6 @@ namespace SkyServer.Tools.QuickLook
 
             if (objectInfo.specObjId != null && !objectInfo.specObjId.Equals(""))
                 objectInfo.specId = Utilities.ParseId(objectInfo.specObjId);
-        }
-
-        private void getObjPmts()
-        {
-            if (fiber.HasValue && plate.HasValue) setFromPlateMjdFiber(plate, mjd, fiber);
-            else if (qra.HasValue && qdec.HasValue) setFromEq(qra, qdec);
-            else if (specId.HasValue || !String.IsNullOrEmpty(sidstring)) setFromSpecObjID(sidstring);
-            else if (id.HasValue && !specId.HasValue) setFromObjID(id);
-            else if (!id.HasValue && !specId.HasValue && (run.HasValue && rerun.HasValue && camcol.HasValue && field.HasValue && obj.HasValue)) setFrom5PartSDSS(run, rerun, camcol, field, obj);
-            else if (!String.IsNullOrEmpty(apid)) parseApogeeID(apid);
         }
 
 
@@ -157,31 +149,6 @@ namespace SkyServer.Tools.QuickLook
             setObjectInfo(cmd);
         }
 
-        private void setFromEq(double? qra, double? qdec)
-        {
-
-            string cmd = QuickLookQueries.getObjIDFromEq;
-            cmd = cmd.Replace("@qra", qra.ToString());
-            cmd = cmd.Replace("@qdec", qdec.ToString());
-            cmd = cmd.Replace("@searchRadius", (globals.EqSearchRadius).ToString());
-            //cmd = cmd.Replace("@searchRadius", (0.5 / 60).ToString());
-            //DataSet ds = runQuery.RunCasjobs(cmd, "QuickLook: Summary");
-            DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Quicklook.Summary.getObjIDFromEq");
-            string ObjID2 = null;
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
-            {
-                if (reader.Read())
-                {
-                    ObjID2 = reader["objId"].ToString();
-                }
-            }
-            if (ObjID2 != null && !ObjID2.Equals(""))
-            {
-                cmd = QuickLookQueries.getParamsFromObjID; task = "getParamsFromObjID";
-                cmd = cmd.Replace("@objid", ObjID2);
-                setObjectInfo(cmd);
-            }
-        }
 
 
         private void setFromSpecObjID(string sid)
@@ -192,28 +159,6 @@ namespace SkyServer.Tools.QuickLook
         }
 
 
-        private void setFrom5PartSDSS(Int16? Run, Int16? Rerun, byte? Camcol, Int16? Field, Int16? Obj)
-        {
-            string Skyversion = "";
-            string cmd = QuickLookQueries.getSkyversion; task = "getSkyversion";
-            DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Quicklook.Summary." + task);
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
-            {
-                if (reader.Read())
-                {
-                    Skyversion = reader["skyversion"] is DBNull ? Skyversion : reader["skyversion"].ToString();
-                }
-            }
-
-            cmd = QuickLookQueries.getpmtsFrom5PartSDSS; task = "getpmtsFrom5PartSDSS";
-            cmd = cmd.Replace("@skyversion", Skyversion);
-            cmd = cmd.Replace("@run", Run == null ? "null" : Run.ToString());
-            cmd = cmd.Replace("@rerun", Rerun == null ? "null" : Rerun.ToString());
-            cmd = cmd.Replace("@camcol", Camcol == null ? "null" : Camcol.ToString());
-            cmd = cmd.Replace("@field", Field == null ? "null" : Field.ToString());
-            cmd = cmd.Replace("@obj", Obj == null ? "null" : Obj.ToString());
-            setObjectInfo(cmd);
-        }
 
 
         private void setFromObjID(long? id)
@@ -225,42 +170,7 @@ namespace SkyServer.Tools.QuickLook
 
 
 
-        private void parseApogeeID(string idstring)
-        {
-            double qra = 0, qdec = 0;
-            objectInfo.apid = apid;
-            string cmd = "";
-            apid = apid.ToLower();
-            if (apid.Contains("apogee"))
-            {
-                cmd = QuickLookQueries.getApogee; task = "getApogee";
-            }
-            else
-            {
-                cmd = QuickLookQueries.getApogee2; task = "getApogee2";
-            }
-
-            cmd = cmd.Replace("@apogeeId", apid);
-            //DataSet ds = runQuery.RunCasjobs(cmd, "QuickLook: Summary");
-            DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Quicklook.Summary." + task);
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
-            {
-                if (reader.Read())
-                {
-                    qra = (double)reader["ra"];
-                    qdec = (double)reader["dec"];
-
-                }
-            }
-            cmd = QuickLookQueries.getParamsFromEq;
-            cmd = cmd.Replace("@qra", qra.ToString());
-            cmd = cmd.Replace("@qdec", qdec.ToString());
-            cmd = cmd.Replace("@searchRadius", (globals.EqSearchRadius).ToString());
-            //cmd = cmd.Replace("@searchRadius", (0.5 / 60).ToString());
-            setObjectInfo(cmd);
-        }
-
-        
+    
 
 
 

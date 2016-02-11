@@ -40,7 +40,7 @@
                 <td align='center' valign='top' width='50%'>
                     <p><b>Preview image (click to go to Navigate tool)</b></p>
                     <a href='<%= naviLink %>'>
-                    <img alt='An image of this object' align='center' src='<%= (globals.WSGetJpegUrl + "?ra="+ra+"&dec="+dec+"&scale=0.2&width=200&height=200&opt=G") %>' border='0' width='200' height='200'/>
+                    <img alt='An image of this object' align='center' src='<%= (globals.WSGetJpegUrl + "?TaskName=Skyserver.QuickLook.Image&ra="+ra+"&dec="+dec+"&scale=0.2&width=200&height=200&opt=G") %>' border='0' width='200' height='200'/>
                     </a>
                 </td>
                 <td align='center' valign='top' width='50%'>

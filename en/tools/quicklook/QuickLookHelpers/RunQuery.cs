@@ -46,35 +46,6 @@ namespace SkyServer.Tools.QuickLook
 
 
 
-        public string GetClientIP()
-        {
-            string clientIP = "unknown";
-            try
-            {
-                if (HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"] != null)
-                {
-                    clientIP = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-                }
-                else
-                {
-                    if (HttpContext.Current.Request.UserHostAddress != null)
-                    {
-                        clientIP = HttpContext.Current.Request.UserHostAddress;
-                    }
-                    else
-                    {
-                        clientIP = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
-                    }
-                }
-                if (clientIP == "")
-                    clientIP = "unspecified";
-            }
-            catch { }
-            return clientIP;
-        }
-
-
-
         public DataSet RunDatabaseSearch(string command, string format, string ClientIP, string TaskName)
         {
 

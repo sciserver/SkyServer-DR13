@@ -35,6 +35,8 @@ namespace SkyServer.Tools.Search
         string token = "";
         string requestUrl = "";
         String requestString = "";
+        string ClientIpHeaderName = ConfigurationManager.AppSettings["IpHeaderName"];
+        string ReferrerHeaderName = ConfigurationManager.AppSettings["RefererHeaderName"];
 
         private Globals globals;
         String WSrequestUri = "";
@@ -82,7 +84,7 @@ namespace SkyServer.Tools.Search
             {
                     requestString += key + "=" + Uri.EscapeDataString(inputForm[key]) + "&";
             }
-            requestString += "clientIP=" + GetClientIP() +"&";
+            //requestString += "clientIP=" + GetClientIP() +"&";
 
             String searchTool = inputForm["searchtool"];
 
@@ -186,9 +188,16 @@ namespace SkyServer.Tools.Search
             runQuery(requestUrl, requestString, radecText, inputForm["format"]);
         }
 
-        
 
 
+
+        /// <summary>
+        /// Runs the query.
+        /// </summary>
+        /// <param name="serviceUrl">The service URL.</param>
+        /// <param name="requestString">The request string.</param>
+        /// <param name="uploaded">The uploaded.</param>
+        /// <param name="returnType">Type of the return.</param>
         public void runQuery( String serviceUrl, String requestString, string uploaded, string returnType)
         {
 
@@ -209,21 +218,18 @@ namespace SkyServer.Tools.Search
             else 
                 content = new StringContent(uploaded);
 
-            //bool success = client.DefaultRequestHeaders.TryAddWithoutValidation("Referer", HttpContext.Current.Request.UrlReferrer.ToString());
-            //string gg = REQUEST.UrlReferrer.AbsoluteUri;
-            //client.DefaultRequestHeaders.Add("Referer", gg);
-
-            client.DefaultRequestHeaders.Referrer = HttpContext.Current.Request.UrlReferrer;
-            client.DefaultRequestHeaders.Add("X-Forwarded-For", "");
+            client.DefaultRequestHeaders.Add(ClientIpHeaderName, GetClientIP());
+            client.DefaultRequestHeaders.Referrer = HttpContext.Current.Request.UrlReferrer != null ? HttpContext.Current.Request.UrlReferrer : HttpContext.Current.Request.Url;
 
             if (!(token == null || token == String.Empty))
-            {
                 content.Headers.Add("X-Auth-Token", token);
-                respMessage = client.PostAsync(requestUri, content).Result;
-            }else{
-                //respMessage = client.GetAsync(requestUri).Result;
-                respMessage = client.PostAsync(requestUri, content).Result;
-            }
+
+            if (!HttpContext.Current.Request.Cookies.AllKeys.Contains("ASP.NET_SessionId"))
+                HttpContext.Current.Request.Cookies.Add(new HttpCookie("ASP.NET_SessionId", System.Web.HttpContext.Current.Session.SessionID));
+            
+            //posting the request and getting the result back.
+            respMessage = client.PostAsync(requestUri, content).Result;
+
 
             //respMessage.EnsureSuccessStatusCode();
             if (respMessage.IsSuccessStatusCode)
@@ -384,17 +390,22 @@ namespace SkyServer.Tools.Search
 
         public string GetClientIP()
         {
-            string clientIP = "unknown";
+            string clientIP = "";
             try
             {
                 if (!string.IsNullOrEmpty(HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"]))
                 {
                     clientIP = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-                    string[] addresses = clientIP.Split(',');
-                    if (addresses.Length != 0)
+                    string[] addresses = new string [] {};
+                    try
+                    {
+                        addresses = clientIP.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    }
+                    catch { }
+                    if (addresses.Length > 0)
                         clientIP = addresses[0];
                 }
-                else
+                if (string.IsNullOrEmpty(clientIP))
                 {
                     if (HttpContext.Current.Request.UserHostAddress != null)
                     {
@@ -405,35 +416,12 @@ namespace SkyServer.Tools.Search
                         clientIP = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
                     }
                 }
-                if (clientIP == "")
-                    clientIP = "unspecified";
             }
             catch { }
+            if (clientIP == "")
+                clientIP = "unknown";
             return clientIP;
         }
-
-
-        public DataSet RunDatabaseSearch(string command, string format, string ClientIP, string TaskName)
-        {
-            try
-            {
-                WebRequest req = WebRequest.Create(WSrequestUri + "?cmd=" + Uri.EscapeDataString(command) + "&format=" + format + "&clientIP=" + ClientIP + "&task=" + TaskName);//select%20top%2010%20ra,dec%20from%20Frame&format=csv"
-                WebResponse resp = req.GetResponse();
-                BinaryFormatter fmt = new BinaryFormatter();
-                DataSet ds = new DataSet();
-                ds = (DataSet)fmt.Deserialize(resp.GetResponseStream());
-                return ds;
-            }
-            catch (Exception e)
-            {
-                throw new Exception("There is an error running this Query.\n Query:" + command + " ");
-            }
-
-            //Stream s = resp.GetResponseStream();
-            //StreamReader sr = new StreamReader(s, Encoding.ASCII);
-            //string doc = sr.ReadToEnd();
-        }
-
 
 
         public DataSet GetObjectInfoFromWebService(HttpRequest Request)
@@ -460,36 +448,42 @@ namespace SkyServer.Tools.Search
             return URIparameters;
         }
 
+
         public DataSet GetObjectInfoFromWebService(String serviceURI, string URIparameters)
         {
-            string URI = "";
+            //string URI = "";
             string ErrorMessage = "";
             try
             {
-                if (!URIparameters.ToLower().Contains("&clientip="))
-                    URIparameters += "&clientIP=" + GetClientIP();
+                //if (!URIparameters.ToLower().Contains("&clientip="))
+                //    URIparameters += "&clientIP=" + GetClientIP();
                 if (!URIparameters.ToLower().Contains("&format="))
                     URIparameters += "&format=dataset";
                 if (URIparameters.StartsWith("?"))
                     URIparameters = URIparameters.Substring(1);
 
-                //HttpRequest request = HttpContext.Current.Request;
                 cookie = HttpContext.Current.Request.Cookies["Keystone"];
                 if (cookie != null)
                     if (cookie["token"] != null || !cookie["token"].Equals(""))
                         token = cookie["token"];
 
-                
-                HttpWebRequest req = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(serviceURI + "?" + Uri.EscapeUriString(URIparameters));
+
+                //HttpWebRequest req = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(serviceURI + "?" + Uri.EscapeUriString(URIparameters));
+                HttpWebRequest req = (System.Net.HttpWebRequest)WebRequest.Create(serviceURI + "?" + Uri.EscapeUriString(URIparameters));
 
                 //WebRequest req = WebRequest.Create(serviceURI + "?" + Uri.EscapeUriString(URIparameters));
 
                 if (!token.Equals("") && token != null)
                     req.Headers.Add("X-Auth-Token", token);
 
-                req.Referer = HttpContext.Current.Request.Url.ToString();
+                if (!HttpContext.Current.Request.Cookies.AllKeys.Contains("ASP.NET_SessionId"))
+                    HttpContext.Current.Request.Cookies.Add(new HttpCookie("ASP.NET_SessionId", System.Web.HttpContext.Current.Session.SessionID));
 
-                URI = req.RequestUri.ToString();
+                req.Headers.Add(ClientIpHeaderName, GetClientIP());
+
+                string Referrer = HttpContext.Current.Request.UrlReferrer != null ? HttpContext.Current.Request.UrlReferrer.ToString() : HttpContext.Current.Request.Url.ToString();
+                req.Headers.Add(ReferrerHeaderName, Referrer);
+
                 WebResponse resp = req.GetResponse();
                 BinaryFormatter fmt = new BinaryFormatter();
                 DataSet ds = new DataSet();
@@ -507,7 +501,6 @@ namespace SkyServer.Tools.Search
                 //throw new Exception(e.Message + "\nThere is an error in getting results from this URI:\n" + URI);
             }
         }
-
 
 
         public DataSet RunCasjobs(string command, string ClientIP, string taskname)
@@ -653,200 +646,6 @@ namespace SkyServer.Tools.Search
 
             }
         }
-
-        /// <summary>
-        /// this is a hack  for some of QS_parameter functions
-        /// </summary>
-
-        public void showImgParams(string type, HttpResponse response, string Task)
-        {
-
-            string cmd = "SELECT [name] FROM DBColumns WHERE tableName='PhotoObjAll'";
-
-            response.Write("<td class='q' width='100'>");
-            //DataSet ds = RunCasjobs(cmd, "SkyServer:showImgParams");
-            DataSet ds = RunDatabaseSearch(cmd, globals.ContentDataset, GetClientIP(), Task);
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
-            {   
-                if (!reader.HasRows)
-                {
-                    response.Write("<b>No columns found for table PhotoObjAll</b>\n");
-                }
-                else
-                {
-                    response.Write("\t<SELECT name=\"imgparams\" multiple=\"multiple+\" size=\"3\">\n");
-                    if (type == "spec")
-                    {
-                        response.Write("\t\t<OPTION value=\"none\" selected>none</OPTION>\n");
-                        response.Write("\t\t<OPTION value=\"minimal\">minimal</OPTION>\n");
-                    }
-                    else
-                        response.Write("\t\t<OPTION value=\"minimal\" selected>minimal</OPTION>\n");
-                    response.Write("\t\t<OPTION value=\"typical\">typical</OPTION>\n");
-                    response.Write("\t\t<OPTION value=\"radec\">radec</OPTION>\n");
-                    response.Write("\t\t<OPTION value=\"model_mags\">model_mags</OPTION>\n");
-                    response.Write("\t\t<OPTION value=\"model_magerrs\">model_magerrs</OPTION>\n");
-                    response.Write("\t\t<OPTION value=\"psf_mags\">psf_mags</OPTION>\n");
-                    response.Write("\t\t<OPTION value=\"psf_magerrs\">psf_magerrs</OPTION>\n");
-                    response.Write("\t\t<OPTION value=\"petro_mags\">petro_mags</OPTION>\n");
-                    response.Write("\t\t<OPTION value=\"petro_magerrs\">petro_magerrs</OPTION>\n");
-                    response.Write("\t\t<OPTION value=\"model_colors\">model_colors</OPTION>\n");
-                    response.Write("\t\t<OPTION value=\"ugModelColor\">ugModelColor</OPTION>\n");
-                    response.Write("\t\t<OPTION value=\"grModelColor\">grModelColor</OPTION>\n");
-                    response.Write("\t\t<OPTION value=\"riModelColor\">riModelColor</OPTION>\n");
-                    response.Write("\t\t<OPTION value=\"izModelColor\">izModelColor</OPTION>\n");
-                    response.Write("\t\t<OPTION value=\"SDSSname\">SDSSname</OPTION>\n");
-                    response.Write("\t\t<OPTION value=\"blankImg\"> </OPTION>\n");
-                    while (reader.Read())
-                    {
-                        response.Write("\t\t<OPTION value=\"" + Utilities.getSqlString(reader.GetValue(0)) + "\">" + Utilities.getSqlString(reader.GetValue(0)) + "\n");
-                    }
-                    response.Write("\t</OPTION></SELECT>\n");
-                }
-                response.Write("</td>\n");
-            } // using dattable reader
-
-        }
-
-        public void showSpecParams(string type, HttpResponse response, string Task)
-        {
-            
-             string cmd = "SELECT [name] FROM DBColumns WHERE tableName='SpecObjAll'";
-             //DataSet ds = RunCasjobs(cmd,"SkyServer:showSpecParams");
-             DataSet ds = RunDatabaseSearch(cmd, globals.ContentDataset, GetClientIP(), Task);
-             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
-             {
-                response.Write("<td class='q' width='100'>");
-                if (!reader.HasRows)
-                {
-                    response.Write("<b>No columns found for table SpecObjAll</b>\n");
-                }
-                else
-                {
-                    response.Write("\t<SELECT name=\"specparams\" multiple=\"multiple\" size=\"3\">\n");
-                    if (type == "spec")
-                        response.Write("\t\t<OPTION value=\"minimal\" selected>minimal</OPTION>\n");
-                    else
-                    {
-                        response.Write("\t\t<OPTION value=\"none\" selected>none</OPTION>\n");
-                        response.Write("\t\t<OPTION value=\"minimal\">minimal</OPTION>\n");
-                    }
-                    response.Write("\t\t<OPTION value=\"typical\">typical</OPTION>\n");
-                    response.Write("\t\t<OPTION value=\"radec\">radec</OPTION>\n");
-                    response.Write("\t\t<OPTION value=\"blankSpec\"> </OPTION>\n");
-                    while (reader.Read())
-                    {
-                        response.Write("\t\t<OPTION value=\"" + Utilities.getSqlString(reader.GetValue(0)) + "\">" + Utilities.getSqlString(reader.GetValue(0)) + "\n");
-
-                    }
-                    response.Write("\t</OPTION></SELECT>\n");
-                }
-                response.Write("</td>\n");
-             } // using DataReader
-            
-        }
-
-        public  void showIRSpecParams( string type, HttpResponse response, string Task)
-        {            
-            //string cmd = "SELECT [name] FROM DBColumns WHERE tableName='apogeeStar'";
-            string cmd = "SELECT CASE WHEN [name] = 'file' then '['+[name]+']' else [name] END FROM DBColumns WHERE tableName='apogeeStar'";
-            //DataSet ds = RunCasjobs(cmd,"SkyServer:showIRSpecParams");
-            DataSet ds = RunDatabaseSearch(cmd, globals.ContentDataset, GetClientIP(), Task);
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
-               
-            {
-                response.Write("<td class='q' colspan='2' align='center'>");
-                if (!reader.HasRows)
-                {
-                    response.Write("<b>No columns found for table apogeeStar</b>\n");
-                }
-                else
-                {
-                    response.Write("\t<SELECT style=\"width:200px;\" name=\"irspecparams\" multiple=\"multiple\" size=\"6\">\n");
-                    if (type == "irspec")
-                        response.Write("\t\t<OPTION value=\"minimal\">Minimal</OPTION>\n");
-                    else
-                    {
-                        response.Write("\t\t<OPTION value=\"none\" selected>none</OPTION>\n");
-                        response.Write("\t\t<OPTION value=\"minimal\">minimal</OPTION>\n");
-                    }
-                    response.Write("\t\t<OPTION value=\"typical\" selected>Typical</OPTION>\n");
-                    response.Write("\t\t<OPTION value=\"blankSpec\"> </OPTION>\n");
-                    while (reader.Read())
-                    {
-                        response.Write("\t\t<OPTION value=\"" + Utilities.getSqlString(reader.GetValue(0)) + "\">" + Utilities.getSqlString(reader.GetValue(0)) + "\n");
-
-                    }
-                    response.Write("\t\t<OPTION value=\"blankSpec\"> </OPTION>\n");
-                    response.Write("\t\t<OPTION value=\"twomassj\">2MASS J</OPTION>\n");
-                    response.Write("\t\t<OPTION value=\"twomassh\">2MASS H</OPTION>\n");
-                    response.Write("\t\t<OPTION value=\"twomassk\">2MASS K_s</OPTION>\n");
-                    response.Write("\t</OPTION></SELECT>\n");
-                }
-                response.Write("</td>\n");
-            } // using DataReader           
-        }
-
-
-
-        public string getTableHTMLresult(DataSet ds)
-        {
-
-            string ColumnName = "";
-
-            StringBuilder sb = new StringBuilder();
-            sb.AppendFormat("<html><head>\n");
-            sb.AppendFormat("<title>SDSS Query Results</title>\n");
-            sb.AppendFormat("</head><body bgcolor=white>\n");
-            int NumTables = ds.Tables.Count;
-
-            for (int t = 0; t < NumTables; t++)
-            {
-
-                int NumRows = ds.Tables[t].Rows.Count;
-                if (NumRows == 0)
-                {
-                    sb.AppendFormat("<h3><br><font color=red>No entries have been found</font> </h3>");
-                }
-                else
-                {
-                    if (ds.Tables[0].Rows[0][0].ToString().StartsWith("error: limit is") || ds.Tables[0].Rows[0][0].ToString().Contains("Maximum number of rows allowed"))
-                    {
-                    }
-                    else
-                    {
-                        for (int r = 0; r < NumRows; r++)
-                        {
-                            int NumColumns = ds.Tables[t].Columns.Count;
-                            if (r == 0)// filling the first row with the names of the columns
-                            {
-                                sb.AppendFormat("<table border='1' BGCOLOR=cornsilk>\n");
-                                sb.AppendFormat("<tr align=center>");
-                                for (int c = 0; c < NumColumns; c++)
-                                {
-                                    ColumnName = ds.Tables[t].Columns[c].ColumnName;
-                                    sb.AppendFormat("<td><font size=-1>{0}</font></td>", ColumnName);
-                                }
-                                sb.AppendFormat("</tr>");
-                            }
-
-                            sb.AppendFormat("<tr align=center BGCOLOR=#eeeeff>");
-                            for (int c = 0; c < NumColumns; c++)
-                                sb.AppendFormat("<td nowrap><font size=-1>{0}</font></td>", ds.Tables[t].Rows[r][c].ToString());
-                            sb.AppendFormat("</tr>");
-                        }
-                        sb.AppendFormat("</TABLE>");
-                    }
-                }
-                sb.AppendFormat("<hr>");
-            }
-            sb.AppendFormat("</BODY></HTML>\n");
-            return sb.ToString();
-
-
-        }
-
-
 
 
 

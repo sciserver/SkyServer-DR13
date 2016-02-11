@@ -41,7 +41,7 @@
         <td style="vertical-align:top">
              <% string link = "javascript:showNavi(" + ra + "," + dec + "," + 0.2 + ");"; %>
              <a href="<%= link%>">
-                 <img alt="" src="<%= globals.WSGetJpegUrl + "?ra=" + ra + "&dec=" + dec + "&scale=0.2&width=200&height=200&opt=G"%>" border="0" width="200" height="200" />
+                 <img alt="" src="<%= globals.WSGetJpegUrl + "?TaskName=Skyserver.Explore.Image&ra=" + ra + "&dec=" + dec + "&scale=0.2&width=200&height=200&opt=G"%>" border="0" width="200" height="200" />
              </a>
          </td>
         <td >

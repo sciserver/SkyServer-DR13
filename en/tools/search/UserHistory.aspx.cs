@@ -23,7 +23,7 @@ namespace SkyServer.en.tools.UserHistory
 
         public ResponseREST rs = null;
 
-        string Sort_Direction = "Time desc";
+        string SortExpr = "Time DESC";
         public DateTime DateLow;
         public DateTime DateHigh;
         public string searchtool = null;
@@ -110,7 +110,7 @@ namespace SkyServer.en.tools.UserHistory
                     
                     if (!HasSubmittedForm & !Request.Form.HasKeys())//executes this block only when the page loads for the first time.
                     {
-                        string Parameters = "TaskName=Skyserver.tools.GetHistory&CustomMessageType=1&format=dataset&DoShowAllHistory="+DoShowAllHistory.ToString() + "&limit=" + TopRowsDefault.ToString();
+                        string Parameters = "TaskName=Skyserver.UserHistory&format=dataset&DoShowAllHistory=" + DoShowAllHistory.ToString() + "&limit=" + TopRowsDefault.ToString();
                         CreateTable(Parameters);
                         PopulateDropDownList();
                         RowsPerPageButton.Text = RowsPerPage.ToString();
@@ -160,7 +160,7 @@ namespace SkyServer.en.tools.UserHistory
                         Session["DateHigh"] = DateHigh;
 
                         //getting the table
-                        string Parameters = "TaskName=Skyserver.tools.GetHistory&CustomMessageType=1&format=dataset&DoShowAllHistory=" + DoShowAllHistory.ToString() + "&date_low=" + DateLow.ToString() + "&date_high=" + DateHigh.ToString() + "&limit=" + MaxRowsDisplayedDefault.ToString();
+                        string Parameters = "TaskName=Skyserver.UserHistory&format=dataset&DoShowAllHistory=" + DoShowAllHistory.ToString() + "&date_low=" + DateLow.ToString() + "&date_high=" + DateHigh.ToString() + "&limit=" + MaxRowsDisplayedDefault.ToString();
                         CreateTable(Parameters);
                         PopulateDropDownList();
                         RowsPerPageButton.Text = RowsPerPage.ToString();
@@ -227,8 +227,8 @@ namespace SkyServer.en.tools.UserHistory
             {
                 Session["UserHistoryDataSet"] = rs.GetObjectInfoFromWebService(requestURI, Parameters);//initialize dataset
                 DataView DV = ((DataSet)(Session["UserHistoryDataSet"])).Tables[0].DefaultView;//initialize dataview
-                DV.Sort = Sort_Direction;
-                ViewState["SortExpr"] = Sort_Direction;
+                DV.Sort = SortExpr;
+                ViewState["SortExpr"] = SortExpr;
                 Session["UserHistoryDataView"] = DV;
 
                 NumRows = ((DataSet)(Session["UserHistoryDataSet"])).Tables[0].Rows.Count;
@@ -237,6 +237,15 @@ namespace SkyServer.en.tools.UserHistory
                 QueryGridView.DataSource = DV;
                 QueryGridView.PageSize = RowsPerPage;
                 QueryGridView.DataBind();
+                /*
+                for (int i = 0; i < QueryGridView.Columns.Count - 1; i++)
+                {
+                    TableCell tableCell = QueryGridView.HeaderRow.Cells[i];
+                    Image img = new Image();
+                    img.ImageUrl = "./img/asc.gif";
+                    tableCell.Controls.Add(img);
+                }
+                */
             }
             catch (Exception ex)
             {
@@ -282,6 +291,7 @@ namespace SkyServer.en.tools.UserHistory
                 DataView DV = ((DataSet)(Session["UserHistoryDataSet"])).Tables[0].DefaultView;
                 DV.RowFilter = SelectWithinRows;
                 DV.Sort = ViewState["SortExpr"].ToString();
+
                 Session["UserHistoryDataView"] = DV;// save back the view adjusted now to the new filtering scheme.
                 QueryGridView.DataSource = DV;
                 QueryGridView.PageSize = RowsPerPage;
@@ -407,6 +417,22 @@ namespace SkyServer.en.tools.UserHistory
                 
                 QueryGridView.DataSource = DV;
                 QueryGridView.DataBind();
+
+                /*
+                for (int i = 0; i < QueryGridView.Columns.Count - 1; i++)
+                {
+                    string ht = ((LinkButton)QueryGridView.HeaderRow.Cells[i].Controls[0]).Text;
+                    if (ht == e.SortExpression)
+                    {
+                        TableCell tableCell = QueryGridView.HeaderRow.Cells[i];
+                        Image img = new Image();
+                        img.ImageUrl = (SortOrder[1] == "ASC") ? "./img/asc.gif" : "./img/desc.gif";
+                        tableCell.Controls.Add(img);
+                    }
+                }
+                */
+
+
             }
             catch (Exception ex)
             {

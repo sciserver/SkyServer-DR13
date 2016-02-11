@@ -16,13 +16,11 @@ namespace SkyServer.Tools.Explore
         protected string[] hrefsCf;
         protected string fieldId;
         protected RunQuery runQuery;
-        string ClientIP = "";
 
         protected void Page_Load(object sender, EventArgs e)
         {
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             runQuery = new RunQuery();
-            ClientIP = runQuery.GetClientIP();
             long? fieldId = Utilities.ParseId(Request.QueryString["fieldId"]);
             if (fieldId.HasValue)
             {
@@ -37,7 +35,7 @@ namespace SkyServer.Tools.Explore
             //DataSet ds = runQuery.RunCasjobs(cmd,"Explore: FitsImg");
             //DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.FitsImg.getFitsimg");
             ResponseREST rs = new ResponseREST();
-            string URIparams = "?fieldId=" + fieldId + "&query=fitsimg&TaskName=Skyserver.Explore.FitsImg.getFitsimg";
+            string URIparams = "?fieldId=" + fieldId + "&query=fitsimg&TaskName=Skyserver.Explore.FitsImg";
             DataSet ds = rs.GetObjectInfoFromWebService(globals.ExploreWS, URIparams);
 
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())

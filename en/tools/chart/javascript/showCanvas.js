@@ -1138,7 +1138,7 @@ function selectCenter() {
 }
 
 function makeCanvas(release, scale, opt, raThis, decThis, where) {
-    canvasState = new CanvasState(document.getElementById('canvas1'), wsGetJpegurl + "?");
+    canvasState = new CanvasState(document.getElementById('canvas1'), wsGetJpegurl);
     if (where == 2) canvasState.recreateCanvas();
     canvasState.release = release;
     canvasState.inscale = scale;

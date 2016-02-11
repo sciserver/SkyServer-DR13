@@ -58,7 +58,7 @@ if( globals.Access == "public" ) {
 
 </script>
 <input type="hidden" name="searchtool" id="searchtool" value="SQL" />
-<input type="hidden" name="TaskName" id="TaskName" value="Skyserver.tools.search.SQL"/>
+<input type="hidden" name="TaskName" id="TaskName" value="Skyserver.Search.SQL"/>
         
 <table BORDER=0 WIDTH="600"  cellpadding=1 cellspacing=1 bgcolor="#aaaaaa">
 	

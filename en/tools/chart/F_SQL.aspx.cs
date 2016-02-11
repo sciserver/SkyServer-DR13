@@ -35,7 +35,7 @@ namespace SkyServer.Tools.Chart
             try
             {
                 ResponseREST rs = new ResponseREST();
-                string URIparams = "?cmd=" + cmd + "&format=dataset&TaskName=Skyserver.chart.F_SQL.UsersQuery";
+                string URIparams = "?cmd=" + cmd + "&format=dataset&TaskName=Skyserver.Chart.F_SQL";
                 DataSet ds = rs.GetObjectInfoFromWebService(globals.SQLSearchWS, URIparams);
                 //DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.chart.F_SQL.UsersQuery");
                 using (DataTableReader reader = ds.Tables[0].CreateDataReader())

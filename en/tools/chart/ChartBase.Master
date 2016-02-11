@@ -63,8 +63,6 @@
 
     <div id="toc">
         
-        <input type="hidden" name="TaskName" id="TaskName" value="Skyserver.tools.Chart"/>
-
         <table width="<%=tabwidth%>" border="0" cellspacing="0" cellpadding="2" bgcolor=black>
 	    <tr>
 		    <td width="40"><a href="<%= url%>" TARGET="_top">

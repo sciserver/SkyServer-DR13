@@ -35,8 +35,8 @@
         #temptext  {position: absolute; top: 650px; left: 245px; z-index:1;}
     </style>
 
-    <script type="text/javascript">var wsGetJpegurl = "<%= globals.WSGetJpegUrl %>";</script>
-    <script type="text/javascript">var wsGetImage64 = "<%= globals.WSGetImage64 %>";</script>
+    <script type="text/javascript">var wsGetJpegurl = "<%= globals.WSGetJpegUrl + "?TaskName=Skyserver.Chart.Navi&"%>";</script>
+    <script type="text/javascript">var wsGetImage64 = "<%= globals.WSGetImage64 + "?TaskName=Skyserver.Chart.Navi&"%>";</script>
     <script type="text/javascript">var release = "<%= globals.Release %>";</script>
     <!--For icon and header-->
     <script id="Script1" type="text/javascript" language='javascript' src='../STARTBall/STARTBall.js'></script>    
@@ -182,7 +182,7 @@
     <form id="form1" runat="server">
     <div>
     
-        <input type="hidden" name="TaskName" id="TaskName" value="Skyserver.tools.Navigate"/>    
+
 
     </div>
     </form>

@@ -139,7 +139,7 @@ namespace SkyServer.Tools.Chart
 
         protected void makeGlass(string ra_, string dec_)
         {
-            string qstring = globals.WSGetJpegUrl + "?ra=" + ra_ + "&dec=" + dec_ + "&scale=" + qscale+"&opt="+opt;
+            string qstring = globals.WSGetJpegUrl + "?TaskName=Skyserver.Chart.ShowNearest&ra=" + ra_ + "&dec=" + dec_ + "&scale=" + qscale+"&opt="+opt;
             Response.Write("<div id='zimage'><img src='" + qstring + "' width=128 height=128></div>\n");
             Response.Write("<div id='zframe'><img src='images/mglass.gif' width=150 height=150 ONMOUSEOVER=\"this.T_TEMP=\'2000\';this.T_WIDTH=\'140\';return escape(\'Close-up image of selected object\')\"></div>\n");
         }

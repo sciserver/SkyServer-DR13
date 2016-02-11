@@ -24,7 +24,6 @@ namespace SkyServer.Tools.Explore
         public ObjectInfo objectInfo = new ObjectInfo();
 
         string format = "";
-        string ClientIP = "";
 
         //protected HRefs hrefs = new HRefs();
 
@@ -52,7 +51,6 @@ namespace SkyServer.Tools.Explore
         protected void Page_Load(object sender, EventArgs e)
         {
             runQuery = new RunQuery();
-            ClientIP = runQuery.GetClientIP();
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             master = (ObjectExplorer)Page.Master;
             Session["objectInfo"] = objectInfo;
@@ -67,18 +65,21 @@ namespace SkyServer.Tools.Explore
             rs = new ResponseREST();
             string requestURI = globals.ExploreWS;
 
-            string AllParameters = rs.GetURIparameters(Request);
-            
+            //string AllParameters = rs.GetURIparameters(Request);
+            string AllParameters = "";
             bool CanResolve = false;
             string[] NecessaryParams = new string[] { "id", "objid", "sid", "spec", "specobjid", "apid", "ra", "dec", "plate", "mjd", "fiber", "run", "rerun", "camcol", "field", "obj" };
             foreach(string key in Request.QueryString.AllKeys)
             {
                 if (NecessaryParams.Contains(key.ToLower()))
+                {
                     CanResolve = true;
+                    AllParameters += key + "=" + Request.QueryString.GetValues(key)[0].ToString() + "&";
+                }
             }
             if (Request.QueryString.AllKeys.Length == 0 || !CanResolve  )
-                AllParameters = "id=" + globals.ExploreDefault.ToString();
-            AllParameters += "&query=LoadExplore&TaskName=Skyserver.Explore.Summary.LoadExplore";
+                AllParameters = "id=" + globals.ExploreDefault.ToString() + "&";
+            AllParameters += "query=LoadExplore&TaskName=Skyserver.Explore.Summary";
             objectInfo.LoadExplore = rs.GetObjectInfoFromWebService(globals.ExploreWS, AllParameters);
             Session["LoadExplore"] = objectInfo.LoadExplore;
 

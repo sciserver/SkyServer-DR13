@@ -22,7 +22,7 @@ namespace SkyServer.Get
             int zoom = int.Parse(context.Request.QueryString["zoom"]);
 
             ResponseREST rs = new ResponseREST();
-            string URIparams = "?fieldId=" + id.ToString() + "&zoom=" + zoom.ToString() + "&query=FrameById&TaskName=Skyserver.get.FrameById.getRCFZ";
+            string URIparams = "?fieldId=" + id.ToString() + "&zoom=" + zoom.ToString() + "&query=FrameById&TaskName=Skyserver.GetRCFZ";
             DataSet ds = rs.GetObjectInfoFromWebService(globals.ExploreWS, URIparams);
 
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
@@ -38,7 +38,7 @@ namespace SkyServer.Get
                     string col = reader.GetValue(1).ToString();
                     string fld = reader.GetValue(2).ToString();
                     string zz = reader.GetValue(3).ToString();
-                    context.Response.Redirect(globals.WSGetCodecUrl + "?R=" + run + "&C=" + col + "&F=" + fld + "&Z=" + zz);
+                    context.Response.Redirect(globals.WSGetCodecUrl + "?TaskName=Skyserver.FrameById&R=" + run + "&C=" + col + "&F=" + fld + "&Z=" + zz);
                 }
             }
         }

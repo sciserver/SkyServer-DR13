@@ -32,7 +32,18 @@
         table.grid td, th{ 
            border:solid 1px black; 
            color:black;
-        } 
+        }
+        
+        th.sortasc a  
+        {
+           display:block; padding:0 4px 0 15px; 
+           background:url(img/asc.gif) no-repeat;  
+        }
+        th.sortdesc a 
+        {
+           display:block; padding:0 4px 0 15px; 
+           background:url(img/desc.gif) no-repeat;
+        }
     </style>
 
   <script type="text/javascript">
@@ -112,7 +123,7 @@
 
         <table BORDER=2 BGCOLOR="#aaaaaa" cellpadding=1 cellspacing=1   >
         <tr ALIGN=left VALIGN=center>
-          <td> <b>Select Skyserver tools:</b> <h5><i>Shift-mouse</i> for multiple <i>contiguous</i> entries, <br /><i>Ctrl-mouse</i>
+          <td> <b>Select Skyserver tools:</b> <h5><i>Shift-click</i> for multiple <i>contiguous</i> entries, <br /><i>Ctrl-click</i>
             for <i>non-contiguous</i> entries.</h5> </td>
           <td> <asp:ListBox ID="ToolsListBox"  runat="server" SelectionMode="Multiple"  height="70px"  > </asp:ListBox></td>
         </tr>
@@ -147,11 +158,19 @@
        
         if(!HasSubmittedForm & !Request.Form.HasKeys()){   %>
             <div style="color: Yellow; font-weight: bold; font-size:23px">
-                Showing last <%=NumRows.ToString()%> data records.
+                <%if(NumRows == 1){%>
+                    Showing first and only data record.
+                <%}else{%>
+                    Showing last <%=NumRows.ToString()%> data records.
+                <%}%>
             </div>
         <% }else{%>
             <div style="color: Yellow; font-weight: bold; font-size:23px">
-                Found <%=NumRows.ToString()%> data records.
+                <%if(NumRows == 1){%>
+                    Found 1 data record.
+                <%}else{%>
+                    Found <%=NumRows.ToString()%> data records.
+                <%}%>
             </div>
         <% } %>
 
@@ -159,10 +178,10 @@
         if(!HasSubmittedForm & !Request.Form.HasKeys()){   %>
             <div style="color: Yellow; font-weight: bold; font-size:23px">
                 Your use of SkyServer tools has never been registered.<br />
-                Try using some of the tools listed <a target="_blank" href="../toolshome.aspx" style="color:lightblue" > HERE </a>.
+                Try using some of the search tools listed <a target="_blank" href="../toolshome.aspx" style="color:lightblue" > HERE </a>.
                 </div>
         <% }else{%>
-            <div style="color: Yellow; font-weight: bold; font-size:22px">
+            <div style="color: Yellow; font-weight: bold; font-size:23px">
                 No data records found.
             </div>
         <%}%>
@@ -197,6 +216,9 @@
                     OnPageIndexChanging="ChangeGridPageIndex" BorderColor="Gray" BorderStyle="Solid" CellPadding="8"
                     BorderWidth="5px" OnSorting="ColumnSorting" BackColor="DarkGray" >
 
+                <SortedAscendingHeaderStyle CssClass="sortasc" />
+                <SortedDescendingHeaderStyle CssClass="sortdesc" />
+
                 <pagersettings position="TopAndBottom" FirstPageText="1" LastPageText="Last Page" Mode="NumericFirstLast" NextPageText="Next" PreviousPageText="Previous"/>
                 <PagerStyle BorderColor="Gray" BorderStyle="Solid" BorderWidth="1px"/>
     
@@ -208,7 +230,7 @@
 
                 <Columns>
                     <asp:BoundField DataField="RowIndex" HeaderText="#" SortExpression="RowIndex" ItemStyle-Width="4%" ItemStyle-HorizontalAlign="Left" />
-                    <asp:BoundField DataField="Time" HeaderText="Date-Time" SortExpression="Time" ItemStyle-Width="11%" ItemStyle-HorizontalAlign="Left" />
+                    <asp:BoundField DataField="Time" HeaderText="Time" SortExpression="Time" ItemStyle-Width="11%" ItemStyle-HorizontalAlign="Left" />
                     <asp:TemplateField HeaderText="Skyserver Tool" SortExpression="Application" ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center" >
                         <ItemTemplate><asp:HyperLink runat="server" Target="ToolHistory"  NavigateUrl='<%# string.Format("{0}", Eval("Content").ToString()  ) %>' Text='<%# string.Format("{0}", Eval("Application").ToString()  ) %>' /> </ItemTemplate>
                     </asp:TemplateField>

@@ -29,7 +29,7 @@ namespace SkyServer.Tools.Explore
                 GalaxyZooTables = (DataSet)Session["GalaxyZooTables"];
             else
             {
-                string URIparams = "?id=" + objId + "&query=GalaxyZoo&TaskName=Skyserver.Explore.galaxyzoo.GalaxyZooTables";
+                string URIparams = "?id=" + objId + "&query=GalaxyZoo&TaskName=Skyserver.Explore.Galaxyzoo";
                 GalaxyZooTables = rs.GetObjectInfoFromWebService(globals.ExploreWS, URIparams);
                 Session["GalaxyZooTables"] = GalaxyZooTables;
             }

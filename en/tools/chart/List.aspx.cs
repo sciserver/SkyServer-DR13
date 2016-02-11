@@ -206,7 +206,7 @@ namespace SkyServer.Tools.Chart
                 }
 
                 s += "<img ";
-                s += "src='" + globals.WSGetJpegUrl + "?ra=" + ra + "&dec=" + dec + "&scale=" + qscale;
+                s += "src='" + globals.WSGetJpegUrl + "?TaskName=Skyserver.Chart.List&ra=" + ra + "&dec=" + dec + "&scale=" + qscale;
                 s += "&width=" + width + "&height=" + height + "&opt=" + opt + "' ";
                 s += " width=" + width + " height=" + height + ">";
                 if (islink == 1) s += "</a>";

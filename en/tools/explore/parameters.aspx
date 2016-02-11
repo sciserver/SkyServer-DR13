@@ -20,7 +20,6 @@
                 <h3><a href="<%=globals.SdssUrl%>spectro/sspp.php" target='_blank'>SEGUE Stellar Parameters Pipeline (SSPP) <img src='../../images/new_window_black.png' alt=' (new window)' /></a></h3>
                 <%
                     RunQuery runQuery = new RunQuery();
-                    string ClientIP = runQuery.GetClientIP();
                     
                     //DataSet ds = runQuery.RunCasjobs(fitsParametersSppParams, "Explore Tool: Parameters Page");
                     //DataSet ds = runQuery.RunDatabaseSearch(fitsParametersSppParams,globals.ContentDataset, ClientIP, "Skyserver.Explore.Parameters.fitParSppParams");

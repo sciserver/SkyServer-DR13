@@ -22,7 +22,7 @@ namespace SkyServer.Get
             Globals globals = (Globals)context.Application[Globals.PROPERTY_NAME];
             ResponseREST rs = new ResponseREST();
 
-            string URIparams = "?spec=" + specid + "&query=SpecById&TaskName=Skyserver.get.SpecById.getImg";
+            string URIparams = "?spec=" + specid + "&query=SpecById&TaskName=Skyserver.SpecById";
             DataSet ds = rs.GetObjectInfoFromWebService(globals.ExploreWS, URIparams);
 
             using (DataTableReader reader = ds.CreateDataReader(ds.Tables[0]))

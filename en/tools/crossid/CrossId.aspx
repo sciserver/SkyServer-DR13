@@ -239,7 +239,7 @@ function resetRadio() {
 <FORM METHOD="post" ENCTYPE="multipart/form-data" ACTION="../search/X_Results.aspx" id="crossid" name="crossid" target="search">
 
 <input type="hidden" name="searchtool" id="searchtool" value="CrossID" />
-<input type="hidden" name="TaskName" id="TaskName" value="Skyserver.tools.CrossId.CrossId"/>
+<input type="hidden" name="TaskName" id="TaskName" value="Skyserver.CrossId"/>
 
 <table BORDER=1 WIDTH=540 cellpadding=3 cellspacing=3 BGCOLOR="#aaaaaa"><tr><td class="q">
 <table border="0" width="100%">

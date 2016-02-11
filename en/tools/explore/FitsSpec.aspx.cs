@@ -20,13 +20,11 @@ namespace SkyServer.Tools.Explore
         protected Globals globals;
 
         protected RunQuery runQuery;
-        protected string ClientIP = "";
 
 
         protected void Page_Load(object sender, EventArgs e)
         {
             runQuery = new RunQuery();
-            ClientIP = runQuery.GetClientIP();
 
             globals = (Globals)Application[Globals.PROPERTY_NAME];
 
@@ -43,7 +41,7 @@ namespace SkyServer.Tools.Explore
             //DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.FitsSpec.getUrlFitsSpectrum");
 
             ResponseREST rs = new ResponseREST();
-            string URIparams = "?spec=" + specObjId.ToString() + "&query=fitsspec&TaskName=Skyserver.Explore.FitsSpec.getUrlFitsSpectrum";
+            string URIparams = "?spec=" + specObjId.ToString() + "&query=fitsspec&TaskName=Skyserver.Explore.FitsSpec";
             DataSet ds = rs.GetObjectInfoFromWebService(globals.ExploreWS, URIparams);
 
 

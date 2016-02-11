@@ -27,7 +27,7 @@
 <div id="transp">
 <form method="post" target="search" enctype="multipart/form-data" action="x_results.aspx" id=sqs name="sqs">
     <input type="hidden" name="searchtool" id="searchtool" value="Spectro" />
-    <input type="hidden" name="TaskName" id="TaskName" value="Skyserver.tools.search.SQS"/>
+    <input type="hidden" name="TaskName" id="TaskName" value="Skyserver.Search.SQS"/>
 <!------------------------------------------------------->
 <table border=0 cellspacing=3 cellpadding=3 bgcolor=#aaaaaa>
   <tr><td>

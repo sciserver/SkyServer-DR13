@@ -61,7 +61,6 @@ namespace SkyServer.Tools.Explore
         protected string flagsLink = "";
 
         protected RunQuery runQuery;
-        protected string ClientIP = "";
 
         DataSet ds = new DataSet();
 
@@ -78,7 +77,6 @@ namespace SkyServer.Tools.Explore
                 if (cookie["token"] != null || !cookie["token"].Equals(""))
                     token = cookie["token"];
             runQuery = new RunQuery(token);
-            ClientIP = runQuery.GetClientIP();
             
 
             try
@@ -198,28 +196,5 @@ namespace SkyServer.Tools.Explore
             }
         }
 
-        protected string getUnit(string tablename, string columname) 
-        {
-            string unit = "";
-            string cmd = ExplorerQueries.getUnit;
-            cmd = cmd.Replace("@tablename", tablename);
-            cmd = cmd.Replace("@name", columname);
-            //DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Imaging");
-            DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.ImagingControl.getUnit");
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
-            {
-                if (reader.HasRows)
-                {
-                    if (reader.Read())
-                    {
-                        unit = reader.GetString(0);
-
-                    }
-                }
-            }
-            return unit;
-
-            
-        }
     }
 }

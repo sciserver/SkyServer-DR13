@@ -19,7 +19,6 @@ namespace SkyServer.Tools.Explore
         protected ObjectExplorer master;
         protected RunQuery runQuery;
         protected DataSet ds = new DataSet();
-        string ClientIP = "";
         DataSet PlateTables = new DataSet();
         ResponseREST rs = new ResponseREST();
 
@@ -30,7 +29,6 @@ namespace SkyServer.Tools.Explore
             string s = Request.QueryString["plateId"];            
             plateId = Utilities.ParseId(s);                      
             runQuery = new RunQuery();
-            ClientIP = runQuery.GetClientIP();
             executeQuery();
         }
 
@@ -43,7 +41,7 @@ namespace SkyServer.Tools.Explore
                 PlateTables = (DataSet)Session["Plate"];
             else
             {
-                string URIparams = "?plateId=" + plateId.ToString() + "&query=Plate&TaskName=Skyserver.Explore.Plate.getPlate";
+                string URIparams = "?plateId=" + plateId.ToString() + "&query=Plate&TaskName=Skyserver.Explore.Plate";
                 PlateTables = rs.GetObjectInfoFromWebService(globals.ExploreWS, URIparams);
                 Session["Plate"] = PlateTables;
             }

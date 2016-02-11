@@ -44,7 +44,6 @@
 
     <%  
         RunQuery runQuery = new RunQuery();
-        string ClientIP = runQuery.GetClientIP();
         
         DataSet ds = new DataSet();
 

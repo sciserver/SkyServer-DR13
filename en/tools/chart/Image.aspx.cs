@@ -30,7 +30,7 @@ namespace SkyServer.Tools.Chart
             {
                 if (!key.StartsWith("_"))
                 {
-                    query += (query == null) ? "?" : "&amp;";
+                    query += (query == null) ? "?TaskName=Skyserver.Chart.Image&" : "&amp;";
                     query += (key + "=" + HttpUtility.UrlEncode(Request[key]));
                 }
             }

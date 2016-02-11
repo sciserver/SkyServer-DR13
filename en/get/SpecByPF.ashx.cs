@@ -28,7 +28,7 @@ namespace SkyServer.Get
             catch {  }
 
             ResponseREST rs = new ResponseREST();
-            string URIparams = "?plateId=" + plateid.ToString() + "&fiber=" + fiberid.ToString() + "&query=SpecByPF&TaskName=Skyserver.get.SpecByPF.getImg";
+            string URIparams = "?plateId=" + plateid.ToString() + "&fiber=" + fiberid.ToString() + "&query=SpecByPF&TaskName=Skyserver.SpecByPF";
             DataSet ds = rs.GetObjectInfoFromWebService(globals.ExploreWS, URIparams);
 
             using (DataTableReader reader = ds.Tables[0].CreateDataReader())

@@ -32,7 +32,7 @@ Imaging Query Form
 
 <form method="post" target="search"  enctype="multipart/form-data" action="x_results.aspx" id=iqs name="iqs">
 <input type="hidden" name="searchtool" id="searchtool" value="Imaging" />
-<input type="hidden" name="TaskName" id="TaskName" value="Skyserver.tools.search.IQS"/>
+<input type="hidden" name="TaskName" id="TaskName" value="Skyserver.Search.IQS"/>
     <!----------------------------------------------------->
 <table border=1 cellspacing=3 cellpadding=3 bgcolor=#aaaaaa>
 <tr><td>

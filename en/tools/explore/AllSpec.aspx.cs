@@ -33,7 +33,7 @@ namespace SkyServer.Tools.Explore
                 AllSpecTables = (DataSet)Session["AllSpec"];
             else
             {
-                string URIparams = "?id=" + objId + "&query=AllSpec&TaskName=Skyserver.Explore.Allspec.AllSpec";
+                string URIparams = "?id=" + objId + "&query=AllSpec&TaskName=Skyserver.Explore.Allspec";
                 AllSpecTables = rs.GetObjectInfoFromWebService(globals.ExploreWS, URIparams);
                 Session["AllSpec"] = AllSpecTables;
             }
