@@ -1,157 +1,471 @@
 ﻿<%@ Page Title="SkyServer: Application Programming Interface" Language="C#" MasterPageFile="../HelpMaster.master" AutoEventWireup="true" CodeBehind="API.aspx.cs" Inherits="SkyServer.Help.Docs.API" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HelpContent" runat="server">
-<div id="title">API: Programmer's Interface</div>
+<div id="title">API and Tools for Programmer's Reference</div>
 <div id="transp">
 <table width="600px" cellspacing="3" cellpadding="5">
 	<tr><td>
-	<p>Many of the tools on this site may be called programatically or may be included in your own
-	website or tutorial pages. 
-	A URL may be constructed for the ASP pages passing parameters in the query string.
-	Examples are provided below.
+	<p>
+        This page gives quick access to the webservices and links of the tools, which can be called programatically.<br />
+        First section covers the description of Webservices REST-api and small usage examples.<br/>
+        Second section provides quick links to the tools, showing examples how to construct their URLs.
 	</p>
-	<ul>
-	<table>
-	<tr><td class="b">Topic</td><td class="b">Description</td> </tr>
+	
+    <h2> REST API and Examples</h2>
+        <ul>
+	Table 1: List of web services
+    <table>
+	<tr><td class="b">Webservices</td><td class="b">Short Description</td> </tr>
+	<tr><td class="h"><a href="#imgcutout">Image Cutout </a></td><td class="h">Returns color images at given location. There are two resources /getJpeg and /getJpegCodec</td> </tr>
+	<tr><td class="h"><a href="#getspec"> Get Spectra  </a></td><td class="h"> Access spectra graphs and data</td> </tr>	
+	<tr><td class="h"><a href="#spectrum">Full Spectral Access  </a></td><td class="h">Web Service access to details of spectra </td> </tr>
+	<tr><td class="h"><a href="#search">Search  </a></td><td class="h"> Returns specific database results. There are three services availble /radial, /rectangular and /sql</td> </tr>
+	<tr><td class="h"><a href="#explore"> Explore </a></td><td class="h">Interactive exploration of object properties </td> </tr>
+	<tr><td class="h"><a href="#cross"> Cross-id </a></td><td class="h">Upload your own objects for cross-identification </td> </tr>
+    <tr><td class="h"><a href="#voservice"> VO Services</a></td><td class="h">Services to search databases using IVOA standards and protocols. /conesearch, /SIAP, /SDSSFields </td> </tr>
+    <tr><td class="h"><a href="#advanced"> Advanced Search</a></td><td class="h">Equivalent to search tools, there are three services /imagingquery, /spectroquery, /irspectraquery </td> </tr>
+	</table>
+	</ul>
+        Web services described below can used either as an authenticated user or anonymous users. <br/>
+        If user wants to use her own authentication tokens following header parameters needs to be set.<br/>
+        There are common for all the services listed below.
+
+        <table>
+            <tr><td class="b">Header Names</td><td class="b">Values</td> </tr>
+            <tr><td class="h">X-Auth-Token</td><td class="h"> Keystone token. If omitted, the query will be executed anonymously.</td> </tr>
+        </table>
+
+	<h3 class='wsapi'>Image Cutout</h3>
+        There are two resources available under this service. 
+        <h4>1. <b>GET or POST</b>      /getJpeg</h4>        
+           <table>
+               <tr><td class="b">Prameters</td><td class="b">Expected Values</td></tr>
+               <tr><td>Ra</td><td>Right Ascention in degrees</td></tr>
+               <tr><td>Dec</td><td>Declination in degrees</td></tr>
+               <tr><td>scale</td><td>Scale of image in arsec per pixel, 0.4 is default</td></tr>
+               <tr><td>height</td><td>in pixels</td></tr>
+               <tr><td>width</td><td>in pixels</td></tr>
+               <tr><td>opt</td><td>a string of characters for overlays on image (details below). This is an optional parameter</td></tr>
+           </table>
+        
+           <br /><table>	<tr> <td class='b'> Code</td><td class='b'> Effect on image</td></tr>
+	        <%
+		        string[] p = new string[]{"G","L","P","S","T","O","B","F","M","Q","I"};
+		        string[] f = new string[]{"Grid","Label","PhotoObjs","SpecObjs","TargetObjs","Outline","BoundingBox","Fields","Masks","Plates","InvertImage"};
+		        for (int i=0; i<p.Length;i++) {
+    			    Response.Write("<tr><td class='h'>"+p[i]+"</td>");
+	    		    Response.Write("<td class='h'>"+f[i]+"</td></tr>");}
+	        %> 
+	        </table>
+            <br><span>Example:
+                <pre><a target="api"  class='sml' href="<%=globals.WSGetJpegUrl%>?ra=114.82991&dec=10.91817&width=512&height=512&opt=OG"><%=globals.WSGetJpegUrl%>?ra=224.5941&dec=-1.09&width=512&height=512&opt=OG </a></pre>
+                </span>        
+        <hr>
+        <h4>2. <b>GET or POST</b>      /getJpegCodec</h4>
+            <table>
+               <tr><td class="b">Prameters</td><td class="b">Expected Values</td></tr>
+               <tr><td>R</td><td>SDSS Run number</td></tr>
+               <tr><td>C</td><td>SDSS Camcol number</td></tr>
+               <tr><td>F</td><td>SDSS Field number</td></tr>
+               <tr><td>Z</td><td>SDSS Zoom number</td></tr>               
+           </table>    
+            <span>Example:<pre><a target="api"  class='sml' href="<%=globals.WSGetJpegUrl%>R=1140&C=1&F=120&Z=12"><%=globals.WSGetJpegUrl%>?R=1140&C=1&F=120&Z=12</a></pre></span>
+
+
+
+        <h3 class='wsapi'>Spectra Services</h3>
+        <a name="getspec"></a>
+	    <h4>1. Get Spectra </h4>
+	    <pre><a target="api" class='sml'  href="<%=url%>/get/specByPF.ashx?P=299489402567026688&F=25"><%=url%>/get/specByPF.ashx?P=299489402567026688&F=25 </a> </pre>
+	    where P is the Plate and F is the Fiber, or
+	    <pre><a target="api" class='sml'  href="<%=url%>/get/specById.ashx?ID=301889361622886400"><%=url%>/get/specById.ashx?ID=301889361622886400 </a></pre>
+	    where ID is the SpecObjId.
+	    <hr>
+	    <a name="spectrum"></a>
+	    <h4>Full Spectral Access</h4>
+	    There is a comprehensive web site to access the details of spectra from the SDSS
+	    and other surveys (2dF). You can also upload your own spectra. <p>
+	    <a target="api"  class='sml' href="<%=globals.WSSpecHome%>"> <%=globals.WSSpecHome%></a>  <br>
+	    <p>
+	    This site also has a <a href="<%=globals.WSFilterHome%>">Filter Profile service</a> and a SOAP interface 
+	    to the spectrum service described in its <a target="api" href="<%=globals.WSSpecHome%>/docs/doc.aspx?p=00_index.htm">documentation page </a>.
+	    <p>
+	<a name="search"></a>
+
+	<h3 class='wsapi'>Searching </h3>
+	<h4>1. Radial Search</h4><br />GET or POST /radialSearch
+           <table>
+               <tr><td class="b">Prameters</td><td class="b">Expected Values</td></tr>
+               <tr><td>Ra</td><td>Right Ascention in degrees</td></tr>
+               <tr><td>Dec</td><td>Declination in degrees</td></tr>
+               <tr><td>radius</td><td>Radius in arcminutes</td></tr>
+               <tr><td>format</td><td>output file format. E.g. csv,html,xml</td></tr>               
+               <tr><td>whichway</td><td>Specify Equitorial or Galactic</td></tr>               
+               <tr><td>uband</td><td>Specify comma seperated range e.g 0,20. This is an optional parameter for SDSS U band.</td></tr>               
+               <tr><td>gband</td><td>Specify comma seperated range e.g 0,20. This is an optional parameter for SDSS G band.</td></tr>               
+               <tr><td>rband</td><td>Specify comma seperated range e.g 0,20. This is an optional parameter for SDSS R band.</td></tr>               
+               <tr><td>iband</td><td>Specify comma seperated range e.g 0,20. This is an optional parameter for SDSS I band.</td></tr>               
+               <tr><td>zband</td><td>Specify comma seperated range e.g 0,20. This is an optional parameter for SDSS Z band.</td></tr>               
+               <tr><td>whichquery</td><td>imaging or spectra</td></tr>               
+           </table>    
+            <br><span>Example:
+            <pre><a target="api"  class='sml' href="<%=globals.RadialSearchWS%>?ra=258.2&dec=64&radius=4.1&whichway=equitorial&limit=10&format=json&fp=none&uband=0,17&gband=0,15&whichquery=imaging"><%=globals.RadialSearchWS%>?ra=258.2&dec=64&radius=4.1&whichway=equitorial&limit=10&format=json&fp=none&uband=0,17&gband=0,15&whichquery=imaging</a></pre>
+            </span>
+	
+	<hr>
+        <h4>2. Rectangular Search</h4><br />GET or POST /radialSearch
+           <table>
+               <tr><td class="b">Prameters</td><td class="b">Expected Values</td></tr>
+               <tr><td>min_ra</td><td>Right Ascention in degrees in one corner</td></tr>
+               <tr><td>min_dec</td><td>Declination in degrees in one corner</td></tr>
+               <tr><td>max_ra</td><td>Right Ascention in degrees in other corner</td></tr>
+               <tr><td>max_dec</td><td>Declination in degrees in other corner</td></tr>
+               <tr><td>radius</td><td>Radius in arcminutes</td></tr>
+               <tr><td>format</td><td>output file format. E.g. csv,html,xml,json</td></tr>               
+               <tr><td>searchtype</td><td>Specify Equitorial or Galactic</td></tr>               
+               <tr><td>uband</td><td>Specify comma seperated range e.g 0,20. This is an optional parameter for SDSS U band.</td></tr>               
+               <tr><td>gband</td><td>Specify comma seperated range e.g 0,20. This is an optional parameter for SDSS G band.</td></tr>               
+               <tr><td>rband</td><td>Specify comma seperated range e.g 0,20. This is an optional parameter for SDSS R band.</td></tr>               
+               <tr><td>iband</td><td>Specify comma seperated range e.g 0,20. This is an optional parameter for SDSS I band.</td></tr>               
+               <tr><td>zband</td><td>Specify comma seperated range e.g 0,20. This is an optional parameter for SDSS Z band.</td></tr>               
+               <tr><td>whichquery</td><td>imaging or irspectra</td></tr>               
+               <tr><td>limit</td><td>number of output rows</td></tr>               
+           </table>    
+            <br><span>Example:
+            <pre><a target="api"  class='sml' href="<%=globals.RectangularSearchWS%>?min_ra=250.2&max_ra=250.5&min_dec=35.1&max_dec=35.5&searchtype=equitorial&limit=10&format=json&whichquery=irspectra"><%=globals.RectangularSearchWS%>?min_ra=250.2&max_ra=250.5&min_dec=35.1&max_dec=35.5&searchtype=equitorial&limit=10&format=json&whichquery=irspectra</a></pre>
+            </span>
+	<hr>	
+     <h4>3. SQL Search</h4><br />GET or POST /sqlSearch
+           <table>
+               <tr><td class="b">Prameters</td><td class="b">Expected Values</td></tr>
+               <tr><td>cmd</td><td>SQL query</td></tr>
+               <tr><td>format</td><td>output file format. E.g. csv,html,xml,json</td></tr>               
+               <tr><td>searchtype</td><td>Specify Equitorial or Galactic</td></tr>               
+               <tr><td>whichquery</td><td>imaging or irspectra</td></tr>               
+               <tr><td>limit</td><td>number of output rows</td></tr>               
+           </table>    
+            <br><span>Example:
+            <pre><a target="api"  class='sml' href="<%=globals.SQLSearchWS%>?cmd=select%20top%2010%20ra,dec%20from%20Frame&format=csv"><%=globals.SQLSearchWS%>?cmd=select%20top%2010%20ra,dec%20from%20Frame&format=csv</a></pre>
+            </span>
+
+    <h3 class='wsapi'>VO Webservices</h3>
+            Following web services are developed on standards and protocols given by International Virtual Observatory Alliance. 
+            These services we are supporting as is.
+            <h4>1. Cone Search</h4><br />GET or POST /conesearch
+             <table>
+               <tr><td class="b">Prameters</td><td class="b">Expected Values</td></tr>
+               <tr><td>Ra</td><td>Right Ascention in degrees</td></tr>
+               <tr><td>Dec</td><td>Declination in degrees</td></tr>
+               <tr><td>sr</td><td>Radius in arcminutes</td></tr>
+              </table>    
+            <br><span>Example:
+            <pre><a target="api"  class='sml' href="<%=globals.ConeWS%>?ra=145&dec=34&sr=1"><%=globals.ConeWS%>?ra=145&dec=34&sr=1</a></pre>
+            </span>
+            <hr/>
+            <h4>2. SDSS Fields Search</h4><br />GET or POST /sdssfields
+               <span>This webservices has four resources as below</span>
+               <h5> 1.1 /FieldArray</h5>
+               <table>
+               <tr><td class="b">Prameters</td><td class="b">Expected Values</td></tr>
+               <tr><td>ra</td><td>Right Ascention in degrees</td></tr>
+               <tr><td>dec</td><td>Declination in degrees</td></tr>
+               <tr><td>radius</td><td>Radius in arcminutes</td></tr>
+                <tr><td>format</td><td>output file format. E.g. csv,html,xml,json</td></tr>    
+              </table>    
+            <br>
+            <span>Example:
+                <pre><a target="api"  class='sml' href="<%=globals.FieldsArray%>?ra=132&dec=12&radius=10&format=json"><%=globals.FieldsArray%>?ra=132&dec=12&radius=10&format=json</a></pre>
+            </span>
+
+            <h5> 1.2 /FieldArrayRect</h5>
+                <table>
+               <tr><td class="b">Prameters</td><td class="b">Expected Values</td></tr>
+               <tr><td>ra</td><td>Right Ascention in degrees  one corner</td></tr>
+               <tr><td>dec</td><td>Declination in degrees one corner</td></tr>
+               <tr><td>dra</td><td>Right Ascention in degrees other corner </td></tr>
+               <tr><td>ddec</td><td>Declination in degrees other corner</td></tr>
+                <tr><td>format</td><td>output file format. E.g. csv,html,xml,json</td></tr>    
+              </table>    
+            <br><span>Example:
+            <pre><a target="api"  class='sml' href="<%=globals.FieldArrayRect%>?ra=132&dec=12&dra=0.1&ddec=0.1&format=json"><%=globals.FieldArrayRect%>?ra=132&dec=12&dra=0.1&ddec=0.1&format=json</a></pre>
+            </span>
+
+            <hr>	
+
+             <h4>3. SIAP</h4><br />GET or POST /siap
+               <span>Simple Image Access Protocol is a virtual Observatory protocol, web service gives options to get SDSS images data</span>
+
+            <h5> 1.1 /getSIAPinfoAll</h5>
+            Siap search for all bands. It outputs all fields (images) included in the Region of Interest.
+                <table>
+                    <tr><td class="b">Prameters</td><td class="b">Expected Values</td></tr>
+                    <tr><td>POS</td><td>Position (string with comma seperation) in Right Ascention, Declination in degrees </td></tr>
+                    <tr><td>SIZE</td><td>Size in degrees</td></tr>               
+              </table>    
+            <br><span>Example:
+            <pre><a target="api"  class='sml' href="<%=globals.getAllSIAPInfo%>?POS=132,12&SIZE=0.1&FORMAT=image/jpeg"><%=globals.getAllSIAPInfo%>SIAP/getSIAP?POS=132,12&SIZE=0.1&FORMAT=image/jpeg</a></pre>
+            </span>
+                <h5> 1.2 /getSIAP</h5>
+                Get the image access via SIAP.
+                <table>
+               <tr><td class="b">Prameters</td><td class="b">Expected Values</td></tr>
+               <tr><td>POS</td><td>Position (string with comma seperation) in Right Ascention, Declination in degrees </td></tr>
+               <tr><td>SIZE</td><td>Size in degrees</td></tr>
+               <tr><td>FORMAT</td><td>format , one of the following values: 'METADATA', 'ALL','GRAPHIC','image/fits', or 'image/jpeg' (string)</td></tr>
+               
+              </table>    
+            <br><span>Example:
+            <pre><a target="api"  class='sml' href="<%=globals.getSIAP%>?POS=132,12&SIZE=0.1&FORMAT=metadata&bandpass=i"><%=globals.getSIAP%>?POS=132,12&SIZE=0.1&FORMAT=metadata&bandpass=i</a></pre>
+            </span>
+
+            <h5> 1.3 /getSIAPinfo</h5>
+            Siap search by band name. It outputs all fields (images) included in the Region of Interes            
+               <table>
+                    <tr><td class="b">Prameters</td><td class="b">Expected Values</td></tr>
+                    <tr><td>POS</td><td>Position (string with comma seperation) in Right Ascention, Declination in degrees </td></tr>
+                    <tr><td>SIZE</td><td>Size in degrees</td></tr>
+                    <tr><td>FORMAT</td><td>one of the following values: 'METADATA', 'ALL','GRAPHIC', 'image/fits', or 'image/jpeg' (string) </td></tr>               
+                    <tr><td>BANDPASS</td><td> band name, any combination of 'u', 'g', 'r', 'i', 'z' or '*' to get them all in addition to the jpeg mosaic (string)</td></tr>                
+              </table>    
+            <br><span>Example:
+            <pre><a target="api"  class='sml' href="<%=globals.getSIAPInfo%>?POS=132,12&SIZE=0.01"><%=globals.getSIAPInfo%>?POS=132,12&SIZE=0.01</a></pre>
+            </span>
+
+            <h3 class='wsapi'>Advanced Search </h3>
+<!-------------------------------------------------------Imaging Query Search -------------------------------------------------------------------------------------------------------->     
+	<h4>1. ImagingQuery Search</h4><br />GET or POST /ImagingQuery
+            Get the query results on Imaging data from SDSS database.            
+             <h5> 1.1 /Cone</h5>
+                Conical search on the imaging data.
+                <table>
+                    <tr><td class="b">Prameters</td><td class="b">Expected Values</td></tr>
+                    <tr><td>limit</td><td>limit the number of rows in result</td></tr>
+                    <tr><td>format</td><td>result format</td></tr>               
+                    <tr><td>ra, dec</td><td>sky cordinates to search</td></tr>               
+                    <tr><td>radius</td><td>search radius in arcmin</td></tr>               
+                    <tr><td>u,g,r,i,z</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>ug,gr,ri,iz</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>objType</td><td>To select star or galaxy</td></tr>               
+                    <tr><td>magType</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>imgparams</td><td> imaging parameters</td></tr>               
+                    <tr><td>specparams</td><td>spectroscopy parameters</td></tr>               
+                    <tr><td>flags</td><td>object flags</td></tr>               
+                       
+              </table>    
+            <br><span>Example:
+            <pre><a target="api"  class='sml' href="<%=globals.ConeImaging%>?limit=50&format=csv&imgparams=minimal&specparams=none&ra=10&dec=0.2&radius=5.0&magType=model"><%=globals.ConeImaging%>?limit=50&format=csv&imgparams=minimal&specparams=none&ra=10&dec=0.2&radius=5.0&magType=model</a></pre>
+
+                <h5> 1.2 /NoPosition</h5>
+                Search imaging data with no positional constraints.
+                <table>
+                    <tr><td class="b">Prameters</td><td class="b">Expected Values</td></tr>
+                    <tr><td>limit</td><td>limit the number of rows in result</td></tr>
+                    <tr><td>format</td><td>result format</td></tr>               
+                    <tr><td>u,g,r,i,z</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>ug,gr,ri,iz</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>objType</td><td>To select star or galaxy</td></tr>               
+                    <tr><td>magType</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>imgparams</td><td> imaging parameters</td></tr>               
+                    <tr><td>specparams</td><td>spectroscopy parameters</td></tr>               
+                    <tr><td>flags</td><td>object flags</td></tr>               
+              </table>    
+                <br><span>Example:
+                <pre><a target="api"  class='sml' href="<%=globals.NoPositionImaging%>?limit=30&izMin=3&izMax=4&riMin=&riMax=&flagsonlist=BRIGHT,EDGE&magType=model&uMin=0"><%=globals.NoPositionImaging%>?limit=30&izMin=3&izMax=4&riMin=&riMax=&flagsonlist=BRIGHT,EDGE&magType=model&uMin=0</a></pre>
+
+
+                <h5> 1.3 /Proximity</h5> Only POST method.
+                 Proximity query searches data on user input data.
+                <table>
+                    <tr><td class="b">Prameters</td><td class="b">Expected Values</td></tr>
+                    <tr><td>limit</td><td>limit the number of rows in result</td></tr>
+                    <tr><td>format</td><td>result format</td></tr>               
+                    <tr><td>u,g,r,i,z</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>ug,gr,ri,iz</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>objType</td><td>To select star or galaxy</td></tr>               
+                    <tr><td>magType</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>imgparams</td><td> imaging parameters</td></tr>               
+                    <tr><td>specparams</td><td>spectroscopy parameters</td></tr>               
+                    <tr><td>flags</td><td>object flags</td></tr>        
+               </table>    
+            <br><span>Example:
+            <pre><a target="api"  class='sml' href="<%=globals.ProximityImaging%>"><%=globals.ProximityImaging%></a></pre>
+
+                <h5> 1.4 /Rectangular</h5>
+            
+                <table>                    
+                   <tr><td class="b">Prameters</td><td class="b">Expected Values</td></tr>
+                    <tr><td>limit</td><td>limit the number of rows in result</td></tr>
+                    <tr><td>format</td><td>result format</td></tr>               
+                    <tr><td>ramin,ramax,decmin,decmax</td><td>sky cordinates to search</td></tr>               
+                    <tr><td>radius</td><td>search radius in arcmin</td></tr>               
+                    <tr><td>u,g,r,i,z</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>ug,gr,ri,iz</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>objType</td><td>To select star or galaxy</td></tr>               
+                    <tr><td>magType</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>imgparams</td><td> imaging parameters</td></tr>               
+                    <tr><td>specparams</td><td>spectroscopy parameters</td></tr>               
+                    <tr><td>flags</td><td>object flags</td></tr>                      
+              </table>    
+            <br><span>Example:
+            <pre><a target="api"  class='sml' href="<%=globals.RectangularImaging%>?limit=50&ramin=258&ramax=258.2&decmin=64&decmax=64.1&imgparams=typical,minimal&magType=model&format=csv"><%=globals.RectangularImaging%>?limit=50&ramin=258&ramax=258.2&decmin=64&decmax=64.1&imgparams=typical,minimal&magType=model&format=csv</a></pre>
+
+     <!-------------------------------------------------------Spectral Search -------------------------------------------------------------------------------------------------------->     
+	<hr>
+        <h4>2. Spectroquery Search</h4><br />GET or POST /SpectroQuery
+                Similar to Imaging Query search one can do search on the spectral data.                
+                They are divided in four sub positional services. Cone,Rectangular,Proximity,NoPosition etc.
+           <h5> 2.1 /Cone</h5>
+                Conical search on the imaging data, main input parameters are ra, dec and radius.
+                <table>
+                    <tr><td class="b">Prameters</td><td class="b">Expected Values</td></tr>
+                    <tr><td>ra, dec</td><td>sky cordinates to search</td></tr>               
+                    <tr><td>radius</td><td>search radius in arcmin</td></tr> 
+                    <tr><td>limit</td><td>limit the number of rows in result</td></tr>
+                    <tr><td>format</td><td>result format</td></tr>                                                
+                    <tr><td>u,g,r,i,z</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>ug,gr,ri,iz</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>objType</td><td>To select star or galaxy</td></tr>               
+                    <tr><td>magType</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>imgparams</td><td> imaging parameters</td></tr>               
+                    <tr><td>specparams</td><td>spectroscopy parameters</td></tr>               
+                    <tr><td>flags</td><td>object flags</td></tr>               
+                       
+              </table>    
+            <br><span>Example:
+            <pre><a target="api"  class='sml' href="<%=globals.ConeSpectroWS%>?radius=5.0&dec=0.2&ra=10&uMin=0&uMax=20&objType=doGalaxy,doStar&limit=50&format=csv&specparams=minimal&imgparams=none&redshiftMin=&zWarning=on&redshiftMax=&priFlagsOnList=ignore&priFlagsOffList=ignore&secFlagsOnList=ignore&secFlagsOffList=ignore&magType=model&gMin=&rMin=&iMin=&zMin=&gMax=&rMax=&iMax=&zMax=&ugMin=&grMin=&riMin=&izMin=&ugMax=&grMax=&riMax=&izMax=&minQA=&flagsOnList=ignore&flagsOffList=ignore"><%=globals.ConeSpectroWS%>?radius=5.0&dec=0.2&ra=10&uMin=0&uMax=20&objType=doGalaxy,doStar&limit=50&format=csv&specparams=minimal&imgparams=none&redshiftMin=&zWarning=on&redshiftMax=&priFlagsOnList=ignore&priFlagsOffList=ignore&secFlagsOnList=ignore&secFlagsOffList=ignore&magType=model&gMin=&rMin=&iMin=&zMin=&gMax=&rMax=&iMax=&zMax=&ugMin=&grMin=&riMin=&izMin=&ugMax=&grMax=&riMax=&izMax=&minQA=&flagsOnList=ignore&flagsOffList=ignore</a></pre>
+
+                <h5> 2.2 /NoPosition</h5>
+                Search imaging data with no positional constraints.
+                <table>
+                    <tr><td class="b">Prameters</td><td class="b">Expected Values</td></tr>
+                    <tr><td>limit</td><td>limit the number of rows in result</td></tr>
+                    <tr><td>format</td><td>result format</td></tr>               
+                    <tr><td>u,g,r,i,z</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>ug,gr,ri,iz</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>objType</td><td>To select star or galaxy</td></tr>               
+                    <tr><td>magType</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>imgparams</td><td> imaging parameters</td></tr>               
+                    <tr><td>specparams</td><td>spectroscopy parameters</td></tr>               
+                    <tr><td>flags</td><td>object flags</td></tr>               
+              </table>    
+                <br><span>Example:
+                <pre><a target="api"  class='sml' href="<%=globals.NoPositionSpectroWS%>?limit=30&izMin=3&izMax=4&riMin=&riMax=&flagsonlist=BRIGHT,EDGE&magType=model&uMin=0"><%=globals.NoPositionSpectroWS%>?limit=30&izMin=3&izMax=4&riMin=&riMax=&flagsonlist=BRIGHT,EDGE&magType=model&uMin=0</a></pre>
+
+                <h5> 2.3 /Proximity</h5> POST method only
+                 Proximity query searches data on user input data.
+                <table>
+                    <tr><td class="b">Prameters</td><td class="b">Expected Values</td></tr>
+                    <tr><td>limit</td><td>limit the number of rows in result</td></tr>
+                    <tr><td>format</td><td>result format</td></tr>               
+                    <tr><td>u,g,r,i,z</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>ug,gr,ri,iz</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>objType</td><td>To select star or galaxy</td></tr>               
+                    <tr><td>magType</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>imgparams</td><td> imaging parameters</td></tr>               
+                    <tr><td>specparams</td><td>spectroscopy parameters</td></tr>               
+                    <tr><td>flags</td><td>object flags</td></tr>        
+               </table>    
+                <br><span>Example:
+                <pre><a target="api"  class='sml' href="<%=globals.ProximitySpectroWS%>"><%=globals.ProximitySpectroWS%></a></pre>
+
+                <h5> 2.4 /Rectangular</h5>
+                        Rectangular search takes two corners of rectangular area.
+                <table>                    
+                   <tr><td class="b">Prameters</td><td class="b">Expected Values</td></tr>
+                    <tr><td>ramin,ramax,decmin,decmax</td><td>sky cordinates to search</td></tr>               
+                    <tr><td>limit</td><td>limit the number of rows in result</td></tr>
+                    <tr><td>format</td><td>result format</td></tr>                    
+                    <tr><td>u,g,r,i,z</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>ug,gr,ri,iz</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>objType</td><td>To select star or galaxy</td></tr>               
+                    <tr><td>magType</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>imgparams</td><td> imaging parameters</td></tr>               
+                    <tr><td>specparams</td><td>spectroscopy parameters</td></tr>               
+                    <tr><td>flags</td><td>object flags</td></tr>                      
+              </table>    
+                <br><span>Example:
+                <pre><a target="api"  class='sml' href="<!--%=globals.SIAPSearch%-->ImagingQuery/Rectangular?limit=50&ramin=258&ramax=258.2&decmin=64&decmax=64.1&imgparams=typical,minimal&magType=model&format=csv"><%=globals.RectangularSpectroWS%>?limit=50&ramin=258&ramax=258.2&decmin=64&decmax=64.1&imgparams=typical,minimal&magType=model&format=csv</a></pre>
+          
+                <!-------------------------------------------------------IR Spectra Search -------------------------------------------------------------------------------------------------------->     
+	         <hr>	
+              <h4>3. IRSpectra query Search</h4><br />GET or POST /IRSpectraQuery/
+
+                Similar to Imaging Query search one can do search on the spectral data.                
+                They are divided in four sub positional services. Cone,Rectangular,Proximity,NoPosition etc.
+
+                <h5> 2.1 /ConeIR</h5>
+                    Conical search on the IR Spectra data, main input parameters are ra, dec and radius.
+                   <table>
+                    <tr><td class="b">Prameters</td><td class="b">Expected Values</td></tr>
+                    <tr><td>ra, dec</td><td>sky cordinates to search</td></tr>               
+                    <tr><td>radius</td><td>search radius in arcmin</td></tr> 
+                    <tr><td>limit</td><td>limit the number of rows in result</td></tr>
+                    <tr><td>format</td><td>result format</td></tr>                                                
+                    <tr><td>j,h,k (min and max)</td><td>IR magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>jh,hk (min and max)</td><td>IR colors</td></tr>               
+                    <tr><td>snr, vhelio, scatter (min and max)</td><td>Observational Parameters</td></tr>               
+                    <tr><td>Temp,logg,feh,afe (min and max)</td><td>Stellar Parameters</td></tr>                                   
+                    <tr><td>irspecparams</td><td>IR spectroscopy parameters</td></tr>               
+                    <tr><td>irTargetflags</td><td>APOGEE_Target flags (on and off list)</td></tr>                                      
+                   </table>    
+                <br><span>Example:
+                <pre><a target="api"  class='sml' href="<%=globals.ConeIRWS%>?limit=50&format=json&irspecparams=typical&ra=271.75&dec=-20.19&radius=5.0&Lcenter=10&Bcenter=0.2&lbRadius=5.0&jMin=&hMin=&kMin=&jMax=&hMax=&kMax=&jhMin=&hkMin=&jhMax=&hkMax=&snrMin=&vhelioMin=&scatterMin=&snrMax=&vhelioMax=&scatterMax=&tempMin=&loggMin=&fehMin=&afeMin=&tempMax=&loggMax=&fehMax=&afeMax=&irTargetFlagsOnList=ignore&irTargetFlagsOffList=ignore&irTargetFlags2OnList=ignore&irTargetFlags2OffList=ignore"><%=globals.ConeIRWS%>?limit=50&format=json&irspecparams=typical&ra=271.75&dec=-20.19&radius=5.0&Lcenter=10&Bcenter=0.2&lbRadius=5.0&jMin=&hMin=&kMin=&jMax=&hMax=&kMax=&jhMin=&hkMin=&jhMax=&hkMax=&snrMin=&vhelioMin=&scatterMin=&snrMax=&vhelioMax=&scatterMax=&tempMin=&loggMin=&fehMin=&afeMin=&tempMax=&loggMax=&fehMax=&afeMax=&irTargetFlagsOnList=ignore&irTargetFlagsOffList=ignore&irTargetFlags2OnList=ignore&irTargetFlags2OffList=ignore</a></pre>
+                
+                <h5> 2.2 /GalacticIR </h5>
+                Search IR Spectra with galactic coordinates.
+               <table>
+                    <tr><td class="b">Prameters</td><td class="b">Expected Values</td></tr>
+                    <tr><td>LCenter, Bcenter</td><td>Galactic co-ordinates</td></tr>               
+                    <tr><td>lbRadius</td><td>search radius in arcmin</td></tr> 
+                    <tr><td>limit</td><td>limit the number of rows in result</td></tr>
+                    <tr><td>format</td><td>result format</td></tr>                                                
+                    <tr><td>j,h,k (min and max)</td><td>IR magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>jh,hk (min and max)</td><td>IR colors</td></tr>               
+                    <tr><td>snr, vhelio, scatter (min and max)</td><td>Observational Parameters</td></tr>               
+                    <tr><td>Temp,logg,feh,afe (min and max)</td><td>Stellar Parameters</td></tr>                                   
+                    <tr><td>irspecparams</td><td>IR spectroscopy parameters</td></tr>               
+                    <tr><td>irTargetflags</td><td>APOGEE_Target flags (on and off list)</td></tr>                                      
+                   </table>    
+                <br><span>Example:
+                <pre><a target="api"  class='sml' href="<%=globals.GalacticIRWS%>?limit=50&format=csv&irspecparams=typical&Lcenter=10&Bcenter=0.2&lbRadius=5.0&jMin=&hMin=&kMin=&jMax=&hMax=&kMax=&jhMin=&hkMin=&jhMax=&hkMax=&snrMin=&vhelioMin=&scatterMin=&snrMax=&vhelioMax=&scatterMax=&tempMin=&loggMin=&fehMin=&afeMin=&tempMax=&loggMax=&fehMax=&afeMax=&irTargetFlagsOnList=ignore&irTargetFlagsOffList=ignore&irTargetFlags2OnList=ignore&irTargetFlags2OffList=ignore"><%=globals.GalacticIRWS%>IRSpectraQuery/GalacticIR?limit=50&format=csv&irspecparams=typical&Lcenter=10&Bcenter=0.2&lbRadius=5.0&jMin=&hMin=&kMin=&jMax=&hMax=&kMax=&jhMin=&hkMin=&jhMax=&hkMax=&snrMin=&vhelioMin=&scatterMin=&snrMax=&vhelioMax=&scatterMax=&tempMin=&loggMin=&fehMin=&afeMin=&tempMax=&loggMax=&fehMax=&afeMax=&irTargetFlagsOnList=ignore&irTargetFlagsOffList=ignore&irTargetFlags2OnList=ignore&irTargetFlags2OffList=ignore</a></pre>
+
+
+                <h5> 2.3 /NoPositionIR</h5>
+                 No positional constraints.
+                <table>
+                    <tr><td class="b">Prameters</td><td class="b">Expected Values</td></tr>
+                    <tr><td>limit</td><td>limit the number of rows in result</td></tr>
+                    <tr><td>format</td><td>result format</td></tr>                                                
+                    <tr><td>j,h,k (min and max)</td><td>IR magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>jh,hk (min and max)</td><td>IR colors</td></tr>               
+                    <tr><td>snr, vhelio, scatter (min and max)</td><td>Observational Parameters</td></tr>               
+                    <tr><td>Temp,logg,feh,afe (min and max)</td><td>Stellar Parameters</td></tr>                                   
+                    <tr><td>irspecparams</td><td>IR spectroscopy parameters</td></tr>               
+                    <tr><td>irTargetflags</td><td>APOGEE_Target flags (on and off list)</td></tr>     
+               </table>    
+            <br><span>Example:
+            <pre><a target="api"  class='sml' href="<%=globals.NoPositionIRWS%>?limit=50&format=csv&irspecparams=typical&jMin=&hMin=&kMin=&jMax=&hMax=&kMax=&jhMin=&hkMin=&jhMax=&hkMax=&snrMin=&vhelioMin=&scatterMin=&snrMax=&vhelioMax=&scatterMax=&tempMin=&loggMin=&fehMin=&afeMin=&tempMax=&loggMax=&fehMax=&afeMax=&irTargetFlagsOnList=ignore&irTargetFlagsOffList=ignore&irTargetFlags2OnList=ignore&irTargetFlags2OffList=ignore"><%=globals.NoPositionIRWS%>?limit=50&format=csv&irspecparams=typical&jMin=&hMin=&kMin=&jMax=&hMax=&kMax=&jhMin=&hkMin=&jhMax=&hkMax=&snrMin=&vhelioMin=&scatterMin=&snrMax=&vhelioMax=&scatterMax=&tempMin=&loggMin=&fehMin=&afeMin=&tempMax=&loggMax=&fehMax=&afeMax=&irTargetFlagsOnList=ignore&irTargetFlagsOffList=ignore&irTargetFlags2OnList=ignore&irTargetFlags2OffList=ignore</a></pre>
+            
+            <!-------------------------------------------------------Other Tools -------------------------------------------------------------------------------------------------------->     
+	        <hr>	
+               <h1 class='m'>Tools</h1>
+
+             Table 2: List of Tools
+    <table>
+	<tr><td class="b">Tools</td><td class="b">Short Description</td> </tr>
 	<tr><td class="h"><a href="#getframe">Get Frame </a></td><td class="h"> Access frame pictures</td> </tr>
 	<tr><td class="h"><a href="#getspec"> Get Spectra  </a></td><td class="h"> Access spectra graphs and data</td> </tr>
-	<tr><td class="h"><a href="#getssky">Get Scrolling Sky Image  </a></td><td class="h">Animated images of the sky passing the telescope </td> </tr>
-	<tr><td class="h"><a href="#spectrum">Full Spectral Access  </a></td><td class="h">Web Service access to details of spectra </td> </tr>
-	<tr><td class="h"><a href="#search">Searching  </a></td><td class="h"> Radial,Rectangular,SQL database searches</td> </tr>
-	<tr><td class="h"><a href="#cutout">Image Cutout  </a></td><td class="h">Built custom color images at given location</td> </tr>
+	<tr><td class="h"><a href="#getssky">Get Scrolling Sky Image  </a></td><td class="h">Animated images of the sky passing the telescope </td> </tr>	
+	<tr><td class="h"><a href="#search">Searching  </a></td><td class="h"> Radial,Rectangular,SQL database searches</td> </tr>	
 	<tr><td class="h"><a href="#chart">Finding Chart </a></td><td class="h">Call Finding Chart at a particular location </td> </tr>
 	<tr><td class="h"><a href="#navi">Navigate </a></td><td class="h">Pull up navigator with particular location </td> </tr>
 	<tr><td class="h"><a href="#imglist">ImgList  </a></td><td class="h">Display thumbnails for uploaded object list</td> </tr>
 	<tr><td class="h"><a href="#explore"> Explore </a></td><td class="h">Interactive exploration of object properties </td> </tr>
-<!--
-	<tr><td class="h"><a href="#density">Density Plots  </a></td><td class="h"> Reguest color coded density plots </td> </tr>
--->
 	<tr><td class="h"><a href="#cross"> Cross-id </a></td><td class="h">Upload your own objects for cross-identification </td> </tr>
 	</table>
-	</ul>
-
-	<h1 class='m'>Image access</h1>
 
 
-	<a name="getframe"></a>
-	<h3> Get Frame </h3>
-	<pre><a target="api" class='sml' href="<%=url%>/get/frameByRCFZ.ashx?R=1140&C=1&F=120&Z=12"><%=url%>/get/frameByRCFZ.ashx?R=1140&C=1&F=120&Z=12 </a></pre>
-	where R is the Run, C is the CamCol and Z is the Zoom level (Z can be either 12, 25, 50 or 0 (for 100%)), or 
-	<pre><a target="api"  class='sml' href="<%=url%>/get/frameById.ashx?id=1237650369404207104&zoom=12"> <%=url%>/get/frameById.ashx?id=1237650369404207104&zoom=12 </a></pre>
-	where id is the fieldId.
-	<p>
+	<h3 class='m'>Visualization Tools</h3>
 
-	<hr>
-	<a name="getspec"></a>
-	<h3>Get Spectra </h3>
-	<pre><a target="api" class='sml'  href="<%=url%>/get/specByPF.ashx?P=299489402567026688&F=25"><%=url%>/get/specByPF.ashx?P=299489402567026688&F=25 </a> </pre>
-	where P is the Plate and F is the Fiber, or
-	<pre><a target="api" class='sml'  href="<%=url%>/get/specById.ashx?ID=301889361622886400"><%=url%>/get/specById.ashx?ID=301889361622886400 </a></pre>
-	where ID is the SpecObjId.
-	<p>
-
-	<hr>
-	<a name="getssky"></a>
-	<h3> Get Scrolling Sky image</h3>
-	<pre><a target="api" class='sml'  href="<%=url%>/tools/scroll/camcol.aspx?R=1140&C=1&Z=25"><%=url%>/tools/scroll/camcol.aspx?R=1140&C=1&Z=25 </a></pre>
-	Where R is the Run number , C is the CamCol and Z is the Zoom
-	level.  Z can be either 12, 25, 50 or 0 (for 100%).
-	
-	<p>
-	<hr>
-	<a name="spectrum"></a>
-	<h3>Full Spectral Access</h3>
-	There is a comprehensive web site to access the details of spectra from the SDSS
-	and other surveys (2dF). You can also upload your own spectra. <p>
-	<a target="api"  class='sml' href="<%=globals.WSSpecHome%>"> <%=globals.WSSpecHome%></a>  <br>
-	<p>
-	This site also has a <a href="<%=globals.WSFilterHome%>">Filter Profile service</a> and a SOAP interface 
-	to the spectrum service described in its <a target="api" href="<%=globals.WSSpecHome%>/docs/doc.aspx?p=00_index.htm">documentation page </a>.
-	<p>
-
-
-	<a name="search"></a>
-	<h1 class='m'>Searching </h1>
-	
-
-	<h4>Radial</h4>
-	<pre><a target="api"  class='sml' href="<%=url%>/tools/search/x_results.aspx?searchtool=Radial&ra=180&dec=-0.2&radius=3&format=csv&limit=20"><%=url%>/tools/search/x_results.aspx?searchtool=Radial&
-ra=180&dec=-0.2&radius=3&format=csv&limit=20</a> </pre>
-	where ra is Right Ascension in degrees, dec is Declination in degrees, radius is search radius in arcminutes,
-	format is the format to return, which may be csv, html, or xml,
-	limit is the number of rows to return. If you want all rows, put entries=all instead.
-	<p>
-	Additional parameters may be passed for restricting its range. For each band (x one of r,i,u,g,z)
-	<i>check_x,min_x,max_x and xband </i>may be specified. Hence adding to the above we may restrict the result to rows with 
-	u between 20 and 22 as follows:
-	<pre><a target="api"  class='sml' href="<%=url%>/tools/search/x_results.aspx?searchtool=Radial&ra=180&dec=-0.2&radius=3&format=xml&limit=20&check_u=u&min_u=20&max_u=22&uband=0,20"><%=url%>/tools/search/x_results.aspx?searchtool=Radial&
-ra=180&dec=-0.2&radius=3&format=xml&limit=20&check_u=u&min_u=20&max_u=22&uband=0,20</a> </pre>
-	<p>The same parameters can be also sent using POST. The names forms are the same as the GET parameter names.	<p>
-
-	<hr>
-	<h4>Rectangular</h4>
-	<pre><a target="api" class='sml'  href="<%=url%>/tools/search/x_results.aspx?searchtool=Rectangular&min_ra=180.1&max_ra=180.2&min_dec=-0.1&max_dec=0.01&format=xml&limit=20"><%=url%>/tools/search/x_results.aspx?searchtool=Rectangular&
-min_ra=180.1&max_ra=180.2&min_dec=-0.1&max_dec=0.01&format=xml&limit=20</a> </pre>
-	where min_ra,min_dec in degrees form one corner, max_ra,max_dec form the other corner,
-	format is the format to return which may be csv, html, or xml,
-	limit is the number of rows to return. If you want all rows, put entries=all instead.
-	<p>The same parameters can be also sent using POST. The names forms are the same as the GET parameter names.	<p>
-	
-	<hr>
-	<h4>SQL</h4>
-	<pre><a target="api"  class='sml' href="<%=url%>/tools/search/x_results.aspx?searchtool=SQL&format=xml&cmd=select top 10 * from galaxy"><%=url%>/tools/search/x_results.aspx?searchtool=SQL&
-format=xml&cmd=select top 10 * from galaxy </a> </pre>
-	Where cmd is the sql command to execute and format is the format to return which may be csv, html, or xml.
-	The command should be preferably URL-encoded, like
-	<ul>
-	 <pre>&amp;cmd=SELECT+TOP+10+*+FROM+Galaxy+WHERE+r%3C17</pre> 
-	</ul>
-	<p>The same parameters can be also sent using POST. The POST parameter values can be in plain text, they do not
-	need to be encoded. The names forms are the same as the GET parameter names.	<p>
-
-<!--
-	<hr>
-	<a name="casaccess"></a>
-	<h4>CasAccess </h4>
-	CASAccess provides a <em>Web Service</em> interface for querying SDSS Data. Example clients and information may be found at 
-	<br><a href="http://skyservice.pha.jhu.edu/develop/vo/casclient.aspx">http://skyservice.pha.jhu.edu/develop/vo/casclient.aspx</a>
-	An example query through http GET would be like 
-	<pre><a target="api" class='sml'  href="<=wsCasAccess%>/GetVoTable?sqlcmd=select+top+10+ra%2Cdec%2Cr%2Ci%2Cu%2Cg%2Cz+from+galaxy"><=wsCasAccess%>/GetVoTable?
-sqlcmd=select+top+10+ra%2Cdec%2Cr%2Ci%2Cu%2Cg%2Cz+from+galaxy</a></pre>
--->
-
-	<h1 class='m'>Visualization Tools</h1>
-
-	<a name="cutout"></a>
-	<h3>Image Cutout </h3>
-	This is a <em>Web Service</em> that returns a JPEG image centered on <i>(ra,dec)</i>, of size <i>(height x width)</i>
-	where the image is scaled to an arbitrary scale <i>(scale)</i>. 
-	Various drawing options can be specified <i>(opt)</i>.
-	The image cutout may be called using SOAP or through a HTTP interface, using either GET or POST.
-	It can be also included in a page through the URL in an IMG tag.
-	<p>
-	For information on writing a Java SOAP client see <a href="http://skyservice.pha.jhu.edu/develop/vo/imgcutoutclient.aspx"> ImgCutOut DIME page</a>.
-	<br>The <a target="api"  class='sml' href = "../../tools/chart/chart.aspx">ImgCutout page </a>itself contains information on building url's but here is an example also:
-	<pre><a target="api"  class='sml' href="<%=globals.WSGetJpegUrl%>?ra=114.82991&dec=10.91817&width=512&height=512&opt=OG"><%=globals.WSGetJpegUrl%>
-ra=224.5941&dec=-1.09&width=512&height=512&opt=OG </a></pre>
-	where ra is Right Ascension in degrees, dec is declination in degrees,<br>
-	scale is the scale of the image in arcsec per pixel, 0.4 is default<br> 
-	opt is a string of charectors for overlays on the image codes are : 
-	<ul>
-	<table>
-	<tr> <td class='b'> Code</td><td class='b'> Effect on image</td></tr>
-	<%
-		string[] p = new string[]{"G","L","P","S","T","O","B","F","M","Q","I"};
-		string[] f = new string[]{"Grid","Label","PhotoObjs","SpecObjs",
-			"TargetObjs","Outline","BoundingBox","Fields","Masks",
-			"Plates","InvertImage"};
-		for (int i=0; i<p.Length;i++) {
-			Response.Write("<tr><td class='h'>"+p[i]+"</td>");
-			Response.Write("<td class='h'>"+f[i]+"</td></tr>");
-		}
-
-	%> 
-	</table>
-	</ul>
 
 	<hr>
 	<a name="chart"></a>
@@ -234,15 +548,16 @@ Basically you must post to the server a field called "paste" which contains the 
 	objects using the same cross-id form.  You may use POST or GET
 	methods to this URL - the basic form is as follows.</p>
 
-<h3>The GET method (example for default crossid page):	</h3>
+    <h3>The GET method (example for default crossid page):	</h3>
 
-	<pre><a target="api" class='sml' href="<%=url%>/tools/crossid/x_crossid.aspx?searchType=photo&photoScope=nearPrim&photoUpType=ra-dec&radius=0.5&firstcol=1&paste=++name++ra+++++++dec%0D%0A++A1+++195.2++++2.5%0D%0A++A2+++194.5++++2.6%0D%0A++A3+++193.6++++2.8%0D%0A++A4+++-90.1++++-90.051%0D%0A&upload=&uquery=SELECT+%0D%0A+++p.objID%2C+p.ra%2C+p.dec%2C+p.run%2C+p.rerun%2C+p.camcol%2C+p.field%2C%0D%0A+++dbo.fPhotoTypeN(p.type)+as+type%2C%0D%0A+++p.modelMag_u%2C+p.modelMag_g%2C+p.modelMag_r%2C+p.modelMag_i%2C+p.modelMag_z+%0D%0AFROM+%23x+x%2C+%23upload+u%2C+PhotoTag+p%0D%0AWHERE+u.up_id+%3D+x.up_id+and+x.objID%3Dp.objID+%0D%0AORDER+BY+x.up_id%0D%0A%09%09&format=html"><%=url%>/tools/crossid/x_crossid.aspx?searchType=photo&photoScope=nearPrim&photoUpType=ra-dec&radius=0.5&firstcol=1&paste=++name++ra+++++++dec%0D%0A++A1+++195.2++++2.5%0D%0A++A2+++194.5++++2.6%0D%0A++A3+++193.6++++2.8%0D%0A++A4+++-90.1++++-90.051%0D%0A&upload=&uquery=SELECT+%0D%0A+++p.objID%2C+p.ra%2C+p.dec%2C+p.run%2C+p.rerun%2C+p.camcol%2C+p.field%2C%0D%0A+++dbo.fPhotoTypeN(p.type)+as+type%2C%0D%0A+++p.modelMag_u%2C+p.modelMag_g%2C+p.modelMag_r%2C+p.modelMag_i%2C+p.modelMag_z+%0D%0AFROM+%23x+x%2C+%23upload+u%2C+PhotoTag+p%0D%0AWHERE+u.up_id+%3D+x.up_id+and+x.objID%3Dp.objID+%0D%0AORDER+BY+x.up_id%0D%0A%09%09&format=html</a>
+	<pre>
+        <a target="api" class='sml' href="<%=url%>/tools/crossid/x_crossid.aspx?searchType=photo&photoScope=nearPrim&photoUpType=ra-dec&radius=0.5&firstcol=1&paste=++name++ra+++++++dec%0D%0A++A1+++195.2++++2.5%0D%0A++A2+++194.5++++2.6%0D%0A++A3+++193.6++++2.8%0D%0A++A4+++-90.1++++-90.051%0D%0A&upload=&uquery=SELECT+%0D%0A+++p.objID%2C+p.ra%2C+p.dec%2C+p.run%2C+p.rerun%2C+p.camcol%2C+p.field%2C%0D%0A+++dbo.fPhotoTypeN(p.type)+as+type%2C%0D%0A+++p.modelMag_u%2C+p.modelMag_g%2C+p.modelMag_r%2C+p.modelMag_i%2C+p.modelMag_z+%0D%0AFROM+%23x+x%2C+%23upload+u%2C+PhotoTag+p%0D%0AWHERE+u.up_id+%3D+x.up_id+and+x.objID%3Dp.objID+%0D%0AORDER+BY+x.up_id%0D%0A%09%09&format=html"><%=url%>/tools/crossid/x_crossid.aspx?searchType=photo&photoScope=nearPrim&photoUpType=ra-dec&radius=0.5&firstcol=1&paste=++name++ra+++++++dec%0D%0A++A1+++195.2++++2.5%0D%0A++A2+++194.5++++2.6%0D%0A++A3+++193.6++++2.8%0D%0A++A4+++-90.1++++-90.051%0D%0A&upload=&uquery=SELECT+%0D%0A+++p.objID%2C+p.ra%2C+p.dec%2C+p.run%2C+p.rerun%2C+p.camcol%2C+p.field%2C%0D%0A+++dbo.fPhotoTypeN(p.type)+as+type%2C%0D%0A+++p.modelMag_u%2C+p.modelMag_g%2C+p.modelMag_r%2C+p.modelMag_i%2C+p.modelMag_z+%0D%0AFROM+%23x+x%2C+%23upload+u%2C+PhotoTag+p%0D%0AWHERE+u.up_id+%3D+x.up_id+and+x.objID%3Dp.objID+%0D%0AORDER+BY+x.up_id%0D%0A%09%09&format=html</a>
 	</pre>
 
 
-<h3>The POST method:	</h3>
+<!--h3>The POST method:	</h3-->
 
-	<pre class="sml">
+	<!--pre class="sml">
 &lt;FORM METHOD="post" ENCTYPE="multipart/form-data" ACTION="<%=url%>/tools/crossid/x_crossid.aspx" id="crossid" name="crossid"&gt;
 &lt;input id="searchType1" name="searchType" value="photo" type=radio class="box" CHECKED&gt;
 &lt;input id="photoScope1" name="photoScope" value="nearPrim" type=radio class="box" CHECKED&gt;Nearest Primary Object&lt;/input&gt;
@@ -271,7 +586,7 @@ Basically you must post to the server a field called "paste" which contains the 
 &lt;input name=format value="csv"  type=radio class="box"&gt;
 &lt;input TYPE="reset" VALUE="Reset " class="button" id="reset" name="reset"&gt;
 &lt;/FORM&gt;
-</pre>
+</pre-->
 
 	</td></tr>
 </table>
