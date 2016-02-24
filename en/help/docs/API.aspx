@@ -16,11 +16,11 @@
     <table>
 	<tr><td class="b">Webservices</td><td class="b">Short Description</td> </tr>
 	<tr><td class="h"><a href="#imgcutout">Image Cutout </a></td><td class="h">Returns color images at given location. There are two resources /getJpeg and /getJpegCodec</td> </tr>
-	<tr><td class="h"><a href="#getspec"> Get Spectra  </a></td><td class="h"> Access spectra graphs and data</td> </tr>	
+	<!--tr><td class="h"><a href="#getspec"> Get Spectra  </a></td><td class="h"> Access spectra graphs and data</td> </tr-->	
 	<tr><td class="h"><a href="#spectrum">Full Spectral Access  </a></td><td class="h">Web Service access to details of spectra </td> </tr>
 	<tr><td class="h"><a href="#search">Search  </a></td><td class="h"> Returns specific database results. There are three services availble /radial, /rectangular and /sql</td> </tr>
 	<tr><td class="h"><a href="#explore"> Explore </a></td><td class="h">Interactive exploration of object properties </td> </tr>
-	<tr><td class="h"><a href="#cross"> Cross-id </a></td><td class="h">Upload your own objects for cross-identification </td> </tr>
+	<!--tr><td class="h"><a href="#cross"> Cross-id </a></td><td class="h">Upload your own objects for cross-identification </td> </tr-->
     <tr><td class="h"><a href="#voservice"> VO Services</a></td><td class="h">Services to search databases using IVOA standards and protocols. /conesearch, /SIAP, /SDSSFields </td> </tr>
     <tr><td class="h"><a href="#advanced"> Advanced Search</a></td><td class="h">Equivalent to search tools, there are three services /imagingquery, /spectroquery, /irspectraquery </td> </tr>
 	</table>
@@ -33,7 +33,7 @@
             <tr><td class="b">Header Names</td><td class="b">Values</td> </tr>
             <tr><td class="h">X-Auth-Token</td><td class="h"> Keystone token. If omitted, the query will be executed anonymously.</td> </tr>
         </table>
-
+    <a name="imgcutout"></a>
 	<h3 class='wsapi'>Image Cutout</h3>
         There are two resources available under this service. 
         <h4>1. <b>GET or POST</b>      /getJpeg</h4>        
@@ -71,7 +71,7 @@
             <span>Example:<pre><a target="api"  class='sml' href="<%=globals.WSGetJpegUrl%>R=1140&C=1&F=120&Z=12"><%=globals.WSGetJpegUrl%>?R=1140&C=1&F=120&Z=12</a></pre></span>
 
 
-
+        <a name="spectrum"></a>
         <h3 class='wsapi'>Spectra Services</h3>
         <a name="getspec"></a>
 	    <h4>1. Get Spectra </h4>
@@ -89,8 +89,8 @@
 	    This site also has a <a href="<%=globals.WSFilterHome%>">Filter Profile service</a> and a SOAP interface 
 	    to the spectrum service described in its <a target="api" href="<%=globals.WSSpecHome%>/docs/doc.aspx?p=00_index.htm">documentation page </a>.
 	    <p>
-	<a name="search"></a>
 
+	<a name="search"></a>
 	<h3 class='wsapi'>Searching </h3>
 	<h4>1. Radial Search</h4><br />GET or POST /radialSearch
            <table>
@@ -146,7 +146,7 @@
             <br><span>Example:
             <pre><a target="api"  class='sml' href="<%=globals.SQLSearchWS%>?cmd=select%20top%2010%20ra,dec%20from%20Frame&format=csv"><%=globals.SQLSearchWS%>?cmd=select%20top%2010%20ra,dec%20from%20Frame&format=csv</a></pre>
             </span>
-
+        <a name="voservice"></a>
     <h3 class='wsapi'>VO Webservices</h3>
             Following web services are developed on standards and protocols given by International Virtual Observatory Alliance. 
             These services we are supporting as is.
@@ -229,7 +229,7 @@
             <br><span>Example:
             <pre><a target="api"  class='sml' href="<%=globals.getSIAPInfo%>?POS=132,12&SIZE=0.01"><%=globals.getSIAPInfo%>?POS=132,12&SIZE=0.01</a></pre>
             </span>
-
+            <a name="advanced"></a>
             <h3 class='wsapi'>Advanced Search </h3>
 <!-------------------------------------------------------Imaging Query Search -------------------------------------------------------------------------------------------------------->     
 	<h4>1. ImagingQuery Search</h4><br />GET or POST /ImagingQuery
