@@ -399,7 +399,7 @@ ORDER BY x.up_id
 	    <td colspan="2"><table width="100%">
 		<tr>
 		    <td width="10%" align="left">
-			<input id=submit type="submit" value="Submit" class="button">
+			<input id=submit type="submit" value="Submit" class="button" onclick="goToWindow()">
 	    	    </td>
 		    <td width="30%" align="center" class="q">
 			<table BORDER=0 width="100%">

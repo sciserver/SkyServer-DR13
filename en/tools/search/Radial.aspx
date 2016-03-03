@@ -44,7 +44,7 @@ if( globals.Access == "public" ) {
 }
 %>
 
-<script language="javascript" src="validate.js"></script>
+<script language="javascript" src="validate_search.js"></script>
 
 
 <script type="text/javascript">
@@ -67,23 +67,45 @@ if( globals.Access == "public" ) {
         document.getElementById('labelDecOrB').innerHTML = "Dec"; // give RA/Dec option by default
     }
 
+
+
+
+
     function changeSearchType(newtype) {
 
         if (newtype == 'galactic')
         {
-            document.getElementById('ra').value = "10";
-            document.getElementById('dec').value = "0.2";
-            document.getElementById('labelRaOrL').innerHTML = "Galactic Longitude (<i>l</i>)";
-            document.getElementById('labelDecOrB').innerHTML = "Galactic Latitude (<i>b</i>)";
-            document.getElementById('galactic').checked = "checked";         
+            if (isNumeric(document.getElementById('ra').value) && isNumeric(document.getElementById('dec').value)) {
+                var glon = ra2glon(document.getElementById('ra').value, document.getElementById('dec').value);
+                var glat = dec2glat(document.getElementById('ra').value, document.getElementById('dec').value); 
+                document.getElementById('ra').value = glon;
+                document.getElementById('dec').value = glat;
+                document.getElementById('labelRaOrL').innerHTML = "Galactic Longitude (<i>l</i>)";
+                document.getElementById('labelDecOrB').innerHTML = "Galactic Latitude (<i>b</i>)";
+            } else {
+                alert('You entered non-numeric values. Using default values instead.')
+                document.getElementById('coordtype_equatorial').checked = true;
+                document.getElementById('coordtype_galactic').checked = false;
+                //document.getElementById('ra').value = "10";
+                //document.getElementById('dec').value = "0.2";
+            }
         }
         else
         {
-            document.getElementById('ra').value = "258.25";
-            document.getElementById('dec').value = "64.05";
-            document.getElementById('labelRaOrL').innerHTML = "RA";
-            document.getElementById('labelDecOrB').innerHTML = "Dec";
-            document.getElementById('equatorial').checked = "checked";            
+            if (isNumeric(document.getElementById('ra').value) && isNumeric(document.getElementById('dec').value)) {
+                var ra = glon2ra(document.getElementById('ra').value, document.getElementById('dec').value);
+                var dec = glat2dec(document.getElementById('ra').value, document.getElementById('dec').value);
+                document.getElementById('ra').value = ra;
+                document.getElementById('dec').value = dec;
+                document.getElementById('labelRaOrL').innerHTML = "RA";
+                document.getElementById('labelDecOrB').innerHTML = "Dec";
+            } else {
+                alert('You entered non-numeric values. Using default values instead.')
+                document.getElementById('coordtype_equatorial').checked = false;
+                document.getElementById('coordtype_galactic').checked = true;
+                //document.getElementById('ra').value = "258.25";
+                //document.getElementById('dec').value = "64.05";
+            }
         }
         
     } 
@@ -178,8 +200,8 @@ if( globals.Access == "public" ) {
 			<tr ALIGN=middle VALIGN=center>
                 <td width="30%" class="qtitle">Coordinate System</td>
                 <td WIDTH="70%" class="q">
-                    <input type="radio" name="coordtype" value="equatorial" onclick="javascript:changeSearchType('equatorial');" checked />Equatorial ( RA / Dec )&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="radio" name="coordtype" value="galactic" onclick="javascript:changeSearchType('galactic');" />Galactic ( <i>l</i> / <i>b</i> )&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="coordtype" id="coordtype_equatorial" value="equatorial" onclick="javascript:changeSearchType('equatorial');" checked />Equatorial ( RA / Dec )&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="coordtype" id="coordtype_galactic" value="galactic" onclick="javascript:changeSearchType('galactic');" />Galactic ( <i>l</i> / <i>b</i> )&nbsp;&nbsp;&nbsp;&nbsp;
                 </td>
 			</tr>
 

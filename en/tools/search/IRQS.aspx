@@ -24,6 +24,14 @@
 <div id="title">Infrared Spectroscopy Query Form</div></a>
 
 <script language="javascript" src="validate_search.js"></script>
+<script> 
+
+    function goToWindow() {
+        var w = window.open("", 'search');
+        w.focus();
+    }
+
+</script>
 
 <div id="transp">
 <form method="post" target="search" enctype="multipart/form-data" action="x_results.aspx" id=irqs name="irqs">

@@ -2084,6 +2084,7 @@
     <Content Include="en\tools\started\StartedHome.aspx" />
     <Content Include="en\tools\ToolsHome.aspx" />
     <Content Include="en\wz_tooltip.js" />
+    <Content Include="en\exception\ErrorPage.aspx" />
     <Content Include="FavIcon.ICO" />
     <Content Include="Global.asax" />
     <Content Include="images\flag_br.gif" />
@@ -2108,6 +2109,7 @@
     <Content Include="images\tick.GIF" />
     <Content Include="images\tick.jpg" />
     <Content Include="images\word_icon.gif" />
+    <Content Include="en\motd.inc" />
     <Content Include="robots.txt" />
     <Content Include="scroll.js" />
     <Content Include="skyserver.css" />
@@ -2192,6 +2194,7 @@
     <Compile Include="en\credits\CreditsMaster.master.designer.cs">
       <DependentUpon>CreditsMaster.master</DependentUpon>
     </Compile>
+    <Compile Include="en\exception\ExceptionUtility.cs" />
     <Compile Include="en\get\FrameById.ashx.cs">
       <DependentUpon>FrameById.ashx</DependentUpon>
     </Compile>
@@ -6085,6 +6088,13 @@
     </Compile>
     <Compile Include="en\tools\explore\FitsSpec.aspx.designer.cs">
       <DependentUpon>FitsSpec.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\exception\ErrorPage.aspx.cs">
+      <DependentUpon>ErrorPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\exception\ErrorPage.aspx.designer.cs">
+      <DependentUpon>ErrorPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="misc\KeyStone.cs" />
     <Compile Include="misc\net.ivoa.data\DataSetWrapper.cs" />

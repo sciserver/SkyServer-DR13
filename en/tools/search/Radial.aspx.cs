@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using SkyServer;
 
 namespace SkyServer.Tools.Search
 {
@@ -24,6 +25,12 @@ namespace SkyServer.Tools.Search
         protected string userguide;
         protected Globals globals;
         ToolsMaster master;
+
+        public double ra;
+        public double dec;
+        public double glat;
+        public double glon;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             globals = (Globals)Application[Globals.PROPERTY_NAME];

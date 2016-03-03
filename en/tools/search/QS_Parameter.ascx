@@ -95,7 +95,7 @@
 <table width="100%">
 		<tr>
 			<!--td align="left"><input id=submit type="submit" value="Submit Request"></td-->
-            <td align="left"><input id=SubmitButton type=button style="width:110px;" onclick="runquery();" value="Submit Request"></input></td>
+            <td align="left"><input id=SubmitButton type=button style="width:110px;" onclick="goToWindow();runquery();" value="Submit Request"></input></td>
 			<td colspan="2">&nbsp;</td>
 			<td align="right"><input id=reset  type="reset" value="Reset Form"></td>
 		</tr>

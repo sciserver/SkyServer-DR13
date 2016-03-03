@@ -11,7 +11,7 @@
 The Sloan Digital Sky Survey has published several papers describing the data,
 the data acquisition process, and other technical details of the project.
 These publications can all be found listed on the <a
-href="<%=globals.SdssUrlBase%>science/publications.php">SDSS publications page</a>.
+href="<%=globals.SdssUrlBase%>science/publications/">SDSS publications page</a>.
 
 </td></tr>
 </table>

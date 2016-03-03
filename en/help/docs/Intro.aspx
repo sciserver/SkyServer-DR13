@@ -299,7 +299,7 @@ href="http://www.galaxyzoo.org">Galaxy Zoo site</a>:
 <h3>BOSS Galaxy Product Tables <a href="#top"><img src="images/top.gif"
 ALT="Back to Top" NOSAVE BORDER="0" HEIGHT="25" ALIGN="TOP"></a> </h3>
 There are a few new tables for derived data products from the <a
-href="<%=globals.SdssUrlBase%>surveys/boss.php">Baryon Oscillation Spectroscopic
+href="<%=globals.SdssUrlBase%>surveys/boss/">Baryon Oscillation Spectroscopic
 Survey</a>.  They each have a primary key index on specobjid.
 	<ol>
 		<p>

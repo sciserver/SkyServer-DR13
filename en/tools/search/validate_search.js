@@ -1,6 +1,124 @@
 var prefix = 'ContentPlaceHolder1_ToolsContent_';
 
-function launch(link,name) {
+function dec2glat(ra, dec) {
+    var galPoleRA = 192.859508;
+    var galPoleDec = 27.128336;
+    var galAscNode = 32.932;
+
+    // convert all angles from degrees to radians for the trig functions
+    ra = ra * (Math.PI / 180);
+    dec = dec * (Math.PI / 180);
+    galPoleRA = galPoleRA * (Math.PI / 180);
+    galPoleDec = galPoleDec * (Math.PI / 180);
+    galAscNode = galAscNode * (Math.PI / 180);
+
+    var glat = Math.asin((Math.cos(dec) * Math.cos(galPoleDec) * Math.cos(ra - galPoleRA)) + (Math.sin(dec) * Math.sin(galPoleDec)));
+
+    glat = glat * (180 / Math.PI);
+
+    if (glat < -90)
+        glat = glat + 90;
+    if (glat > 90)
+        glat = glat - 90;
+
+    return glat;
+}
+
+function ra2glon(ra, dec) {
+    var glat = dec2glat(ra, dec); // first, find the galactic latitude (B) since we'll need it in the formula
+
+    var galPoleRA = 192.859508;
+    var galPoleDec = 27.128336;
+    var galAscNode = 32.932;
+
+    // convert all angles from degrees to radians for the trig functions
+    ra = ra * (Math.PI / 180);
+    dec = dec * (Math.PI / 180);
+    galPoleRA = galPoleRA * (Math.PI / 180);
+    galPoleDec = galPoleDec * (Math.PI / 180);
+    galAscNode = galAscNode * (Math.PI / 180);
+    glat = glat * (Math.PI / 180);
+
+    var numerator = Math.sin(dec) - (Math.sin(glat) * Math.sin(galPoleDec));
+    var denominator = Math.cos(dec) * Math.sin(ra - galPoleRA) * Math.cos(galPoleDec);
+
+    var glon = Math.atan2(numerator, denominator) + galAscNode;  // use atan2 instead of atan to solve ambiguity of arctan
+
+    glon = glon * (180 / Math.PI); // convert answer back to degrees
+
+    if (glon < 0)
+        glon = glon + 360;
+    if (glon > 360)
+        glon = glon - 360;
+
+    return glon;
+}
+
+function glon2ra(L, B) {
+    // function to convert from a galactic longitude (l) to right ascension
+    // input: the galactic latitude (b) and longitude (l) of a point in degrees
+    // output: the celestial RA in degrees
+
+    var i = 192.859508;
+    var j = 27.128336;
+    var k = 32.932;
+
+    var m = L - k;
+
+    // convert all angles from degrees to radians for the trig functions
+    L = L * (Math.PI / 180);
+    B = B * (Math.PI / 180);
+    var x = i * (Math.PI / 180);
+    var y = j * (Math.PI / 180);
+    var z = m * (Math.PI / 180);
+
+    var numerator = Math.cos(B) * Math.cos(z);
+    var denominator = (Math.sin(B) * Math.cos(y)) - (Math.cos(B) * Math.sin(y) * Math.sin(z));
+
+    var ra = Math.atan2(numerator, denominator) + x;  // use atan2 instead of atan to solve ambiguity of arctan
+    // double ra = Math.Atan(numerator / denominator) + x;
+
+    ra = ra * (180 / Math.PI); // convert answer back to degrees
+    if (ra > 360)
+        ra = ra - 360;
+    return ra;
+}
+
+function glat2dec(L, B) {
+    // function to convert from a galactic latitude (B) to declination
+    // input: the galactic latitude (B) and longitude (L) of a point in degrees
+    // output: that point's celestial dec in degrees
+
+    var i = 192.859508;
+    var j = 27.128336;
+    var k = 32.932;
+
+    var m = L - k;
+
+    // convert all angles from degrees to radians for the trig functions
+    L = L * (Math.PI / 180);
+    B = B * (Math.PI / 180);
+    var x = i * (Math.PI / 180);
+    var y = j * (Math.PI / 180);
+    var z = m * (Math.PI / 180);
+
+    var dec = Math.asin((Math.cos(B) * Math.cos(y) * Math.sin(z)) + (Math.sin(B) * Math.sin(y)));
+    dec = dec * (180 / Math.PI); // convert answer back to degrees
+
+    return dec;
+
+}
+
+function isNumeric(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+
+
+
+
+
+function launch(link, name) {
 	window.open(link,'_blank');
 //	if (window.focus) { w.focus();}
 }

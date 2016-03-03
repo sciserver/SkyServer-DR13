@@ -40,6 +40,7 @@ namespace SkyServer.Tools.Search
 
         private Globals globals;
         String WSrequestUri = "";
+        string SaveResponseToFile = "";
 
         public void ProcessRequest()
         {
@@ -84,10 +85,10 @@ namespace SkyServer.Tools.Search
             {
                     requestString += key + "=" + Uri.EscapeDataString(inputForm[key]) + "&";
             }
-            //requestString += "clientIP=" + GetClientIP() +"&";
+            requestString = requestString.TrimEnd('&');
 
             String searchTool = inputForm["searchtool"];
-
+            SaveResponseToFile = String.IsNullOrEmpty(inputForm["SaveResponseToFile"]) ? "true" : "false";
             
             bool temp = false;
             string radecText = "";
@@ -249,7 +250,7 @@ namespace SkyServer.Tools.Search
             if (returnType=="fits" || returnType=="dataset")
                 httpResponse.BinaryWrite(queryResultByte);
             else
-                httpResponse.Write(queryResult);
+                httpResponse.Output.Write(queryResult);
             
             httpResponse.End();
             //if (returnType.ToLower().Equals("html"))
@@ -264,15 +265,32 @@ namespace SkyServer.Tools.Search
         public void setContentType(string format) {
             format  = format.ToLower();
             switch(format){
-                case "csv"    :  httpResponse.ContentType = "text/plain"; break;
-                case "xml"    :  httpResponse.ContentType = "application/xml"; break;
-                case "votable":  httpResponse.ContentType = "application/xml"; break;
-                case "json"   :  httpResponse.ContentType = "application/json"; break;
-                case "fits"   :  httpResponse.ContentType = "application/octet-stream";
-                                 httpResponse.AddHeader("Content-Disposition", "attachment;filename=\"result.fits\"");
+                case "csv"    :  httpResponse.ContentType = "text/plain";
+                                 if(SaveResponseToFile == "true")
+                                     httpResponse.AddHeader("Content-Disposition", "attachment;filename=\"result.csv\"");
                                  break;
-                case "html"   :  httpResponse.ContentType = ""; break;
-                default       :  httpResponse.ContentType = "text/plain"; break;
+                case "xml"    :  httpResponse.ContentType = "application/xml";
+                                 if (SaveResponseToFile == "true")
+                                     httpResponse.AddHeader("Content-Disposition", "attachment;filename=\"result.xml\"");
+                                 break;
+                case "votable": httpResponse.ContentType = "application/xml";
+                                 if (SaveResponseToFile == "true")
+                                     httpResponse.AddHeader("Content-Disposition", "attachment;filename=\"result.csv\"");
+                                 break;
+                case "json"   :  httpResponse.ContentType = "application/json";
+                                 if (SaveResponseToFile == "true")
+                                     httpResponse.AddHeader("Content-Disposition", "attachment;filename=\"result.json\"");
+                                 break;
+                case "fits"   :  httpResponse.ContentType = "application/octet-stream";
+                                 if (SaveResponseToFile == "true")
+                                     httpResponse.AddHeader("Content-Disposition", "attachment;filename=\"result.fits\"");
+                                 break;
+                case "html"   :  httpResponse.ContentType = "";
+                                 break;
+                default       :  httpResponse.ContentType = "text/plain";
+                                 if (SaveResponseToFile == "true")
+                                     httpResponse.AddHeader("Content-Disposition", "attachment;filename=\"result.txt\"");
+                                 break;
             }
 
             //return format;

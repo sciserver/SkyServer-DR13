@@ -28,6 +28,14 @@ Imaging Query Form
 
 
 <script language="javascript" src="validate_search.js"></script>
+<script>
+    function goToWindow() {
+        var w = window.open("", 'search');
+        w.focus();
+    }
+
+</script>
+
 
 
 <form method="post" target="search"  enctype="multipart/form-data" action="x_results.aspx" id=iqs name="iqs">

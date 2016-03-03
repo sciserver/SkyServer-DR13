@@ -44,6 +44,7 @@ if( globals.Access == "public" ) {
 }
 %>
 
+<script language="javascript" src="validate_search.js"></script>
 <script type="text/javascript">
     window.onload = function page_load() {
         document.getElementById('labelRaOrL').innerHTML = "RA"; // give RA/Dec option by default
@@ -55,29 +56,53 @@ if( globals.Access == "public" ) {
     }
 
     function changeSearchType(newtype) {
-        //        alert("in fcn");
-        //alert(newtype);
+
         if (newtype == 'galactic') {
-            document.getElementById('labelRaOrL').innerHTML = "Galactic Longitude (<i>l</i>)";
-            document.getElementById('labelDecOrB').innerHTML = "Galactic Latitude (<i>b</i>)";
-            document.getElementById('min_ra').value = "10";
-            document.getElementById('max_ra').value = "10.1";
-            document.getElementById('min_dec').value = "0.2";
-            document.getElementById('max_dec').value = "0.3";
-            document.getElementById('galactic').checked = "checked";
+            if (isNumeric(document.getElementById('min_ra').value) && isNumeric(document.getElementById('max_ra').value) && isNumeric(document.getElementById('min_dec').value) && isNumeric(document.getElementById('max_dec').value) ) {
+                var glon1 = ra2glon(document.getElementById('min_ra').value, document.getElementById('min_dec').value);
+                var glat1 = dec2glat(document.getElementById('min_ra').value, document.getElementById('min_dec').value);
+                var glon2 = ra2glon(document.getElementById('max_ra').value, document.getElementById('max_dec').value);
+                var glat2 = dec2glat(document.getElementById('max_ra').value, document.getElementById('max_dec').value);
+                document.getElementById('min_ra').value = Math.min(glon1,glon2);
+                document.getElementById('min_dec').value = Math.min(glat1,glat2);
+                document.getElementById('max_ra').value = Math.max(glon1, glon2);
+                document.getElementById('max_dec').value = Math.max(glat1, glat2);
+                document.getElementById('labelRaOrL').innerHTML = "Galactic Longitude (<i>l</i>)";
+                document.getElementById('labelDecOrB').innerHTML = "Galactic Latitude (<i>b</i>)";
+            } else {
+                alert('You entered non-numeric values. Using default values instead.')
+                document.getElementById('coordtype_equatorial').checked = true;
+                document.getElementById('coordtype_galactic').checked = false;
+                //document.getElementById('min_ra').value = "10";
+                //document.getElementById('max_ra').value = "10.1";
+                //document.getElementById('min_dec').value = "0.2";
+                //document.getElementById('max_dec').value = "0.3";
+            }
         }
         else {
-            document.getElementById('labelRaOrL').innerHTML = "RA";
-            document.getElementById('labelDecOrB').innerHTML = "Dec";
-            document.getElementById('min_ra').value = "258.2";
-            document.getElementById('max_ra').value = "258.3";
-            document.getElementById('min_dec').value = "64";
-            document.getElementById('max_dec').value = "64.1";
-            document.getElementById('equatorial').checked = "checked";
-
+            if (isNumeric(document.getElementById('min_ra').value) && isNumeric(document.getElementById('max_ra').value) && isNumeric(document.getElementById('min_dec').value) && isNumeric(document.getElementById('max_dec').value)) {
+                var ra1 = glon2ra(document.getElementById('min_ra').value, document.getElementById('min_dec').value);
+                var dec1 = glat2dec(document.getElementById('min_ra').value, document.getElementById('min_dec').value);
+                var ra2 = glon2ra(document.getElementById('max_ra').value, document.getElementById('max_dec').value);
+                var dec2 = glat2dec(document.getElementById('max_ra').value, document.getElementById('max_dec').value);
+                document.getElementById('min_ra').value = Math.min(ra1,ra2);
+                document.getElementById('min_dec').value = Math.min(dec1,dec2);
+                document.getElementById('max_ra').value = Math.max(ra1,ra2);
+                document.getElementById('max_dec').value = Math.max(dec1,dec2);
+                document.getElementById('labelRaOrL').innerHTML = "RA";
+                document.getElementById('labelDecOrB').innerHTML = "Dec";
+            } else {
+                alert('You entered non-numeric values. Using default values instead.')
+                document.getElementById('coordtype_equatorial').checked = true;
+                document.getElementById('coordtype_galactic').checked = false;
+                //document.getElementById('min_ra').value = "258.2";
+                //document.getElementById('max_ra').value = "258.3";
+                //document.getElementById('min_dec').value = "64";
+                //document.getElementById('max_dec').value = "64.1";
+            }
         }
-
     }
+
 
     function changeQueryType(newtype) {
 
@@ -167,8 +192,8 @@ if( globals.Access == "public" ) {
 			<tr ALIGN=middle VALIGN=center>
                 <td width="30%" class="qtitle">Coordinate system</td>
                 <td WIDTH="70%" class="q" colspan="2">
-                    <input type="radio" name="coordtype" value="equatorial" onclick="javascript:changeSearchType('equatorial');" checked />Equatorial ( RA / Dec )&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="radio" name="coordtype" value="galactic" onclick="javascript:changeSearchType('galactic');" />Galactic (<i>l</i> and <i>b</i>)&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="coordtype" id="coordtype_equatorial" value="equatorial" onclick="javascript:changeSearchType('equatorial');" checked />Equatorial ( RA / Dec )&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="coordtype" id="coordtype_galactic" value="galactic" onclick="javascript:changeSearchType('galactic');" />Galactic (<i>l</i> and <i>b</i>)&nbsp;&nbsp;&nbsp;&nbsp;
                 </td>
 			</tr>
 			<tr ALIGN=middle VALIGN=center>
