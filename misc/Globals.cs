@@ -118,6 +118,11 @@ namespace SkyServer
             get { return skyserverRESTservice + "SearchTools/UserHistory"; }
         }
 
+        public string ConeWS
+        {
+            get { return skyserverRESTservice + "ConeSearch/ConeSearchService"; }
+        }
+
         public string RadialSearchWS
         {
             get { return skyserverRESTservice + "SearchTools/RadialSearch"; }
@@ -175,6 +180,46 @@ namespace SkyServer
         {
             get { return skyserverRESTservice + "SpectroQuery/ProximitySpectro"; }
         }
+
+        /// SDSS Fields        
+        public string FieldsArray
+        {
+            get { return skyserverRESTservice + "SDSSFields/FieldArray"; }
+        }
+
+        public string FieldArrayRect
+        {
+            get { return skyserverRESTservice + "SDSSFields/FieldArrayRect"; }
+        }
+
+        public string ListOfFields
+        {
+            get { return skyserverRESTservice + "SDSSFields/ListOfFields"; }
+        }
+
+        public string UrlOfFields
+        {
+            get { return skyserverRESTservice + "SDSSFields/UrlOfFields"; }
+        }
+
+        ///SIAP
+
+        public string getSIAP
+        {
+            get { return skyserverRESTservice + "SIAP/getSIAP"; }
+        }
+
+        public string getSIAPInfo
+        {
+            get { return skyserverRESTservice + "SIAP/getSIAPInfo"; }
+        }
+
+        public string getAllSIAPInfo
+        {
+            get { return skyserverRESTservice + "SIAP/getAllSIAPInfo"; }
+        }
+
+
         /****/
 
         public string SolarConnectionString
