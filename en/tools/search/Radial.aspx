@@ -163,7 +163,7 @@ if( globals.Access == "public" ) {
 <input type="hidden" id=kband name=kband />
 
 <input type="hidden" name="TaskName" id="TaskName" value="Skyserver.Search.Radial"/>
-
+<input type="hidden" name="ReturnHtml" id="ReturnHtml" value="true" />
 
 <table BORDER=0 WIDTH="600"  BGCOLOR="#aaaaaa" >
 	<tr><td class="frame">
@@ -304,14 +304,20 @@ if( globals.Access == "public" ) {
 			<td nowrap width="13%" ALIGN=middle><input name=format value="html" type=radio class="box" CHECKED>HTML</td>
 			<td nowrap width="13%" ALIGN=middle><input name=format value="xml"  type=radio class="box">XML</td>
 			<td nowrap width="13%" ALIGN=middle><input name=format value="csv"  type=radio class="box">CSV</td>
-      <td nowrap width="13%" ALIGN=middle><input name=format value="json"  type=radio class="box">JSON</td>
-      <td nowrap width="13%" ALIGN=middle><input name=format value="votable"  type=radio class="box">VOTable</td>
-      <td nowrap width="13%" ALIGN=middle><input name=format value="fits"  type=radio class="box">FITS</td>
+            <td nowrap width="13%" ALIGN=middle><input name=format value="json"  type=radio class="box">JSON</td>
+            <td nowrap width="13%" ALIGN=middle><input name=format value="votable"  type=radio class="box">VOTable</td>
+            <td nowrap width="13%" ALIGN=middle><input name=format value="fits"  type=radio class="box">FITS</td>
+            <td nowrap class="q" onmouseover="return escape('Executes the query as a job in CasJobs, and stores the result in a table in the MyDB database. If the Table name entry is empty, then a default name will be given to it.');"><input name=format value="mydb"  type=radio class="box">MyDB<i><em><strong><sup><font color="red">NEW!</font></sup></strong> </em></i></td>
 		</tr>
-		<tr>
+        <tr > 
+            <td></td><td></td><td></td><td></td><td></td><td></td><td></td>   
+            <td nowrap class="q">Table name <input id=TableName name=TableName VALUE="" SIZE="10"></td>
+        </tr>
+        <tr><td colspan="5">Limit number of output rows (0 for max) to <input type=text name="limit" size=5 value="10"></td> </tr>
+		<tr >
 			<td align="left"><input id=submit type="submit" value="Submit Request" onclick="SetBands(); goToWindow()" ></td>
-			<td colspan="5">Limit number of output rows (0 for max) to <input type=text name="limit" size=5 value="10"></td>
 			<td align="right"><input id=reset  type="reset" value="Reset Form"></td>
+            <td></td> 
 		</tr>
 	</table>
 	</td></tr>

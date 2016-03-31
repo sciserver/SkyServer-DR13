@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Text.RegularExpressions;
+using System.Configuration;
+
 
 namespace SkyServer.Tools
 {
@@ -81,7 +83,10 @@ namespace SkyServer.Tools
   
               gutter += "6,Object Crossid,/tools/crossid/crossid.aspx;";
             // hiding the link until crossmatch is working      
-            gutter += "9,Skyquery CrossMatch,/tools/crossmatch/crossmatch.aspx;";
+              if (Boolean.Parse(ConfigurationManager.AppSettings["DoShowCrossMatch"].ToLower()))
+              {
+                  gutter += "9,Skyquery CrossMatch<i><em><strong><sup> NEW!</sup></strong> </em></i>,/tools/crossmatch/crossmatch.aspx;";
+              }
 
               if( globals.ReleaseNumber > 1 ) {
   	            gutter += "8,CasJobs,"+globals.CasJobs+"' TARGET='CASJOBS;";

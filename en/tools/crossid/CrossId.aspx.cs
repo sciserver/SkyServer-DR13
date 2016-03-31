@@ -15,8 +15,8 @@ namespace SkyServer.Tools.CrossId
 	    protected double uploadDec2 = 0.6;		// Default upload page dec for A2
 	    protected double uploadRA3  = 13.9;		// Default upload page RA for A3
 	    protected double uploadDec3 = +0.8;		// Default upload page dec for A3
-	    protected double uploadRA4  = 10.1;		// Default upload page RA for A4
-        protected double uploadDec4 = -1.01;	// Default upload page dec for A4
+        protected double uploadRA4 = 197.614;		// Default upload page RA for A4
+        protected double uploadDec4 = 18.438;	// Default upload page dec for A4
         protected string crossidSample = "run rerun camcol field obj\\n3964  301    4   265   219\\n3185  301    1   091   324\\n3918  301    2   366   065\\n";
         protected string url;
         

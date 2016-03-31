@@ -192,7 +192,7 @@
 
 <% if (QueryGridView.PageCount > 0)
    { %>
-    <font style="color:DarkGray">(from <%=DateLow.ToString("yyyy/MM/dd HH:mm:ss")%>  to <%=DateHigh.ToString("yyyy/MM/dd HH:mm:ss")%> <%=UTC.ToString()%>  ) </font>
+    <font style="color:DarkGray">(from <%=DateLow.ToString("yyyy/MM/dd HH:mm:ss")%>  to <%=DateHigh.ToString("yyyy/MM/dd HH:mm:ss")%> <%=UTC.ToString()%>) </font>
 <br />
 <br />    
         <div style="color: DarkGray; font-weight: bold">
@@ -229,9 +229,9 @@
                 <AlternatingRowStyle BackColor="lightgray"></AlternatingRowStyle>
 
                 <Columns>
-                    <asp:BoundField DataField="RowIndex" HeaderText="#" SortExpression="RowIndex" ItemStyle-Width="4%" ItemStyle-HorizontalAlign="Left" />
-                    <asp:BoundField DataField="Time" HeaderText="Time" SortExpression="Time" ItemStyle-Width="11%" ItemStyle-HorizontalAlign="Left" />
-                    <asp:TemplateField HeaderText="Skyserver Tool" SortExpression="Application" ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center" >
+                    <asp:BoundField DataField="RowIndex" HeaderText="&#9660;&#9650;" SortExpression="RowIndex" ItemStyle-Width="4%" ItemStyle-HorizontalAlign="Left" />
+                    <asp:BoundField DataField="Time" HeaderText="Time  &#9660;&#9650;" SortExpression="Time" ItemStyle-Width="11%" ItemStyle-HorizontalAlign="Left" />
+                    <asp:TemplateField HeaderText="Skyserver Tool  &#9660;&#9650;" SortExpression="Application" ItemStyle-Width="15%" ItemStyle-HorizontalAlign="Center" >
                         <ItemTemplate><asp:HyperLink runat="server" Target="ToolHistory"  NavigateUrl='<%# string.Format("{0}", Eval("Content").ToString()  ) %>' Text='<%# string.Format("{0}", Eval("Application").ToString()  ) %>' /> </ItemTemplate>
                     </asp:TemplateField>
                     <asp:BoundField DataField="Parameters" HeaderText="Request Parameters" ItemStyle-HorizontalAlign="Left"/>
@@ -256,7 +256,9 @@
 
 <input type="hidden" name="searchtool3" id="searchtool3" value="UserHistory"/>
 
-<h3>To see your history, log-in with SciServer.</h3>
+<h3>To see your history, <a target=INFO href=" <% =ConfigurationManager.AppSettings["Keystone.Login"]+ConfigurationManager.AppSettings["skyserverBase"] + HttpUtility.UrlEncode(Request.Url.AbsolutePath) %> "><font  color="yellow"><i><b>log-in</b></i></font></a> with SciServer.</h3>
+
+
 
 </form>
     </div>

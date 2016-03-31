@@ -151,12 +151,14 @@
 							   </a>
                             </td>
                         </tr>
-						<tr height="20">
+<% if( Boolean.Parse(ConfigurationManager.AppSettings["DoShowCrossMatch"].ToLower() )  ) {  %>						
+                        <tr height="20">
 							<td nowrap class="menulink">
                                 <a class="menulink" href="tools/crossmatch/crossmatch.aspx">
-							     &nbsp;&nbsp;SkyQuery CrossMatch</a>
+							     &nbsp;&nbsp;SkyQuery CrossMatch <i><em><strong><sup>NEW!</sup></strong> </em></i>  </a>
 							 </td>
 						</tr>
+<% } %>
 						<tr height="20">
 							<td nowrap class="menulink">
 							   <a class="menulink" href="<%=globals.CasJobs%>">

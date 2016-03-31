@@ -67,10 +67,12 @@
 
         <h3>Cross Match Client</h3>
         <p>
-            This tool uses Skyquery web services to run cross match. More about SkyQuery is available 
-            <a href="<%=skyqueryurl%>">here</a> 
+            This tool uses <a href="<%=string.IsNullOrEmpty(token) ? skyqueryurl : skyqueryurl + "?token="+token%>" target="_blank">SkyQuery</a>  web services to run cross match. More about SkyQuery is available 
+            <a href="<%=string.IsNullOrEmpty(token) ? skyqueryurl : skyqueryurl + "?token="+token%>" target="_blank">HERE</a>
         </p>
       </div>
+
+<% if(!String.IsNullOrEmpty(token)) { %>
       
       <div class="page-header">
         <h4>Browse tables and columns available for crossmatch</h4>
@@ -155,6 +157,15 @@ WHERE s.ra BETWEEN 0 AND 5 AND s.dec BETWEEN 0 AND 5 AND g.ra BETWEEN 0 AND 5 AN
         </div>
         
       </div>
+
+<% } else { %>
+
+        <p>
+To use the Cross Match Client, <a target=INFO href=" <% =ConfigurationManager.AppSettings["Keystone.Login"]+ConfigurationManager.AppSettings["skyserverBase"] + HttpUtility.UrlEncode(Request.Url.AbsolutePath) %> "><font  ><i><b>log-in</b></i></font></a> with SciServer.
+        </p>
+
+
+<% } %>
 
 
     

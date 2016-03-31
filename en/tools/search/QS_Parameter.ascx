@@ -18,7 +18,13 @@
             <td nowrap width="13%" ALIGN=middle><input name=format value="json"  type=radio class="box">JSON</td>
             <td nowrap width="13%" ALIGN=middle><input name=format value="votable"  type=radio class="box">VOTable</td>
             <td nowrap width="13%" ALIGN=middle><input name=format value="fits"  type=radio class="box">FITS</td>
+            <td nowrap width="13%" ALIGN=middle onmouseover="return escape('Executes the query as a job in CasJobs, and stores the result in a table in the MyDB database. If the Table name entry is empty, then a default name will be given to it.');"><input name=format value="mydb"  type=radio class="box">MyDB<i><em><strong><sup><font color="red">NEW!</font></sup></strong> </em></i></td>
 		</tr>
+        <tr>
+            <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            <td nowrap class="q">Table name <input id=TableName name=TableName VALUE="" SIZE="10"></td>
+        </tr>
+
 		<tr><td align=center colspan=7>
 			<u>Please see the </u><a href="<%=url%>/help/docs/limits.aspx"><u>Query Limits
 			help page</u></a><u> for <b>timeouts</b> and <b>row limits</b>.

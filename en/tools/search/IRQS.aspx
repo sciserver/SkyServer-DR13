@@ -37,6 +37,7 @@
 <form method="post" target="search" enctype="multipart/form-data" action="x_results.aspx" id=irqs name="irqs">
     <input type="hidden" name="searchtool" id="searchtool" value="IRSpectra" />
     <input type="hidden" name="TaskName" id="TaskName" value="Skyserver.Search.IRQS"/>
+    <input type="hidden" name="ReturnHtml" id="ReturnHtml" value="true" />
 <!------------------------------------------------------->
 <table border=0 cellspacing=3 cellpadding=3 bgcolor=#aaaaaa>
   <tr><td>

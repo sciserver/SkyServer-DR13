@@ -12,7 +12,9 @@ var sampleQueries = [
 function init() {
 
     readCookie("Keystone");
-    callServices();
+    if (xAuth != "") {
+        callServices();
+    }
     
 }
 
@@ -201,7 +203,7 @@ function updateJobs(response) {
                 //if (text2.output.indexOf(":") >= 0)
                 if (typeof text2.output != 'undefined')
                      dbtb = text2.output.split(":");
-                var link = skyqueryUrl + "Api/V1/Data.svc/" + dbtb[0] + "/" + dbtb[1];
+                var link = skyqueryUrl + "Api/V1/Data.svc/" + dbtb[0] + "/" + dbtb[1] + "?token=" + xAuth;
                 var dnlink = "<a href=" + link + "  download><span class=\"" + getLabelCls(text2.status) + "\"> " + text2.output + "</span></a>";
                 tablerow += "<td>"+dnlink+"</td>";
             });
@@ -256,8 +258,8 @@ function skyQueryConnect(url, authToken, method, caller, senddata) {
                     callJobs(caller);
             }
         },
-        error: function (data, errorThrown) {
-            alert(errorThrown);
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("Error when connecting with SkyQuery:\n\n" + errorThrown);
         }
     });
 }

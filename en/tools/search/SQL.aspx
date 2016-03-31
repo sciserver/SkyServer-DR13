@@ -56,10 +56,21 @@ if( globals.Access == "public" ) {
         document.getElementById("cmd").value = "";
     }
 
+    function SetSyntax() {
+        document.getElementById("syntax").value = "Syntax";
+    }
+
+    function UnsetSyntax() {
+        document.getElementById("syntax").value = "NoSyntax";
+    }
+
 </script>
 <input type="hidden" name="searchtool" id="searchtool" value="SQL" />
 <input type="hidden" name="TaskName" id="TaskName" value="Skyserver.Search.SQL"/>
-        
+<input TYPE="hidden" VALUE="NoSyntax" id="syntax" name="syntax">       
+<input type="hidden" name="ReturnHtml" id="ReturnHtml" value="true" />
+         
+
 <table BORDER=0 WIDTH="600"  cellpadding=1 cellspacing=1 bgcolor="#aaaaaa">
 	
 	<tr><td class='frame'>
@@ -126,20 +137,24 @@ if( globals.Access == "public" ) {
     if (globals.Access == "public")
     {
 %>
-	<input id=submit type=submit value=Submit onmouseover="return escape('Press this to submit the query to the server.');" onclick="goToWindow()">
+<table>
+    <tr><td><input id=submit type=submit value="Check syntax" onmouseover="return escape('Press this to check SQL syntax.');" onclick="SetSyntax(); goToWindow();"><br /></td></tr>
+    <tr> <td> </td></tr><tr> <td> </td></tr><tr> <td> </td></tr><tr> <td> </td></tr>
+    <tr><td><input id=submit type=submit value="Submit query" style="font-weight:bold" onmouseover="return escape('Press this to submit the query to the server.');" onclick="UnsetSyntax(); goToWindow();"><br /></td></tr>
+</table>
 <%
     }
     else
     {
 %>
-    <input id=submit type=submit value=Submit onmouseover="return escape('Press this to submit the query to the server.');">
-<% 
+<table>
+    <tr><td><input id=submit type=submit value="Check syntax" onmouseover="return escape('Press this to check SQL syntax.');" onclick="SetSyntax(); goToWindow();"><br /></td></tr>
+    <tr> <td> </td></tr><tr> <td> </td></tr><tr> <td> </td></tr><tr> <td> </td></tr>
+    <tr><td><input id=submit type=submit value="Submit query" style="font-weight:bold" onmouseover="return escape('Press this to submit the query to the server.');" onclick="UnsetSyntax(); goToWindow();"><br /></td></tr>
+</table><% 
     } 
 %>
 		</td>
-		<td nowrap class="q" onmouseover="return escape('Checking this box will do only a syntax check when you press Submit.  Uncheck and press Submit again when done.');">&nbsp;
-		<input TYPE="checkbox" VALUE="Syntax" id="syntax" name="syntax">Check Syntax Only?
-		</td>	
 		<td class='frame'>
 			<table BORDER=0 WIDTH="100%" >
 			  <tr>
@@ -150,7 +165,13 @@ if( globals.Access == "public" ) {
                 <td nowrap class="q"><input name=format value="json"  type=radio class="box">JSON</td>
                 <td nowrap class="q"><input name=format value="votable"  type=radio class="box">VOTable</td>
                 <td nowrap class="q"><input name=format value="fits"  type=radio class="box">FITS</td>
+                <td nowrap class="q" onmouseover="return escape('Executes the query and stores the result in a table in CasJobs MyDB database. If the table name entry is empty, then a default name will be given.');"><input name=format value="mydb"  type=radio class="box"> MyDB <i><em><strong><sup><font color="red">NEW!</font></sup></strong> </em></i></td>
+                
 				</tr>
+                <tr>
+                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    <td nowrap class="q">Table name <input id=TableName name=TableName VALUE="" SIZE="10"></td>
+                </tr>
 			</table>
 		</td>
 		<td width="10%">

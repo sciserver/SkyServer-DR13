@@ -124,8 +124,8 @@ function apogeeQuery() {
 }
 
 function doRaDecSample(upRA1,upDec1,upRA2,upDec2,upRA3,upDec3,upRA4,upDec4) {
-	document.getElementById("paste").value = "  name  ra       dec\n  A1   "+upRA1+"    "+upDec1+"\n  A2   "+
-		upRA2+"    "+upDec2+"\n  A3   "+upRA3+"    "+upDec3+"\n  A4   "+upRA4+"    "+upDec4+"\n";
+	document.getElementById("paste").value = "  name  ra         dec\n  A1    "+upRA1+"       "+upDec1+"\n  A2    "+
+		upRA2+"       "+upDec2+"\n  A3    "+upRA3+"       "+upDec3+"\n  A4    "+upRA4+"    "+upDec4+"\n";
 //document.getElementById("paste").focus();
 	document.getElementById("radius").disabled = false;
 	
@@ -231,7 +231,6 @@ function resetRadio() {
 	.txt	{width:260px}
 </style>
 
-
 <div id="title">SDSS CrossID for <%=globals.Release%>&nbsp;&nbsp;&nbsp;&nbsp;
 <span class='frame'><font size=-1><a class="qtitle" href="#help">Scroll down for Help</a></font></span></div>
 
@@ -240,6 +239,7 @@ function resetRadio() {
 
 <input type="hidden" name="searchtool" id="searchtool" value="CrossID" />
 <input type="hidden" name="TaskName" id="TaskName" value="Skyserver.CrossId"/>
+<input type="hidden" name="ReturnHtml" id="ReturnHtml" value="true" />
 
 <table BORDER=1 WIDTH=540 cellpadding=3 cellspacing=3 BGCOLOR="#aaaaaa"><tr><td class="q">
 <table border="0" width="100%">
@@ -412,8 +412,15 @@ ORDER BY x.up_id
         <td nowrap=nowrap ALIGN=middle width="13%"><input name=format value="json"  type=radio class="box">JSON</td>
         <td nowrap=nowrap ALIGN=middle width="13%"><input name=format value="votable"  type=radio class="box">VOTable</td>
         <td nowrap=nowrap ALIGN=middle width="13%"><input name=format value="fits"  type=radio class="box">FITS</td>
+        <td nowrap=nowrap ALIGN=middle width="13%" onmouseover="return escape('Executes the query as a job in CasJobs, and stores the result in a table in the MyDB database. If the Table name entry is empty, then a default name will be given to it.');"><input name=format value="mydb"  type=radio class="box"> MyDB <i><em><strong><sup><font color="red">NEW!</font></sup></strong> </em></i></td>
+
 				<td nowrap=nowrap ALIGN=left width="5%">&nbsp;</td>
 		  	    </tr>
+                <tr>  
+                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>  
+                    <td nowrap class="q">Table name <input id=TableName name=TableName VALUE="" SIZE="10"></td>
+                     <td></td>   </tr>
+
 			</table>
 	    	    </td>
 	    	    <td width="10%" align="right">

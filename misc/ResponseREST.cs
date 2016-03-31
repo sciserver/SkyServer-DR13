@@ -37,10 +37,10 @@ namespace SkyServer.Tools.Search
         String requestString = "";
         string ClientIpHeaderName = ConfigurationManager.AppSettings["IpHeaderName"];
         string ReferrerHeaderName = ConfigurationManager.AppSettings["RefererHeaderName"];
-
+        public static string searchTool = "";
         private Globals globals;
         String WSrequestUri = "";
-        string SaveResponseToFile = "";
+        bool SaveResponseToFile = ConfigurationManager.AppSettings["SaveResponseToFile"].ToLower() == "true" ? true : false;
 
         public void ProcessRequest()
         {
@@ -87,8 +87,8 @@ namespace SkyServer.Tools.Search
             }
             requestString = requestString.TrimEnd('&');
 
-            String searchTool = inputForm["searchtool"];
-            SaveResponseToFile = String.IsNullOrEmpty(inputForm["SaveResponseToFile"]) ? "true" : "false";
+            searchTool = inputForm["searchtool"];
+            //SaveResponseToFile = String.IsNullOrEmpty(inputForm["SaveResponseToFile"]) ? "true" : "false";
             
             bool temp = false;
             string radecText = "";
@@ -261,35 +261,36 @@ namespace SkyServer.Tools.Search
             
         }
 
-
+        string FileName = "Skyserver_"+ searchTool + DateTime.UtcNow ;
         public void setContentType(string format) {
             format  = format.ToLower();
             switch(format){
                 case "csv"    :  httpResponse.ContentType = "text/plain";
-                                 if(SaveResponseToFile == "true")
-                                     httpResponse.AddHeader("Content-Disposition", "attachment;filename=\"result.csv\"");
+                                 if(SaveResponseToFile)
+                                     httpResponse.AddHeader("Content-Disposition", "attachment;filename=\"" + FileName +".csv\"");
                                  break;
                 case "xml"    :  httpResponse.ContentType = "application/xml";
-                                 if (SaveResponseToFile == "true")
-                                     httpResponse.AddHeader("Content-Disposition", "attachment;filename=\"result.xml\"");
+                                 if (SaveResponseToFile)
+                                     httpResponse.AddHeader("Content-Disposition", "attachment;filename=\"" + FileName + ".xml\"");
                                  break;
-                case "votable": httpResponse.ContentType = "application/xml";
-                                 if (SaveResponseToFile == "true")
-                                     httpResponse.AddHeader("Content-Disposition", "attachment;filename=\"result.csv\"");
+                case "votable": httpResponse.ContentType = "application/x-votable+xml";
+                                 if (SaveResponseToFile)
+                                     httpResponse.AddHeader("Content-Disposition", "attachment;filename=\"" + FileName + ".votable.xml\"");
                                  break;
                 case "json"   :  httpResponse.ContentType = "application/json";
-                                 if (SaveResponseToFile == "true")
-                                     httpResponse.AddHeader("Content-Disposition", "attachment;filename=\"result.json\"");
+                                 if (SaveResponseToFile)
+                                     httpResponse.AddHeader("Content-Disposition", "attachment;filename=\"" + FileName + ".json\"");
                                  break;
                 case "fits"   :  httpResponse.ContentType = "application/octet-stream";
-                                 if (SaveResponseToFile == "true")
-                                     httpResponse.AddHeader("Content-Disposition", "attachment;filename=\"result.fits\"");
+                                 if (SaveResponseToFile)
+                                     httpResponse.AddHeader("Content-Disposition", "attachment;filename=\"" + FileName + ".fits\"");
                                  break;
+                case "mydb"   :
                 case "html"   :  httpResponse.ContentType = "";
                                  break;
                 default       :  httpResponse.ContentType = "text/plain";
-                                 if (SaveResponseToFile == "true")
-                                     httpResponse.AddHeader("Content-Disposition", "attachment;filename=\"result.txt\"");
+                                 if (SaveResponseToFile)
+                                     httpResponse.AddHeader("Content-Disposition", "attachment;filename=\"" + FileName + ".txt\"");
                                  break;
             }
 
