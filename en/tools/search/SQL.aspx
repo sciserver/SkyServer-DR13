@@ -165,7 +165,7 @@ if( globals.Access == "public" ) {
                 <td nowrap class="q"><input name=format value="json"  type=radio class="box">JSON</td>
                 <td nowrap class="q"><input name=format value="votable"  type=radio class="box">VOTable</td>
                 <td nowrap class="q"><input name=format value="fits"  type=radio class="box">FITS</td>
-                <td nowrap class="q" onmouseover="return escape('Executes the query and stores the result in a table in CasJobs MyDB database. If the table name entry is empty, then a default name will be given.');"><input name=format value="mydb"  type=radio class="box"> MyDB <i><em><strong><sup><font color="red">NEW!</font></sup></strong> </em></i></td>
+                <td nowrap class="q" onmouseover="return escape('Executes the query and stores the result in a table in the CasJobs MyDB database. If the table name entry is empty, then a default name will be given.');"><input name=format value="mydb"  type=radio class="box"> MyDB <i><em><strong><sup><font color="red">NEW!</font></sup></strong> </em></i></td>
                 
 				</tr>
                 <tr>
