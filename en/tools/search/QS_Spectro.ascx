@@ -112,8 +112,7 @@
                     }
          %>
                    </OPTION></SELECT>
-                   </td><td class='q' colspan=2><a href="<%=url %>/help/docs/QS_UserGuide.aspx#PrimTarget" onmouseover="return escape('
-                    The bit-wise AND of all these bits must be equal to 0.');"><strong>All of these bits OFF</strong></a><br>
+                   </td><td class='q' colspan=2><a href="<%=url %>/help/docs/QS_UserGuide.aspx#PrimTarget" onmouseover="return escape('The bit-wise AND of all these bits must be equal to 0.');"><strong>All of these bits OFF</strong></a><br>
                    <SELECT name="priFlagsOffList" multiple="multiple+" size="5">
                     <OPTION value="ignore" selected>ignore</OPTION>
         <%
@@ -155,8 +154,7 @@
                 else
                 {
        %>
-                    <td class='q' colspan=2><a href="<%=url %>/help/docs/QS_UserGuide.aspx#SecTarget" onmouseover="return escape('
-                    The bit-wise OR of all these bits must be greater than 0.');"><strong>At least one of these bits ON</strong></a><br>
+                    <td class='q' colspan=2><a href="<%=url %>/help/docs/QS_UserGuide.aspx#SecTarget" onmouseover="return escape('The bit-wise OR of all these bits must be greater than 0.');"><strong>At least one of these bits ON</strong></a><br>
                     <SELECT name='secFlagsOnList' multiple='multiple+' size=5>
                     <OPTION value="ignore" selected>ignore</OPTION>
         <%
@@ -175,8 +173,7 @@
           %>
                     </OPTION></SELECT>
 
-                    </td><td class='q' colspan=2><a href="<%=url%>/help/docs/QS_UserGuide.aspx#SecTarget" onmouseover="return escape('
-                    The bit-wise AND of all these bits must be equal to 0.');"><strong>All of these bits OFF</strong></a><br>
+                    </td><td class='q' colspan=2><a href="<%=url%>/help/docs/QS_UserGuide.aspx#SecTarget" onmouseover="return escape('The bit-wise AND of all these bits must be equal to 0.');"><strong>All of these bits OFF</strong></a><br>
 
                     <SELECT name="secFlagsOffList" multiple="multiple+" size="5">
                     <OPTION value="ignore" selected>ignore</OPTION>

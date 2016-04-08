@@ -13,7 +13,7 @@ using Newtonsoft.Json.Linq;
 using System.Text;
 using System.Net.Http;
 using System.Net.Http.Headers;
-
+using SkyServer.Tools.Search;
 
 namespace SkyServer
 {
@@ -47,7 +47,7 @@ namespace SkyServer
 
             string pageR = HttpContext.Current.Request.Url.ToString();
 
-            string JsonBugReport = "";
+            string JsonBugReport = "w";
             string username = "";
             string userid = "";
             string errorMessage = "";
@@ -67,6 +67,7 @@ namespace SkyServer
 
             if (exc != null)
             {
+                ResponseREST rs = new ResponseREST();
                 StringBuilder strbldr = new StringBuilder();
                 StringWriter sw = new StringWriter(strbldr);
                 using (JsonWriter writer = new JsonTextWriter(sw))
@@ -87,6 +88,10 @@ namespace SkyServer
                     writer.WriteValue(exc.StackTrace);
                     writer.WritePropertyName("InnerTrace");
                     writer.WriteValue(exc.InnerException != null ? exc.InnerException.StackTrace : "");
+                    writer.WritePropertyName("ErrorTime");
+                    writer.WriteValue(DateTime.Now);
+                    writer.WritePropertyName("ClientIP");
+                    writer.WriteValue(rs.GetClientIP());
                 }
                 JsonBugReport = strbldr.ToString();
             }
@@ -94,8 +99,21 @@ namespace SkyServer
             if (!HttpContext.Current.Request.Path.EndsWith("ErrorPage.aspx", StringComparison.InvariantCultureIgnoreCase))// this bypasses the redirect
             {
                 //ExceptionUtility.LogException(exc, pageR);
+                ResponseREST rs = new ResponseREST();
                 NameValueCollection data = new NameValueCollection();
-                data.Add("bugreport", JsonBugReport);
+                data.Add("popz_username", username);
+                data.Add("popz_bugreport", "qwdeef");
+                data.Add("popz_userid", userid);
+                data.Add("popz_ClientIP", rs.GetClientIP());
+                data.Add("popz_pageurl", Request.Url != null ? Request.Url.ToString() : "");
+                data.Add("popz_referrer", Request.UrlReferrer != null ? Request.UrlReferrer.ToString() : "");
+                if (exc != null)
+                {
+                    data.Add("popz_ErrorMessage", exc.Message + ((exc.InnerException != null) ? (": " + exc.InnerException.Message) : ""));
+                    data.Add("popz_StackTrace", exc.StackTrace);
+                    data.Add("popz_InnerTrace", exc.InnerException != null ? exc.InnerException.StackTrace : "");
+                }
+                data.Add("popz_ErrorTime", DateTimeOffset.Now.ToString());
                 Server.TransferRequest("~/en/exception/ErrorPage.aspx", true, "POST", data);
             }
 

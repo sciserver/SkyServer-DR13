@@ -78,7 +78,8 @@
 
 <tr  ALIGN=left VALIGN=top>
 
-    <td><h4>Change dates to get more records.<br />Maximum <%=MaxRowsDisplayedDefault.ToString("c0").Remove(0, 1)%> rows (<%=UTC.ToString()%>).</h4> </td>
+    <!--td><h4>Change dates to get more records.<br />Maximum <%=MaxRowsDisplayedDefault.ToString("c0").Remove(0, 1)%> rows (<%=UTC.ToString()%>).</h4> </!--td-->
+    <td><h4>Change dates to get more records (maximum <%=MaxRowsDisplayedDefault.ToString("c0").Remove(0, 1)%> rows).</h4> </td>
     <td><h4>Filtering rows within results table</h4></td>
 </tr>
 <tr ALIGN=left VALIGN=top >
@@ -192,7 +193,7 @@
 
 <% if (QueryGridView.PageCount > 0)
    { %>
-    <font style="color:DarkGray">(from <%=DateLow.ToString("yyyy/MM/dd HH:mm:ss")%>  to <%=DateHigh.ToString("yyyy/MM/dd HH:mm:ss")%> <%=UTC.ToString()%>) </font>
+    <font style="color:DarkGray">(from <%=DateLow.ToString("yyyy-MM-dd HH:mm:ss UTCzzz")%>  to <%=DateHigh.ToString("yyyy-MM-dd HH:mm:ss UTCzzz")%>) </font>
 <br />
 <br />    
         <div style="color: DarkGray; font-weight: bold">

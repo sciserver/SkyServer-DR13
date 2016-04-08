@@ -4,15 +4,25 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
  <div class="content">
      <h2>An error has occurred in Skyserver</h2>
-    <p>
-      Please inform <%=ConfigurationManager.AppSettings["helpdesk"].ToString()%>, or <br />
-    </p>
+    <%if(!string.IsNullOrEmpty(ErrorMessage)){ %>
+    <div style="color: yellow; font-weight: bold">
+        <%=ErrorMessage%>
+    </div>
+     <%} %>
+
+<br>
 <br> 
          <form method ="POST" target="_blank" name="bugreportform" action="<%=ConfigurationManager.AppSettings["BugReportURL"]%>" >
-         <input type="hidden" name="bugreport" id="bugreport" value="<%=bugreportJson%>"/>
+         
+         <%=HiddenInputList %>
+
          <input id="submit" type="submit" value="Click to Report Error">
+
          </form>
 
+    <p>
+      or inform <%=ConfigurationManager.AppSettings["helpdesk"].ToString()%><br />
+    </p>
 
  </div>    
 </asp:Content>

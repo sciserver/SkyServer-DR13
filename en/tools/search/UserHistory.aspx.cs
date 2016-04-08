@@ -7,7 +7,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using SkyServer.Tools.Search;
 using System.Data;
-
+using System.Globalization;
 using System.Configuration;
 
 
@@ -116,7 +116,10 @@ namespace SkyServer.en.tools.UserHistory
                         RowsPerPageButton.Text = RowsPerPage.ToString();
 
                         if (NumRows > 0)
-                            DateLow = DateTime.Parse(((DataSet)(Session["UserHistoryDataSet"])).Tables[0].Rows[NumRows - 1]["Time"].ToString());
+                        {
+                            //string 
+                            DateLow = DateTime.ParseExact(((DataSet)(Session["UserHistoryDataSet"])).Tables[0].Rows[NumRows - 1]["Time"].ToString(), "yyyy-MM-dd HH:mm:ss UTCzzz", CultureInfo.InvariantCulture);
+                        }
                         else
                             DateLow = DateLowDefault;
                         DateHigh = DateHighDefault;
@@ -173,6 +176,7 @@ namespace SkyServer.en.tools.UserHistory
             catch (Exception ex)
             {
                 Exception = ex; PageHasError = true;
+                throw (ex);// will be send and catched in ErrorPage.aspx. If commented out, a custom error message will appear in UserHistory.aspx
             }
 
         }
