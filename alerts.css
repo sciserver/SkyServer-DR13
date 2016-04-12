@@ -100,7 +100,7 @@ body > div.migrationMenu ul>li>a {
     float:right;
     padding-left:0px;
     padding-right:10px;
-    width: 200px;
+    width: 220px;
     height: 73px;
     background-color:#fc6f03;
     border-radius:5px;
@@ -110,12 +110,13 @@ body > div.migrationMenu ul>li>a {
 
     #headerAlert > .imgwithlink {
         float:right;
+        padding-right:10px;
     }
 
     #headerAlert > p
     {
         margin-top:5px;
-        margin-left:10px;
+        margin-left:20px;
         font-size:large;
     }
 
