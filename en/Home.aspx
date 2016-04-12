@@ -48,17 +48,18 @@
 
         <div class="migrationAlert">
 
-            <p>Within the next few weeks, we will roll out a new collaborative science framework called 
-                <a href="<%=globals.SciServerLink%>" target="_blank">SciServer&nbsp;<img src="images/new_window_cyan.png" alt=" (new window)" /></a>. 
-                SciServer will integrate the current SkyServer and CasJobs systems, as well as add several new features. The main feature is 
-                a Single Sign-On system across all SciServer applications. SkyServer will still support anonymous 
-                access, but if you log in with your new SciServer account, you can save queries and results to 
-                your MyDB personal database in CasJobs. You can also seamlessly access other SciServer services.</p>
+            <p>On May 3rd, 2016 (exact time TBD), we will release 
+            	<a href="<%=globals.SciServerLink%>" target="_blank">SciServer&nbsp;<img src="images/new_window_cyan.png" alt=" (new window)" /></a>,
+            	a collaborative research environment for large-scale data-driven science. 
+                SciServer integrates SkyServer and CasJobs, and adds several new features. </p>
                 
-                <p>For more information 
-                on all upcoming new features, please see our 
-                    <a href="<%=globals.SciServerLink%>building-blocks/updates/" target="_blank">New Features
-                        <img src="images/new_window_cyan.png" alt=" (new window)" /></a> section on the SciServer website.</p>
+                <p>SciServer features a Single Sign-On Login Portal to seamlessly access all SciServer applications. 
+                Although SkyServer will continue to support anonymous access, logging in with a SciServer account
+                allows you to save queries and results to a personal MyDB database in CasJobs. </p>
+                
+                <p>For more information on features included in this release, please see the
+                    <a href="<%=globals.SciServerLink%>/updates/" target="_blank">Updates
+                        <img src="images/new_window_cyan.png" alt=" (new window)" /></a> page on our website.</p>
 
         </div>
 
