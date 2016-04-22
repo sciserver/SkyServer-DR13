@@ -208,10 +208,17 @@ namespace SkyServer.en.tools.UserHistory
                 {
                     HttpCookie Cookie = Request.Cookies["Keystone"];
                     if (Cookie != null)
+                    {
                         if (Cookie["token"] != null || !Cookie["token"].Equals(""))
+                        {
+                            // this checks the token is not expired
+                            var userAccess = Keystone.Authenticate(token);
+                            string userid = userAccess.User.Name;
                             isValidUser = true;
+                        }
+                    }
                 }
-                catch { }
+                catch { isValidUser = false; }
             }
             return isValidUser;
         }

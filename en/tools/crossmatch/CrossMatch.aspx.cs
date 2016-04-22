@@ -33,7 +33,7 @@ namespace SkyServer.en.tools.crossmatch
                         Session["USERID"] = userid;
                         Response.Cookies.Add(Cookie);
                     }
-                    catch { }
+                    catch { token = ""; }
                 }
                 else
                 {
@@ -41,10 +41,18 @@ namespace SkyServer.en.tools.crossmatch
                     {
                         HttpCookie Cookie = Request.Cookies["Keystone"];
                         if (Cookie != null)
+                        {
                             if (Cookie["token"] != null || !Cookie["token"].Equals(""))
+                            {
                                 token = Cookie["token"];
+                                // this checks the token is not expired
+                                var userAccess = Keystone.Authenticate(token);
+                                string userid = userAccess.User.Name;
+                            }
+                        }
+
                     }
-                    catch { }
+                    catch { token = ""; }
                 }
             }
             catch { }
