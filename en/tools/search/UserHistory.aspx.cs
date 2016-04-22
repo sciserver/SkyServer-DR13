@@ -212,6 +212,7 @@ namespace SkyServer.en.tools.UserHistory
                         if (Cookie["token"] != null || !Cookie["token"].Equals(""))
                         {
                             // this checks the token is not expired
+                            token = Cookie["token"];
                             var userAccess = Keystone.Authenticate(token);
                             string userid = userAccess.User.Name;
                             isValidUser = true;
