@@ -48,7 +48,7 @@
 
         <div class="migrationAlert">
 
-            <p>On May 10th 2016, we will roll out a new collaborative science framework called 
+            <p>On May 3rd 2016, we will roll out a new collaborative science framework called 
                 <a href="<%=globals.SciServerLink%>" target="_blank">SciServer&nbsp;<img src="images/new_window_cyan.png" alt=" (new window)" /></a>. 
                 SciServer will integrate the current SkyServer and CasJobs systems, as well as add several new features. The main feature is 
                 a Single Sign-On system across all SciServer applications. SkyServer will still support anonymous 
