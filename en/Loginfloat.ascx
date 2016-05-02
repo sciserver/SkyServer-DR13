@@ -14,7 +14,7 @@
              }
          }
     </script>
-  <div  style="height: 100px; width: 225px;   position:absolute;    right:0;    top:0;    background-color: rgba(0,33,66,0.5);	  border-radius:5px;">	
+  <div  style="height: 110px; width: 250px;   position:absolute;    right:0;    top:0;    background-color: rgba(0,33,66,0.5);	  border-radius:5px; z-index:1000;">	
      <div>
 		<img src="<%= imgpath %>sciserverlogo.png"  style="max-width: 95%;margin: 2%;" />
 	</div>
