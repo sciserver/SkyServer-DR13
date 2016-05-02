@@ -37,6 +37,32 @@
 	</div>
 
 	<div id="public">
+
+        <div class="migrationAlert">
+
+            <h2>Welcome to the new SkyServer!</h2>
+
+            <p>We are proud to announce that SkyServer now connects to the new 
+                <a href="http://www.sciserver.org" target="_blank">SciServer&nbsp;<img alt=" (new window)" src="images/new_window_cyan.png"></a> 
+                science framework! If you have a login through SciServer, you can log in using the control on the top right. 
+                Logging in allows you to connect seamlessly with the updated CasJobs and the brand-new SciDrive datafile 
+                management tool.
+            </p>
+
+            <p>If you do not yet have a SciServer login, you can create one at our new 
+                <a href="<%=ConfigurationManager.AppSettings["Keystone.Portal"]%>Account/Register" target="_blank">registration&nbsp;<img alt=" (new window)" src="images/new_window_cyan.png"></a> 
+                page.
+            </p>
+                
+                <p>These new features come from the first release of the SciServer framework, which we call 
+                    <em class="headerAlert">SciServer Altair</em>. 
+                    For more information the new features of SciServer Altair, please see our 
+                    <a href="http://www.sciserver.org/building-blocks/updates/" target="_blank">New Features
+                        <img alt=" (new window)" src="images/new_window_cyan.png"></a> section on the SciServer website.
+                </p>
+
+        </div>
+
 		<table border="0" cellpadding="0" cellspacing="2" width="668">
 			<tr><td colspan=5 class="midbodytext" style="color=#ffff00"><b>
 			<!-- #include file="motd.inc" -->
