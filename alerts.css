@@ -22,7 +22,7 @@ body > div#public > div.migrationAlert a{
     color:aqua;
 }
 body > div.migrationNotice {
-    width:180px;
+    width:160px;
     position:absolute;
     top:105px;
     left:200px;
@@ -116,7 +116,7 @@ body > div.migrationMenu ul>li>a {
     #headerAlert > p
     {
         margin-top:5px;
-        margin-left:10px;
+        margin-left:20px;
         font-size:large;
     }
 
