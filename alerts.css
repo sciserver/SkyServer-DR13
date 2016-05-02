@@ -101,7 +101,7 @@ body > div.migrationMenu ul>li>a {
     padding-left:0px;
     padding-right:10px;
     width: 220px;
-    height: 73px;
+    height: 80px;
     background-color:#fc6f03;
     border-radius:5px;
     z-index:500;
@@ -116,7 +116,7 @@ body > div.migrationMenu ul>li>a {
     #headerAlert > p
     {
         margin-top:5px;
-        margin-left:20px;
+        margin-left:10px;
         font-size:large;
     }
 

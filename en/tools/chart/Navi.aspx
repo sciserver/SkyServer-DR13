@@ -152,7 +152,7 @@
             <a href="<%=globals.SciServerLink%>updates/" class="imgwithlink" target="_blank">
                 <img src="../../images/sciserver_logo_usermsg.png" alt="logo" width="190" />
             </a>
-            <p class="headeralert"><a href="<%=globals.SciServerLink%>updates/" target="_blank">Coming May 3rd!<img src="../../images/new_window_cyan.png" alt=" (new window)" style="max-width:95%;margin:2%" /></a></p>
+            <p class="headeralert"><a href="<%=globals.SciServerLink%>updates/" target="_blank">Coming May 10th!<img src="../../images/new_window_cyan.png" alt=" (new window)" style="max-width:95%;margin:2%" /></a></p>
         </div>    
 
     <form id="form1" runat="server">
