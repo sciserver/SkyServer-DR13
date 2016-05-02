@@ -460,6 +460,8 @@
     <Content Include="en\images\new_window_cyan.png" />
     <Content Include="en\images\offsite.png" />
     <Content Include="en\images\offsite_black.png" />
+    <Content Include="en\images\sciserverlogo.png" />
+    <Content Include="en\images\sciserver_icon_bkgd_blue_64px.png" />
     <Content Include="en\images\sdss-background.jpg" />
     <Content Include="en\images\sdss-globe.gif" />
     <Content Include="en\images\sdss-main-banner.gif" />
