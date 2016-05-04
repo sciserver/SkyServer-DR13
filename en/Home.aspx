@@ -50,9 +50,8 @@
                 management tool.
             </p>
 
-            <p>If you do not yet have a SciServer login, you can create one at our new 
-                <a href="<%=ConfigurationManager.AppSettings["Keystone.Portal"]%>Account/Register" target="_blank">registration&nbsp;<img alt=" (new window)" src="images/new_window_cyan.png"></a> 
-                page.
+            <p>Log in or register on the <a href="<%=ConfigurationManager.AppSettings["Keystone.Portal"]%>Account/Register" target="_blank">SciServer 
+                Single Sign-on Portal</a>.
             </p>
                 
                 <p>These new features come from the first release of the SciServer framework, which we call 
