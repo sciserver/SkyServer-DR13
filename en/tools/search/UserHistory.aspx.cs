@@ -285,7 +285,7 @@ namespace SkyServer.en.tools.UserHistory
                 {
                     SelectWithinRows = "Parameters like '%" + SearchParameters.Text + "%' ";
                 }
-                if (ToolsListBox.SelectedIndex > 0)
+                if (ToolsListBox.SelectedIndex >= 0)
                 {
                     if (String.IsNullOrEmpty(SearchParameters.Text))    
                         SelectWithinRows += "Application in (";
