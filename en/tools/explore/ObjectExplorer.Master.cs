@@ -57,7 +57,7 @@ namespace SkyServer.Tools.Explore
             enUrl = getEnURL();
            
             // common query to explorer
-            string allId ="id="+id + "&spec=" + specId + "&apid=" + apid+"&fieldId="+fieldId;
+            string allId ="id="+id + "&spec=" + specId + "&apid=" + apid+"&fieldId="+fieldId+"&ra="+ra+"&dec="+dec+"&plateId="+plateId;
 
             
             // id is the decimal representation; objId is the hex representation.
@@ -136,7 +136,7 @@ namespace SkyServer.Tools.Explore
                 hrefs.galSpecIndx = "DisplayResults.aspx?name=galSpecIndexQuery&" + allId;
                 hrefs.galSpecInfo = "DisplayResults.aspx?name=galSpecInfoQuery&" + allId;
 
-                hrefs.Plate = "plate.aspx?&name=Plate&plateId=" + plateId;
+                hrefs.Plate = "plate.aspx?&name=Plate&" + allId;
 
                 hrefs.Spectrum = "../../get/SpecById.ashx?ID=" + specId;
 
@@ -166,29 +166,53 @@ namespace SkyServer.Tools.Explore
              }
         }
 
-        private void getSessionIds() {
-
+        private void getSessionIds()
+        {
             ObjectInfo o = (ObjectInfo)Session["objectInfo"];
-            objId = o.objId;
-            specObjId = o.specObjId;
-            apid = o.apid;
+            if (o != null)
+            {
+                objId = o.objId;
+                specObjId = o.specObjId;
+                apid = o.apid;
 
-            ra = o.ra;
-            dec = o.dec;
+                ra = o.ra;
+                dec = o.dec;
 
-            plateId =o.plateId;
-            fieldId = o.fieldId;
-            fiberId = o.fiberId;
-            mjd = o.mjd;
-            plate = o.plate;
+                plateId = o.plateId;
+                fieldId = o.fieldId;
+                fiberId = o.fiberId;
+                mjd = o.mjd;
+                plate = o.plate;
 
-            run = o.run;
-            rerun = o.rerun;
-            camcol = o.camcol;
-            field = o.field;
+                run = o.run;
+                rerun = o.rerun;
+                camcol = o.camcol;
+                field = o.field;
 
-            id = o.id;
-            specId = o.specId;
+                id = o.id;
+                specId = o.specId;
+            }
+            else
+            {
+                try { id = Int64.Parse(Request.QueryString["id"]); }
+                catch { }
+                try { objId = id.ToString(); }
+                catch { }
+                try { specId = Int64.Parse(Request.QueryString["spec"]); }
+                catch { }
+                try { specObjId = Request.QueryString["spec"]; }
+                catch { }
+                try { apid = Request.QueryString["apid"]; }
+                catch { }
+                try { fieldId = Request.QueryString["fieldId"]; }
+                catch { }
+                try { ra = Double.Parse(Request.QueryString["ra"]); }
+                catch { }
+                try { dec = Double.Parse(Request.QueryString["dec"]); }
+                catch { }
+                try { plateId = Request.QueryString["plateId"]; }
+                catch { }
+            }
         }
 
         public string getURL()

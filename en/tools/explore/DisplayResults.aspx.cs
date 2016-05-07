@@ -20,6 +20,7 @@ namespace SkyServer.Tools.Explore
         protected string apid = null;
         protected string fieldId = null;
         protected Globals globals;
+        protected string Name = null;
 
         protected ObjectExplorer master;
         protected DataSet ds;
@@ -50,7 +51,10 @@ namespace SkyServer.Tools.Explore
 
             string URIparams = "?id=" + objId + "&spec=" + specId + "&apid=" + apid + "&fieldId=" + fieldId + "&query=" + name + "&TaskName=Skyserver.Explore.DisplayResults." + name;
             ds = rs.GetObjectInfoFromWebService(globals.ExploreWS, URIparams);
-
+            if (name.EndsWith("Query"))
+                Name = name.Substring(0,name.Length - 5);
+            else
+                Name = name;
 
             //if(cmd == null || cmd.Equals(""))
             //    getQuery();

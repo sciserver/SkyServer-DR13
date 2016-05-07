@@ -104,13 +104,13 @@
                         %>
 
                         <tr><td align="right"><hr width="90"/></td></tr>
-	                    <tr><td><a class="med" target="_top" href='#crossidtop' onclick="javascript:window.location.href='#crossidtop';javascript:showSection('crossid');javascript:showLink('crossid_is_hidden');javascript:hideLink('crossid_is_shown');" title="Photometric cross-identifications with other surveys, if there are any available.">Cross-ID</a><br></td></tr>
+	                    <tr><td><a class="med" target="_top" href='<%=hrefs.Summary%>#crossidtop' onclick="javascript:window.location.href='#crossidtop';javascript:showSection('crossid');javascript:showLink('crossid_is_hidden');javascript:hideLink('crossid_is_shown');" title="Photometric cross-identifications with other surveys, if there are any available.">Cross-ID</a><br></td></tr>
                         <tr><td align="right"><hr width="90"/></td></tr>
 
 	                    <!--tr><td><a class="med" target="_top" href='#' onclick="javascript:getPage();"> Cross-ID2 </a><br></td></!--tr-->
                         
 
-	                    <tr><td><a class="med" target="_top" href='#spectro' title="Summary of spectroscopic parameters (if a spectrum was observed).">Spec Summary</a><br></td></tr>
+	                    <tr><td><a class="med" target="_top" href='<%=hrefs.Summary%>#spectro' title="Summary of spectroscopic parameters (if a spectrum was observed).">Spec Summary</a><br></td></tr>
                       <tr><td class="s" align="right"><a target="_top" href="<%=hrefs.AllSpec%>" title="Find all the spectra observed for this object in the SpecObjAll table.">All Spectra</a></td></tr>
 	                                            <%
                       if (specId != null)
