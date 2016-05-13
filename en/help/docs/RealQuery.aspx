@@ -57,41 +57,6 @@ before you try any queries, especially if you are new to SQL or the SkyServer.
 
 <br><hr>
 
-<b><i>Quasars:</i></b>
-<br><a href="#qsospec">QSOs by spectroscopy</a>
-<br><a href="#qsocol">QSOs by colors</a>
-<br><a href="#quasar3">FIRST matches for quasars</a>
-
-</td>
-
-<td width="5">&nbsp;</td>
-
-<td class='tsml'>
-<b><i>General Astronomy:</i></b>
-<br><a href="#galview">Only stars or galaxies</a>
-<br><a href="#clean">Clean photometry</a>
-<br><a href="#mjd">Using Field MJD</a>
-<br><a href="#lines">Objects by spectral lines</a>
-<br><a href="#unspec">Spectra by classification</a>
-<br><a href="#movast">Moving asteroids</a>
-<br><a href="#repeat">Plates with repeat spectra</a>
-<br><a href="#galstar">Galaxies blended with stars</a>
-<br><a href="#countsbytype">Counts by type and program</a>
-<br><a href="#footprint">Checking SDSS footprint</a>
-
-<br><hr>
-
-<b><i>Stars:</i></b>
-<br><a href="#cleanStars">Clean photometry - Stars</a>
-<br><a href="#cv">CVs using colors</a>
-<br><a href="#bincol">Binary stars colors</a>
-<br><a href="#spplines">Using sppLines table</a>
-<br><a href="#sppparams">Using sppParams table</a>
-<br /><a href="#pm">Proper motions</a>
-<!-- <br><font color="red"><b>Stars by spectral class (KS)</b></font> -->
-
-<br><hr>
-
 <b><i>Miscellaneous:</i></b>
 <br><a href="#photoz">Photometric Redshifts</a>
 <br><a href="#specOther1">Spectra in Other Programs - I</a>
@@ -116,9 +81,44 @@ before you try any queries, especially if you are new to SQL or the SkyServer.
 
 <br><hr>
 
+<b><i>Stars:</i></b>
+<br><a href="#cleanStars">Clean photometry - Stars</a>
+<br><a href="#cv">CVs using colors</a>
+<br><a href="#bincol">Binary stars colors</a>
+<br><a href="#spplines">Using sppLines table</a>
+<br><a href="#sppparams">Using sppParams table</a>
+<br /><a href="#pm">Proper motions</a>
+<!-- <br><font color="red"><b>Stars by spectral class (KS)</b></font> -->
+
+<br><hr>
+
+<b><i>Quasars:</i></b>
+<br><a href="#qsospec">QSOs by spectroscopy</a>
+<br><a href="#qsocol">QSOs by colors</a>
+<br><a href="#quasar3">FIRST matches for quasars</a>
+
+<br><hr>
+
 <b><i>Varaibility Queries:</i></b>
 <br><a href="#multiple">Stars multiply measured</a>
 <br><a href="#timeseries">Multiple Detections and Time Series</a>
+
+</td>
+
+<td width="5">&nbsp;</td>
+
+<td class='tsml'>
+<b><i>General Astronomy:</i></b>
+<br><a href="#galview">Only stars or galaxies</a>
+<br><a href="#clean">Clean photometry</a>
+<br><a href="#mjd">Using Field MJD</a>
+<br><a href="#lines">Objects by spectral lines</a>
+<br><a href="#unspec">Spectra by classification</a>
+<br><a href="#movast">Moving asteroids</a>
+<br><a href="#repeat">Plates with repeat spectra</a>
+<br><a href="#galstar">Galaxies blended with stars</a>
+<br><a href="#countsbytype">Counts by type and program</a>
+<br><a href="#footprint">Checking SDSS footprint</a>
 
 <br><hr>
 
@@ -132,6 +132,13 @@ before you try any queries, especially if you are new to SQL or the SkyServer.
 <br><a href="#apogeeRVs">RVs for Individual APOGEE Visits</a>
 <br><a href="#apogeeSegue">APOGEE and SEGUE Spectra</a>
 <br><a href="#apogeeStarPhoto">SDSS photometry for APOGEE Stars</a>
+
+<br><hr>
+
+<b><i>MaNGA Queries:</i></b>
+<br><a href="#mangaCubes">MaNGA Data Cubes</a>
+<br><a href="#mangaCubesGood">MaNGA Data Cubes of Good Quality</a>
+<br><a href="#mangaCubesPrimary">MaNGA Data Cubes of Primary Sample</a>
 
 <br>
 </td>
@@ -1951,6 +1958,68 @@ Some hints on searching SkyServer:</p>
 	cmd += "<br></td></tr>\r\n";
 	cmd += "</table>\r\n<br><br>";
 	showQuery( qName, qry, cmd, cmd );
+
+
+	qName = "mangaCubes";
+	qry = "MaNGA Data Cubes";
+	cmd = tableDef;
+	cmd += "-- <i>Find all MaNGA data cubes of galaxies in the main or ancillary target sample.</i> <br>\r\n";
+	cmd += "-- Get the unique observation identifier (plateifu), object identifier (mangaid),<br>\r\n";
+	cmd += "-- object coordinates, primary sample targeting bit (mngtarg1) and summary data<br>\r\n";
+	cmd += "-- reduction quality bit (drp3qual)<br>\r\n";
+	cmd += "-- A basic SELECT-FROM-WHERE query.<br>\r\n";
+	cmd += "<br>\r\n";
+	cmd += "SELECT TOP 2000 plateifu,        -- Get the unique object ID,<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;   mangaid, objra, objdec, mngtarg1, drp3qual -- and other quantities<br>\r\n";
+	cmd += "FROM mangadrpall        -- From the drpall catalog<br>\r\n";
+	cmd += "WHERE<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;   mngtarg1 != 0 or mngtarg3 != 0 -- Require that either mngtarg1 is nonzero<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;   -- (galaxy in the primary, secondary, or color-enhanced sample) or that<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;   -- mngtarg3 is nonzero (galaxy is an ancillary program target)<br>\r\n";
+	cmd += "<br></td></tr>\r\n";
+	cmd += "</table>\r\n<br><br>";
+	showQuery( qName, qry, cmd, cmd );
+
+
+	qName = "mangaCubesGood";
+	qry = "MaNGA Data Cubes of Good Quality";
+	cmd = tableDef;
+	cmd += "-- <i>Find all MaNGA data cubes of galaxies in the main<br>\r\n";
+	cmd += "-- or ancillary target sample that are of good reduction quality</i><br>\r\n";
+	cmd += "-- Use the largest 127-fiber bundles, have NSA redshift > 0.03,<br>\r\n";
+	cmd += "-- and have NSA elliptical petrosian stellar mass > 10^10 Msun.<br>\r\n";
+	cmd += "<br>\r\n";
+	cmd += "SELECT TOP 2000 plateifu,        -- Get the unique object ID,<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;  mangaid, objra, objdec, mngtarg1, drp3qual -- and other quantities<br>\r\n";
+	cmd += "FROM mangadrpall        -- From the drpall catalog<br>\r\n";
+	cmd += "WHERE<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;  ((mngtarg1 != 0 or mngtarg3 != 0)<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;    and (drp3qual < 10000)<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;    and (ifudesignsize = 127)<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;    and (nsa_z > 0.03)<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;    and (nsa_elpetro_mass >1e10))<br>\r\n";
+	cmd += "<br></td></tr>\r\n";
+	cmd += "</table>\r\n<br><br>";
+	showQuery( qName, qry, cmd, cmd );
+
+
+	qName = "mangaCubesPrimary";
+	qry = "MaNGA Data Cubes of Primary Sample";
+	cmd = tableDef;
+	cmd += "-- <i>Find all MaNGA data cubes of galaxies in the <br>\r\n";
+	cmd += "-- Primary+ (Primary v1_2_0 and color enhanced v1_2_0) sample<br>\r\n";
+	cmd += "-- that are of good reduction quality.</i><br>\r\n";
+	cmd += "<br>\r\n";
+	cmd += "SELECT TOP 2000 plateifu,  &nbsp;&nbsp;&nbsp;-- Get the unique object ID,<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;  mangaid, objra, objdec, mngtarg1, drp3qual -- and other quantities<br>\r\n";
+	cmd += "FROM mangadrpall -- From the drpall catalog<br>\r\n";
+	cmd += "WHERE<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;  (((mngtarg1 & (power(2,10)+power(2,12))) != 0) -- Either bit 10 or 12 of mngtarg1<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;    and ((drp3qual & power(2,30))  = 0)) -- Not bit 30 of drp3qual<br>\r\n";
+	cmd += "<br></td></tr>\r\n";
+	cmd += "</table>\r\n<br><br>";
+	showQuery( qName, qry, cmd, cmd );
+
 
 
 

@@ -45,29 +45,31 @@ describes the database organization and structure.
 <li><a href="#interfaces">Accessing the Data</a>
     <table class='v' border="0" bgcolor="#404088" cellspacing="3" cellpadding="3">
 	<a name="simple"></a>
-	<tr><td> <b>Simple Search:</b></td>
-	    <td> <a href="#rect">Rectangular</a> </td>
+	<tr><td> <b>Form-based Search:</b></td>
 	    <td> <a href="#radial">Radial</a></td>
-	    <td>&nbsp;</td>
-	    <td>&nbsp;</td>
+	    <td> <a href="#rect">Rectangular</a> </td>
+	    <td> <a href="#iqs">IQS</a></td>
+	    <td> <a href="#sqs">SQS</a></td>
+	    <td> <a href="#irsqs">IRSQS</a></td>
 	</tr>
 	<a name="sqlint"></a>
 	<tr><td> <b>SQL Interfaces:</b></td>
-	    <td> <a href="#sql">Web Page</a></td>
-<!--	    <td> <a href="#emacs">Emacs</a></td> -->
-	    <td> <a href="#sqlcl">sqlcl</a></td>
+	    <td> <a href="#sql">SQL Search</a></td>
 	    <td> <a href="#casjobs">CasJobs</a></td>
+	    <td colspan=3>&nbsp;</td>
         </tr>
 	<a name="upload"></a>
 	<tr><td> <b>List Uploads:</b></td>
 	    <td> <a href="#crossid">CrossID</a></td>
-	    <td>&nbsp;</td><td>&nbsp;</td>
+	    <td colspan=4>&nbsp;</td>
 	</tr>
 	<a name="visual"></a>
-	<tr><td> <b>Visualization:</b></td>
+	<tr><td> <b>Visual Tools:</b></td>
 	    <td> <a href="#chart">Finding Chart</a></td>
-	    <td><a href="#list">Image Lists</a></td><td> <a href="#navi">Navigator</a></td>
+	    <td><a href="#list">Image Lists</a></td>
+	    <td> <a href="#navi">Navigator</a></td>
 	    <td><a href="#explore">Explore</a></td>
+	    <td>&nbsp;</td>
 	</tr>
     </table>
 </li></h4>
@@ -378,40 +380,8 @@ The CAS uses a Microsoft SQL Server database to store and serve the data.
 Users can access this data by a number of methods.</p>
 <table class='v' border="0"  cellspacing="1" cellpadding="3">
 
-<tr><td></b></td>
-	<a name="simple"></a>
-	<tr><td> <b>Simple Search:</b></td>
-	<td> <a href="#rect">Rectangular</a> </td>
-	<td> <a href="#radial">Radial</a></td>
-	<td>&nbsp;</td>
-	<td>&nbsp;</td></tr>
-	<a name="sqlint"></a>
-	<tr><td><b>SQL Interfaces:</b></td>
-	<td> <a href="#sql">Web Page</a></td>
-<!-- 	<td> <a href="#emacs">Emacs</a></td> -->
-	<td> <a href="#sqlcl">sqlcl</a></td>
-<%
-	if( globals.ReleaseNumber > 1 ) {
-		Response.Write("<td> <a href=\"#casjobs\">CasJobs</a></td></tr>");
-	}
-%>
-	<a name="upload"></a>
-	<tr><td><b>List Uploads:</b></td>
-	<td> <a href="#crossid">CrossID</a></td>
-	<td>&nbsp;</td><td>&nbsp;</td></tr>
-	<a name="visual"></a>
-	<tr><td><b>Visualization:</b></td>
-	<td> <a href="#chart">Finding Chart</a></td>
-	<td><a href="#list">Image Lists</a></td><td> <a href="#navi">Navigator</a></td>
-	<td><a href="#explore">Explore</a></td></tr>
-</table>
-
-<a name="skyserver"></a>
 <ol>
-<li>
-<a href="http://skyserver.sdss.org/"><b>The SkyServer.</b></a>
-	This provides a variety of methods to retrieve data:
-  <ol type="a">
+
  <a name="radial"></a>
   <li><a href="../../tools/search/radial.aspx">Radial search</a>. 
 	Allows entry of a central coordinate, radius, and 
@@ -452,42 +422,12 @@ columns available in each. All of the SkyServer interfaces allow
 data to be returned in HTML, XML, or CSV (comma separated variable) 
 format.
 </li>
-
-<!--
-<a name="emacs"></a>
+<a name="casjobs"></a>
 <p></p>
-<li><a href="http://astro.princeton.edu/~rhl/skyserver/skyserver.el">Emacs interface</a>. 
-This interface, developed by <a href="mailto:rhl@astro.princeton.edu">Robert Lupton</a>, which can be 
-<a href="http://astro.princeton.edu/~rhl/skyserver/skyserver.el"> downloaded 
-here</a>.  Robert has provided some 
-<a href="http://astro.princeton.edu/~rhl/skyserver/examples.sql">example 
-queries</a>, and there is <a href="http://astro.princeton.edu/~rhl/skyserver">
-additional documentation available for this tool</a>.
-  Our <a href="sql_help.aspx">SQL help</a> and the descriptions of
- <a href="#datamodel">the data model</a> and the <a
- href="../browser/browser.aspx">  parameters stored in the various tables</a>
- are also applicable. 
-</li>
--->
-
-<a name="sqlcl"></a>
-<p></p>
-<li><a href="../download/sqlcl/default.aspx"><em>sqlcl</em> command line interface.</a> 
-A straightforward command line interface written in Python by <a href="http://www.sdss.jhu.edu/~budavari/tamas/">Tam&aacute;s Budav&aacute;ri</a> 
-    (<a href="mailto:budavari@pha.jhu.edu">email</a>). The tool can be downloaded, and some help found, on the 
-<a href="../download/sqlcl/default.aspx">sqlcl page</a>. 
-</li>
-
-<%
-if( globals.ReleaseNumber > 1 ) {
-	Response.Write("<a name=\"casjobs\"></a>\n<p></p>\n<li><a href=\""+globals.CasJobs+"\"><em>CasJobs</em> batch query service.</a>\n"); 
-	Response.Write("CasJobs allows you to submit queries and recover the results at a later time.  It is a\n");
-    Response.Write("Web Service developed by <a href=\"http://www.rssd.esa.int/index.php?project=GAIA&page=Gaia_people&person=102\">Wil O'Mullane</a> and ");
-	Response.Write("Nolan Li. CasJobs allows you \n");
-	Response.Write("to submit unlimited queries and save the results to your own database on the server called\n");
-    Response.Write("MyDB.  There is a user guide and FAQ available on the <a href=\"" + globals.CasJobs + "\">CasJobs page</a>.\n");
-}
-%>
+<li>
+<a href="<%=globals.CasJobs%>"><em>CasJobs</em> batch query service.</a>
+CasJobs allows you to submit queries and recover the results at a later
+time.  It is a Web Service developed by Wil O'Mullane and Nolan Li. CasJobs allows you to submit unlimited queries and save the results to your own database on the server called MyDB.  There is a user guide and FAQ available on the <a href="<%=globals.CasJobs%>">CasJobs page</a>.
 </li>
 
 </ol>
