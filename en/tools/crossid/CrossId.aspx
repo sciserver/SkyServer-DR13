@@ -449,13 +449,19 @@ ORDER BY x.up_id
 	Just check the appropriate "JOIN with" box to return the matching objects.   You will see the default
 	query in the query window changing accordingly.
 	<p>
+  <!--
 	In order to avoid congestion on the server, the upload file is limited to a size of <u>80KB</u>, and the
 	radius (for RA/dec search) is limited to <u><%=crossidRadius%> arcmin</u>.  The crossid search will time out 
 	after <u><%=crossidTimeout%> secs</u>, and the output data set can not exceed <u><%=rowLimit%> 
 	objects</u>. 
 	Please see the <a href="<%=url%>/help/docs/limits.aspx">Query Limits page</a>.  If this is a 
 	problem, please submit your list in pieces. 
-
+  -->
+  For this browser-based synchronous cross-ID service, the upload file is limited to <u>1000 rows</u> and 
+  the output is limited to <u><%=rowLimit%> rows</u> to ensure that the results are returned in a timely 
+  manner. For larger uploads, please use the asynchronous CasJobs service (see the Help page for Advanced 
+  Queries under Nearest Neighbor Searches (Cross-ID)).
+  
 	<a name="list"></a><h5>Upload list format:</h5>
 	You have the following choices:
 	<ol>
