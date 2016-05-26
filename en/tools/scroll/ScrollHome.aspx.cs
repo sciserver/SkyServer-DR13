@@ -78,7 +78,7 @@ namespace SkyServer.Tools.Scroll
                         if (stripe != oldstripe)
                         {
                             if (oldstripe != -1) writeRow(runs);
-                            runs = ""+stripe;
+                            runs = "" + stripe;
                             oldstripe = stripe;
                         }
                         runs += "," + run;

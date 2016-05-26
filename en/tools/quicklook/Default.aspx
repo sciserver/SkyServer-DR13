@@ -1,2 +1,2 @@
 ﻿<%@ Page Language="C#" %>
-<% Response.Redirect("quickobj.aspx"); %>
+<% Response.Redirect("summary.aspx"); %>

@@ -63,7 +63,165 @@ namespace SkyServer
 
         private string apogeeSpectrumLink;
         private string apogeeFitsLink;
+        private int timeoutSkyserverWS;
 
+       
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private string skyserverRESTservice;
+        private string casjobsRESTapi;
+        private string contentDataset;
+        //private string skyServerWSsql;
+
+        public string username
+        {
+            get;
+            set;
+        }
+
+        public string CasjobsRESTapi {
+            get {
+                return casjobsRESTapi;
+            }
+        }
+        public string SkyserverRESTservice {
+            get { return skyserverRESTservice; }
+        }
+
+        public string SQLSearchWS
+        {
+            get { return skyserverRESTservice + "SearchTools/SqlSearch"; }
+        }
+        public string DatabaseSearchWS
+        {
+            get { return skyserverRESTservice + "SearchTools/DatabaseSearch"; }
+        }
+
+        public string RectangularSearchWS
+        {
+            get { return skyserverRESTservice + "SearchTools/RectangularSearch"; }
+        }
+
+        public string CrossIdWS
+        {
+            get { return skyserverRESTservice + "SearchTools/CrossIdSearch"; }
+        }
+
+        public string ExploreWS
+        {
+            get { return skyserverRESTservice + "SearchTools/ObjectSearch"; }
+        }
+
+        public string UserHistoryWS
+        {
+            get { return skyserverRESTservice + "SearchTools/UserHistory"; }
+        }
+
+        public string ConeWS
+        {
+            get { return skyserverRESTservice + "ConeSearch/ConeSearchService"; }
+        }
+
+        public string RadialSearchWS
+        {
+            get { return skyserverRESTservice + "SearchTools/RadialSearch"; }
+        }
+        /// <summary>
+        /// These are Imaging Search Tool services
+        /// </summary>
+        public string ConeImaging
+        {
+            get { return skyserverRESTservice + "ImagingQuery/Cone"; }
+        }
+        public string RectangularImaging
+        {
+            get { return skyserverRESTservice + "ImagingQuery/Rectangular"; }
+        }
+        public string NoPositionImaging
+        {
+            get { return skyserverRESTservice + "ImagingQuery/NoPosition"; }
+        }
+        public string ProximityImaging
+        {
+            get { return skyserverRESTservice + "ImagingQuery/Proximity"; }
+        }
+        /// <summary>
+        /// These are IRSpectraQuery Search Tool services
+        /// </summary>
+        public string ConeIRWS 
+        {
+            get { return skyserverRESTservice + "IRSpectraQuery/ConeIR"; }
+        }
+        public string GalacticIRWS
+        {
+            get { return skyserverRESTservice + "IRSpectraQuery/GalacticIR"; }
+        }
+        public string NoPositionIRWS 
+        {
+            get { return skyserverRESTservice + "IRSpectraQuery/NoPositionIR"; }
+        }
+        /// <summary>
+        /// These are SpectroQuery Search Tool services
+        /// </summary>
+        public string ConeSpectroWS
+        {
+            get { return skyserverRESTservice + "SpectroQuery/ConeSpectro"; }
+        }
+        public string RectangularSpectroWS
+        {
+            get { return skyserverRESTservice + "SpectroQuery/RectangularSpectro"; }
+        }
+        public string NoPositionSpectroWS
+        {
+            get { return skyserverRESTservice + "SpectroQuery/NoPositionSpectro"; }
+        }
+        public string ProximitySpectroWS
+        {
+            get { return skyserverRESTservice + "SpectroQuery/ProximitySpectro"; }
+        }
+
+        /// SDSS Fields        
+        public string FieldsArray
+        {
+            get { return skyserverRESTservice + "SDSSFields/FieldArray"; }
+        }
+
+        public string FieldArrayRect
+        {
+            get { return skyserverRESTservice + "SDSSFields/FieldArrayRect"; }
+        }
+
+        public string ListOfFields
+        {
+            get { return skyserverRESTservice + "SDSSFields/ListOfFields"; }
+        }
+
+        public string UrlOfFields
+        {
+            get { return skyserverRESTservice + "SDSSFields/UrlOfFields"; }
+        }
+
+        ///SIAP
+
+        public string getSIAP
+        {
+            get { return skyserverRESTservice + "SIAP/getSIAP"; }
+        }
+
+        public string getSIAPInfo
+        {
+            get { return skyserverRESTservice + "SIAP/getSIAPInfo"; }
+        }
+
+        public string getAllSIAPInfo
+        {
+            get { return skyserverRESTservice + "SIAP/getAllSIAPInfo"; }
+        }
+
+
+        /****/
 
         public string SolarConnectionString
         {
@@ -203,7 +361,7 @@ namespace SkyServer
         }
         public string ContactUrl
         {
-            get { return "http://skyserver.sdss3.org/contact/?release=" + Release + "&helpdesk=" + helpdesk + "&smtp=" + smtp + "&epoHelp=" + epoHelp + "&subject=SkyServer+" + Release + "+issue:+"; }
+            get { return "http://skyserver.sdss.org/contact/?release=" + Release + "&helpdesk=" + helpdesk + "&smtp=" + smtp + "&epoHelp=" + epoHelp + "&subject=SkyServer+" + Release + "+issue:+"; }
         }
         public string LogUrl
         {
@@ -235,7 +393,7 @@ namespace SkyServer
         {
             get { return "DR" + releaseNumber; }
         }
-
+       
         /*
         public string DBType
         {
@@ -262,17 +420,17 @@ namespace SkyServer
 
         public string WSGetJpegUrl
         {
-              get { return WSBaseUrl + "ImgCutout/getjpeg.aspx"; }
+            get { return skyserverRESTservice + "ImgCutout/getjpeg"; }
         }
 
         public string WSGetImage64
         {
-            get { return WSBaseUrl + "ImgCutout/getImage64.aspx"; }
+            get { return skyserverRESTservice + "ImgCutout/getImage64"; }
         }
 
         public string WSGetCodecUrl
         {
-            get { return WSBaseUrl + "ImgCutout/getjpegcodec.aspx"; }
+            get { return skyserverRESTservice + "ImgCutout/getJpegCodec"; }
         }
 
         public double EqSearchRadius
@@ -345,10 +503,24 @@ namespace SkyServer
             get { return apogeeFitsLink; }
         }
 
+        public int TimeoutSkyserverWS
+        {
+            get { return timeoutSkyserverWS; }
+        }
+
+        public string ContentDataset
+        {
+            get { return contentDataset; }
+        }
+
+
+
         public Globals()
         {
             var appSettings = System.Web.Configuration.WebConfigurationManager.AppSettings;
-            this.solarConnectionString = appSettings["solarConnectionString"];
+
+            this.contentDataset = "application/x-dataset";// – serialized .NET DataSet
+
             this.releaseNumber = int.Parse(appSettings["releaseNumber"]);
             //this.dbType = appSettings["dbType"];
             this.connectionString = appSettings["connectionString"];
@@ -391,6 +563,9 @@ namespace SkyServer
             this.rowLimit = int.Parse(appSettings["rowLimit"] ?? "500000");
             this.emacsRowLimit = int.Parse(appSettings["emacsRowLimit"] ?? "500000");
             this.queriesPerMinute = int.Parse(appSettings["queriesPerMinute"] ?? "60");
+            this.timeoutSkyserverWS = int.Parse(appSettings["TimeoutSkyserverWS"] ?? "100000");// time in milliseconds
+            this.skyserverRESTservice = appSettings["restwebservice"];
+            this.casjobsRESTapi = appSettings["casjobsRESTapi"];
 
             if (releaseNumber == 8)
             {

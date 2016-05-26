@@ -24,66 +24,56 @@
         #test  {position: absolute; left: 20px; top:150px;font-family:sans-serif;color:#000000;font-size:9pt}			
     </style>
     <script type="text/javascript">
+        var check;
+        function quicklook(id) {
+            var url = "../quicklook/quickobj.aspx?id=" + id;
+            var w = window.open(url, '_blank');
+            w.focus();
+        }
+        function explore(id) {
+            var url = "../explore/obj.aspx?id=" + id;
+            var w = window.open(url, '_blank');
+            w.focus();
+        }
+        function exploreAPOGEE(id) {
+            var url = "../explore/summary.aspx?apid=" + id;
+            var w = window.open(url, '_blank');
+            w.focus();
+        }
+        function saveBook(id) {
+            check.show();
+            var url = "book.aspx?add=" + id;
+            var frame = document.getElementById("test");
+            frame.src = url;
+        }
+        function init() {
+            check = new Div('check', 120, 428);
+            //check.show();
+            check.hide();
+        }
+        function showBook() {
+            w = window.open("book.aspx", "POPUP");
+            w.focus();
+        }
+        function showSTARTBall() {
+            w = window.open("STARTFrame.html", "STARTBall", "width=300,height=325");
+            w.focus();
+        }
+        function showSTARTBallHelp() {
+            w = window.open("skymapshelp.aspx", "help", "width=800,height=600,resizeable,scrollbars");
+            w.focus();
+        }
+        function recenter(ra_, dec_) {
 
-var check;
+            window.parent.document.getElementById("ra").value = ra_;
+            window.parent.document.getElementById("dec").value = dec_;
+            //alert(window.parent.document.getElementById("getImageId").value);
+            window.parent.document.getElementById('getImageId').disabled = false;
+            window.parent.document.getElementById("getImage").click();
 
-function quicklook(id) {
-	var url = "../quicklook/quickobj.aspx?id="+id;
-	var w = window.open(url,'_blank');
-	w.focus();
-}
-
-function explore(id) {
-	var url = "../explore/obj.aspx?id="+id;
-	var w = window.open(url,'_blank');
-	w.focus();
-}
-
-function exploreAPOGEE(id) {
-    var url = "../explore/summary.aspx?apid=" + id;
-    var w = window.open(url, '_blank');
-    w.focus();
-}
-
-function saveBook(id) {
-	check.show();
-	var url = "book.aspx?add=" + id;
-	var frame = document.getElementById("test");
-	frame.src = url;
-}
-
-function init() {
-	check = new Div('check',120,416);
-	//check.show();
-	check.hide();
-}
-
-function showBook() {
-	w = window.open("book.aspx","POPUP");
-	w.focus();
-}
-
-function showSTARTBall() {
-  w = window.open("STARTFrame.html","STARTBall","width=300,height=325");
-  w.focus();
-}
-
-function showSTARTBallHelp() {
-  w = window.open("skymapshelp.aspx","help","width=800,height=600,resizeable,scrollbars");
-  w.focus();
-}
-
-function recenter(ra_, dec_) {
-    
-    window.parent.document.getElementById("ra").value = ra_;
-    window.parent.document.getElementById("dec").value = dec_;
-    //alert(window.parent.document.getElementById("getImageId").value);
-    window.parent.document.getElementById('getImageId').disabled = false;
-    window.parent.document.getElementById("getImage").click();
-    
-	//var s = "navictrl.aspx?ra="+ra_+"&dec="+dec_;
-	//s += "&scale=<%=(4*qscale)%>&opt=<%=opt%>";
-	//top.frames.ctrl.location.href=s;
+            //var s = "navictrl.aspx?ra="+ra_+"&dec="+dec_;
+            //s += "&scale=<%=(4*qscale)%>&opt=<%=opt%>";
+    //top.frames.ctrl.location.href=s;
 }
 </script>
     <title></title>
@@ -112,7 +102,6 @@ function recenter(ra_, dec_) {
             {
                 makeGlass(oRa, oDec);
                 makeLinks();
-
                 long? specObjId = getSpecObjId(oConn, objId);
                 if (specObjId.HasValue && specObjId != 0)
                 {

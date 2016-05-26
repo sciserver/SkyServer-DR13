@@ -7,13 +7,16 @@
 //
 /////////////////////////////////////////////////////////////////////
 
-function Div(id,left,top) {
+function Div(id, left, top) {
+    
 	this.window = window;
     this.id = id;
     this.pmt = new Object();
 	this.pmt.left = left;
-	this.pmt.top  = top;
+	this.pmt.top = top;
 	this.initialize();
+	this.style.left = left + 'px';
+	this.style.top = top + 'px';	
 	this.moveTo(left,top);
 }
 
@@ -95,7 +98,10 @@ if (navigator.appName.indexOf("Netscape") != -1  && !IsInternetExplorer()   ) {
 		};
 }
 
-// Now define methods for Internet Explorer.
+    Div.prototype.moveTo = function (x, y) {	    
+	    this.style.left = x+'px';
+	    this.style.top = y+'px';
+    }
 
 //if (navigator.appName.indexOf("Microsoft ") != -1) {
 if (IsInternetExplorer()) {
@@ -114,54 +120,54 @@ if (IsInternetExplorer()) {
 		this.style.pixelTop += y;
 	}
   
-	// Methods to set other attributes of the dynamic object
-	Div.prototype.show = function() { this.style.visibility = "visible"; }
-	Div.prototype.hide = function() { this.style.visibility = "hidden"; }
-	Div.prototype.setZIndex  = function(z) { this.style.zIndex = z; }
-	Div.prototype.setBgColor = function(color) { this.style.backgroundColor = color; }
-	Div.prototype.setBgImage = function(image) { this.style.backgroundImage = image; }
-	Div.prototype.setClip = function(l,t,r,b) {
-		this.style.clip = "rect("+t+" "+r+" "+b+" "+l+")";
-	}
-	// Methods to query the dynamic object
-	Div.prototype.getX = function() {return this.style.pixelLeft;}
-	Div.prototype.getY = function() {return this.style.pixelRight;}
-	Div.prototype.getWidth = function() {return this.style.width;}
-	Div.prototype.getHeight = function() {return this.style.height;}
-	Div.prototype.getZIndex = function() {return this.style.zIndex;}
-	Div.prototype.isVisible = function() {return this.style.visibility=="visible";}
+    // Methods to set other attributes of the dynamic object
+    Div.prototype.show = function() { this.style.visibility = "visible"; }
+    Div.prototype.hide = function() { this.style.visibility = "hidden"; }
+    Div.prototype.setZIndex  = function(z) { this.style.zIndex = z; }
+    Div.prototype.setBgColor = function(color) { this.style.backgroundColor = color; }
+    Div.prototype.setBgImage = function(image) { this.style.backgroundImage = image; }
+    Div.prototype.setClip = function(l,t,r,b) {
+	    this.style.clip = "rect("+t+" "+r+" "+b+" "+l+")";
+    }
+    // Methods to query the dynamic object
+    Div.prototype.getX = function() {return this.style.pixelLeft;}
+    Div.prototype.getY = function() {return this.style.pixelRight;}
+    Div.prototype.getWidth = function() {return this.style.width;}
+    Div.prototype.getHeight = function() {return this.style.height;}
+    Div.prototype.getZIndex = function() {return this.style.zIndex;}
+    Div.prototype.isVisible = function() {return this.style.visibility=="visible";}
   
-	// Change the contents of the dynamic element.
-	Div.prototype.setBody = function() {
-		var body = "";
+    // Change the contents of the dynamic element.
+    Div.prototype.setBody = function() {
+        var body = "";        
 	    for(var i = 0; i < arguments.length; i++) {body += arguments[i]+"\n";}
-		this.element.innerHTML = body;
-	}
+	    this.element.innerHTML = body;
+    }
   
-	// Define an event handler.
-	Div.prototype.addEventHandler = function(eventname, handler) {
-		var dynel = this;  // Current DynEl for use in the nested function
+    // Define an event handler.
+    Div.prototype.addEventHandler = function(eventname, handler) {
+	    var dynel = this;  // Current DynEl for use in the nested function
 	    // Set an IE4 event handler that invokes the specified handler
-		// with the appropriate nine arguments.
-		this.element[eventname] = function() { 
-			var e = dynel.window.event;
-			e.cancelBubble = true;
-			//--------------------------------------------
-			// return the page coordinates of the event, 
-			// corrected for the scrollbars (Alex Szalay)
-			//--------------------------------------------
-			var x = e.clientX + document.body.scrollLeft -2;
-			var y = e.clientY + document.body.scrollTop -2;
-			return handler(dynel, e.type, x, y, e.screenX, e.screenY,
-				e.button, e.keyCode, e.shiftKey, e.ctrlKey, e.altKey); 
-		}
-	}
+	    // with the appropriate nine arguments.
+	    this.element[eventname] = function() { 
+		    var e = dynel.window.event;
+		    e.cancelBubble = true;
+		    //--------------------------------------------
+		    // return the page coordinates of the event, 
+		    // corrected for the scrollbars (Alex Szalay)
+		    //--------------------------------------------
+		    var x = e.clientX + document.body.scrollLeft -2;
+		    var y = e.clientY + document.body.scrollTop -2;
+		    return handler(dynel, e.type, x, y, e.screenX, e.screenY,
+			    e.button, e.keyCode, e.shiftKey, e.ctrlKey, e.altKey); 
+	    }
+    }
   
-	// Remove an event handler.
-	Div.prototype.removeEventHandler = function(eventname) {
+    // Remove an event handler.
+    Div.prototype.removeEventHandler = function(eventname) {
 	    delete this.element[eventname];
-	}
-}
+    }
+    
 
 /////////////////////////////////////////////////////////////////////
 //

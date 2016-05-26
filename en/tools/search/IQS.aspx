@@ -2,6 +2,8 @@
 <%@ Register TagPrefix="uc" TagName="QS_Parameter" Src="QS_Parameter.ascx" %>
 <%@ Register TagPrefix="uc" TagName="QS_Position" Src="QS_Position.ascx" %>
 <%@ Register TagPrefix="uc" TagName="QS_Imaging" Src="QS_Imaging.ascx" %>
+
+
 <asp:Content ID="Content1" ContentPlaceHolderID="ToolsContent" runat="server">
 <style type="text/css">
 	td,p	{font-size:9pt; color:#000000}
@@ -24,9 +26,23 @@ Imaging Query Form
 
 <div id="transp">
 
-<form method="post" enctype="multipart/form-data" action="x_iqs.aspx" id=iqs name="iqs">
 
-<!----------------------------------------------------->
+<script language="javascript" src="validate_search.js"></script>
+<script>
+    function goToWindow() {
+        var w = window.open("", 'search');
+        w.focus();
+    }
+
+</script>
+
+
+
+<form method="post" target="search"  enctype="multipart/form-data" action="x_results.aspx" id=iqs name="iqs">
+<input type="hidden" name="searchtool" id="searchtool" value="Imaging" />
+<input type="hidden" name="TaskName" id="TaskName" value="Skyserver.Search.IQS"/>
+<input type="hidden" name="ReturnHtml" id="ReturnHtml" value="true" />
+    <!----------------------------------------------------->
 <table border=1 cellspacing=3 cellpadding=3 bgcolor=#aaaaaa>
 <tr><td>
 

@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Text.RegularExpressions;
+using System.Configuration;
+
 
 namespace SkyServer.Tools
 {
@@ -75,11 +77,16 @@ namespace SkyServer.Tools
                   gutter += "5.4,Imaging Query,/tools/search/IQS.aspx;";
             //      if( dbType == "BEST" ) {
 	              gutter += "5.5,Spectro Query,/tools/search/SQS.aspx;";
-                  if (globals.ReleaseNumber == 10) { gutter += "5.6,IR Spec Query,/tools/search/IRQS.aspx;"; }
+                  if (globals.ReleaseNumber >= 10) { gutter += "5.6,IR Spec Query,/tools/search/IRQS.aspx;"; }
             //      }
             //  }
   
               gutter += "6,Object Crossid,/tools/crossid/crossid.aspx;";
+            // hiding the link until crossmatch is working      
+              if (Boolean.Parse(ConfigurationManager.AppSettings["DoShowCrossMatch"].ToLower()))
+              {
+                  gutter += "9,Skyquery CrossMatch<i><em><strong><sup> NEW!</sup></strong> </em></i>,/tools/crossmatch/crossmatch.aspx;";
+              }
 
               if( globals.ReleaseNumber > 1 ) {
   	            gutter += "8,CasJobs,"+globals.CasJobs+"' TARGET='CASJOBS;";

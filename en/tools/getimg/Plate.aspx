@@ -6,11 +6,9 @@
     <div id="transp">
 
 <script type="text/javascript" language="javascript">
-    function radiogo(x)
-        {
-            document.getElementById(x).checked = true;
-        }
-
+    function radiogo(x) {
+        document.getElementById(x).checked = true;
+    }
 </script>
 
 <form method="get" action="plate.aspx"  id="form1" name="form1">
@@ -114,8 +112,8 @@
 <%
         writePlateHeader(oConn);
 	    // generate the options list right out of the database
-            if (survey == "apogee") writePlateAPOGEE(oConn);
-            else  writePlate(oConn);
+            if (survey == "apogee") writePlateAPOGEE();
+            else  writePlate();
         }
 %></tr>
 </table>

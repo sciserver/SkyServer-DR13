@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/en/tools/quicklook/QuickLook.Master" AutoEventWireup="true" CodeBehind="Help.aspx.cs" Inherits="SkyServer.Tools.QuickLook.Help" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/en/tools/QuickLook/QuickLook.Master" AutoEventWireup="true" CodeBehind="Help.aspx.cs" Inherits="SkyServer.Tools.QuickLook.Help" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="qlhelp.css" rel="stylesheet" type="text/css"/>
 </asp:Content>

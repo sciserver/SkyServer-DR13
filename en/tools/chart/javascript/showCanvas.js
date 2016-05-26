@@ -1138,8 +1138,7 @@ function selectCenter() {
 }
 
 function makeCanvas(release, scale, opt, raThis, decThis, where) {
-
-    canvasState = new CanvasState(document.getElementById('canvas1'), wsGetJpegurl + "?");
+    canvasState = new CanvasState(document.getElementById('canvas1'), wsGetJpegurl);
     if (where == 2) canvasState.recreateCanvas();
     canvasState.release = release;
     canvasState.inscale = scale;
@@ -1151,7 +1150,7 @@ function makeCanvas(release, scale, opt, raThis, decThis, where) {
 
 function resubmit() {
 
-    if (document.getElementById('getImageId').disabled == false) {
+    //if (document.getElementById('getImageId').disabled == false) {
 
         var newra = document.getElementById('ra').value;
         var newdec = document.getElementById('dec').value;
@@ -1161,7 +1160,7 @@ function resubmit() {
         checkScale();
         makeCanvas(release, canvasState.inscale, canvasState.opt, newra, newdec, 2);
         document.getElementById('getImageId').disabled = true;
-    }
+    //}
     return false;
 }
 

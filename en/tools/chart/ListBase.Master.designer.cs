@@ -31,6 +31,15 @@ namespace SkyServer.Tools.Chart {
         protected global::System.Web.UI.WebControls.ContentPlaceHolder Content1;
         
         /// <summary>
+        /// loginParams control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SkyServer.en.Loginfloat loginParams;
+        
+        /// <summary>
         /// getjpeg control.
         /// </summary>
         /// <remarks>

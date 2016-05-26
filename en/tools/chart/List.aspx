@@ -37,10 +37,17 @@
 			        Response.Write("</pre>\n");
 		        } else {
 			        header();
-			        for (var i=0;i<body.Length;i++)
-				        if (body[i].Length>0)
-					        parseLine(names,body[i]);
-			        trailer();
+                    if (HasCorrectUploadFormat)
+                    {
+                        for (var i = 0; i < body.Length; i++)
+                            if (body[i].Length > 0)
+                                parseLine(names, body[i]);
+                        trailer();
+                    }
+                    else
+                    {
+                        Response.Write("Error: List of coordinates not in correct format.");
+                    }
 		        }
             
         %>

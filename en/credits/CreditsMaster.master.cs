@@ -26,7 +26,7 @@ namespace SkyServer.Credits
             master.imgpath = this.imgpath;
 
             gutter = "0,Credits,/credits/;";
-            gutter += "1,Using Our Data," + globals.SdssUrlBase + "collaboration/boiler-plate.php;";
+            gutter += "1,Using Our Data," + globals.SdssUrlBase + "collaboration/;";
 
             CreditsGutter = new Gutter(imgpath, url, Response);
         }

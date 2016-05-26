@@ -15,7 +15,8 @@ namespace SkyServer.Help.Browser
             string server_name = Request.ServerVariables["SERVER_NAME"];
             string remote_addr = Request.ServerVariables["REMOTE_ADDR"];
             c = c.Replace("'", "''");
-            var cmd = "EXEC spExecuteSQL '" + c + "  ', 1000, '" + server_name + "','" + windows_name + "','" + remote_addr + "','" + globals.Access + "', 1";
+            //var cmd = "EXEC spExecuteSQL '" + c + "  ', 1000, '" + server_name + "','" + windows_name + "','" + remote_addr + "','" + globals.Access + "', 1";
+            var cmd = "EXEC spExecuteSQL '" + c + "  ', 1000, '" + server_name + "','" + windows_name + "','" + remote_addr + "','" + "Skyserver.help.Browser.BrwsFunct" + "', 1";
             oCmd.CommandText = cmd;
             SqlDataReader reader = oCmd.ExecuteReader();
             return reader;

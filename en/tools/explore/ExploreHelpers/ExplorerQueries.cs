@@ -117,14 +117,14 @@ namespace SkyServer.Tools.Explore
         //AllSpec Queries
         public  static string AllSpec1= @"select s.specObjId, s.plate as plate, s.mjd as MJD, s.fiberID as fiber, 
                             str(t.ra,10,5) as ra, str(t.dec,10,5) as dec, str(s.ra,10,5) as specRa, str(s.dec,10,5) as specDec, s.sciencePrimary, 
-                            str(dbo.fDistanceArcMinEq(t.ra,t.dec,s.ra,s.dec),10,8) as distanceArcMin, s.class as class 
+                            str(dbo.fDistanceArcMinEq(t.ra,t.dec,s.ra,s.dec),10,8) as distanceArcMin, s.class as class  
                             from SpecObjAll s, photoobjall t
                             where t.objid=@objId  and s.bestobjid=t.objid  order by scienceprimary desc, plate, MJD, fiber";
                 
         
         public static string AllSpec2  = @"select s.specObjId, s.plate as plate, s.mjd as MJD, s.fiberID as fiber, str(t.ra,10,5) as ra, str(t.dec,10,5) as dec, 
                             str(s.ra,10,5) as specRa, str(s.dec,10,5) as specDec,  s.sciencePrimary, 
-                            str(dbo.fDistanceArcMinEq(t.ra,t.dec,s.ra,s.dec),10,8) as distanceArcMin, s.class as class 
+                            str(dbo.fDistanceArcMinEq(t.ra,t.dec,s.ra,s.dec),10,8) as distanceArcMin, s.class as class  
                             from SpecObjAll s, photoobjall t 
                             where t.objid=@objId  and s.fluxobjid=t.objid order by  plate, MJD, fiber, 
                             scienceprimary desc, distanceArcMin asc";                
@@ -133,13 +133,23 @@ namespace SkyServer.Tools.Explore
 
         #region matches
         ///Matches Queries
-        public static  string matches1 = @"select dbo.fIAUFromEq(p.ra,p.dec) as 'IAU name', p.objid, p.thingid, dbo.fPhotoModeN(p.mode) as mode
+        public static string matches1 = @"select dbo.fIAUFromEq(p.ra,p.dec) as 'IAU name', p.objid, p.thingid, dbo.fPhotoModeN(p.mode) as 'mode description'
                                         from Photoobjall p where p.objid=@objId";
                 
 
-        public static string matches2  = @" select t.objid, t.thingid, p.mode, dbo.fPhotoModeN(p.mode) as '(mode description)'
+/*        public static string matches2  = @" select t.objid, t.thingid, p.mode, dbo.fPhotoModeN(p.mode) as '(mode description)'
                                         from thingindex t join photoobjall p on t.objid = p.objid 
                                         where t.objid=@objId and p.mode != 1 order by p.mode";
+*/
+        public static string matches2  = @" select d.objid, d.thingid, p2.mode, dbo.fPhotoModeN(p2.mode) as 'mode description'
+                                        from thingIndex t join detectionIndex d on t.thingId=d.thingId join phototag p on t.objid = p.objid join phototag p2 on d.objid = p2.objid 
+                                        where t.objid=@objId order by p2.mode";
+
+
+
+
+
+
         #endregion
 
         #region neighbors
@@ -161,14 +171,14 @@ namespace SkyServer.Tools.Explore
                         str(loggadopunc,8,3) as 'log<sub>10</sub>(g) error' from sppParams where specObjId=@specId";
                 
 
-        public static string fitsParametersStellarMassStarformingPort  = @"  select logMass as 'Best-fit log<sub>10</sub>(stellar mass)',minLogMass as '1-&sigma; min', maxLogMass as '1-&sigma; max',
-                        age as 'Best-fit age (Gyr)', minAge as '1-&sigma; min Age', maxAge as '1-&sigma; max Age',
-                        SFR as 'Best-fit SFR (M<sub>&#9737;</sub> / yr)', minSFR as '1-&sigma; min SFR', maxSFR as '1-&sigma; max SFR' 
+        public static string fitsParametersStellarMassStarformingPort  = @"  select logMass as 'Best-fit log<sub>10</sub>(stellar mass)',minLogMass as '1-&#963 min', maxLogMass as '1-&#963 max',
+                        age as 'Best-fit age (Gyr)', minAge as '1-&#963 min Age', maxAge as '1-&#963 max Age',
+                        SFR as 'Best-fit SFR (M<sub>&#9737</sub> / yr)', minSFR as '1-&#963 min SFR', maxSFR as '1-&#963 max SFR' 
                         from stellarMassStarformingPort where specObjId=@specId";
 
-        public static string fitsParameterSstellarMassPassivePort = @" select logMass as 'Best-fit log<sub>10</sub>(stellar mass)', minLogMass as '1-&sigma; min', maxLogMass as '1-&sigma; max'
-                         , age as 'Best-fit age (Gyr)', minAge as '1-&sigma; min Age', maxAge as '1-&sigma; max Age', SFR as 'Best-fit SFR (M<sub>&#9737;</sub> / yr)',
-                         minSFR as '1-&sigma; min SFR', maxSFR as '1-&sigma; max SFR' 
+        public static string fitsParameterSstellarMassPassivePort = @" select logMass as 'Best-fit log<sub>10</sub>(stellar mass)', minLogMass as '1-&#963 min', maxLogMass as '1-&#963 max'
+                         , age as 'Best-fit age (Gyr)', minAge as '1-&#963 min Age', maxAge as '1-&#963 max Age', SFR as 'Best-fit SFR (M<sub>&#9737</sub> / yr)',
+                         minSFR as '1-&#963 min SFR', maxSFR as '1-&#963 max SFR' 
                          from stellarMassPassivePort where specObjId=@specId";
 
         public static string fitsParametersEmissionLinesPort  = @" select velstars as 'Stellar velocity (km/s)',sigmaStars as 'Stellar velocity disperson (km/s)', 
@@ -264,36 +274,36 @@ namespace SkyServer.Tools.Explore
         ///Metadata Queries
         ///
         public static String getObjParamaters = @"select p.ra, p.dec, s.specObjId, p.clean, s.survey, cast(p.mode as int) as mode, 
-                                                dbo.fPhotoTypeN(p.type) as otype, p.mjd
+                                                dbo.fPhotoTypeN(p.type) as otype, p.mjd, p.run, p.rerun, p.camcol, p.field, p.obj 
                                                 from PhotoObjAll p LEFT OUTER JOIN SpecObjAll s ON s.bestobjid=p.objid AND s.scienceprimary=1
                                                 where p.objId= @objId";
                 
 
          /// Imaing Query
-        public static  String getImagingQuery= @" select            
-            --phototag
-             dbo.fPhotoFlagsN(pt.flags) as 'flags',pt.ra, pt.dec, pt.run, pt.rerun, pt.camcol, pt.field, 
-             cast(pt.fieldId as binary(8)) as fieldId, cast(pt.objId as binary(8)) as objId, 
-            --PhotoObjall
-             pa.clean,  dbo.fPhotoTypeN(pa.type) as otype, 
-             pa.u as u, pa.g  as g, pa.r as r, pa.i as i, pa.z as z, 
-             pa.err_u as err_u,  pa.err_g  as err_g,  pa.err_r  as err_r, pa.err_i  as err_i, pa.err_z as err_z, 
-            -- photoObj
-            dbo.fPhotoModeN(po.mode) as mode,po.mjd as 'mjdNum',  (po.nDetect-1) as 'Other observations', po.parentID, po.nChild, str(po.extinction_r,7,2) as extinction_r,
-            str(po.petroRad_r,9,2)+' &plusmn; '+str(po.petroRadErr_r,10,3) as 'petrorad_r',
-            --- photz,photozRF,zoospec 
-            (str(phz.z,7,3)+' &plusmn; '+str(phz.zerr,8,4))as 'photoZ_KD', 
-            ---(str(phzrf.z,7,3)+' &plusmn; '+str(phzrf.zerr,8,4)) as 'photoZ_RF', 
-            case (1*zz.spiral+10*zz.elliptical+100*zz.uncertain) when 1 then 'Spiral' when 10 then 'Elliptical' when 100 then 'Uncertain' else '-' end as 'GalaxyZoo_Morph' 
-            --all joins
-             from PhotoTag pt  
-             left outer join PhotoObj po on po.objid = pt.objid
-             left outer join Photoz phz on pt.objid=phz.objid 
-             ---left outer join PhotozRF phzrf on pt.objid=phzrf.objid 
-             left outer join zooSpec zz on pt.objid=zz.objid 
-             left outer join field f on f.fieldID=pt.fieldID 
-             left outer join photoobjall pa with (nolock)on  pa.objid = pt.objid 
-             where pt.objId= @objId";
+        public static  String getImagingQuery= @" select "+
+            //--phototag
+             "dbo.fPhotoFlagsN(pt.flags) as 'flags',pt.ra, pt.dec, pt.run, pt.rerun, pt.camcol, pt.field, "+
+             "cast(pt.fieldId as binary(8)) as fieldId, cast(pt.objId as binary(8)) as objId, "+
+            //--PhotoObjall
+             "pa.clean,  dbo.fPhotoTypeN(pa.type) as otype, "+
+             "pa.u as u, pa.g  as g, pa.r as r, pa.i as i, pa.z as z, "+
+             "pa.err_u as err_u,  pa.err_g  as err_g,  pa.err_r  as err_r, pa.err_i  as err_i, pa.err_z as err_z, "+
+            //-- photoObj
+            "dbo.fPhotoModeN(po.mode) as mode,po.mjd as 'mjdNum',  (po.nDetect-1) as 'Other observations', po.parentID, po.nChild, str(po.extinction_r,7,2) as extinction_r,"+
+            "str(po.petroRad_r,9,2)+' &plusmn '+str(po.petroRadErr_r,10,3) as 'petrorad_r',"+
+            //--- photz,photozRF,zoospec 
+            "(str(phz.z,7,3)+' &plusmn '+str(phz.zerr,8,4)) as 'photoZ_KD', "+
+            //---(str(phzrf.z,7,3)+' &plusmn; '+str(phzrf.zerr,8,4)) as 'photoZ_RF', 
+            "case (1*zz.spiral+10*zz.elliptical+100*zz.uncertain) when 1 then 'Spiral' when 10 then 'Elliptical' when 100 then 'Uncertain' else '-' end as 'GalaxyZoo_Morph' "+
+            //--all joins
+            " from PhotoTag pt  "+
+            " left outer join PhotoObj po on po.objid = pt.objid "+
+            " left outer join Photoz phz on pt.objid=phz.objid "+
+             //---left outer join PhotozRF phzrf on pt.objid=phzrf.objid 
+            " left outer join zooSpec zz on pt.objid=zz.objid "+
+            " left outer join field f on f.fieldID=pt.fieldID "+
+            " left outer join photoobjall pa with (nolock)on  pa.objid = pt.objid " +
+            " where pt.objId= @objId";
                 
 
         /// Spectral parameters
@@ -329,7 +339,7 @@ namespace SkyServer.Tools.Explore
                                hi as 'Neutral Hydrogen Index' from RC3 where objId=@objId";
 
         public static string WISE = @" select 'WISE' as Catalog,w.w1mag,w.w2mag,w.w3mag,w.w4mag,'link' as 'Full WISE data' 
-                            from WISE_xmatch x join WISE_allsky w on x.wise_cntr=w.cntr where x.sdss_objid=@objId";
+                            from WISE_xmatch x join WISE_allsky as w WITH(INDEX(pk_WISE_allsky_cntr)) on x.wise_cntr=w.cntr where x.sdss_objid=@objId";
                        //cmd = cmd.Replace("@wiselink", wiseLinkCrossId);
                
         
@@ -385,7 +395,8 @@ namespace SkyServer.Tools.Explore
         public static string getpmtsFromEq = @" select top 1 cast(p.objId as binary(8)) as objId, cast(p.specObjId as binary(8)) as specObjId 
                             from PhotoTag p, dbo.fGetNearbyObjAllEq(@qra , @qdec , @searchRadius) n
                             where p.objId=n.objId order by n.mode asc, n.distance asc";
-                
+
+        public static string getSkyversion = "select top 1 skyversion from run";
 
         public static string getpmtsFromSpecWithApogeeId= @" select st.apstar_id, st.ra, st.dec
                                                             from apogeeStar st
@@ -408,7 +419,15 @@ namespace SkyServer.Tools.Explore
                      from PhotoTag p 
                      left outer join SpecObjAll s ON s.bestobjid=p.objid AND s.scienceprimary=1
                      where p.objId=dbo.fObjId(@objid)";
-                
+
+
+        public static string getpmtsFrom5PartSDSS = @"select p.ra, p.dec, p.run, p.rerun, p.camcol, p.field,
+                     cast(p.fieldId as binary(8)) as fieldId,
+                     cast(s.specobjid as binary(8)) as specObjId,
+                     cast(p.objId as binary(8)) as objId 
+                     from PhotoTag p 
+                     left outer join SpecObjAll s ON s.bestobjid=p.objid AND s.scienceprimary=1
+                     where p.objId=dbo.fObjidFromSDSS(@skyversion,@run,@rerun,@camcol,@field,@obj)";
 
         public static string getPlateFiberFromSpecObj = @"select cast(s.plateId as binary(8)) as plateId, s.mjd, s.fiberId, q.plate 
                            from SpecObjAll s JOIN PlateX q ON s.plateId=q.plateId 
@@ -445,19 +464,16 @@ namespace SkyServer.Tools.Explore
                  dbo.fGetUrlFitsCFrame(@fieldId,'r'),
                  dbo.fGetUrlFitsCFrame(@fieldId,'i'),
                  dbo.fGetUrlFitsCFrame(@fieldId,'z'),
-
                  dbo.fGetUrlFitsBin(@fieldId,'u'),
                  dbo.fGetUrlFitsBin(@fieldId,'g'),
                  dbo.fGetUrlFitsBin(@fieldId,'r'),
                  dbo.fGetUrlFitsBin(@fieldId,'i'),
                  dbo.fGetUrlFitsBin(@fieldId,'z'),
-
                  dbo.fGetUrlFitsMask(@fieldId,'u'),
                  dbo.fGetUrlFitsMask(@fieldId,'g'),
                  dbo.fGetUrlFitsMask(@fieldId,'r'),
                  dbo.fGetUrlFitsMask(@fieldId,'i'),
                  dbo.fGetUrlFitsMask(@fieldId,'z'),
-
                  dbo.fGetUrlFitsAtlas(@fieldId),
                  dbo.fGetUrlFitsField(@fieldId)";
 

@@ -44,7 +44,7 @@ a week) because SDSS astronomers need the information to configure
 their telescope to work most efficiently during the next dark phase 
 of the moon.  If too much time goes by, the target objects will set as the 
 season passes.</p>
-<img src=images/sdss-main-logo.gif align=left>
+<img src=images/sdssIVlogo.png height = 65 align=left>
 <p>Scientists at <a href="http://www.sdss.org/members/fermi.html" target="offsite">Fermilab</a> have 
 led the effort to develop what the SDSS calls data-processing
 pipelines.  A pipeline is a computer program that processes

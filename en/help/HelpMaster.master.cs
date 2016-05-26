@@ -70,7 +70,7 @@ namespace SkyServer.Help
             //  gutter += "20.3,Emacs interface,"+emacsURL+"/skyserver.el;";
             //  gutter += "20.4,Cooking with Sloan,/help/download/cooking/;"
 
-            gutter += "8,API,/help/docs/api.aspx;";
+            gutter += "8,API/Tools,/help/docs/api.aspx;";
 
             HelpGutter = new Gutter(imgpath, url, Response);
 

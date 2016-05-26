@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace SkyServer.Tools.Explore
 {
@@ -35,11 +36,23 @@ namespace SkyServer.Tools.Explore
         protected long? specObjId;
 
         protected RunQuery runQuery;
+
+        DataSet ds = new DataSet();
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            //ds = (DataSet)Session["objectDataSet"];
+            
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             master = (ObjectExplorer)Page.Master;
-            runQuery = new RunQuery();
+
+            string token = "";
+            HttpCookie cookie = Request.Cookies["Keystone"];
+            if (cookie != null)
+                if (cookie["token"] != null || !cookie["token"].Equals(""))
+                    token = cookie["token"];
+            runQuery = new RunQuery(token);
             try
             {
                 //objId = Request.QueryString["id"];
@@ -51,23 +64,25 @@ namespace SkyServer.Tools.Explore
             catch(Exception exp){
                 specObjId = null;
             }
-            if(specId != null && !specId.Equals(""))
-            executeQuery();
+
+            if (specId != null && !specId.Equals(""))
+                executeQuery();
+
         }
 
         private void executeQuery()
         {
 
             string cmd = ExplorerQueries.getSpectroQuery.Replace("@objId", objId).Replace("@specId", master.specId.ToString());
-            DataSet ds = runQuery.RunCasjobs(cmd);
 
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            //using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            using (DataTableReader reader = ((DataSet)Session["LoadExplore"]).Tables["SpectralData"].CreateDataReader())
             {
                 if (reader.Read())
                 {
                     if (reader.HasRows)
                     {
-                        plate = reader["plate"] is DBNull ? -99999 : (short)reader["plate"]; 
+                        plate = reader["plate"] is DBNull ? -99999 : (short)reader["plate"];
 
                         mjd = reader["mjd"] is DBNull ? -99999 : (int)reader["mjd"];
 

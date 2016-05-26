@@ -33,6 +33,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\SkyServer.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -46,6 +47,9 @@
     <Reference Include="CSharpFITS_v1.1">
       <HintPath>lib\CSharpFITS_v1.1.dll</HintPath>
     </Reference>
+    <Reference Include="DotNetOpenAuth">
+      <HintPath>lib\DotNetOpenAuth.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -53,10 +57,14 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\Newtonsoft.Json.6.0.6\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <HintPath>packages\Newtonsoft.Json.6.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="openstacknet, Version=1.3.0.0, Culture=neutral, PublicKeyToken=bf74868971e80ac6, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\openstacknet.dll</HintPath>
     </Reference>
     <Reference Include="SimpleRESTServices">
-      <HintPath>packages\SimpleRESTServices.1.3.0.1\lib\net40\SimpleRESTServices.dll</HintPath>
+      <HintPath>lib\SimpleRESTServices.dll</HintPath>
     </Reference>
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -174,6 +182,7 @@
     <Content Include="en\get\noimage2.gif" />
     <Content Include="en\get\noimage2.jpg" />
     <Content Include="en\GSearch.aspx" />
+    <Content Include="en\HandleKeystone.aspx" />
     <Content Include="en\help\browser\Browser.aspx" />
     <Content Include="en\help\browser\Default.aspx" />
     <Content Include="en\help\browser\images\backtotop.gif" />
@@ -460,6 +469,8 @@
     <Content Include="en\images\sciserver_icon_bkgd_blk_150px.png" />
     <Content Include="en\images\sciserver_logo_inverted.png" />
     <Content Include="en\images\sciserver_logo_usermsg.png" />
+    <Content Include="en\images\sciserverlogo.png" />
+    <Content Include="en\images\sciserver_icon_bkgd_blue_64px.png" />
     <Content Include="en\images\sdss-background.jpg" />
     <Content Include="en\images\sdss-globe.gif" />
     <Content Include="en\images\sdss-main-banner.gif" />
@@ -479,6 +490,7 @@
     <Content Include="en\images\titlebar1.jpg" />
     <Content Include="en\links\Default.aspx" />
     <Content Include="en\links\LinksHome.aspx" />
+    <Content Include="en\Loginfloat.ascx" />
     <Content Include="en\News.aspx" />
     <Content Include="en\proj\advanced\AdvancedHome.aspx" />
     <Content Include="en\proj\advanced\color\Amounts.aspx" />
@@ -1750,7 +1762,6 @@
     <Content Include="en\tools\chart\images\zoombar9.jpg" />
     <Content Include="en\tools\chart\javascript\Control.js" />
     <Content Include="en\tools\chart\javascript\Coord.js" />
-    <Content Include="en\tools\chart\javascript\naviClass.js" />
     <Content Include="en\tools\chart\javascript\ShowCanvas.js" />
     <Content Include="en\tools\chart\js\ctrlscript.js" />
     <Content Include="en\tools\chart\List.aspx" />
@@ -1765,7 +1776,20 @@
     <Content Include="en\tools\chart\SqlToForm.aspx" />
     <Content Include="en\tools\crossid\CrossId.aspx" />
     <Content Include="en\tools\crossid\Default.aspx" />
-    <Content Include="en\tools\crossid\X_CrossId.aspx" />
+    <Content Include="en\tools\crossmatch\CrossMatch.aspx" />
+    <Content Include="en\tools\crossmatch\css\bootstrap-theme.css" />
+    <Content Include="en\tools\crossmatch\css\bootstrap-theme.min.css" />
+    <Content Include="en\tools\crossmatch\css\bootstrap.css" />
+    <Content Include="en\tools\crossmatch\css\bootstrap.min.css" />
+    <Content Include="en\tools\crossmatch\css\crossmatch.css" />
+    <Content Include="en\tools\crossmatch\Default.aspx" />
+    <Content Include="en\tools\crossmatch\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="en\tools\crossmatch\images\new_titlebar.jpg" />
+    <Content Include="en\tools\crossmatch\js\bootstrap.js" />
+    <Content Include="en\tools\crossmatch\js\bootstrap.min.js" />
+    <Content Include="en\tools\crossmatch\js\crossmatch-old.js" />
+    <Content Include="en\tools\crossmatch\js\crossmatch.js" />
+    <Content Include="en\tools\crossmatch\js\npm.js" />
     <Content Include="en\tools\Default.aspx" />
     <Content Include="en\tools\explore\AllSpec.aspx" />
     <Content Include="en\tools\explore\Default.aspx" />
@@ -1984,13 +2008,10 @@
     <Content Include="en\tools\quicklook\images\square.gif" />
     <Content Include="en\tools\quicklook\qlhelp.css" />
     <Content Include="en\tools\quicklook\quicklook.swf" />
-    <Content Include="en\tools\quicklook\QuickObj.aspx" />
-    <Content Include="en\tools\quicklook\QuickSummary.aspx" />
+    <Content Include="en\tools\quicklook\QuickLookControls\MetaDataControl.ascx" />
+    <Content Include="en\tools\quicklook\quickobj.aspx" />
     <Content Include="en\tools\quicklook\Search.aspx" />
-    <Content Include="en\tools\quicklook\SetEq.aspx" />
-    <Content Include="en\tools\quicklook\SetId.aspx" />
-    <Content Include="en\tools\quicklook\SetPlfib.aspx" />
-    <Content Include="en\tools\quicklook\SetSDSS.aspx" />
+    <Content Include="en\tools\quicklook\Summary.aspx" />
     <Content Include="en\tools\scroll\Camcol.aspx" />
     <Content Include="en\tools\scroll\Default.aspx" />
     <Content Include="en\tools\scroll\ScrollHome.aspx" />
@@ -2017,6 +2038,7 @@
     <Content Include="en\tools\search\form\images\update.jpg" />
     <Content Include="en\tools\search\form\SearchForm.aspx" />
     <Content Include="en\tools\search\form\validate.js" />
+    <Content Include="en\tools\search\UserHistory.aspx" />
     <Content Include="en\tools\search\IQS.aspx" />
     <Content Include="en\tools\search\IRQS.aspx" />
     <Content Include="en\tools\search\naviClass.js" />
@@ -2030,12 +2052,8 @@
     <Content Include="en\tools\search\SearchHome.aspx" />
     <Content Include="en\tools\search\SQL.aspx" />
     <Content Include="en\tools\search\SQS.aspx" />
-    <Content Include="en\tools\search\X_IQS.aspx" />
-    <Content Include="en\tools\search\X_IRQS.aspx" />
-    <Content Include="en\tools\search\X_Radial.aspx" />
-    <Content Include="en\tools\search\X_Rect.aspx" />
-    <Content Include="en\tools\search\X_SQL.aspx" />
-    <Content Include="en\tools\search\X_SQS.aspx" />
+    <Content Include="en\tools\search\validate_search.js" />
+    <Content Include="en\tools\search\X_Results.aspx" />
     <Content Include="en\tools\STARTBall\FlashJavascriptGateway\FlashJavascriptGateway\docs\license.txt" />
     <Content Include="en\tools\STARTBall\FlashJavascriptGateway\FlashJavascriptGateway\docs\readme.html" />
     <Content Include="en\tools\STARTBall\FlashJavascriptGateway\FlashJavascriptGateway\installation\JavaScriptFlashGateway.js" />
@@ -2079,6 +2097,7 @@
     <Content Include="en\tools\started\StartedHome.aspx" />
     <Content Include="en\tools\ToolsHome.aspx" />
     <Content Include="en\wz_tooltip.js" />
+    <Content Include="en\exception\ErrorPage.aspx" />
     <Content Include="FavIcon.ICO" />
     <Content Include="Global.asax" />
     <Content Include="images\flag_br.gif" />
@@ -2105,17 +2124,19 @@
     <Content Include="images\tick.GIF" />
     <Content Include="images\tick.jpg" />
     <Content Include="images\word_icon.gif" />
+    <Content Include="en\motd.inc" />
+    <Content Include="robots.txt" />
     <Content Include="scroll.js" />
     <Content Include="skyserver.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Web.Debug.config">
+    <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
+    </None>
+    <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
-    </Content>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="en\astro\AstroHome.aspx.cs">
@@ -2188,6 +2209,7 @@
     <Compile Include="en\credits\CreditsMaster.master.designer.cs">
       <DependentUpon>CreditsMaster.master</DependentUpon>
     </Compile>
+    <Compile Include="en\exception\ExceptionUtility.cs" />
     <Compile Include="en\get\FrameById.ashx.cs">
       <DependentUpon>FrameById.ashx</DependentUpon>
     </Compile>
@@ -2206,6 +2228,13 @@
     </Compile>
     <Compile Include="en\GSearch.aspx.designer.cs">
       <DependentUpon>GSearch.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\HandleKeystone.aspx.cs">
+      <DependentUpon>HandleKeystone.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\HandleKeystone.aspx.designer.cs">
+      <DependentUpon>HandleKeystone.aspx</DependentUpon>
     </Compile>
     <Compile Include="en\help\BrowserFunctions.cs" />
     <Compile Include="en\help\browser\Browser.aspx.cs">
@@ -2963,6 +2992,13 @@
     </Compile>
     <Compile Include="en\links\LinksMaster.master.designer.cs">
       <DependentUpon>LinksMaster.master</DependentUpon>
+    </Compile>
+    <Compile Include="en\Loginfloat.ascx.cs">
+      <DependentUpon>Loginfloat.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\Loginfloat.ascx.designer.cs">
+      <DependentUpon>Loginfloat.ascx</DependentUpon>
     </Compile>
     <Compile Include="en\News.aspx.cs">
       <DependentUpon>News.aspx</DependentUpon>
@@ -5586,12 +5622,19 @@
     <Compile Include="en\tools\crossid\CrossId.aspx.designer.cs">
       <DependentUpon>CrossId.aspx</DependentUpon>
     </Compile>
-    <Compile Include="en\tools\crossid\X_CrossId.aspx.cs">
-      <DependentUpon>X_CrossId.aspx</DependentUpon>
+    <Compile Include="en\tools\crossmatch\CrossMatch.aspx.cs">
+      <DependentUpon>CrossMatch.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="en\tools\crossid\X_CrossId.aspx.designer.cs">
-      <DependentUpon>X_CrossId.aspx</DependentUpon>
+    <Compile Include="en\tools\crossmatch\CrossMatch.aspx.designer.cs">
+      <DependentUpon>CrossMatch.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\tools\crossmatch\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\tools\crossmatch\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="en\tools\explore\DisplayResults.aspx.cs">
       <DependentUpon>DisplayResults.aspx</DependentUpon>
@@ -5795,12 +5838,30 @@
     <Compile Include="en\tools\quicklook\Help.aspx.designer.cs">
       <DependentUpon>Help.aspx</DependentUpon>
     </Compile>
-    <Compile Include="en\tools\quicklook\QuickObj.aspx.cs">
-      <DependentUpon>QuickObj.aspx</DependentUpon>
+    <Compile Include="en\tools\quicklook\HRefs.cs" />
+    <Compile Include="en\tools\quicklook\QuickLook.Master.cs">
+      <DependentUpon>QuickLook.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="en\tools\quicklook\QuickObj.aspx.designer.cs">
-      <DependentUpon>QuickObj.aspx</DependentUpon>
+    <Compile Include="en\tools\quicklook\QuickLook.Master.designer.cs">
+      <DependentUpon>QuickLook.Master</DependentUpon>
+    </Compile>
+    <Compile Include="en\tools\quicklook\QuickLookControls\MetaDataControl.ascx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+      <DependentUpon>MetaDataControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="en\tools\quicklook\QuickLookControls\MetaDataControl.ascx.designer.cs">
+      <DependentUpon>MetaDataControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="en\tools\quicklook\QuickLookHelpers\ObjectInfo.cs" />
+    <Compile Include="en\tools\quicklook\QuickLookHelpers\QuickLookQueries.cs" />
+    <Compile Include="en\tools\quicklook\QuickLookHelpers\RunQuery.cs" />
+    <Compile Include="en\tools\quicklook\quickobj.aspx.cs">
+      <DependentUpon>quickobj.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\tools\quicklook\quickobj.aspx.designer.cs">
+      <DependentUpon>quickobj.aspx</DependentUpon>
     </Compile>
     <Compile Include="en\tools\quicklook\Search.aspx.cs">
       <DependentUpon>Search.aspx</DependentUpon>
@@ -5809,33 +5870,12 @@
     <Compile Include="en\tools\quicklook\Search.aspx.designer.cs">
       <DependentUpon>Search.aspx</DependentUpon>
     </Compile>
-    <Compile Include="en\tools\quicklook\SetEq.aspx.cs">
-      <DependentUpon>SetEq.aspx</DependentUpon>
+    <Compile Include="en\tools\quicklook\Summary.aspx.cs">
+      <DependentUpon>Summary.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="en\tools\quicklook\SetEq.aspx.designer.cs">
-      <DependentUpon>SetEq.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="en\tools\quicklook\SetId.aspx.cs">
-      <DependentUpon>SetId.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="en\tools\quicklook\SetId.aspx.designer.cs">
-      <DependentUpon>SetId.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="en\tools\quicklook\SetPlfib.aspx.cs">
-      <DependentUpon>SetPlfib.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="en\tools\quicklook\SetPlfib.aspx.designer.cs">
-      <DependentUpon>SetPlfib.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="en\tools\quicklook\SetSDSS.aspx.cs">
-      <DependentUpon>SetSDSS.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="en\tools\quicklook\SetSDSS.aspx.designer.cs">
-      <DependentUpon>SetSDSS.aspx</DependentUpon>
+    <Compile Include="en\tools\quicklook\Summary.aspx.designer.cs">
+      <DependentUpon>Summary.aspx</DependentUpon>
     </Compile>
     <Compile Include="en\tools\Resolver.ashx.cs">
       <DependentUpon>Resolver.ashx</DependentUpon>
@@ -5867,6 +5907,13 @@
     </Compile>
     <Compile Include="en\tools\search\form\SearchForm.aspx.designer.cs">
       <DependentUpon>SearchForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\tools\search\UserHistory.aspx.cs">
+      <DependentUpon>UserHistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\tools\search\UserHistory.aspx.designer.cs">
+      <DependentUpon>UserHistory.aspx</DependentUpon>
     </Compile>
     <Compile Include="en\tools\search\IQS.aspx.cs">
       <DependentUpon>IQS.aspx</DependentUpon>
@@ -5952,47 +5999,12 @@
     <Compile Include="en\tools\search\SQS.aspx.designer.cs">
       <DependentUpon>SQS.aspx</DependentUpon>
     </Compile>
-    <Compile Include="en\tools\search\X_IQS.aspx.cs">
-      <DependentUpon>X_IQS.aspx</DependentUpon>
+    <Compile Include="en\tools\search\X_Results.aspx.cs">
+      <DependentUpon>X_Results.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="en\tools\search\X_IQS.aspx.designer.cs">
-      <DependentUpon>X_IQS.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="en\tools\search\X_IRQS.aspx.cs">
-      <DependentUpon>X_IRQS.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="en\tools\search\X_IRQS.aspx.designer.cs">
-      <DependentUpon>X_IRQS.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="en\tools\search\X_Radial.aspx.cs">
-      <DependentUpon>X_Radial.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="en\tools\search\X_Radial.aspx.designer.cs">
-      <DependentUpon>X_Radial.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="en\tools\search\X_Rect.aspx.cs">
-      <DependentUpon>X_Rect.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="en\tools\search\X_Rect.aspx.designer.cs">
-      <DependentUpon>X_Rect.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="en\tools\search\X_SQL.aspx.cs">
-      <DependentUpon>X_SQL.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="en\tools\search\X_SQL.aspx.designer.cs">
-      <DependentUpon>X_SQL.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="en\tools\search\X_SQS.aspx.cs">
-      <DependentUpon>X_SQS.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="en\tools\search\X_SQS.aspx.designer.cs">
-      <DependentUpon>X_SQS.aspx</DependentUpon>
+    <Compile Include="en\tools\search\X_Results.aspx.designer.cs">
+      <DependentUpon>X_Results.aspx</DependentUpon>
     </Compile>
     <Compile Include="en\tools\started\StartedHome.aspx.cs">
       <DependentUpon>StartedHome.aspx</DependentUpon>
@@ -6092,6 +6104,14 @@
     <Compile Include="en\tools\explore\FitsSpec.aspx.designer.cs">
       <DependentUpon>FitsSpec.aspx</DependentUpon>
     </Compile>
+    <Compile Include="en\exception\ErrorPage.aspx.cs">
+      <DependentUpon>ErrorPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\exception\ErrorPage.aspx.designer.cs">
+      <DependentUpon>ErrorPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="misc\KeyStone.cs" />
     <Compile Include="misc\net.ivoa.data\DataSetWrapper.cs" />
     <Compile Include="misc\net.ivoa.data\DataWrapper.cs" />
     <Compile Include="misc\Functions.cs" />
@@ -6159,21 +6179,6 @@
     <Compile Include="en\tools\explore\Summary.aspx.designer.cs">
       <DependentUpon>Summary.aspx</DependentUpon>
     </Compile>
-    <Compile Include="en\tools\quicklook\HRefs.cs" />
-    <Compile Include="en\tools\quicklook\QuickSummary.aspx.cs">
-      <DependentUpon>QuickSummary.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="en\tools\quicklook\QuickSummary.aspx.designer.cs">
-      <DependentUpon>QuickSummary.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="en\tools\quicklook\QuickLook.Master.cs">
-      <DependentUpon>QuickLook.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="en\tools\quicklook\QuickLook.Master.designer.cs">
-      <DependentUpon>QuickLook.Master</DependentUpon>
-    </Compile>
     <Compile Include="en\tools\ToolsHome.aspx.cs">
       <DependentUpon>ToolsHome.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -6195,8 +6200,7 @@
     <Compile Include="misc\Gutter.cs" />
     <Compile Include="misc\net.ivoa.data\HexEncoding.cs" />
     <Compile Include="misc\net.ivoa.data\VOTableWrapper.cs" />
-    <Compile Include="en\tools\search\RadialSearchRequest.cs" />
-    <Compile Include="en\tools\search\RectSearchRequest.cs" />
+    <Compile Include="misc\ResponseREST.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="misc\QueryFuncs.cs" />
     <Compile Include="misc\ResponseAux.cs" />
@@ -6426,6 +6430,12 @@
     <Content Include="en\tools\places\abell.csv" />
     <Content Include="en\tools\places\messier.csv" />
     <Content Include="en\tools\places\ngc.xls" />
+    <Content Include="en\tools\crossmatch\css\bootstrap-theme.css.map" />
+    <Content Include="en\tools\crossmatch\css\bootstrap.css.map" />
+    <Content Include="en\tools\crossmatch\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="en\tools\crossmatch\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="en\tools\crossmatch\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="en\tools\quicklook\QuickLook.Master" />
     <None Include="en\tools\STARTBall\FlashJavascriptGateway\FlashJavascriptGateway\.DS_Store" />
     <None Include="en\tools\STARTBall\FlashJavascriptGateway\FlashJavascriptGateway\installation\.DS_Store" />
     <None Include="en\tools\STARTBall\FlashJavascriptGateway\FlashJavascriptGateway\source\flash\actionscript\com\macromedia\javascript\JavaScriptProxy.as" />
@@ -6445,12 +6455,11 @@
     <Content Include="en\tools\chart\ListBase.Master" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="en\tools\quicklook\QuickLook.Master" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="en\tools\ToolsMaster.master" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="en\tools\search\img\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

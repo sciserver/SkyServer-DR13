@@ -21,8 +21,15 @@ body > div#public > div.migrationAlert a{
     font-family:inherit;
     color:aqua;
 }
+
 body > div.migrationNotice {
     width:160px;
+    color:inherit;
+    font-weight:bold;
+}
+
+body > div.migrationNotice {
+    width:180px;
     position:absolute;
     top:105px;
     left:200px;
@@ -100,7 +107,7 @@ body > div.migrationMenu ul>li>a {
     float:right;
     padding-left:0px;
     padding-right:10px;
-    width: 200px;
+    width: 220px;
     height: 73px;
     background-color:#fc6f03;
     border-radius:5px;

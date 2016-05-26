@@ -121,8 +121,11 @@ function resolveName() {
             else {
                 var s = response.split('\n');
                 $('#searchName').val(s[0].substring(6));
-                $('#searchRA').val(s[1].substring(4));
-                $('#searchDec').val(s[2].substring(5));
+                //$('#searchRA').val(s[1].substring(4));
+                //$('#searchDec').val(s[2].substring(5));
+                var windowPage = "summary.aspx";
+                window.location = windowPage + '?ra=' + s[1].substring(4) + '&dec=' + s[2].substring(5);
+                
             }
         },
         error: function () {
@@ -162,9 +165,11 @@ function press_ok(kind) {
             //callNameResolver();
             break;
         case "objid":
-            window.location = windowPage+'?id=' + f.searchObjID.value;
+            window.location = windowPage + '?id=' + f.searchObjID.value;
             break;
         case "radec":
+            setra()
+            setdec()
             window.location = windowPage+'?ra=' + f.searchRA.value + '&dec=' + f.searchDec.value;
             break;
         case "sdss":
@@ -173,23 +178,31 @@ function press_ok(kind) {
                 alert('The SDSS Id has 5 parts,\n Run-Rerun-Camcol-Field-Obj\n');
                 return false;
             }
-            var rerun = Number(a[1]) + 2048;  // skyversion=1
-            var run = Number(a[0]);
-            var camcol = Number(a[2]);
-            var field = Number(a[3]);
-            var obj = Number(a[4]);
-            var cf = 8192 * camcol + field;
+            //var rerun = Number(a[1]) + 2048;  // skyversion=1
+            //var rerun = Number(a[1]) + 4096;  // skyversion=2
+            //var run = Number(a[0]);
+            //var camcol = Number(a[2]);
+            //var field = Number(a[3]);
+            //var obj = Number(a[4]);
+            //var cf = 8192 * camcol + field;
 
-            var s = "0x";
-            s += padHex(rerun, 4);
-            s += padHex(run, 4);
-            s += padHex(cf, 4);
-            s += padHex(obj, 4);
+            //var s = "0x";
+            //s += padHex(rerun, 4);
+            //s += padHex(run, 4);
+            //s += padHex(cf, 4);
+            //s += padHex(obj, 4);
 
-            window.location = windowPage+'?id=' + s;
+            //window.location = windowPage + '?id=' + s //Number(s).toString(10);
+            window.location = windowPage + '?run=' + a[0] + '&rerun=' + a[1] + '&camcol=' + a[2] + '&field=' + a[3] + '&obj=' + a[4]
             break;
         case "specid":
-            window.location = windowPage+'?sid=' + encodeURIComponent(f.searchSpecID.value);
+            var ID = parseFloat(f.searchSpecID.value)
+            if (isNaN(ID) || f.searchSpecID.value.indexOf("+")>-1 ) {
+                window.location = windowPage + '?apid=' + (f.searchSpecID.value);
+            }
+            else {
+                window.location = windowPage + '?sid=' + f.searchSpecID.value;
+            }
             break;
         case "plfib":
             window.location = windowPage+'?plate=' + f.searchPlate.value + '&mjd=' + f.searchMJD.value + '&fiber=' + f.searchFiber.value;
@@ -219,4 +232,49 @@ function toggleSearch() {
     }
 }
 
+
+function setra() {
+    var s_ra = String(document.getElementById('searchRA').value);
+    var v;
+    if ($.isNumeric(s_ra)) {
+        v = s_ra;
+        v = v % 360;
+        if (v < 0) v += 360;
+
+        document.getElementById('searchRA').value = v;
+    }
+    return false;
+}
+
+//------------------------------------
+// set and validate the dec value
+//------------------------------------
+function setdec() {
+
+    var s_dec = String(document.getElementById('searchDec').value);
+    var v;
+    if ($.isNumeric(s_dec)) {
+        v = parseFloat(s_dec);
+        if (isNaN(v)) v = 0.0;
+        //if (v<-90) v= -90;
+        //if (v>90) v= 90;
+        var OldRa = parseFloat(document.getElementById('searchRA').value)
+        if (v < -90 || v > 90) {
+            v = v % 360;					// brings dec within the circle
+            if (v < 0) {
+                v = v + 360     // only allows positive dec values
+            }
+            if (v > 90 & v < 270) { // if dec is at the other side of the poles
+                document.getElementById('searchRA').value = (OldRa + 180) % 360 // go 1/2 way around the globe
+                v = 180 - v
+            }
+            if (v >= 270) { // if dec is at this side from the south pole
+                v = v - 360
+            }
+        }
+
+        document.getElementById('searchDec').value = v;
+    }
+    return false;
+}
 

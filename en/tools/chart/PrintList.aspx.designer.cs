@@ -11,14 +11,5 @@ namespace SkyServer.Tools.Chart {
     
     
     public partial class PrintList {
-        
-        /// <summary>
-        /// getjpeg control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm getjpeg;
     }
 }

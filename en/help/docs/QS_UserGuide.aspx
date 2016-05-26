@@ -122,7 +122,6 @@ designation</a> for the object, in the format:<dd> SDSS JHHMMSS.ss+DDMMSS.s.<br>
 
 <%
     showTable(oConn, "PhotoObj");
-
     Response.Write("<hr><p><a name= \"SAS\"> <h3> Getting FITS files from the SAS (Science Archive Server) </h3> </a> \n");
     Response.Write("<p>\n");
     Response.Write("After you press <b>Submit</b>, the page that displays the results of the query will include the appropriate button(s) to upload\n");
@@ -132,7 +131,6 @@ designation</a> for the object, in the format:<dd> SDSS JHHMMSS.ss+DDMMSS.s.<br>
     Response.Write("displayed on the results page (below the query results table).  If you request spectroscopic data, and include the columns \n");
     Response.Write("<i>plate</i>, <i>mjd</i> and <i>fiberid</i> in the output (included in the <b>minimal</b> and <b>typical</b> column lists), then the\n");
     Response.Write("<b>Upload list of spectra to SAS</b> button will be displayed on the results page so you can retrieve FITS files for the spectra. \n");
-
 %>
 
 <hr><p><a name= "PositionConstraint"> <h3> Position Constraints </h3> </a> 
@@ -189,12 +187,12 @@ Valid formats (J2000):
         the default is 1 arcminute. 
         </P>
         <P>
-        Valid formats for positions are:  
+        Valid formats for positions are:  
         </p>
         <ul>
-            <li>ra in decimal degrees (D.ddddd); or in sexagesimal hours, minutes, seconds (HH:MM:SS.ss or HH MM SS.ss)  
+            <li>ra in decimal degrees (D.ddddd); or in sexagesimal hours, minutes, seconds (HH:MM:SS.ss or HH MM SS.ss)  
             </li>
-            <li>dec in decimal degrees (+/-DD.ddddd); or in sexagesimal degrees, arcminutes, arcseconds (+/-DD:MM:SS.s or +/-DD MM SS.s)  
+            <li>dec in decimal degrees (+/-DD.ddddd); or in sexagesimal degrees, arcminutes, arcseconds (+/-DD:MM:SS.s or +/-DD MM SS.s)  
             </li>
             <li>sep in decimal arcminutes (S.ssss...) </li>
         </ul>

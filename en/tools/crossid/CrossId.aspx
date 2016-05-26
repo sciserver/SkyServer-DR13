@@ -4,6 +4,14 @@
 <script type="text/javascript">
 //window.onload = alert('OK');
 
+
+function goToWindow() {
+        var w = window.open("", 'search');
+        w.focus();
+
+}
+
+
 function disableFields(photo,spectro,apogee) {
 	document.getElementById("photoScope1").disabled = photo;
 	document.getElementById("photoScope2").disabled = photo;
@@ -92,7 +100,7 @@ function doSpecQuery(join, pmf) {
 
 function doApogeeQuery() {
 	var joinClause, selectClause;
-  selectClause = "SELECT *";
+  selectClause = "SELECT s.*";
   joinClause = "      JOIN #x x ON x.up_id = u.up_id\n      JOIN apogeestar s ON s.apstar_id = x.apstar_id\n";
 	document.crossid.uquery.value = selectClause + "\nFROM #upload u\n" + joinClause;
 }
@@ -116,8 +124,8 @@ function apogeeQuery() {
 }
 
 function doRaDecSample(upRA1,upDec1,upRA2,upDec2,upRA3,upDec3,upRA4,upDec4) {
-	document.getElementById("paste").value = "  name  ra       dec\n  A1   "+upRA1+"    "+upDec1+"\n  A2   "+
-		upRA2+"    "+upDec2+"\n  A3   "+upRA3+"    "+upDec3+"\n  A4   "+upRA4+"    "+upDec4+"\n";
+	document.getElementById("paste").value = "  name  ra         dec\n  A1    "+upRA1+"       "+upDec1+"\n  A2    "+
+		upRA2+"       "+upDec2+"\n  A3    "+upRA3+"       "+upDec3+"\n  A4    "+upRA4+"    "+upDec4+"\n";
 //document.getElementById("paste").focus();
 	document.getElementById("radius").disabled = false;
 	
@@ -223,13 +231,15 @@ function resetRadio() {
 	.txt	{width:260px}
 </style>
 
-
 <div id="title">SDSS CrossID for <%=globals.Release%>&nbsp;&nbsp;&nbsp;&nbsp;
 <span class='frame'><font size=-1><a class="qtitle" href="#help">Scroll down for Help</a></font></span></div>
 
 <div id="transp">
-<FORM METHOD="post" ENCTYPE="multipart/form-data" ACTION="x_crossid.aspx" id="crossid" name="crossid">
+<FORM METHOD="post" ENCTYPE="multipart/form-data" ACTION="../search/X_Results.aspx" id="crossid" name="crossid" target="search">
 
+<input type="hidden" name="searchtool" id="searchtool" value="CrossID" />
+<input type="hidden" name="TaskName" id="TaskName" value="Skyserver.CrossId"/>
+<input type="hidden" name="ReturnHtml" id="ReturnHtml" value="true" />
 
 <table BORDER=1 WIDTH=540 cellpadding=3 cellspacing=3 BGCOLOR="#aaaaaa"><tr><td class="q">
 <table border="0" width="100%">
@@ -389,7 +399,7 @@ ORDER BY x.up_id
 	    <td colspan="2"><table width="100%">
 		<tr>
 		    <td width="10%" align="left">
-			<input id=submit type=submit value=Submit class="button">
+			<input id=submit type="submit" value="Submit" class="button" onclick="goToWindow()">
 	    	    </td>
 		    <td width="30%" align="center" class="q">
 			<table BORDER=0 width="100%">
@@ -402,8 +412,15 @@ ORDER BY x.up_id
         <td nowrap=nowrap ALIGN=middle width="13%"><input name=format value="json"  type=radio class="box">JSON</td>
         <td nowrap=nowrap ALIGN=middle width="13%"><input name=format value="votable"  type=radio class="box">VOTable</td>
         <td nowrap=nowrap ALIGN=middle width="13%"><input name=format value="fits"  type=radio class="box">FITS</td>
+        <td nowrap=nowrap ALIGN=middle width="13%" onmouseover="return escape('Executes the query and stores the result in a table in the CasJobs MyDB database. If the table name entry is empty, then a default name will be given.');"><input name=format value="mydb"  type=radio class="box"> MyDB <i><em><strong><sup><font color="red">NEW!</font></sup></strong> </em></i></td>
+
 				<td nowrap=nowrap ALIGN=left width="5%">&nbsp;</td>
 		  	    </tr>
+                <tr>  
+                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>  
+                    <td nowrap class="q">Table name <input id=TableName name=TableName VALUE="" SIZE="10"></td>
+                     <td></td>   </tr>
+
 			</table>
 	    	    </td>
 	    	    <td width="10%" align="right">
@@ -432,13 +449,19 @@ ORDER BY x.up_id
 	Just check the appropriate "JOIN with" box to return the matching objects.   You will see the default
 	query in the query window changing accordingly.
 	<p>
+  <!--
 	In order to avoid congestion on the server, the upload file is limited to a size of <u>80KB</u>, and the
 	radius (for RA/dec search) is limited to <u><%=crossidRadius%> arcmin</u>.  The crossid search will time out 
 	after <u><%=crossidTimeout%> secs</u>, and the output data set can not exceed <u><%=rowLimit%> 
 	objects</u>. 
 	Please see the <a href="<%=url%>/help/docs/limits.aspx">Query Limits page</a>.  If this is a 
 	problem, please submit your list in pieces. 
-
+  -->
+  For this browser-based synchronous cross-ID service, the upload file is limited to <u>1000 rows</u> and 
+  the output is limited to <u><%=rowLimit%> rows</u> to ensure that the results are returned in a timely 
+  manner. For larger uploads, please use the asynchronous CasJobs service (see the Help page for Advanced 
+  Queries under Nearest Neighbor Searches (Cross-ID)).
+  
 	<a name="list"></a><h5>Upload list format:</h5>
 	You have the following choices:
 	<ol>
