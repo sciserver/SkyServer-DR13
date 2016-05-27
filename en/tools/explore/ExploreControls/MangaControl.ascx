@@ -5,7 +5,14 @@
 <% if (HasData)   { %>
 
 
+<script type="text/javascript">
 
+function showRow(thelink) {
+    document.getElementById(thelink).style.visibility = "visible";
+}
+
+
+</script>
 
 <div id="manga">
     
@@ -25,19 +32,19 @@
 
             <% if(RowIndex == 0){ %>
                   <td width="70" align="center"> 
-                        <a target="_blank" href="<%=globals.MangaUrlBase + dt.Rows[RowIndex]["versdrp3"].ToString() + "/" + dt.Rows[RowIndex]["plate"].ToString() + "/stack/images/" + dt.Rows[RowIndex]["ifudsgn"].ToString() + ".png"%>"><img src="<%=globals.MangaUrlBase + dt.Rows[RowIndex]["versdrp3"].ToString() + "/" + dt.Rows[RowIndex]["plate"].ToString() + "/stack/images/" + dt.Rows[RowIndex]["ifudsgn"].ToString() + ".png"%>" width="70" height="70" alt="Manga Image" /></a> 
+                        <a target="_blank" href="<%=globals.MangaUrlBase + dt.Rows[RowIndex]["versdrp3"].ToString() + "/" + dt.Rows[RowIndex]["plate"].ToString() + "/stack/images/" + dt.Rows[RowIndex]["ifudsgn"].ToString() + ".png"%>"><img src="<%=globals.MangaUrlBase + dt.Rows[RowIndex]["versdrp3"].ToString() + "/" + dt.Rows[RowIndex]["plate"].ToString() + "/stack/images/" + dt.Rows[RowIndex]["ifudsgn"].ToString() + ".png"%>" width="68" height="68" alt="Manga Image" /></a> 
                   </td>
             <%} else { %>
                   <td width="70" align="center">  
-                        <a id="ImageText<%=RowIndex%>" href="javascript:showLink('Image<%=RowIndex%>');hideLink('ImageText<%=RowIndex%>')" >
-                              Show Image
+                        <a id="ImageText<%=RowIndex%>" href="javascript:hideLink('ImageText<%=RowIndex%>');showLink('Image<%=RowIndex%>');showRow('SeconTable<%=RowIndex%>');showRow('Separator<%=RowIndex%>')" >
+                              Expand
                         </a>
-                        <a target="_blank" id="Image<%=RowIndex%>" style="display: none" href="<%=globals.MangaUrlBase + dt.Rows[RowIndex]["versdrp3"].ToString() + "/" + dt.Rows[RowIndex]["plate"].ToString() + "/stack/images/" + dt.Rows[RowIndex]["ifudsgn"].ToString() + ".png"%>"><img src="<%=globals.MangaUrlBase + dt.Rows[RowIndex]["versdrp3"].ToString() + "/" + dt.Rows[RowIndex]["plate"].ToString() + "/stack/images/" + dt.Rows[RowIndex]["ifudsgn"].ToString() + ".png"%>" width="70" height="70" alt="Manga Image" /> </a>
+                        <a target="_blank" id="Image<%=RowIndex%>" style="display: none" href="<%=globals.MangaUrlBase + dt.Rows[RowIndex]["versdrp3"].ToString() + "/" + dt.Rows[RowIndex]["plate"].ToString() + "/stack/images/" + dt.Rows[RowIndex]["ifudsgn"].ToString() + ".png"%>"><img src="<%=globals.MangaUrlBase + dt.Rows[RowIndex]["versdrp3"].ToString() + "/" + dt.Rows[RowIndex]["plate"].ToString() + "/stack/images/" + dt.Rows[RowIndex]["ifudsgn"].ToString() + ".png"%>" width="68" height="68" alt="Manga Image" /> </a>
                   </td>
             <%} %>
 
             <td>
-                <table class="content" cellpadding=2 cellspacing=2 border=0 width=520 >   
+                <table  class="content" cellpadding=2 cellspacing=2 border=0 width=520 >   
 
                     <tr>  
                         <td align="center" class="h">plateIFU</td>
@@ -58,7 +65,11 @@
 
                     </tr>
                 </table>
-                <table class="content" cellpadding=2 cellspacing=2 border=0 width=520>   
+                <%if(RowIndex == 0){ %>
+                    <table class="content" cellpadding=2 cellspacing=2 border=0 width=520 style="table-layout: auto">   
+                <%}else{ %>
+                    <table id="SeconTable<%=RowIndex%>" style="visibility: collapse;"  class="content" cellpadding=2 cellspacing=2 border=0 width=520>   
+                <%} %>
                     <tr>  
                         <td align="center" class="h">drp3qual</td>
                         <td align="center" class="h">bluesn2</td>
@@ -82,7 +93,7 @@
           </tr>
              
         </table>
-        <hr width="625" align="left">
+        <!--hr width="625" align="left"-->
     <%} %>
 
 
