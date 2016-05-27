@@ -2045,6 +2045,7 @@
     <Content Include="en\tools\search\SQS.aspx" />
     <Content Include="en\tools\search\validate_search.js" />
     <Content Include="en\tools\search\X_Results.aspx" />
+    <Content Include="en\tools\search\x_sql.aspx" />
     <Content Include="en\tools\STARTBall\FlashJavascriptGateway\FlashJavascriptGateway\docs\license.txt" />
     <Content Include="en\tools\STARTBall\FlashJavascriptGateway\FlashJavascriptGateway\docs\readme.html" />
     <Content Include="en\tools\STARTBall\FlashJavascriptGateway\FlashJavascriptGateway\installation\JavaScriptFlashGateway.js" />
@@ -5994,6 +5995,13 @@
     </Compile>
     <Compile Include="en\tools\search\X_Results.aspx.designer.cs">
       <DependentUpon>X_Results.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\tools\search\x_sql.aspx.cs">
+      <DependentUpon>x_sql.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\tools\search\x_sql.aspx.designer.cs">
+      <DependentUpon>x_sql.aspx</DependentUpon>
     </Compile>
     <Compile Include="en\tools\started\StartedHome.aspx.cs">
       <DependentUpon>StartedHome.aspx</DependentUpon>

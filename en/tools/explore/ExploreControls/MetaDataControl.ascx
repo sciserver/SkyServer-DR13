@@ -47,7 +47,7 @@
                             <script type="text/javascript" language="javascript">
                                 var thera = new Number(<%=ra%>);
                                 var thedec = new Number(<%=dec%>);
-                                document.write(thera.toFixed(5) + ', ' + thedec.toFixed(5));
+                                document.write(thera.toFixed(9) + ', ' + thedec.toFixed(9));
                             </script>
                         </td>
                         <td align="center" class="t">
@@ -56,13 +56,13 @@
                         <td align="center" class="t">
                             <script type="text/javascript" language="javascript">
                                 var L = new Number(<%=Utilities.ra2glon(ra, dec)%>);
-                                document.write(L.toFixed(5));
+                                document.write(L.toFixed(9));
                             </script>
                         </td>
                         <td align="center" class="t">
                             <script type="text/javascript" language="javascript">
                                 var B = new Number(<%=Utilities.dec2glat(ra, dec)%>);
-                                document.write(B.toFixed(5));
+                                document.write(B.toFixed(9));
                             </script>
                         </td>
                     </tr>
