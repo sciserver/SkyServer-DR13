@@ -31,6 +31,9 @@
     <%--This Section for APOGEE parameters--%>
     <%@ Register TagPrefix="apogee" TagName="ApogeeControl" Src="./ExploreControls/ApogeeControl.ascx" %>
 
+    <%--This Section for MANGA parameters--%>
+    <%@ Register TagPrefix="manga" TagName="MangaControl" Src="./ExploreControls/MangaControl.ascx" %>
+
    <div class="content">
    <metadata:MetadataParameters ID="MetadataParameters1" runat="server"/>
    <imaging:ImagingParameters ID="ImagingParameters1" runat="server" /> 
@@ -40,6 +43,7 @@
 
    <spectral:SpectralControl ID="SpectralControl1" runat="server" /> 
    <apogee:ApogeeControl ID="ApogeeControl1" runat="server" />
+   <manga:MangaControl ID="MangaControl1" runat="server" />
    </div>  
 
 
