@@ -86,6 +86,12 @@ namespace SkyServer.en
                         }
 
                     }
+                    else// when there is no token in request and no stored cookie: means user is not logged-in.
+                    {
+                        if(Session["USERID"] != null  )
+                            Session["USERID"] = "";
+                        isValidUser = false;
+                    }
                 }
             }
             catch (UnauthorizedAccessException ex)
