@@ -84,7 +84,6 @@ namespace SkyServer.Tools.GetImg
             } // using SqlCommand
         }
 
-<<<<<<< HEAD
         protected void writePlateHeader(SqlConnection oConn)
         {
             if (plateid.HasValue)
@@ -117,10 +116,7 @@ namespace SkyServer.Tools.GetImg
                 }   // using SqlCommand
         }   // close writePlateHeader
 
-        protected void writePlate(SqlConnection oConn)
-=======
         protected void writePlate()
->>>>>>> refs/remotes/origin/sciserver_vm
         {
             if (plateid.HasValue)
             {

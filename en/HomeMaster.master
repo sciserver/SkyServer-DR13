@@ -27,15 +27,6 @@
 
 
 <body background="<%= imgpath %>new_home_bktile.jpg" style="margin-left:25px;margin-top:0px;margin-right:25px;margin-bottom:0px;">
-<<<<<<< HEAD
-    
-    <div id="headerAlert">
-        <a href="<%=globals.SciServerLink%>updates/" class="imgwithlink" target="_blank">
-        <img src="<%= imgpath %>sciserver_logo_usermsg.png" alt="logo" width="190" />
-        </a>
-            <p><a href="<%=globals.SciServerLink%>updates/" target="_blank">Coming soon!<img src="<%=imgpath%>new_window_cyan.png" alt=" (new window)" style="max-width:95%;margin:2%" /></a></p>
-    </div>
-=======
 
     <%-- <script type="text/javascript">
          function keystone_login(logout) {
@@ -48,7 +39,6 @@
     }
     </script>--%>
 
->>>>>>> refs/remotes/origin/sciserver_vm
   <div id="div_title">
     <table cellpadding="0" cellspacing="0" border="0" width="200px" style="height:73px">
       <tr>
@@ -66,9 +56,7 @@
             </tr>
           </table>
         </td>       
-<<<<<<< HEAD
-          
-=======
+
         <td >
             <img alt="" src="<%= imgpath %>imageright2.png" />
         </td>
@@ -90,7 +78,6 @@
              </form>--%>
         </td>
         <%--<td ><img alt="" src="<%= imgpath %>imageright2.png" /></td>--%>
->>>>>>> refs/remotes/origin/sciserver_vm
       </tr>
     </table>
   </div>
