@@ -7,6 +7,8 @@ using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using System.Globalization;
 using SkyServer;
+using System.Data;
+using SkyServer.Tools.Search;
 
 namespace SkyServer.Tools.Explore
 {
@@ -17,40 +19,45 @@ namespace SkyServer.Tools.Explore
 
         protected Globals globals;
 
+        protected RunQuery runQuery;
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            runQuery = new RunQuery();
+
             globals = (Globals)Application[Globals.PROPERTY_NAME];
 
             string sid = Request.QueryString["sid"];
             specObjId = Utilities.ParseId(sid);
-
-            using (SqlConnection oConn = new SqlConnection(globals.ConnectionString))
-            {
-                oConn.Open();
-                hrefsSpec = getFits(oConn, specObjId);
-            }
+            hrefsSpec = getFits(specObjId);
         }
 
-        string[] getFits(SqlConnection oConn, long? specObjId) {
-	        string[] result = null;
-            using (SqlCommand oCmd = oConn.CreateCommand())
+        string[] getFits(long? specObjId)
+        {
+            string[] result = null;
+            string cmd = "select dbo.fGetUrlFitsSpectrum(@specObjId)";
+            cmd = cmd.Replace("@specObjId", specObjId == null ? "" : specObjId.ToString());
+            //DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.FitsSpec.getUrlFitsSpectrum");
+
+            ResponseREST rs = new ResponseREST();
+            string URIparams = "?spec=" + specObjId.ToString() + "&query=fitsspec&TaskName=Skyserver.Explore.FitsSpec";
+            DataSet ds = rs.GetObjectInfoFromWebService(globals.ExploreWS, URIparams);
+
+
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
             {
-                oCmd.CommandText = "select dbo.fGetUrlFitsSpectrum(@specObjId)";
-                oCmd.Parameters.AddWithValue("@specObjId", specObjId);
-                using (SqlDataReader reader = oCmd.ExecuteReader())
+                if (reader.HasRows)
                 {
-                    if (reader.HasRows)
-                    {
-                        result = new string[reader.FieldCount];
-                    }
-                    while (reader.Read())
-                    {
-                        for (int i = 0; i < reader.FieldCount; i++)
-                            result[i] = reader.GetValue(i).ToString();
-                    }
+                    result = new string[reader.FieldCount];
+                }
+                while (reader.Read())
+                {
+                    for (int i = 0; i < reader.FieldCount; i++)
+                        result[i] = reader.GetValue(i).ToString();
                 }
             }
-	        return result;
+            return result;
         }
     }  
 }

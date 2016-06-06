@@ -26,10 +26,10 @@ namespace SkyServer
             //		var s = "<tr><td>\n";
             //		s+="  <hr>\n";
             string s = "";
-            s += "  <form target='search' method='post' name='sql' action='" + url + "/tools/search/x_sql.aspx'>\n";
+            s += "  <form target='search' method='post' name='sql' action='" + url + "/tools/search/x_results.aspx" +"'>\n";
             s += "     <table BORDER=0 WIDTH='440' cellpadding=1 cellspacing=1>\n";
             s += "       <tr VALIGN='top'><td>\n";
-            s += "			<textarea cols=64 name=cmd rows=12 wrap=virtual>";
+            s += "			<textarea cols=64 name=cmd rows=12 wrap=virtual>"; 
             s += query;
             s += "</textarea>\n";
             s += "		</td></tr>\n";
@@ -47,6 +47,7 @@ namespace SkyServer
             s += "			<p>\n";
             s += "			<input id=submit type=submit value=Submit>\n";
             s += "			<input TYPE='reset' VALUE='Reset ' id='reset' name='reset'>\n";
+            s += "			<input type=\"hidden\" name=\"searchtool\" id=\"searchtool\" value=\"SQL\" /> \n";
 
             Response.Write(s);
 
@@ -587,7 +588,7 @@ namespace SkyServer
 
                         if (!reader.HasRows)
                         {
-                            response.Write("<h3><br><font color=red>No objects have been found</font> </h3>");
+                            response.Write("<h3><br><font color=red>No entries have been found</font> </h3>");
                         }
                         else
                         {
@@ -909,6 +910,29 @@ namespace SkyServer
 
         }
 
+        public static void writeBookCSV(DataSet ds, string cmd, HttpResponse response, Globals globals)
+        {
+
+            bool buffer = response.Buffer;
+
+            try
+            {
+                response.ContentType = "application/text";
+                writeCsvFields(ds, cmd, response, globals);
+            }
+            catch (Exception ex)
+            {
+                if (response.IsClientConnected)
+                {
+                    response.Write("ERROR\n\nSQL returned the following error message:\n" + ex.Message + "\n");
+                    response.Write("Your SQL command was:\n" + cmd + "\n");
+                }
+            }
+            if (buffer)
+                response.Flush();
+
+        }
+
         public static void writeCsvFields(SqlConnection oConn, string cmd, HttpResponse response, Globals globals, int timeout)
         {
             using (SqlCommand oCmd = oConn.CreateCommand())
@@ -919,7 +943,7 @@ namespace SkyServer
                 {
                     if (!reader.HasRows)
                     {
-                        response.Write("No objects have been found");
+                        response.Write("No entries have been found");
                     }
                     else
                     {
@@ -973,6 +997,64 @@ namespace SkyServer
             }
         }
 
+        public static void writeCsvFields(DataSet ds, string cmd, HttpResponse response, Globals globals)
+        {
+            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            {
+                if (!reader.HasRows)
+                {
+                    response.Write("No entries have been found");
+                }
+                else
+                {
+                    for (int Index = 0; Index < (reader.FieldCount); Index++)
+                    {
+                        response.Write(reader.GetName(Index));
+                        response.Write((Index != reader.FieldCount - 1) ? "," : "\n");
+                    }
+                    if (!response.IsClientConnected)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        response.Flush();
+                    }
+                    var count = 0;
+                    while (reader.Read())
+                    {
+                        for (int Index = 0; Index < (reader.FieldCount); Index++)
+                        {
+                            Type type = reader.GetFieldType(Index);
+                            string str = Utilities.getSqlString(reader.GetValue(Index));
+                            if ((type == typeof(string)) && (str.Contains(",")) && (str[0] != '"'))
+                            {
+                                Regex.Replace(str, "\"([^\"]*)\"", "``$1''");
+                                response.Write("\"" + str + "\"");
+                            }
+                            else
+                            {
+                                response.Write(str);
+                            }
+                            response.Write((Index != reader.FieldCount - 1) ? "," : "\n");
+                        }
+
+                        if (count++ > 100)
+                        {
+                            if (response.IsClientConnected)
+                            {
+                                count = 0;
+                                if (response.Buffer) response.Flush();
+                            }
+                            else
+                            {
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
         public static void writeXML(SqlConnection oConn, string cmd, string cmd_echo, HttpResponse response, Globals globals, int timeout)
         {
 
@@ -1076,6 +1158,111 @@ namespace SkyServer
                 response.Flush();
 
         }
+
+        public static void writeXML(DataSet ds, string cmd, string cmd_echo, HttpResponse response, Globals globals)
+        {
+
+
+            string status = "none";
+            bool buffer = response.Buffer;
+
+            response.ContentType = "application/xml";
+            response.Flush();
+            response.Write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n");
+            response.Write("<!DOCTYPE root [\n");
+            response.Write("<!ELEMENT root (Query,Answer)>\n");
+            response.Write("<!ELEMENT Query (#PCDATA)>\n");
+            response.Write("<!ELEMENT Answer (Row)>\n");
+            cmd_echo = cmd_echo.Replace("<", "&lt;");
+            cmd_echo = cmd_echo.Replace(">", "&gt;");
+            try
+            {
+                using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+                {
+
+                    if (!reader.HasRows)
+                    {
+                        response.Write("<!ELEMENT Row (#PCDATA)>\n>");
+                        response.Write("<root>\n<Query>\n" + cmd_echo + " </Query>\n");
+                        response.Write("<Answer>\n");
+                        response.Flush();
+                        response.Write("<Row> No rows returned </Row>");
+                    }
+                    else
+                    {
+                        int count = 0;
+                        while (reader.Read())
+                        {
+                            if (!response.IsClientConnected)
+                            {
+                                return;
+                            }
+                            if (count == 0)
+                            {
+                                response.Write("<!ELEMENT Row (");
+                                for (int Index = 0; Index < (reader.FieldCount); Index++)
+                                {
+                                    //     					response.Write('<!ATTLIST Row '	+ oRs.fields(Index).name + ' CDATA #REQUIRED>\n'); 
+                                    response.Write(reader.GetName(Index));
+                                    if (Index < (reader.FieldCount - 1))
+                                        response.Write(',');
+                                }
+                                response.Write(")>\n");
+                                response.Write("]>\n");
+                                response.Write("<root>\n<Query>\n" + cmd_echo + " </Query>\n");
+                                response.Write("<Answer>\n");
+                                response.Flush();
+                            }
+                            //     				response.Write("<Row ");
+                            response.Write("<Row>");
+                            for (int Index = 0; Index < (reader.FieldCount); Index++)
+                            {
+                                response.Write("<" + reader.GetName(Index) + ">");
+                                //     					response.Write(' ' + oRs.fields(Index).name + '="'); 
+                                response.Write(Utilities.getSqlString(reader.GetValue(Index)));
+                                //					response.Write('"');
+                                response.Write("</" + reader.GetName(Index) + ">");
+                                //					response.Write("<"+oRs.fields(Index).name+"> ");
+                            }
+                            //	          		response.Write(" />\n");
+                            response.Write("</Row>\n");
+
+                            if (count++ > 100)
+                            {
+                                if (response.IsClientConnected)
+                                {
+                                    count = 0;
+                                    if (buffer) response.Flush();
+                                }
+                                else
+                                {
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                } // using SqlDataReader
+
+            }
+
+            catch (Exception ex)
+            {
+                if (response.IsClientConnected)
+                {
+                    response.Write("<Diagnostic> " + ex.Message + "</Diagnostic>");
+                    //format = "error";
+                }
+            }
+            //	oConn.close();  // shutdown 
+            response.Write("</Answer>\n</root>");
+            if (buffer)
+                response.Flush();
+
+        }
+
+
+
+
         public static void writeSyntaxMessage(SqlConnection oConn, string cmd, string cmd_echo, HttpResponse response)
         {
             using (SqlCommand oCmd = oConn.CreateCommand())

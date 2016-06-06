@@ -51,22 +51,21 @@ namespace SkyServer.Tools.Explore
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             
             exploreQuery = new ExplorerQueries();           
-            //Get Values from Session Object
             getSessionIds();
 
             url = getURL();
             enUrl = getEnURL();
            
             // common query to explorer
-            string allId ="id="+id + "&spec=" + specId + "&apid=" + apid+"&field="+fieldId;
+            string allId ="id="+id + "&spec=" + specId + "&apid=" + apid+"&fieldId="+fieldId+"&ra="+ra+"&dec="+dec+"&plateId="+plateId;
 
             
             // id is the decimal representation; objId is the hex representation.
             hrefs.Summary  = "summary.aspx?"+allId;
-            hrefs.PhotoObj = "DisplayResults.aspx?name=PhotoObj&"+allId;
-            hrefs.PhotoTag = "DisplayResults.aspx?name=PhotoTag&" + allId;
-            hrefs.Field    = "DisplayResults.aspx?name=Field&" + allId;
-            hrefs.Frame    = "DisplayResults.aspx?name=Frame&" + allId;
+            hrefs.PhotoObj = "DisplayResults.aspx?name=PhotoObjQuery&"+allId;
+            hrefs.PhotoTag = "DisplayResults.aspx?name=PhotoTagQuery&" + allId;
+            hrefs.Field = "DisplayResults.aspx?name=FieldQuery&" + allId;
+            hrefs.Frame = "DisplayResults.aspx?name=FrameQuery&" + allId;
 
 
             if (globals.ReleaseNumber >= 8) 
@@ -76,7 +75,7 @@ namespace SkyServer.Tools.Explore
 
             if (globals.ReleaseNumber > 4)
             {
-                hrefs.PhotoZ = "DisplayResults.aspx?&name=photoZ&" + allId;
+                hrefs.PhotoZ = "DisplayResults.aspx?&name=PhotoZ&" + allId;
                // hrefs.PhotozRF = "DisplayResults.aspx?&name=photozRF&" + allId;
             }
 
@@ -84,7 +83,8 @@ namespace SkyServer.Tools.Explore
             hrefs.Neighbors = "neighbors.aspx?"+allId;
             hrefs.Chart    = "javascript:gotochart(" + ra + "," + dec + ");";
             hrefs.Navigate = "javascript:gotonavi(" + ra + "," + dec + ");";
-            hrefs.SaveBook = "javascript:saveBook(\"" + objId + "\");";
+            //hrefs.SaveBook = "javascript:saveBook(\"" + objId + "\");check.show();";
+            hrefs.SaveBook = "javascript:document.getElementById(\"check2\").style.display=\"inline\";saveBook(\"" + objId + "\");";
             hrefs.ShowBook = "javascript:showNotes();";
             
             if (globals.Database.StartsWith("STRIPE"))
@@ -129,14 +129,14 @@ namespace SkyServer.Tools.Explore
 
             if (specId != null)
             {
-                hrefs.SpecObj = "DisplayResults.aspx?name=SpecObj&" + allId;
-                hrefs.sppLines = "DisplayResults.aspx?name=sppLines&" + allId;
-                hrefs.sppParams = "DisplayResults.aspx?name=sppParams&" + allId;
-                hrefs.galSpecLine = "DisplayResults.aspx?name=galSpecLine&" + allId;
-                hrefs.galSpecIndx = "DisplayResults.aspx?name=galSpecIndx&" + allId;
-                hrefs.galSpecInfo = "DisplayResults.aspx?name=galSpecInfo&" + allId;
+                hrefs.SpecObj = "DisplayResults.aspx?name=SpecObjQuery&" + allId;
+                hrefs.sppLines = "DisplayResults.aspx?name=sppLinesQuery&" + allId;
+                hrefs.sppParams = "DisplayResults.aspx?name=sppParamsQuery&" + allId;
+                hrefs.galSpecLine = "DisplayResults.aspx?name=galSpecLineQuery&" + allId;
+                hrefs.galSpecIndx = "DisplayResults.aspx?name=galSpecIndexQuery&" + allId;
+                hrefs.galSpecInfo = "DisplayResults.aspx?name=galSpecInfoQuery&" + allId;
 
-                hrefs.Plate = "plate.aspx?&name=Plate&plateId=" + plateId;
+                hrefs.Plate = "plate.aspx?&name=Plate&" + allId;
 
                 hrefs.Spectrum = "../../get/SpecById.ashx?ID=" + specId;
 
@@ -145,11 +145,11 @@ namespace SkyServer.Tools.Explore
                 if (globals.ReleaseNumber >= 8)
                 {
                     hrefs.theParameters = "parameters.aspx?"+allId;
-                    hrefs.stellarMassStarformingPort = "DisplayResults.aspx?name=stellarMassStarFormingPort&" + allId;
-                    hrefs.stellarMassPassivePort = "DisplayResults.aspx?name=stellarMassPassivePort&" + allId;
-                    hrefs.emissionLinesPort = "DisplayResults.aspx?name=emissionlinesPort&" + allId;
-                    hrefs.stellarMassPCAWiscBC03 = "DisplayResults.aspx?name=stellarMassPCAWiscBC03&" + allId;
-                    hrefs.stellarMassPCAWiscM11 = "DisplayResults.aspx?name=stellarMassPCAWiscM11&" + allId;
+                    hrefs.stellarMassStarformingPort = "DisplayResults.aspx?name=stellarMassStarformingPortQuery&" + allId;
+                    hrefs.stellarMassPassivePort = "DisplayResults.aspx?name=stellarMassPassivePortQuery&" + allId;
+                    hrefs.emissionLinesPort = "DisplayResults.aspx?name=emissionLinesPortQuery&" + allId;
+                    hrefs.stellarMassPCAWiscBC03 = "DisplayResults.aspx?name=stellarMassPCAWiscBC03Query&" + allId;
+                    hrefs.stellarMassPCAWiscM11 = "DisplayResults.aspx?name=stellarMassPCAWiscM11Query&" + allId;
                 }
                 if (globals.ReleaseNumber >= 10)
                 {
@@ -157,7 +157,7 @@ namespace SkyServer.Tools.Explore
                     hrefs.stellarMassFSPSGranEarlyNoDust = "DisplayResults.aspx?name=stellarMassFSPSGranEarlyNoDust&" + allId;
                     hrefs.stellarMassFSPSGranWideDust = "DisplayResults.aspx?name=stellarMassFSPSGranWideDust&" + allId;
                     hrefs.stellarMassFSPSGranWideNoDust = "DisplayResults.aspx?name=stellarMassFSPSGranWideNoDust&" + allId;
-                 }
+                }
              }            
              if (apid != null && !String.IsNullOrEmpty(apid))
              {
@@ -166,29 +166,53 @@ namespace SkyServer.Tools.Explore
              }
         }
 
-        private void getSessionIds() {
+        private void getSessionIds()
+        {
+            ObjectInfo o = (ObjectInfo)Session["objectInfo"];
+            if (o != null)
+            {
+                objId = o.objId;
+                specObjId = o.specObjId;
+                apid = o.apid;
 
-            ObjectInfo o =(ObjectInfo)Session["objectInfo"];
-            objId = o.objId;
-            specObjId = o.specObjId;
-            apid = o.apid;
+                ra = o.ra;
+                dec = o.dec;
 
-            ra = o.ra;
-            dec = o.dec;
+                plateId = o.plateId;
+                fieldId = o.fieldId;
+                fiberId = o.fiberId;
+                mjd = o.mjd;
+                plate = o.plate;
 
-            plateId =o.plateId;
-            fieldId = o.fieldId;
-            fiberId = o.fiberId;
-            mjd = o.mjd;
-            plate = o.plate;
+                run = o.run;
+                rerun = o.rerun;
+                camcol = o.camcol;
+                field = o.field;
 
-            run = o.run;
-            rerun = o.rerun;
-            camcol = o.camcol;
-            field = o.field;
-
-            id = o.id;
-            specId = o.specId;
+                id = o.id;
+                specId = o.specId;
+            }
+            else
+            {
+                try { id = Int64.Parse(Request.QueryString["id"]); }
+                catch { }
+                try { objId = id.ToString(); }
+                catch { }
+                try { specId = Int64.Parse(Request.QueryString["spec"]); }
+                catch { }
+                try { specObjId = Request.QueryString["spec"]; }
+                catch { }
+                try { apid = Request.QueryString["apid"]; }
+                catch { }
+                try { fieldId = Request.QueryString["fieldId"]; }
+                catch { }
+                try { ra = Double.Parse(Request.QueryString["ra"]); }
+                catch { }
+                try { dec = Double.Parse(Request.QueryString["dec"]); }
+                catch { }
+                try { plateId = Request.QueryString["plateId"]; }
+                catch { }
+            }
         }
 
         public string getURL()

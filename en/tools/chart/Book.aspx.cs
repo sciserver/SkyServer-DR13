@@ -27,7 +27,7 @@ namespace SkyServer.Tools.Chart
             if (Request.Cookies["sdssbook"] != null)
                 book = Request.Cookies["sdssbook"].Value;
             else book = "";
-            string host = Request.ServerVariables["SERVER_NAME"];
+            //string host = Request.ServerVariables["SERVER_NAME"];
 
             foreach (string i in Request.QueryString.Keys)
             {
@@ -62,7 +62,7 @@ namespace SkyServer.Tools.Chart
                     HttpCookie cookie = new HttpCookie("sdssbook");
                     Response.Cookies.Add(cookie);
                     Response.Cookies["sdssbook"].Value = newbook;
-                    Response.Cookies["sdssbook"].Domain = host;
+                    //Response.Cookies["sdssbook"].Domain = host;
                     Response.Cookies["sdssbook"].Expires = new DateTime(2037, 1, 1);
                     Response.Expires = 0;
                     // only display if there is no add command
@@ -101,7 +101,7 @@ namespace SkyServer.Tools.Chart
                     HttpCookie cookie = new HttpCookie("sdssbook");
                     Response.Cookies.Add(cookie);
                     Response.Cookies["sdssbook"].Value = newbook;
-                    Response.Cookies["sdssbook"].Domain = host;
+                    //Response.Cookies["sdssbook"].Domain = host;
                     Response.Cookies["sdssbook"].Expires = new DateTime(2037, 1, 1);
                     Response.Expires = 0;
                     

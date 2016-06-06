@@ -223,6 +223,20 @@ IMG {
     width:400px;
 }
 
+
+#manga
+{
+    /*background-color:orange;*/
+    border-top:thick solid black;
+    width:625px;
+    margin-top:3px;
+}
+
+#manga h3
+{
+    margin:3px;
+}
+
 .sectionlabel 
 {
     margin-top:3px;

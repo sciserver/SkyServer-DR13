@@ -40,30 +40,38 @@
             string explore = "DisplayResults.aspx?id=" + objId + "&cmd=";
             string cmd =ExplorerQueries.zooSpec.Replace("@objId",objId);
          %>
-        <h3><a href="<%=explore+cmd%>&name=zooSpec&id=<%=objId%>" class="content">zooSpec</a></h3>
+        <h3><a href="<%=explore+cmd%>&name=zooSpec" class="content">zooSpec</a></h3>
 
     <%  
         RunQuery runQuery = new RunQuery();
         
-        DataSet ds = null;
+        DataSet ds = new DataSet();
 
         cmd = ExplorerQueries.zooSpec1.Replace("@objId", objId);
-        ds =runQuery.RunCasjobs(cmd);
+        //ds =runQuery.RunCasjobs(cmd,"Explore:GalaxyZoo");
+        //ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.GalaxyZoo.zooSpec1");
+        ds.Merge(GalaxyZooTables.Tables["zooSpec1"]);
         master.showHTable(ds, 600, "PhotoObj");
 
         cmd = ExplorerQueries.zooSpec2.Replace("@objId", objId);
-        ds =runQuery.RunCasjobs(cmd);
+        //ds =runQuery.RunCasjobs(cmd,"Explore:GalaxyZoo");
+        //ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.GalaxyZoo.zooSpec2");
+        ds.Reset();
+        ds.Merge(GalaxyZooTables.Tables["zooSpec2"]);
         master.showHTable(ds, 600, "PhotoObj");
         
         // No spec
         cmd = ExplorerQueries.zooNoSpec.Replace("@objId", objId);
     %>
 
-        <h3><a href="<%=explore+cmd%>&name=zooNoSpec&id=<%=objId%>" class="content">zooNoSpec</a></h3>
+        <h3><a href="<%=explore+cmd%>&name=zooNoSpec" class="content">zooNoSpec</a></h3>
         
      <%    
         
-         ds=runQuery.RunCasjobs(cmd);
+         //ds = runQuery.RunCasjobs(cmd, "Explore:GalaxyZoo");
+         //ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.GalaxyZoo.zooNoSpec");
+         ds.Reset();
+         ds.Merge(GalaxyZooTables.Tables["zooNoSpec"]);
          master.showHTable(ds, 600, "PhotoObj");
          
          // confidence
@@ -74,7 +82,10 @@
         
      <%
          cmd = ExplorerQueries.zooConfidence2.Replace("@objId", objId);
-         ds =runQuery.RunCasjobs(cmd);
+         //ds = runQuery.RunCasjobs(cmd, "Explore:GalaxyZoo");
+         //ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.GalaxyZoo.zooConfidence2");
+         ds.Reset();
+         ds.Merge(GalaxyZooTables.Tables["zooConfidence2"]);
          master.showHTable(ds, 600, "PhotoObj");                   
          
          //zooMirrorBias
@@ -85,7 +96,10 @@
         
      <%
          cmd = ExplorerQueries.zooMirrorBias2.Replace("@objId", objId);
-         ds =runQuery.RunCasjobs(cmd);  
+         //ds = runQuery.RunCasjobs(cmd, "Explore:GalaxyZoo");
+         //ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.GalaxyZoo.zooMirrorBias2");
+         ds.Reset();
+         ds.Merge(GalaxyZooTables.Tables["zooMirrorBias2"]);
          master.showHTable(ds, 600, "PhotoObj");
 
          //zooMonochromeBias
@@ -97,6 +111,8 @@
      <%
          cmd = ExplorerQueries.zooMonochromeBias2.Replace("@objId", objId);
          //ds=master.runQuery.RunCasjobs(cmd);
+         ds.Reset();
+         ds.Merge(GalaxyZooTables.Tables["zooMonochromeBias2"]);
          master.showHTable(ds, 600, "PhotoObj");
             
         // show the Galaxy Zoo 2 data only if this is DR10
@@ -114,7 +130,10 @@
         
      <%
             cmd = ExplorerQueries.zoo2MainSpecz2.Replace("@objId", objId);
-            ds =runQuery.RunCasjobs(cmd);
+            //ds = runQuery.RunCasjobs(cmd, "Explore:GalaxyZoo");
+            //ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.GalaxyZoo.zoo2MainSpecz2");
+            ds.Reset();
+            ds.Merge(GalaxyZooTables.Tables["zoo2MainSpecz2"]);            
             master.showHTable(ds, 600, "PhotoObj");
 
             //zoo2MainPhotoz
@@ -125,7 +144,10 @@
         
      <%
             cmd = ExplorerQueries.zoo2MainPhotoz2.Replace("@objId", objId);
-            ds =runQuery.RunCasjobs(cmd);
+            //ds = runQuery.RunCasjobs(cmd, "Explore:GalaxyZoo");
+            //ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.GalaxyZoo.zoo2MainPhotoz2");
+            ds.Reset();
+            ds.Merge(GalaxyZooTables.Tables["zoo2MainPhotoz2"]);            
             master.showHTable(ds, 600, "PhotoObj");
 
             //zoo2Stripe82Normal
@@ -136,7 +158,10 @@
         
      <%
             cmd = ExplorerQueries.zoo2Stripe82Normal2.Replace("@objId", objId);
-            ds =runQuery.RunCasjobs(cmd);
+            //ds = runQuery.RunCasjobs(cmd, "Explore:GalaxyZoo");
+            //ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.GalaxyZoo.zoo2Stripe82Normal2");
+            ds.Reset();
+            ds.Merge(GalaxyZooTables.Tables["zoo2Stripe82Normal2"]);            
             master.showHTable(ds, 600, "PhotoObj");
 
             //zoo2Stripe82Coadd1
@@ -147,7 +172,10 @@
         
      <%
             cmd = ExplorerQueries.zoo2Stripe82Coadd1_2.Replace("@objId", objId);
-            ds =runQuery.RunCasjobs(cmd);
+            //ds = runQuery.RunCasjobs(cmd, "Explore:GalaxyZoo");
+            //ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.GalaxyZoo.zoo2Stripe82Coadd1_2");
+            ds.Reset();
+            ds.Merge(GalaxyZooTables.Tables["zoo2Stripe82Coadd1_2"]);            
             master.showHTable(ds, 600, "PhotoObj");
 
             //zoo2Stripe82Coadd2
@@ -158,7 +186,10 @@
         
      <%
             cmd = ExplorerQueries.zoo2Stripe82Coadd2_2.Replace("@objId", objId);
-            ds =runQuery.RunCasjobs(cmd);
+            //ds = runQuery.RunCasjobs(cmd, "Explore:GalaxyZoo");
+            //ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.GalaxyZoo.zoo2Stripe82Coadd2_2");
+            ds.Reset();
+            ds.Merge(GalaxyZooTables.Tables["zoo2Stripe82Coadd2_2"]);            
             master.showHTable(ds, 600, "PhotoObj");
      
          }  // end of if statement where we control whether Zoo 2 data get displayed

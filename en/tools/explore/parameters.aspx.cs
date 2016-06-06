@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Globalization;
 using SkyServer;
+using SkyServer.Tools.Search;
 
 namespace SkyServer.Tools.Explore
 {
@@ -29,13 +30,16 @@ namespace SkyServer.Tools.Explore
                          fitsParametersStellarMassPCAWiscBC03, fitsParametersstellarMassPCAWiscM11, fitsParametersStellarmassFSPSGranEarlyDust,
                          fitsParametersStellarmassFSPSGranEarlyNoDust, fitsParametersStellarmassFSPSGranWideDust, fitsParametersStellarmassFSPSGranWideNoDust;
 
+        public DataSet SpecFitParameters = new DataSet();
+        ResponseREST rs = new ResponseREST();
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
             globals = (Globals)Application[Globals.PROPERTY_NAME];
             master = (ObjectExplorer)Page.Master;
             runQuery = new RunQuery();
 
-          
             string qSpecId = Request.QueryString["spec"];
 
             try
@@ -46,12 +50,24 @@ namespace SkyServer.Tools.Explore
                     specId = Utilities.ParseId(qSpecId);
                     //if (qSpecId.StartsWith("0x")) specId = Int64.Parse(qSpecId.Substring(2), NumberStyles.AllowHexSpecifier);
                     //else specId = Int64.Parse(qSpecId);
+
+                    if (Session["SpecFitParameters"] != null)
+                        SpecFitParameters = (DataSet)Session["SpecFitParameters"];
+                    else
+                    {
+                        string URIparams = "?spec=" + specId + "&query=SpecFitParameters&TaskName=Skyserver.Explore.Parameters";
+                        SpecFitParameters = rs.GetObjectInfoFromWebService(globals.ExploreWS, URIparams);
+                        Session["SpecFitParameters"] = SpecFitParameters;
+                    }
                 }
             }
             catch (Exception ex)
             {
                 // Could not parse, so leave null
             }
+
+
+
 
             getQueries();
 

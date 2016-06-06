@@ -32,8 +32,8 @@ From this site, you can view all the catalog data - measuremed quantities like p
 and magnitudes - for all the stars, galaxies and quasars in the SDSS-III's Data Release <%=globals.ReleaseNumber%>.</p>
 
 <p>Data Release <%=globals.ReleaseNumber%> (<%=globals.Release %>) is described at 
-<a href="<%=globals.SdssUrlBase%>dr<%=globals.ReleaseNumber%>.php">the <%=globals.Release %> page</a><img src="../../images/offsite.png" /> of the SDSS-III website. 
-The area of sky covered by <%=globals.Release %> is shown on the <a href="<%=globals.SdssUrlBase%>dr<%=globals.ReleaseNumber%>/scope.php"><%=globals.Release %> Scope</a><img src="../../images/offsite.png" /> 
+<a href="<%=globals.SdssUrlBase%>dr<%=globals.ReleaseNumber%>">the <%=globals.Release %> page</a><img src="../../images/offsite.png" /> of the SDSS-III website. 
+The area of sky covered by <%=globals.Release %> is shown on the <a href="<%=globals.SdssUrlBase%>dr<%=globals.ReleaseNumber%>/scope"><%=globals.Release %> Scope</a><img src="../../images/offsite.png" /> 
 page.</p>
 
 <h2>Available Data</h2>
@@ -45,7 +45,7 @@ SkyServer or its companion site, the <a href="<%=globals.DasUrl %>">Science Arch
 <p><%=globals.Release %> contains the full imaging survey from the SDSS imaging camera. Future data releases will include 
 only spectra, so <%=globals.Release %> includes all the released images of the entire Sloan Digital Sky Survey. SkyServer includes JPG images of the entire <%=globals.Release %> 
 survey area; FITS image files of corrected frames in 
-<a href="<%=globals.SdssUrlBase%>instruments/camera.php#filters">five imaging filters</a><img src="../../images/offsite.png" /> 
+<a href="<%=globals.SdssUrlBase%>instruments/camera/#filters">five imaging filters</a><img src="../../images/offsite.png" /> 
 are available through the <a href="<%=globals.DasUrl %>">Science Archive Server</a><img src="../../images/offsite.png" />.</p>
 
 <!--
@@ -74,13 +74,13 @@ are available through the <a href="<%=globals.DasUrl %>">Science Archive Server<
 
 <p><%=globals.Release %> also contains more than one million spectra from the original SDSS spectrograph, as part of the SDSS-I 
 and SDSS-II, as well as data from the previous year of operations of the 
-<a href="<%=globals.SdssUrlBase%>segue2.php">SEGUE-2</a><img src="../../images/offsite.png" /> stellar spectra survey. 
+<a href="<%=globals.SdssUrlBase%>segue2">SEGUE-2</a><img src="../../images/offsite.png" /> stellar spectra survey. 
 SkyServer includes GIF previews and CSV files of all the spectra in <%=globals.Release %>; FITS files of the spectra 
 are available through the <a href="<%=globals.DasUrl %>">Science Archive Server</a><img src="../../images/offsite.png" />.</p>
 
 <p>SkyServer hosts all catalog data measured from the images and spectra as part of <%=globals.Release %>. For more 
 information on how the catalog data was derived, see the <%=globals.Release %> 
-<a href="<%=globals.SdssUrlBase%>/dr<%=globals.ReleaseNumber%>/algorithms.php">Algorithms</a><img src="../../images/offsite.png" /> page. 
+<a href="<%=globals.SdssUrlBase%>/dr<%=globals.ReleaseNumber%>/algorithms/">Algorithms</a><img src="../../images/offsite.png" /> page. 
 To see what catalog data are available in the SkyServer database, see <a href="intro.aspx">About the Database</a>.</p>
 
 <h2>Data Access</h2>
@@ -181,10 +181,10 @@ you need, use the table below to decide which specific tool to use.</p>
 
 <h2>Help</h2>
 
-<p>SkyServer and the <a href="<%=globals.SdssUrlBase%>/dr<%=globals.ReleaseNumber%>.php"><%=globals.Release%> web site</a><img src="../../images/offsite.png" /> include 
+<p>SkyServer and the <a href="<%=globals.SdssUrlBase%>dr<%=globals.ReleaseNumber%>"><%=globals.Release%> web site</a><img src="../../images/offsite.png" /> include 
 extensive help and documentation, covering all the ways to access the data. Good places to start are the 
-<a href="<%=globals.SdssUrlBase%>/dr<%=globals.ReleaseNumber%>/data_help.php#faq">Frequently Asked Questions</a><img src="../../images/offsite.png" /> and 
-<a href="<%=globals.SdssUrlBase%>/dr<%=globals.ReleaseNumber%>/glossary.php">Glossary</a><img src="../../images/offsite.png" />.</p>
+<a href="<%=globals.SdssUrlBase%>dr<%=globals.ReleaseNumber%>/help/faq/">Frequently Asked Questions</a><img src="../../images/offsite.png" /> and 
+<a href="<%=globals.SdssUrlBase%>dr<%=globals.ReleaseNumber%>/help/glossary/">Glossary</a><img src="../../images/offsite.png" />.</p>
 
 <p><a href="../cooking/">Cooking with Sloan</a> is a series of guides showing you how to accomplish common 
 astronomical tasks using SkyServer tools and SDSS data. SkyServer also offers an 

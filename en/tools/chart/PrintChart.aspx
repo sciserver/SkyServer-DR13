@@ -41,11 +41,11 @@
 		<td width="170">&nbsp;</td>
 		<td width="10%"></td>
 	</tr>
-	
+
 	<tr>
 		<td>&nbsp;</td>
 		<td align=center><font size=+2>SDSS <%=globals.Release%></font><br>finding chart</td>
-		<td><img src="images/sdss_logo_tiny.jpg" border=0 width="40" height="50">
+		<td><img src="images/sdssIVlogo.png" border=0 height="50">
 		<td valign=top>&nbsp;&nbsp;
 			<a href="javascript:wprint();" class='s'> Send to printer</a>&nbsp;
 			<a href="javascript:window.close();" class='s'> Close window</a></td>

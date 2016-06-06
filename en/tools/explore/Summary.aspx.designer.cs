@@ -13,6 +13,15 @@ namespace SkyServer.Tools.Explore {
     public partial class Summary {
         
         /// <summary>
+        /// loginParams control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SkyServer.en.Loginfloat loginParams;
+        
+        /// <summary>
         /// MetadataParameters1 control.
         /// </summary>
         /// <remarks>
@@ -56,5 +65,14 @@ namespace SkyServer.Tools.Explore {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::SkyServer.Tools.Explore.ApogeeControl ApogeeControl1;
+        
+        /// <summary>
+        /// MangaControl1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SkyServer.Tools.Explore.MangaControl MangaControl1;
     }
 }

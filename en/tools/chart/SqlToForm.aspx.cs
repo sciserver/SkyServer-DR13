@@ -15,11 +15,15 @@ namespace SkyServer.Tools.Chart
         protected string query;
         protected string caller;
 
+        public string cmd = "";
+
         ListBase master;
         protected void Page_Load(object sender, EventArgs e)
         {
             master = (ListBase)Page.Master;
             //url = master.getURL();
+
+            cmd = Request["cmd"] == null || Request["cmd"].ToString() == "" ? "select top 10 specobjid as name, ra, dec from SpecObj" : Request["cmd"].ToString();
 
             suburl = "list.aspx";
             prturl = "printlist.aspx";

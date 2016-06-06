@@ -17,15 +17,10 @@
     </asp:ContentPlaceHolder>
 </head>
 <body>
-   <asp:ContentPlaceHolder ID="Content1"  runat="server">
-        <div id="headerAlert">
-            <a href="<%=globals.SciServerLink%>updates/" class="imgwithlink" target="_blank">
-                <img src="../../images/sciserver_logo_usermsg.png" alt="logo" width="190" />
-            </a>
-            <p><a href="<%=globals.SciServerLink%>updates/" target="_blank">Coming soon!<img src="../../images/new_window_cyan.png" alt=" (new window)" style="max-width:95%;margin:2%" /></a></p>
-        </div>    
-   </asp:ContentPlaceHolder> 
-
+    <asp:ContentPlaceHolder ID="Content1"  runat="server">
+                    <%@ Register TagPrefix="login" TagName="loginParam" Src="../../Loginfloat.ascx"  %>
+                    <login:loginParam ID="loginParams" runat="server"/>
+                </asp:ContentPlaceHolder>
     <script type="text/javascript">
         var branchname = "<%=name%>";
     </script>
@@ -62,6 +57,9 @@
 		    <td width="59"><a href="<%= url%>" TARGET="_top">
 		    <img src="images/sdss3_logo.gif" border="0"></a></td>
 		    <td class='title' align="left" width="<%= (tabwidth-59)%>">&nbsp;&nbsp;<%= globals.Release%></td>
+		    <td width="40"><a href="<%= url%>" TARGET="_top">
+		    <img src="images/sdssIVlogo.png" border="0" height="50"></a></td>
+		    <td class='title' align="left" width="<%= (tabwidth-40)%>">&nbsp;&nbsp;<%= globals.Release%></td>
 	    </tr>
         </table>
         <table border="0" cellspacing="0" cellpadding="0" >

@@ -48,24 +48,31 @@
 
         <div class="migrationAlert">
 
-            <p>Within the next few weeks, we will roll out a new collaborative science framework called 
-                <a href="<%=globals.SciServerLink%>" target="_blank">SciServer&nbsp;<img src="images/new_window_cyan.png" alt=" (new window)" /></a>. 
-                SciServer will integrate the current SkyServer and CasJobs systems, as well as add several new features. The main feature is 
-                a Single Sign-On system across all SciServer applications. SkyServer will still support anonymous 
-                access, but if you log in with your new SciServer account, you can save queries and results to 
-                your MyDB personal database in CasJobs. You can also seamlessly access other SciServer services.</p>
+            <h2>Welcome to the new SkyServer!</h2>
+
+            <p>We are proud to announce that SkyServer now connects to the new 
+                <a href="http://www.sciserver.org" target="_blank">SciServer&nbsp;<img alt=" (new window)" src="images/new_window_cyan.png"></a> 
+                science framework! If you have a login through SciServer, you can log in using the control on the top right. 
+                Logging in allows you to connect seamlessly with the updated CasJobs and the brand-new SciDrive datafile 
+                management tool.
+            </p>
+
+            <p>Log in or register on the <a href="<%=ConfigurationManager.AppSettings["Keystone.Portal"]%>Account/Register" target="_blank">SciServer 
+                Single Sign-on Portal</a>.
+            </p>
                 
-                <p>For more information 
-                on all upcoming new features, please see our 
-                    <a href="<%=globals.SciServerLink%>building-blocks/updates/" target="_blank">New Features
-                        <img src="images/new_window_cyan.png" alt=" (new window)" /></a> section on the SciServer website.</p>
+                <p>These new features come from the first release of the SciServer framework, which we call 
+                    <em class="headerAlert">SciServer Altair</em>. 
+                    For more information the new features of SciServer Altair, please see our 
+                    <a href="http://www.sciserver.org/building-blocks/updates/" target="_blank">New Features
+                        <img alt=" (new window)" src="images/new_window_cyan.png"></a> section on the SciServer website.
+                </p>
 
         </div>
 
-
 		<table border="0" cellpadding="0" cellspacing="2" width="668">
 			<tr><td colspan=5 class="midbodytext" style="color=#ffff00"><b>
-			<!-- motd.inc" -->
+			<!-- #include file="motd.inc" -->
 			</b></td></tr>
 			<tr>
 				<td colspan="5" class="smallbodytext">&nbsp;</td>
@@ -124,7 +131,7 @@
 							<td nowrap class="menulink">
 							  <a class="menulink" href="tools/quicklook/quickobj.aspx">
 							    &nbsp;&nbsp;Quick Look</a>&nbsp;&nbsp;|
-							    <a class="menulink" href="tools/explore/obj.aspx">&nbsp;Explore&nbsp;&nbsp;&nbsp;</a>
+							    <a class="menulink" href="tools/explore/obj.aspx">&nbsp;&nbsp;Explore&nbsp;&nbsp;&nbsp;</a>
 							</td>
 						</tr>
 <!--
@@ -179,8 +186,16 @@
 							   <a class="menulink" href="tools/crossid/crossid.aspx">
 							     &nbsp;&nbsp;Cross-ID&nbsp;&nbsp;&nbsp;
 							   </a>
+                            </td>
+                        </tr>
+<% if( Boolean.Parse(ConfigurationManager.AppSettings["DoShowCrossMatch"].ToLower() )  ) {  %>						
+                        <tr height="20">
+							<td nowrap class="menulink">
+                                <a class="menulink" href="tools/crossmatch/crossmatch.aspx">
+							     &nbsp;&nbsp;SkyQuery CrossMatch <i><em><strong><sup>NEW!</sup></strong> </em></i>  </a>
 							 </td>
-						</tr>						
+						</tr>
+<% } %>
 						<tr height="20">
 							<td nowrap class="menulink">
 							   <a class="menulink" href="<%=globals.CasJobs%>">

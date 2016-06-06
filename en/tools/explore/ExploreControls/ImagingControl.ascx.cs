@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using  System.Collections.Specialized;
+using System.Data.SqlClient;
 
 namespace SkyServer.Tools.Explore
 {
@@ -60,11 +61,23 @@ namespace SkyServer.Tools.Explore
         protected string flagsLink = "";
 
         protected RunQuery runQuery;
+
+        DataSet ds = new DataSet();
+
         public void Page_Load(object sender, EventArgs e)
         {
+
+            //ds = (DataSet)Session["objectDataSet"];
+
             globals = (Globals)Application[Globals.PROPERTY_NAME];            
             master  = (ObjectExplorer)Page.Master;
-            runQuery = new RunQuery();
+            string token = "";
+            HttpCookie cookie = Request.Cookies["Keystone"];
+            if (cookie != null)
+                if (cookie["token"] != null || !cookie["token"].Equals(""))
+                    token = cookie["token"];
+            runQuery = new RunQuery(token);
+            
 
             try
             {
@@ -88,17 +101,19 @@ namespace SkyServer.Tools.Explore
         private void execQuery()
         {
             string cmd = ExplorerQueries.getImagingQuery.Replace("@objId", objId);
-            DataSet ds = runQuery.RunCasjobs(cmd);
-            using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            //DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Imaging");
+            //DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.ImagingControl.getImagingQuery");
+            //using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            using (DataTableReader reader = ((DataSet)Session["LoadExplore"]).Tables["ImagingData"].CreateDataReader())
             {
                 if (reader.Read())
                 {
                     if (reader.HasRows)
                     {
                         //photoObjall
-                        flag = (string) reader["flags"];
-                        ra =  (double) reader["ra"];
-                        dec = (double) reader["dec"];
+                        flag = (string)reader["flags"];
+                        ra = (double)reader["ra"];
+                        dec = (double)reader["dec"];
                         run = reader["run"] is DBNull ? -9999 : (short)reader["run"];
                         rerun = reader["rerun"] is DBNull ? -9999 : (short)reader["rerun"];
                         camcol = reader["camcol"] is DBNull ? -9999 : (byte)reader["camcol"];
@@ -106,7 +121,7 @@ namespace SkyServer.Tools.Explore
                         fieldId = reader["fieldId"] is DBNull ? " " : Functions.BytesToHex((byte[])reader["fieldId"]);
                         objId = reader["objId"] is DBNull ? null : Functions.BytesToHex((byte[])reader["objId"]);
                         clean = reader["clean"] is DBNull ? -99999 : (int)reader["clean"]; ;
-                        otype = reader["clean"] is DBNull ? "" :(string)reader["otype"];
+                        otype = reader["clean"] is DBNull ? "" : (string)reader["otype"];
 
                         ////--- magnitudes
                         u = reader["u"] is DBNull ? -999.99 : (float)reader["u"];
@@ -125,8 +140,8 @@ namespace SkyServer.Tools.Explore
                         ////--- PhotoObj
                         mode = reader["mode"] is DBNull ? " - " : (string)reader["mode"];
 
-                        mjdNum = reader["mjdNum"] is DBNull ? -99999 :(int) reader["mjdNum"];
-                        if(mjdNum != -99999)
+                        mjdNum = reader["mjdNum"] is DBNull ? -99999 : (int)reader["mjdNum"];
+                        if (mjdNum != -99999)
                             mjdDate = HelperFunctions.ConvertFromJulian(mjdNum).ToString("MM/dd/yyyy");
 
                         otherObs = reader["Other observations"] is DBNull ? -99999 : (int)reader["Other observations"];
@@ -148,6 +163,9 @@ namespace SkyServer.Tools.Explore
                     }
                 }
             }
+
+
+
         }
 
         //protected string u_unit, g_unit, r_unit, i_unit, z_unit, 
@@ -156,44 +174,27 @@ namespace SkyServer.Tools.Explore
 
         protected NameValueCollection columnUnit = new NameValueCollection();
 
-        protected void getUnit(){
-            
+        protected void getUnit()
+        {
+
             string cmd = ExplorerQueries.unitQuery;
-           
-            DataSet ds = runQuery.RunCasjobs(cmd);
-             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
-             {
-                 if (reader.HasRows)
-                 {
+
+            //DataSet ds = runQuery.RunCasjobs(cmd,"Explore: Imaging");
+            //DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.Explore.ImagingControl.unitQuery");
+            //using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+            using (DataTableReader reader = ((DataSet)Session["LoadExplore"]).Tables["ImagingDataUnits"].CreateDataReader())
+            {
+                if (reader.HasRows)
+                {
                     while (reader.Read())
                     {
-                        string colName =reader[0] is DBNull ? "":(string)reader[0];
+                        string colName = reader[0] is DBNull ? "" : (string)reader[0];
                         string colUnit = reader[0] is DBNull ? "" : (string)reader[1];
-                        columnUnit.Add(colName,colUnit);
+                        columnUnit.Add(colName, colUnit);
                     }
-                 }
-             }
-             
+                }
+            }
         }
 
-        protected string getUnit(string tablename, string columname) {
-            string unit = "";
-            string cmd = ExplorerQueries.getUnit;
-            cmd = cmd.Replace("@tablename", tablename);
-            cmd = cmd.Replace("@name", columname);
-            DataSet ds = runQuery.RunCasjobs(cmd);
-             using (DataTableReader reader = ds.Tables[0].CreateDataReader())
-             {
-                 if (reader.HasRows)
-                 {
-                    if (reader.Read())
-                    {
-                         unit = reader.GetString(0);
-                     
-                    }
-                 }
-             }
-             return unit;
-        }
     }
 }

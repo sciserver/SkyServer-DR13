@@ -6,7 +6,7 @@
 
     <table BORDER=0 WIDTH="440"  cellpadding=1 cellspacing=1>
 	    <tr VALIGN=top><td>
-		    <textarea cols=64 name=cmd rows=12 wrap=virtual>select top 10 specobjid as name, ra, dec from SpecObj
+		    <textarea cols=64 name=cmd rows=12 wrap=virtual><%=cmd%>
 		    </textarea> 
 	    </td></tr>
 

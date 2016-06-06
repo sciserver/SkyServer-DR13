@@ -32,7 +32,7 @@ namespace SkyServer.en.proj.basic.solarsystem
             SqlDataSource1.SelectParameters.Add("server_name", server_name);
             SqlDataSource1.SelectParameters.Add("windows_name", windows_name);
             SqlDataSource1.SelectParameters.Add("remote_addr", remote_addr);
-            SqlDataSource1.SelectParameters.Add("access", globals.Access);
+            SqlDataSource1.SelectParameters.Add("access", "Skyserver.proj.solarsys.query");
         }
     }
 }

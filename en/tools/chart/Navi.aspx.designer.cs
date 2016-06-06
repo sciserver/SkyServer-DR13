@@ -13,6 +13,15 @@ namespace SkyServer.Tools.Chart {
     public partial class Navi {
         
         /// <summary>
+        /// loginParams control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SkyServer.en.Loginfloat loginParams;
+        
+        /// <summary>
         /// form1 control.
         /// </summary>
         /// <remarks>

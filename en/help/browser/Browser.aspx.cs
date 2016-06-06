@@ -283,7 +283,8 @@ namespace SkyServer.Help.Browser
             oCmd.Parameters.AddWithValue("@server_name", server_name);
             oCmd.Parameters.AddWithValue("@windows_name", windows_name);
             oCmd.Parameters.AddWithValue("@remote_addr", remote_addr);
-            oCmd.Parameters.AddWithValue("@access", globals.Access);
+            //oCmd.Parameters.AddWithValue("@access", globals.Access);
+            oCmd.Parameters.AddWithValue("@access", "Skyserver.help.Browser.query");
 
             SqlDataReader reader = oCmd.ExecuteReader();
             return reader;

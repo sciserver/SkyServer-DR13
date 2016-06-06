@@ -17,10 +17,10 @@
 }
 </style>
 <script type="text/javascript">
-  function search() {
-    var args = 'search ' + document.getElementById('key').value;
-    __doPostBack('<%= UpdatePanel1.UniqueID %>',args);
-  }
+    function search() {
+        var args = 'search ' + document.getElementById('key').value;
+        __doPostBack('<%= UpdatePanel1.UniqueID %>', args);
+}
 </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -104,7 +104,7 @@
           {
         %>
           <script type="text/javascript">
-            __doPostBack('<%= UpdatePanel1.UniqueID %>', '<%= cmd %>');
+              __doPostBack('<%= UpdatePanel1.UniqueID %>', '<%= cmd %>');
           </script>
         <% 
           }

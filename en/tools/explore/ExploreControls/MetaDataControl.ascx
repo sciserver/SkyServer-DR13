@@ -6,7 +6,7 @@
         <tr>
             <td colspan="2">
                 <h1 id="sdssname"><%= Functions.SDSSname(ra, dec)%></h1>
-                <h2 id="othernames">&nbsp;<input type="button" onclick=" findOtherNames(<%=ra%>, <%=dec%>);" value="Look up common name" /></h2>
+                <h4 id="othernames">&nbsp;<input type="button" onclick=" findOtherNames(<%=ra%>, <%=dec%>);" value="Look up common name" />   <%=OtherObsText%>     </h4>
             </td>
         </tr>
         <tr>
@@ -14,12 +14,24 @@
                 <table width="620">
                     <tr>
                         <td align="center" class="h" colspan="2">Type</td>
+                        <td align="center" class="h" colspan="2">run</td>
+                        <td align="center" class="h" colspan="2">rerun</td>
+                        <td align="center" class="h" colspan="2">camcol</td>
+                        <td align="center" class="h" colspan="2">field</td>
+                        <td align="center" class="h" colspan="2">obj</td>
                         <td align="center" class="h" colspan="2">SDSS Object ID</td>
                     </tr>
                     <tr>
                         <td class="t" align="center" colspan="2"><b><%=otype%></b></td>
+                        <td class="t" align="center" colspan="2"><%=run%></td>
+                        <td class="t" align="center" colspan="2"><%=rerun%></td>
+                        <td class="t" align="center" colspan="2"><%=camcol%></td>
+                        <td class="t" align="center" colspan="2"><%=field%></td>
+                        <td class="t" align="center" colspan="2"><%=obj%></td>
                         <td class="t" align="center" colspan="2"><%=master.id%></td>
                     </tr>
+                </table>
+                <table width="620">
                     <tr>
                         <td class="h" align="center" colspan="2">RA, Dec</td>
                         <td class="h" align="center" colspan="2">Galactic Coordinates (<i>l</i>, <i>b</i>)</td>
@@ -64,7 +76,7 @@
             <table cellpadding=2 cellspacing=2 border=0 width=625>
                   <%--<tr><td class='nodatafound'>Object is out of SDSS footprint</td></tr>--%>                 
             <%  if (String.IsNullOrEmpty(master.apid) && String.IsNullOrEmpty(master.specObjId)) {%>
-                <tr><td class='nodatafound'>The object corresponding to the id specified does not exist in the database.<br> Please try another object.</td></tr>
+                <tr><td class='nodatafound'>The object corresponding to the specified input does not exist in the database.<br> Please try another object.</td></tr>
             <% } else if (!String.IsNullOrEmpty(master.apid) || !String.IsNullOrEmpty(master.specObjId)) {%>
                 <tr><td class='nodatafound'>There is no image corresponding to the specified id in the SDSS imaging data.</td></tr>
             <% }%>

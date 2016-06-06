@@ -48,7 +48,8 @@ namespace SkyServer.Tools
             string result = "";
             string script = "output console=off script=off\nformat object \"%D,%MAIN_ID,%COO(d;A,D)\"\n" + name;
             WebClient client = new WebClient();
-            Stream data = client.OpenRead(BASE_URL + HttpUtility.UrlEncode(script));
+            string URL = BASE_URL + HttpUtility.UrlEncode(script);
+            Stream data = client.OpenRead(URL);
             StreamReader reader = new StreamReader(data);
             string s = reader.ReadToEnd();
             if (!s.StartsWith("1,"))
@@ -56,11 +57,19 @@ namespace SkyServer.Tools
                 throw new Exception("Nothing found.");
             }
             string[] parts = s.Split(new char[] { ',', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            double ra = 0.0;
+            if (double.TryParse(parts[2], out ra))
+            {
 
-            result += "Name: " + parts[1] + "\n";
-            result += "RA: " + parts[2] + "\n";
-            result += "Dec: " + parts[3] + "\n";
-            return result;
+                result += "Name: " + parts[1] + "\n";
+                result += "RA: " + parts[2] + "\n";
+                result += "Dec: " + parts[3] + "\n";
+                return result;
+            }
+            else
+            {
+                throw new Exception("Name found, but coordinates are undefined.");
+            }
         }
 
         private string resolveCoords(string ra, string dec,string radius)
