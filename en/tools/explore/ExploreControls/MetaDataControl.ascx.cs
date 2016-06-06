@@ -42,6 +42,10 @@ namespace SkyServer.Tools.Explore
 
         DataSet ds = new DataSet();
 
+        public bool WasObservedWithApogee = false;
+        public bool WasObservedWithManga = false;
+        public string OtherObsText = "";
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -57,6 +61,22 @@ namespace SkyServer.Tools.Explore
             runQuery = new RunQuery(token);
             if (master.objId != null && !master.objId.Equals(""))
                 executeQuery();
+
+            if (((DataSet)Session["LoadExplore"]).Tables.IndexOf("MangaData") >= 0 && ((DataSet)Session["LoadExplore"]).Tables["MangaData"].Rows.Count > 0)
+                WasObservedWithManga = true;
+
+            if (((DataSet)Session["LoadExplore"]).Tables.IndexOf("ApogeeData") >= 0 && ((DataSet)Session["LoadExplore"]).Tables["ApogeeData"].Rows.Count > 0)
+                WasObservedWithApogee = true;
+
+            if (WasObservedWithManga && !WasObservedWithApogee)
+                OtherObsText = "This object was also observed in <a href=\"#manga\" style=\"color:blue\">MaNGA</a>";
+            if (WasObservedWithApogee && !WasObservedWithManga)
+                OtherObsText = "This object was also observed in <a href=\"#irspec\" style=\"color:blue\">APOGEE</a>";
+            if (WasObservedWithManga && WasObservedWithApogee)
+                OtherObsText = "This object was also observed in <a href=\"#irspec\" style=\"color:blue\">APOGEE</a> and <a href=\"#manga\" style=\"color:blue\">MaNGA</a>";
+
+
+
 
         }
 

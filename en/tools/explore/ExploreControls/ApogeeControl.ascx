@@ -3,7 +3,7 @@
 <%@ Import Namespace="SkyServer.Tools.Explore" %>
 <% if(master.apid != null && !master.apid.Equals("")){ %>
  <div id="irspec">
-        <h3>Infrared Spectra
+        <h3>Apogee Infrared Spectra
           <span class="target">Targeted star: <%=apogee_id%></span>
         </h3>
         <%if(isData != false){ %>
