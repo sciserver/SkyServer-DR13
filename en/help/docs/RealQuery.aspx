@@ -61,6 +61,7 @@ before you try any queries, especially if you are new to SQL or the SkyServer.
 <br><a href="#photoz">Photometric Redshifts</a>
 <br><a href="#specOther1">Spectra in Other Programs - I</a>
 <br><a href="#specOther2">Spectra in Other Programs - II</a>
+<br><a href="#countsbytype">Counts by type and program</a>
 <br><a href="#wisexmatch">Using WISE Cross-Match</a>
 
 </td>
@@ -117,7 +118,6 @@ before you try any queries, especially if you are new to SQL or the SkyServer.
 <br><a href="#movast">Moving asteroids</a>
 <br><a href="#repeat">Plates with repeat spectra</a>
 <br><a href="#galstar">Galaxies blended with stars</a>
-<br><a href="#countsbytype">Counts by type and program</a>
 <br><a href="#footprint">Checking SDSS footprint</a>
 
 <br><hr>
@@ -139,6 +139,7 @@ before you try any queries, especially if you are new to SQL or the SkyServer.
 <br><a href="#mangaCubes">MaNGA Data Cubes</a>
 <br><a href="#mangaCubesGood">MaNGA Data Cubes of Good Quality</a>
 <br><a href="#mangaCubesPrimary">MaNGA Data Cubes of Primary Sample</a>
+<br><a href="#mangaTarget">MaNGA Targets</a>
 
 <br>
 </td>
@@ -2021,6 +2022,33 @@ Some hints on searching SkyServer:</p>
 	showQuery( qName, qry, cmd, cmd );
 
 
+	qName = "mangaTarget";
+	qry = "MaNGA Targets";
+	cmd = tableDef;
+	cmd += "-- <i>Find all MaNGA targets in the Primary sample allocated to a tile</i> <br>\r\n";
+	cmd += "-- Return the unique identifier (mangaID), the tile they were allocated <br>\r\n";
+	cmd += "-- to (manga_tileid) and the size of the IFU they were allocated <br>\r\n";
+	cmd += "-- (ifudesignsize) <br>\r\n";
+	cmd += " <br>\r\n";
+	cmd += "SELECT mangaID,manga_tileid,ifudesignsize  <br>\r\n";
+	cmd += "FROM mangatarget <br>\r\n";
+	cmd += "WHERE  (manga_target1 & (power(2,10)) != 0) AND manga_tileid > 0 AND IFUDESIGNSIZE > 0 <br>\r\n";
+	cmd += "   <br>\r\n";
+	cmd += "-- Find all of the MaNGA data cubes that were in the Primary+ sample <br>\r\n";
+	cmd += "-- match to the target catalog and return the minimum and maximum  <br>\r\n";
+	cmd += "-- redshift each target could have been observed over (ezmin, ezmax). <br>\r\n";
+	cmd += "-- These can be used to calculate Vmax weights. <br>\r\n";
+	cmd += " <br>\r\n";
+	cmd += "/* ( To run second query, click 'Load Query', delete first query, uncomment this one and press Submit)  <br>\r\n";
+	cmd += "SELECT m.plateifu,t.mangaID,t.ezmin,t.ezmax,m.mngtarg1  <br>\r\n";
+	cmd += "FROM mangatarget as t, mangadrpall as m <br>\r\n";
+	cmd += "WHERE  t.mangaID = m.mangaID AND ((mngtarg1 & (power(2,10)+power(2,12))) <br>\r\n";
+	cmd += "!= 0)  <br>\r\n";
+	cmd += "ORDER BY m.plateifu <br>\r\n";
+	cmd += "*/   <br>\r\n";
+	cmd += "<br></td></tr>\r\n";
+	cmd += "</table>\r\n<br><br>";
+	showQuery( qName, qry, cmd, cmd );
 
 
 %>
