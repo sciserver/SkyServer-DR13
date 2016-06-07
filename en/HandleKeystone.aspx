@@ -42,7 +42,11 @@
     }
     else
     {
-        
+      %>
+        <script>
+            window.location.href = "<%=ConfigurationManager.AppSettings["Keystone.Logout"] %>";
+        </script>
+      <%
       //Response.Redirect("default.aspx");
     }
     
