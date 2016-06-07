@@ -34,6 +34,7 @@
     <%--This Section for MANGA parameters--%>
     <%@ Register TagPrefix="manga" TagName="MangaControl" Src="./ExploreControls/MangaControl.ascx" %>
 
+
    <div class="content">
    <metadata:MetadataParameters ID="MetadataParameters1" runat="server"/>
    <imaging:ImagingParameters ID="ImagingParameters1" runat="server" /> 
