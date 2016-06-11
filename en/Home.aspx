@@ -43,6 +43,12 @@
 
             <h2>Welcome to the new SkyServer!</h2>
 
+            <p><strong>NEW:</strong> <a href="http://compute.sciserver.org">SciServer 
+                Compute&nbsp;<img alt=" (new window)" src="images/new_window_cyan.png"></a> released June 10th! This new 
+                tool from the SciServer team lets you run sophisticated analyses on big data using Python or R scripts 
+                through Jupyter notebooks.
+            </p>
+
             <p>We are proud to announce that SkyServer now connects to the new 
                 <a href="http://www.sciserver.org" target="_blank">SciServer&nbsp;<img alt=" (new window)" src="images/new_window_cyan.png"></a> 
                 science framework! If you have a login through SciServer, you can log in using the control on the top right. 
