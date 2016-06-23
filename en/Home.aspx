@@ -50,6 +50,14 @@
 
             <h2>Welcome to the new SkyServer!</h2>
 
+            <p><strong>NEW:</strong> <a href="http://www.sciserver.org/support/updates/" target="_blank">SciServer 
+                <em>Altair</em> Update 2&nbsp;<img alt=" (new window)" src="images/new_window_cyan.png"></a> 
+                 is available! The update includes the first release of 
+                <a href="http://compute.sciserver.org" target="_blank">SciServer 
+                 Compute&nbsp;<img alt=" (new window)" src="images/new_window_cyan.png"></a>, a new resource 
+                that lets you run sophisticated analyses on big data using Python or R scripts 
+                through Jupyter notebooks.</p>
+
             <p>We are proud to announce that SkyServer now connects to the new 
                 <a href="http://www.sciserver.org" target="_blank">SciServer&nbsp;<img alt=" (new window)" src="images/new_window_cyan.png"></a> 
                 science framework! If you have a login through SciServer, you can log in using the control on the top right. 
@@ -57,8 +65,12 @@
                 management tool.
             </p>
 
-            <p>Log in or register on the <a href="<%=ConfigurationManager.AppSettings["Keystone.Portal"]%>Account/Register" target="_blank">SciServer 
-                Single Sign-on Portal</a>.
+            <p>
+                 <a href="<%=ConfigurationManager.AppSettings["Keystone.Login"]+ConfigurationManager.AppSettings["skyserverBase"]+ HttpUtility.UrlEncode(Request.Url.AbsolutePath) %>">
+                     Log in</a> or 
+                <a href="<%=ConfigurationManager.AppSettings["Keystone.Portal"]+"Account/Register"+ConfigurationManager.AppSettings["skyserverBase"]+ HttpUtility.UrlEncode(Request.Url.AbsolutePath) %>">
+                register</a> on the <a href="<%=ConfigurationManager.AppSettings["Keystone.Portal"]%>Account/Register" target="_blank">SciServer 
+                Login Portal<img alt=" (new window)" src="images/new_window_cyan.png"></a>.
             </p>
                 
                 <p>These new features come from the first release of the SciServer framework, which we call 
