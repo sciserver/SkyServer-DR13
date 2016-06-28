@@ -268,13 +268,36 @@ to a Target in a run of tiling software.
 		<h4>sppLines Indices:</h4><% BrowserFunctions.showIndices(oConn, "sppLines", Request, Response, globals); %>
 		<h4>sppParams Indices:</h4><% BrowserFunctions.showIndices(oConn, "sppParams", Request, Response, globals); %>
 		</li><p>
+
 	</ol>
 
 <%  } %>
+<p><a name="bossgaltables"></a>
+<h3>BOSS Galaxy Product Tables <a href="#top"><img src="images/top.gif"
+ALT="Back to Top" NOSAVE BORDER="0" HEIGHT="25" ALIGN="TOP"></a> </h3>
+These are derived data products from the <a
+href="<%=globals.SdssUrlBase%>surveys/boss/">Baryon Oscillation Spectroscopic
+Survey</a>.  They each have a primary key index on specobjid.
+	<ol>
+		<p>
+		<li><a href="tabledesc.aspx?name=emissionLinesPort"><b>emissionLinesPort</b></a> - Emission line kinematics results for BOSS galaxies using GANDALF.
+		</li><p>
+		<li><a href="tabledesc.aspx?name=stellarMassPassivePort"><b>stellarMassPassivePort</b></a> - Estimated stellar masses for BOSS galaxies using photometric method, assuming passive model. 
+
+		</li><p>
+		<li><a
+		href="tabledesc.aspx?name=stellarMassStarformingPort"><b>stellarMassStarformingPort</b></a> - Estimated stellar masses for BOSS galaxies using photometric method, assuming a star-forming model. 
+		</li><p>
+		<li><b><a href="tabledesc.aspx?name=stellarMassPCAWiscBC03">stellarMassPCAWiscBC03</a></b> and <b><a href="tabledesc.aspx?name=stellarMassPCAWiscM11">stellarMassPCAWiscM11</a></b> 
+            - Estimated stellar masses for BOSS galaxies using PCA technique.
+		</li><p>
+	</ol>
+
+
 <p><a name="zootables"></a>
 <h3>Galaxy Zoo Tables <a href="#top"><img src="images/top.gif"
 ALT="Back to Top" NOSAVE BORDER="0" HEIGHT="25" ALIGN="TOP"></a> </h3>
-There are the results of galaxy classification from the <a
+These are the results of galaxy classification from the <a
 href="http://www.galaxyzoo.org">Galaxy Zoo site</a>:
 	<ol>
 		<p>
@@ -294,28 +317,6 @@ href="http://www.galaxyzoo.org">Galaxy Zoo site</a>:
 		</li><p>
 		<li><a
 		href="tabledesc.aspx?name=zooVotes"><b>zooVotes</b></a> - Vote breakdown in Galaxy Zoo results.
-		</li><p>
-	</ol>
-
-
-<p><a name="bossgaltables"></a>
-<h3>BOSS Galaxy Product Tables <a href="#top"><img src="images/top.gif"
-ALT="Back to Top" NOSAVE BORDER="0" HEIGHT="25" ALIGN="TOP"></a> </h3>
-There are a few new tables for derived data products from the <a
-href="<%=globals.SdssUrlBase%>surveys/boss/">Baryon Oscillation Spectroscopic
-Survey</a>.  They each have a primary key index on specobjid.
-	<ol>
-		<p>
-		<li><a href="tabledesc.aspx?name=emissionLinesPort"><b>emissionLinesPort</b></a> - Emission line kinematics results for BOSS galaxies using GANDALF.
-		</li><p>
-		<li><a href="tabledesc.aspx?name=stellarMassPassivePort"><b>stellarMassPassivePort</b></a> - Estimated stellar masses for BOSS galaxies using photometric method, assuming passive model. 
-
-		</li><p>
-		<li><a
-		href="tabledesc.aspx?name=stellarMassStarformingPort"><b>stellarMassStarformingPort</b></a> - Estimated stellar masses for BOSS galaxies using photometric method, assuming a star-forming model. 
-		</li><p>
-		<li><b><a href="tabledesc.aspx?name=stellarMassPCAWiscBC03">stellarMassPCAWiscBC03</a></b> and <b><a href="tabledesc.aspx?name=stellarMassPCAWiscM11">stellarMassPCAWiscM11</a></b> 
-            - Estimated stellar masses for BOSS galaxies using PCA technique.
 		</li><p>
 	</ol>
 

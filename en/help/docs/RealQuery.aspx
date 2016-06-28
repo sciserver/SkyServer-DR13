@@ -7,11 +7,11 @@
 <table WIDTH=640 border=0 cellspacing="3" cellpadding="3">
 <tr><td bgcolor="black">
 <p>
-This page contains a sample queries designed to serve as templates 
-for writing your own SQL queries. The first section, <em>Basic SQL</em>, serves 
+This page contains sample queries designed to serve as templates 
+for writing your own SQL (Structured Query Language) queries. The first section, <em>Basic SQL</em>, serves 
 as an introduction to the syntax of the SQL database access language. The 
 sections that follow feature queries written to solve real 
-scientific problems submitted by astronomers. Those queries are divided by 
+scientific problems submitted by astronomers. Those queries are grouped by 
 scientific topic.
 </p>
 
@@ -20,9 +20,12 @@ Click on the name of the query in the list below to go directly to that
 sample query. You can load the query into SkyServer's 
 <a href="<%=url%>/tools/search/sql.aspx">SQL Query tool</a> by clicking 
 on the <img src="images/load.gif" height=25 align=middle /> button above each
-query. You can then modify the query to suit your needs. Alternatively, you can 
-send each query to the database and see the results by clicking on the <img
-src="images/run.gif" height=25 align=middle /> button.  
+query. You can then modify the query to suit your needs before actually
+running it. Alternatively, you can send each query immediately to the
+database and see the results by clicking on the <img
+src="images/run.gif" height=25 align=middle /> button. (In cases where
+there is more than one query in an example, only one of the queries gets
+loaded and run by the buttons, you have to copy and paste the other one manually.)
 
 <p>
 <b>NOTE</b>: Please read the <a href="#hints">query hints</a> below 
@@ -103,6 +106,7 @@ before you try any queries, especially if you are new to SQL or the SkyServer.
 <b><i>Varaibility Queries:</i></b>
 <br><a href="#multiple">Stars multiply measured</a>
 <br><a href="#timeseries">Multiple Detections and Time Series</a>
+<br><a href="#qsoVar">eBOSS QSO Variability</a>
 
 </td>
 
@@ -169,7 +173,7 @@ Some hints on searching SkyServer:</p>
    </li>
    <li>If you have optimized your query and it still takes much longer to run than you think it should, try again at a different time. 
    Sometimes when many queries are being run simultaneously, the servers can take a longer time to return. This in turn can sometimes result 
-   in queries timing out, even though they would run perfectly well on the server when the server load is less.
+   in queries timing out, even though they would run perfectly well on the server when the server load is light.
    </li>
    <li>A good way to find if there are any objects that meet the search criteria in a given query is to use the "TOP &lt;n&gt;" 
    SQL construct. For example, "SELECT TOP 10 FROM ..." will only return the first 10 objects that meet your criteria. Note that this is 
@@ -177,9 +181,15 @@ Some hints on searching SkyServer:</p>
    </li>
    <li>If your query returns a lot of output (more than a few thousand objects), it is generally not a good idea to select the HTML output 
    format (which is selected by default in the <a href="../../tools/search/sql.aspx">SQL Search</a> tool). Instead, try selecting CSV (comma-separated 
-   value) output. However, for all queries that return many objects, you are much better off using the 
-   <a href="http://casjobs.sdss.org/casjobs">CasJobs</a> batch query service or one of the command-line query interfaces 
-   (<a href="../download/sqlcl/">sqlcl</a> or the <a href="http://astro.princeton.edu/~rhl/skyserver/skyserver.el">emacs query interface</a>). 
+   values), JSON (JavaScript Object Notation) or one of the other output
+   formats.  With the <a href="http://www.sciserver.org/support/updates/#release1p7p3">SciServer
+   release in 2016</a>, you are now also able to select your CasJobs MyDB as
+   an output location <u>as long as you are logged in</u>.
+   </li>
+   <li>For all queries that return very large output sets or take a long
+   time to run, you are much better off using the asynchronous  <a
+   href="http://casjobs.sdss.org/casjobs">CasJobs</a> batch query
+   service.
    </li>
    <li>Be sure to exclude invalid values (unset or uncalculated quantities), as described on the SQL in SkyServer page under 
    <a href="<%=url%>/help/docs/sql_help.aspx#invalid">Excluding Invalid Data Values</a>.
@@ -2046,6 +2056,22 @@ Some hints on searching SkyServer:</p>
 	cmd += "!= 0)  <br>\r\n";
 	cmd += "ORDER BY m.plateifu <br>\r\n";
 	cmd += "*/   <br>\r\n";
+	cmd += "<br></td></tr>\r\n";
+	cmd += "</table>\r\n<br><br>";
+	showQuery( qName, qry, cmd, cmd );
+
+	qName = "qsoVar";
+	qry = "eBOSS QSO Variability";
+	cmd = tableDef;
+	cmd += "-- <i>An example of how to use the eBOSS QSO Variability VAC</i> <br>\r\n";
+	cmd += "-- Get the structure function parameters (A,gamma) from PTF photometry for all quasar targets, except in the stripe region</i> <br>\r\n";
+	cmd += "-- The cut VAR_CHI2>2 and VAR_A>0.1 selects objects with a significantly varying lightcurve. <br>\r\n";
+	cmd += "  <br>\r\n";
+	cmd += "SELECT <br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;&nbsp; TOP 100 RA, DEC, VAR_A, VAR_GAMMA, VAR_CHI2 <br>\r\n";
+	cmd += "FROM qsoVarPTF <br>\r\n";
+	cmd += "WHERE qsoVarPTF.VAR_CHI2>2 AND qsoVarPTF.VAR_A>0.1 <br>\r\n";
+	cmd += " <br>\r\n";
 	cmd += "<br></td></tr>\r\n";
 	cmd += "</table>\r\n<br><br>";
 	showQuery( qName, qry, cmd, cmd );
