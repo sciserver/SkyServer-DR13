@@ -336,6 +336,7 @@
     <Content Include="en\help\docs\images\tiling_1a.gif" />
     <Content Include="en\help\docs\images\tiling_1b.gif" />
     <Content Include="en\help\docs\images\top.gif" />
+    <Content Include="en\help\docs\Indices.aspx" />
     <Content Include="en\help\docs\Intro.aspx" />
     <Content Include="en\help\docs\Introduction.aspx" />
     <Content Include="en\help\docs\Known.aspx" />
@@ -2674,6 +2675,13 @@
     </Compile>
     <Compile Include="en\help\docs\DocsHome.aspx.designer.cs">
       <DependentUpon>DocsHome.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="en\help\docs\Indices.aspx.cs">
+      <DependentUpon>Indices.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\help\docs\Indices.aspx.designer.cs">
+      <DependentUpon>Indices.aspx</DependentUpon>
     </Compile>
     <Compile Include="en\help\docs\Intro.aspx.cs">
       <DependentUpon>Intro.aspx</DependentUpon>
