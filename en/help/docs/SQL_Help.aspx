@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="../HelpMaster.master" AutoEventWireup="true" CodeBehind="SQL_Help.aspx.cs" Inherits="SkyServer.Help.Docs.SQL_Help" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HelpContent" runat="server">
-<div id="title">Using SQL with SkySever</div>
+<div id="title">SQL in SkySever</div>
 <div id="pdflink">
   <a href="swf/sql_help.swf" target="text" onmouseover="this.T_WIDTH=320;this.T_BGCOLOR='#FFFFFF';return escape('Get text as Flash paper document (opens in new window)')">
      <img src="../../../images/swf_icon.jpg" alt="Get text as Flash paper document" />
