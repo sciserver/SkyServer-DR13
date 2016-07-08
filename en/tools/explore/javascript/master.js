@@ -165,15 +165,16 @@ function press_ok(kind) {
             //callNameResolver();
             break;
         case "objid":
-            window.location = windowPage + '?id=' + f.searchObjID.value;
+            //window.location = windowPage + '?id=' + f.searchObjID.value;
             break;
         case "radec":
-            setra()
-            setdec()
-            window.location = windowPage+'?ra=' + f.searchRA.value + '&dec=' + f.searchDec.value;
+            setra2()
+            setdec2()
+            //alert(document.getElementById("searchRA").value.toString());
+            //window.location = windowPage + '?ra=' + f.ra.value + '&dec=' + f.dec.value;
             break;
         case "sdss":
-            var a = String(f.searchSDSS.value).split("-");
+            var a = document.getElementById('searchSDSS').value.toString().split("-");
             if (a.length != 5) {
                 alert('The SDSS Id has 5 parts,\n Run-Rerun-Camcol-Field-Obj\n');
                 return false;
@@ -193,25 +194,34 @@ function press_ok(kind) {
             //s += padHex(obj, 4);
 
             //window.location = windowPage + '?id=' + s //Number(s).toString(10);
-            window.location = windowPage + '?run=' + a[0] + '&rerun=' + a[1] + '&camcol=' + a[2] + '&field=' + a[3] + '&obj=' + a[4]
+            document.getElementById('run').value = a[0];
+            document.getElementById('rerun').value = a[1];
+            document.getElementById('camcol').value = a[2];
+            document.getElementById('field').value = a[3];
+            document.getElementById('obj').value = a[4];
+            //window.location = windowPage + '?run=' + a[0] + '&rerun=' + a[1] + '&camcol=' + a[2] + '&field=' + a[3] + '&obj=' + a[4]
+            document.getElementById("form5PART").submit();
             break;
         case "specid":
-            var ID = parseFloat(f.searchSpecID.value)
-            if (isNaN(ID) || f.searchSpecID.value.indexOf("+")>-1 ) {
-                window.location = windowPage + '?apid=' + (f.searchSpecID.value);
+            //var ID = parseFloat(f.searchSpecID.value)
+            var ID = parseFloat(document.getElementById('searchSpecID').value)
+            if (isNaN(ID) || document.getElementById('searchSpecID').value.indexOf("+") > -1) {
+                document.getElementById('apid').value = document.getElementById('searchSpecID').value;
+                //window.location = windowPage + '?apid=' + (f.searchSpecID.value);
             }
             else {
-                window.location = windowPage + '?sid=' + f.searchSpecID.value;
+                document.getElementById('sid').value = document.getElementById('searchSpecID').value;
+                //window.location = windowPage + '?sid=' + f.searchSpecID.value;
             }
+            document.forms["formSPEC"].submit();
             break;
         case "plfib":
-            window.location = windowPage+'?plate=' + f.searchPlate.value + '&mjd=' + f.searchMJD.value + '&fiber=' + f.searchFiber.value;
+            //window.location = windowPage+'?plate=' + f.searchPlate.value + '&mjd=' + f.searchMJD.value + '&fiber=' + f.searchFiber.value;
             break;
         default:
             alert('Not supported');
             break;
     }
-
     return false;
 }
 
@@ -246,6 +256,20 @@ function setra() {
     return false;
 }
 
+function setra2() {
+    var s_ra = String(document.getElementById('ra').value);
+    var v;
+    if ($.isNumeric(s_ra)) {
+        v = s_ra;
+        v = v % 360;
+        if (v < 0) v += 360;
+
+        document.getElementById('ra').value = v;
+    }
+    return false;
+}
+
+
 //------------------------------------
 // set and validate the dec value
 //------------------------------------
@@ -278,3 +302,31 @@ function setdec() {
     return false;
 }
 
+function setdec2() {
+
+    var s_dec = String(document.getElementById('dec').value);
+    var v;
+    if ($.isNumeric(s_dec)) {
+        v = parseFloat(s_dec);
+        if (isNaN(v)) v = 0.0;
+        //if (v<-90) v= -90;
+        //if (v>90) v= 90;
+        var OldRa = parseFloat(document.getElementById('ra').value)
+        if (v < -90 || v > 90) {
+            v = v % 360;					// brings dec within the circle
+            if (v < 0) {
+                v = v + 360     // only allows positive dec values
+            }
+            if (v > 90 & v < 270) { // if dec is at the other side of the poles
+                document.getElementById('ra').value = (OldRa + 180) % 360 // go 1/2 way around the globe
+                v = 180 - v
+            }
+            if (v >= 270) { // if dec is at this side from the south pole
+                v = v - 360
+            }
+        }
+
+        document.getElementById('dec').value = v;
+    }
+    return false;
+}
