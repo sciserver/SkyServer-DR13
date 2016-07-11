@@ -10,6 +10,8 @@
         <compilation debug="true" targetFramework="4.0" />
     </system.web>
   <appSettings>
+    <add key="PageInspector:ServerCodeMappingSupport" value="Disabled" />
+    
     <add key="solarConnectionString" value="User ID=*****;Password=*****;Data Source=sdssdb002;Database=SDSS_EPO"/>
     <add key="connectionString" value="User ID=*****;Password=*****;Data Source=SDSS3T;"/>
     <add key="releaseNumber" value="12"/>
