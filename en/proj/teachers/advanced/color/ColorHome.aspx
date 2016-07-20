@@ -1,12 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="ColorMaster.master" AutoEventWireup="true" CodeBehind="ColorHome.aspx.cs" Inherits="SkyServer.Proj.Teachers.Advanced.Color.ColorHome" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ColorContent" runat="server">
-<script>
+<!--<script>
     function answers(id) {
         var link = "http://skyserver.pha.jhu.edu/register/answers/getanswer.asp?id=" + id;
         var w = window.open(link, "POPUP", "scrollbars,resizable,menubar,toolbar");
         w.focus();
     }
-</script>
+</script>-->
 <div id="transp">
 <table WIDTH=600 border=0 cellspacing="3" cellpadding="3">
 <tr><td>
@@ -166,12 +166,15 @@ use in their work. Exercises come in two types: Practice and Explore. Practice
 exercises let students practice using the concepts introduced in the project. 
 Explore exercises are designed to get students to explore SkyServer data to 
 discover concepts on their own. For answers to all Questions and Practice 
-exercises, and sample responses to all Explore exercises, click <A href="#questions" 
+exercises, and sample responses to all Explore exercises, 
+    email us at <a href="sciserver-helpdesk@lists.johnshopkins.edu">sciserver-helpdesk@lists.johnshopkins.edu</a>.
+    
+<!--    click <A href="#questions" 
   onclick="javascript:answers(1);">here</a>. To see the answers, you must have 
 the Adobe Acrobat PDF viewer installed on your computer. Acrobat is available for 
 free download at <A href="#questions" 
 onclick="window.open('http://www.adobe.com/products/acrobat/readstep2.html');">Adobe's 
-web site</a>.</p>
+web site</a>.--></p>
 
 <p>Students should be evaluated based on their written answers to the questions and exercises. You may use our sample <a href="#questions" 
   onclick="window.open('colorrubric.pdf');">scoring rubric</a> or develop your own. 

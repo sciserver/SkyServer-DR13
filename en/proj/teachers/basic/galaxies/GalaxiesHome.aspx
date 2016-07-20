@@ -108,11 +108,13 @@
       <p>Questions are designed to get students thinking about the way 
       scientists work. Exercises are designed to get students to explore using 
       SkyServer data to solve problems. For sample solutions to all 
-      questions and exercises, click <a onclick="window.open('<%=globals.UrlProjRegister%>/answers/getanswer.asp?id=12')" href="#questions">here</a>. 
+      questions and exercises, 
+          email us at <a href="sciserver-helpdesk@lists.johnshopkins.edu">sciserver-helpdesk@lists.johnshopkins.edu</a>.
+          <!--click <a onclick="window.open('<%=globals.UrlProjRegister%>/answers/getanswer.asp?id=12')" href="#questions">here</a>. 
       To see the answers, you must have the Adobe Acrobat PDF viewer installed 
       on your computer. Acrobat is available for free download at
       <a onclick="window.open('http://www.adobe.com/products/acrobat/readstep2.html');" href="#">
-      Adobe's web site</a>.</p>
+      Adobe's web site</a>.--></p>
 
 <p>Students should be evaluated based on their written answers to the questions 
 and exercises. You may use our sample <a href="#questions" 

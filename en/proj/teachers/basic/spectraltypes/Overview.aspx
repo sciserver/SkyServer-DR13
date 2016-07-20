@@ -1,12 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="SpectralTypesMaster.master" AutoEventWireup="true" CodeBehind="Overview.aspx.cs" Inherits="SkyServer.Proj.Teachers.Basic.SpectralTypes.Overview" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="SpectralTypesContent" runat="server">
-<script>
+<!--<script>
     function answers(id) {
         var link = "http://skyserver.pha.jhu.edu/register/answers/getanswer.asp?id=" + id;
         var w = window.open(link, "POPUP", "scrollbars,resizable,menubar,toolbar");
         w.focus();
     }
-</script>
+</script>-->
 <div id="transp">
   <table WIDTH="600" border="0" cellspacing="3" cellpadding="3">
     <tr>
@@ -64,7 +64,8 @@ stars.</p>
 <a name="solutions"></a>
 <h2>Sample Solutions</h2>
 
-<p>To get a copy of the sample solutions, E-mail the SkyServer education director at <a href="mailto:skyserver@jhu.edu">skyserver@jhu.edu</a>.</p>
+<p>To get a copy of the sample solutions, email us at 
+    <a href="sciserver-helpdesk@lists.johnshopkins.edu">sciserver-helpdesk@lists.johnshopkins.edu</a>.
 
       </td>
     </tr>

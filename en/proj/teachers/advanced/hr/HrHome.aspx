@@ -1,12 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="HrMaster.master" AutoEventWireup="true" CodeBehind="HrHome.aspx.cs" Inherits="SkyServer.Proj.Teachers.Advanced.HR.HrHome" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HrContent" runat="server">
-<script>
+<!--<script>
     function answers(id) {
         var link = "http://skyserver.pha.jhu.edu/register/answers/getanswer.asp?id=" + id;
         var w = window.open(link, "POPUP", "scrollbars,resizable,menubar,toolbar");
         w.focus();
     }
-</script>
+</script>-->
 <div id="transp">
 <table WIDTH=600 border=0 cellspacing="3" cellpadding="3">
 <tr><td>
@@ -138,12 +138,15 @@ references for further reading:</p>
 
 <p>Questions are designed to get students thinking about the way scientists work. Exercises 
 are designed to get students to explore using SkyServer data to solve problems. 
-For answers to all questions, click <A href="#questions" 
+For answers to all questions, email us at 
+    <a href="sciserver-helpdesk@lists.johnshopkins.edu">sciserver-helpdesk@lists.johnshopkins.edu</a>.
+    
+    <!--click <A href="#questions" 
   onclick="javascript:answers(3);">here</a>. To see the answers, you must have 
 the Adobe Acrobat PDF viewer installed on your computer. Acrobat is available for 
 free download at <A href="#questions" 
 onclick="window.open('http://www.adobe.com/products/acrobat/readstep2.html');">Adobe's 
-web site</a>.</p>
+web site</a>.--></p>
 
 	  <p>Students should be evaluated based on their written answers 
 	  to the questions and exercises. You may use our sample 
