@@ -24,6 +24,7 @@ namespace SkyServer
         private double visualScale;
         private long exploreDefault;
         private string sdssUrlBase;
+        private string sciserverLink;
         private string siteName;
         private string siteIcon;
         private string logURL;
@@ -72,7 +73,7 @@ namespace SkyServer
         private string skyserverRESTservice;
         private string casjobsRESTapi;
         private string contentDataset;
-        //private string skyServerWSsql;
+        private string mangaUrlBase;
 
         public string username
         {
@@ -378,6 +379,10 @@ namespace SkyServer
         {
             get { return sdssUrlBase; }
         }
+        public string SciServerLink
+        {
+            get { return sciserverLink; }
+        }
 
         public int ReleaseNumber
         {
@@ -508,6 +513,12 @@ namespace SkyServer
             get { return contentDataset; }
         }
 
+        public string MangaUrlBase
+        {
+            get { return mangaUrlBase; }
+        }
+        
+
 
 
         public Globals()
@@ -528,6 +539,8 @@ namespace SkyServer
             this.visualScale = double.Parse(appSettings["visualScale"]);
             this.exploreDefault = long.Parse(appSettings["exploreDefault"]);
             this.sdssUrlBase = appSettings["sdssUrlBase"];
+            this.sciserverLink = appSettings["sciserverLink"];
+
             this.siteName = appSettings["siteName"];
             this.siteIcon = appSettings["siteIcon"];
             this.logURL = appSettings["logURL"];
@@ -559,6 +572,7 @@ namespace SkyServer
             this.timeoutSkyserverWS = int.Parse(appSettings["TimeoutSkyserverWS"] ?? "100000");// time in milliseconds
             this.skyserverRESTservice = appSettings["restwebservice"];
             this.casjobsRESTapi = appSettings["casjobsRESTapi"];
+            this.mangaUrlBase = appSettings["mangaUrlBase"];
 
             if (releaseNumber == 8)
             {

@@ -189,8 +189,8 @@ namespace SkyServer
                             addField(IRspecFields, "vscatter");
                             addField(IRspecFields, "teff");
                             addField(IRspecFields, "logg");
-                            addField(IRspecFields, "metals");
-                            addField(IRspecFields, "alphafe");
+                            addField(IRspecFields, "param_m_h");
+                            addField(IRspecFields, "param_alpha_m");
                         }
                         else if (j == "twomassj") { addField(IRspecFields, "j"); }
                         else if (j == "twomassh") { addField(IRspecFields, "h"); }
@@ -380,16 +380,16 @@ namespace SkyServer
                     constraint = " " + prefix + ".logg < " + val;
                     break;
                 case "fehMin":
-                    constraint = " " + prefix + ".metals > " + val;
+                    constraint = " " + prefix + ".param_m_h > " + val;
                     break;
                 case "fehMax":
-                    constraint = " " + prefix + ".metals < " + val;
+                    constraint = " " + prefix + ".param_m_h < " + val;
                     break;
                 case "afeMin":
-                    constraint = " " + prefix + ".alphafe > " + val;
+                    constraint = " " + prefix + ".param_alpha_m > " + val;
                     break;
                 case "afeMax":
-                    constraint = " " + prefix + ".alphafe < " + val;
+                    constraint = " " + prefix + ".param_alpha_m < " + val;
                     break;
                 default:
                     break;
@@ -1428,7 +1428,7 @@ namespace SkyServer
         {
             for (int i = 0; i < theFields.Count; i++)
             {
-                if (theFields[i] == "teff" | theFields[i] == "logg" | theFields[i] == "metals" | theFields[i] == "cfe" | theFields[i] == "nfe" | theFields[i] == "alphafe")
+                if (theFields[i] == "teff" | theFields[i] == "logg" | theFields[i] == "param_m_h" | theFields[i] == "cfe" | theFields[i] == "nfe" | theFields[i] == "param_alpha_m")
                 {
                     selectClause += addImgSelect(theFields[i], "q");
                 }

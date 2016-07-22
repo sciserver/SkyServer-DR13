@@ -54,8 +54,7 @@ at the second time (d<sub>2</sub> - d<sub>1</sub>). Divide by the amount of time
         <TBODY><tr><td>
 <p><strong>Explore 3</strong>. Use a graphing program such as Excel to graph the second distance on the x-axis and average speed on the y-axis. See SkyServer's <a href="../../../help/howto/graph" 
 target="help">Graphing and Analyzing Data</a> tutorial to learn how to use Excel to graph data. If you don't have a graphing program, you can download 
-a free program such as <a href="http://www.openoffice.org" target="offsite">Open Office</a> (Windows/Mac/Linux) or <a href="http://www.ds.unifi.it/stefanin/AGR_2001/SH/sssheet.htm" target="offsite">
-Sphygmic Spreadsheet</a> (Windows).</p>
+a free program such as <a href="http://www.openoffice.org" target="offsite">Open Office</a>.</p>
 
 <p>What does the graph look like? Why do you think the graph has this shape?</p>
 

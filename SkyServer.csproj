@@ -51,6 +51,10 @@
       <HintPath>lib\DotNetOpenAuth.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\Newtonsoft.Json.6.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
@@ -461,6 +465,11 @@
     <Content Include="en\images\new_window_cyan.png" />
     <Content Include="en\images\offsite.png" />
     <Content Include="en\images\offsite_black.png" />
+    <Content Include="en\images\loginportal.png" />
+    <Content Include="en\images\sciserverlogo.png" />
+    <Content Include="en\images\sciserver_icon_bkgd_blk_150px.png" />
+    <Content Include="en\images\sciserver_logo_inverted.png" />
+    <Content Include="en\images\sciserver_logo_usermsg.png" />
     <Content Include="en\images\sciserverlogo.png" />
     <Content Include="en\images\sciserver_icon_bkgd_blue_64px.png" />
     <Content Include="en\images\sdss-background.jpg" />
@@ -1789,6 +1798,7 @@
     <Content Include="en\tools\explore\ExploreControls\ApogeeControl.ascx" />
     <Content Include="en\tools\explore\ExploreControls\CrossIdControls.ascx" />
     <Content Include="en\tools\explore\ExploreControls\ImagingControl.ascx" />
+    <Content Include="en\tools\explore\ExploreControls\MangaControl.ascx" />
     <Content Include="en\tools\explore\ExploreControls\MetaDataControl.ascx" />
     <Content Include="en\tools\explore\ExploreControls\SpectralControl.ascx" />
     <Content Include="en\tools\explore\ExploreError.aspx" />
@@ -2111,6 +2121,8 @@
     <Content Include="images\logo_nsf.jpg" />
     <Content Include="images\logo_sloan.jpg" />
     <Content Include="images\pdf_icon.gif" />
+    <Content Include="images\sciserver_icon_bkgd_blue_64px.png" />
+    <Content Include="images\sciserver_icon_bkgd_blue_73px.png" />
     <Content Include="images\swf_icon.jpg" />
     <Content Include="images\tick.GIF" />
     <Content Include="images\tick.jpg" />
@@ -5662,6 +5674,13 @@
     <Compile Include="en\tools\explore\ExploreControls\ImagingControl.ascx.designer.cs">
       <DependentUpon>ImagingControl.ascx</DependentUpon>
     </Compile>
+    <Compile Include="en\tools\explore\ExploreControls\MangaControl.ascx.cs">
+      <DependentUpon>MangaControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="en\tools\explore\ExploreControls\MangaControl.ascx.designer.cs">
+      <DependentUpon>MangaControl.ascx</DependentUpon>
+    </Compile>
     <Compile Include="en\tools\explore\ExploreControls\MetaDataControl.ascx.cs">
       <DependentUpon>MetaDataControl.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -6432,6 +6451,9 @@
     <Content Include="en\tools\Resolver.ashx" />
     <Content Include="en\skyserver\paper\SkyServer-ACM-SIGMOD-2002.pdf" />
     <Content Include="en\tools\explore\ObjectExplorer.Master" />
+    <Content Include="en\tools\places\abell.csv" />
+    <Content Include="en\tools\places\messier.csv" />
+    <Content Include="en\tools\places\ngc.xls" />
     <Content Include="en\tools\crossmatch\css\bootstrap-theme.css.map" />
     <Content Include="en\tools\crossmatch\css\bootstrap.css.map" />
     <Content Include="en\tools\crossmatch\fonts\glyphicons-halflings-regular.eot" />
@@ -6450,6 +6472,7 @@
     <None Include="en\tools\STARTBall\images\crosshairsLayers.psd" />
     <None Include="en\tools\STARTBall\STARTBall.dcr" />
     <Content Include="packages.config" />
+    <None Include="ViewPage1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="en\tools\chart\ChartBase.Master" />

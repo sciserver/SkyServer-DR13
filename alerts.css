@@ -22,11 +22,12 @@ body > div#public > div.migrationAlert a{
     color:aqua;
 }
 
-    body > div#public > div.migrationAlert em
-    {
-        color:inherit;
-        font-weight:bold;
-    }
+body > div.migrationNotice {
+    width:160px;
+    color:inherit;
+    font-weight:bold;
+}
+
 body > div.migrationNotice {
     width:180px;
     position:absolute;
@@ -116,7 +117,6 @@ body > div.migrationMenu ul>li>a {
 
     #headerAlert > .imgwithlink {
         float:right;
-        padding-right:10px;
     }
 
     #headerAlert > p
@@ -130,7 +130,6 @@ body > div.migrationMenu ul>li>a {
     {
         color:#00ffff;
     }
-
 
   /* 
       Header alerts get formatted differently in the tools pages (e.g. Finding Chart) than in other pages.

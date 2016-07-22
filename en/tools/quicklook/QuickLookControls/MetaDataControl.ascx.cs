@@ -52,8 +52,8 @@ namespace SkyServer.Tools.QuickLook
         protected int? mjd = null;
         protected short? fiberid = null;
         protected string spectralclass = "";
-        protected float? redshift = null; 
-
+        protected float? redshift = null;
+        protected string run2d;
 
 
         public ObjectQuickLook master;
@@ -105,6 +105,7 @@ namespace SkyServer.Tools.QuickLook
 
                 badphotometry = checkFlags(flags, otype);
                 naviLink = "javascript:showNavi(" + ra + "," + dec + ");";
+                run2d = o.run2d;
             }
         }
 

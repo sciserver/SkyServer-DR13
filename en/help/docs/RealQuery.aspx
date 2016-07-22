@@ -7,11 +7,11 @@
 <table WIDTH=640 border=0 cellspacing="3" cellpadding="3">
 <tr><td bgcolor="black">
 <p>
-This page contains a sample queries designed to serve as templates 
-for writing your own SQL queries. The first section, <em>Basic SQL</em>, serves 
+This page contains sample queries designed to serve as templates 
+for writing your own SQL (Structured Query Language) queries. The first section, <em>Basic SQL</em>, serves 
 as an introduction to the syntax of the SQL database access language. The 
 sections that follow feature queries written to solve real 
-scientific problems submitted by astronomers. Those queries are divided by 
+scientific problems submitted by astronomers. Those queries are grouped by 
 scientific topic.
 </p>
 
@@ -20,9 +20,12 @@ Click on the name of the query in the list below to go directly to that
 sample query. You can load the query into SkyServer's 
 <a href="<%=url%>/tools/search/sql.aspx">SQL Query tool</a> by clicking 
 on the <img src="images/load.gif" height=25 align=middle /> button above each
-query. You can then modify the query to suit your needs. Alternatively, you can 
-send each query to the database and see the results by clicking on the <img
-src="images/run.gif" height=25 align=middle /> button.  
+query. You can then modify the query to suit your needs before actually
+running it. Alternatively, you can send each query immediately to the
+database and see the results by clicking on the <img
+src="images/run.gif" height=25 align=middle /> button. (In cases where
+there is more than one query in an example, only one of the queries gets
+loaded and run by the buttons, you have to copy and paste the other one manually.)
 
 <p>
 <b>NOTE</b>: Please read the <a href="#hints">query hints</a> below 
@@ -57,45 +60,11 @@ before you try any queries, especially if you are new to SQL or the SkyServer.
 
 <br><hr>
 
-<b><i>Quasars:</i></b>
-<br><a href="#qsospec">QSOs by spectroscopy</a>
-<br><a href="#qsocol">QSOs by colors</a>
-<br><a href="#quasar3">FIRST matches for quasars</a>
-
-</td>
-
-<td width="5">&nbsp;</td>
-
-<td class='tsml'>
-<b><i>General Astronomy:</i></b>
-<br><a href="#galview">Only stars or galaxies</a>
-<br><a href="#clean">Clean photometry</a>
-<br><a href="#mjd">Using Field MJD</a>
-<br><a href="#lines">Objects by spectral lines</a>
-<br><a href="#unspec">Spectra by classification</a>
-<br><a href="#movast">Moving asteroids</a>
-<br><a href="#repeat">Plates with repeat spectra</a>
-<br><a href="#galstar">Galaxies blended with stars</a>
-<br><a href="#countsbytype">Counts by type and program</a>
-<br><a href="#footprint">Checking SDSS footprint</a>
-
-<br><hr>
-
-<b><i>Stars:</i></b>
-<br><a href="#cleanStars">Clean photometry - Stars</a>
-<br><a href="#cv">CVs using colors</a>
-<br><a href="#bincol">Binary stars colors</a>
-<br><a href="#spplines">Using sppLines table</a>
-<br><a href="#sppparams">Using sppParams table</a>
-<br /><a href="#pm">Proper motions</a>
-<!-- <br><font color="red"><b>Stars by spectral class (KS)</b></font> -->
-
-<br><hr>
-
 <b><i>Miscellaneous:</i></b>
 <br><a href="#photoz">Photometric Redshifts</a>
 <br><a href="#specOther1">Spectra in Other Programs - I</a>
 <br><a href="#specOther2">Spectra in Other Programs - II</a>
+<br><a href="#countsbytype">Counts by type and program</a>
 <br><a href="#wisexmatch">Using WISE Cross-Match</a>
 
 </td>
@@ -116,9 +85,44 @@ before you try any queries, especially if you are new to SQL or the SkyServer.
 
 <br><hr>
 
+<b><i>Stars:</i></b>
+<br><a href="#cleanStars">Clean photometry - Stars</a>
+<br><a href="#cv">CVs using colors</a>
+<br><a href="#bincol">Binary stars colors</a>
+<br><a href="#spplines">Using sppLines table</a>
+<br><a href="#sppparams">Using sppParams table</a>
+<br /><a href="#pm">Proper motions</a>
+<!-- <br><font color="red"><b>Stars by spectral class (KS)</b></font> -->
+
+<br><hr>
+
+<b><i>Quasars:</i></b>
+<br><a href="#qsospec">QSOs by spectroscopy</a>
+<br><a href="#qsocol">QSOs by colors</a>
+<br><a href="#quasar3">FIRST matches for quasars</a>
+
+<br><hr>
+
 <b><i>Varaibility Queries:</i></b>
 <br><a href="#multiple">Stars multiply measured</a>
 <br><a href="#timeseries">Multiple Detections and Time Series</a>
+<br><a href="#qsoVar">eBOSS QSO Variability</a>
+
+</td>
+
+<td width="5">&nbsp;</td>
+
+<td class='tsml'>
+<b><i>General Astronomy:</i></b>
+<br><a href="#galview">Only stars or galaxies</a>
+<br><a href="#clean">Clean photometry</a>
+<br><a href="#mjd">Using Field MJD</a>
+<br><a href="#lines">Objects by spectral lines</a>
+<br><a href="#unspec">Spectra by classification</a>
+<br><a href="#movast">Moving asteroids</a>
+<br><a href="#repeat">Plates with repeat spectra</a>
+<br><a href="#galstar">Galaxies blended with stars</a>
+<br><a href="#footprint">Checking SDSS footprint</a>
 
 <br><hr>
 
@@ -132,6 +136,14 @@ before you try any queries, especially if you are new to SQL or the SkyServer.
 <br><a href="#apogeeRVs">RVs for Individual APOGEE Visits</a>
 <br><a href="#apogeeSegue">APOGEE and SEGUE Spectra</a>
 <br><a href="#apogeeStarPhoto">SDSS photometry for APOGEE Stars</a>
+
+<br><hr>
+
+<b><i>MaNGA Queries:</i></b>
+<br><a href="#mangaCubes">MaNGA Data Cubes</a>
+<br><a href="#mangaCubesGood">MaNGA Data Cubes of Good Quality</a>
+<br><a href="#mangaCubesPrimary">MaNGA Data Cubes of Primary Sample</a>
+<br><a href="#mangaTarget">MaNGA Targets</a>
 
 <br>
 </td>
@@ -161,7 +173,7 @@ Some hints on searching SkyServer:</p>
    </li>
    <li>If you have optimized your query and it still takes much longer to run than you think it should, try again at a different time. 
    Sometimes when many queries are being run simultaneously, the servers can take a longer time to return. This in turn can sometimes result 
-   in queries timing out, even though they would run perfectly well on the server when the server load is less.
+   in queries timing out, even though they would run perfectly well on the server when the server load is light.
    </li>
    <li>A good way to find if there are any objects that meet the search criteria in a given query is to use the "TOP &lt;n&gt;" 
    SQL construct. For example, "SELECT TOP 10 FROM ..." will only return the first 10 objects that meet your criteria. Note that this is 
@@ -169,9 +181,15 @@ Some hints on searching SkyServer:</p>
    </li>
    <li>If your query returns a lot of output (more than a few thousand objects), it is generally not a good idea to select the HTML output 
    format (which is selected by default in the <a href="../../tools/search/sql.aspx">SQL Search</a> tool). Instead, try selecting CSV (comma-separated 
-   value) output. However, for all queries that return many objects, you are much better off using the 
-   <a href="http://casjobs.sdss.org/casjobs">CasJobs</a> batch query service or one of the command-line query interfaces 
-   (<a href="../download/sqlcl/">sqlcl</a> or the <a href="http://astro.princeton.edu/~rhl/skyserver/skyserver.el">emacs query interface</a>). 
+   values), JSON (JavaScript Object Notation) or one of the other output
+   formats.  With the <a href="http://www.sciserver.org/support/updates/#release1p7p3">SciServer
+   release in 2016</a>, you are now also able to select your CasJobs MyDB as
+   an output location <u>as long as you are logged in</u>.
+   </li>
+   <li>For all queries that return very large output sets or take a long
+   time to run, you are much better off using the asynchronous  <a
+   href="http://casjobs.sdss.org/casjobs">CasJobs</a> batch query
+   service.
    </li>
    <li>Be sure to exclude invalid values (unset or uncalculated quantities), as described on the SQL in SkyServer page under 
    <a href="<%=url%>/help/docs/sql_help.aspx#invalid">Excluding Invalid Data Values</a>.
@@ -1719,8 +1737,8 @@ Some hints on searching SkyServer:</p>
 	cmd += "SELECT TOP 100<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;s.apogee_id,s.ra, s.dec, s.glon, s.glat,<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;s.vhelio_avg,s.vscatter,<br>\r\n";
-	cmd += "&nbsp;&nbsp;&nbsp;a.teff, a.teff_err, a.logg, a.logg_err, a.metals, a.metals_err,<br>\r\n";
-	cmd += "&nbsp;&nbsp;&nbsp;a.alphafe,  a.alphafe_err,<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;a.teff, a.teff_err, a.logg, a.logg_err, a.param_m_h, a.param_m_h_err,<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;a.param_alpha_m,  a.param_alpha_m_err,<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;<a href=\""+url+"/help/browser/browser.aspx?cmd=description+fApogeeAspcapFlagN+F\">dbo.fApogeeAspcapFlagN</a>(a.aspxcapflag),<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;<a href=\""+url+"/help/browser/browser.aspx?cmd=description+fApogeeAspcapFlagN+F\">dbo.fApogeeStarFlagN</a>(s.starflag)<br>\r\n";
 	cmd += "FROM apogeeStar s<br>\r\n";
@@ -1747,13 +1765,13 @@ Some hints on searching SkyServer:</p>
 	cmd += "SELECT TOP 100<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;s.apogee_id,s.ra, s.dec, s.glon, s.glat,<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;s.vhelio_avg,s.vscatter,<br>\r\n";
-	cmd += "&nbsp;&nbsp;&nbsp;a.teff,a.logg, a.metals, a.alphafe,<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;a.teff,a.logg, a.param_m_h, a.param_alpha_m,<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;<a href=\""+url+"/help/browser/browser.aspx?cmd=description+fApogeeAspcapFlagN+F\">dbo.fApogeeAspcapFlagN</a>(a.aspxcapflag),<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;<a href=\""+url+"/help/browser/browser.aspx?cmd=description+fApogeeStarFlagN+F\">dbo.fApogeeStarFlagN</a>(s.starflag)<br>\r\n";
 	cmd += "FROM apogeeStar s<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;JOIN <a href=\""+url+"/help/browser/browser.aspx?cmd=description+aspcapStar+U\">aspcapStar</a> a on a.apstar_id = s.apstar_id<br>\r\n";
 	cmd += "WHERE (a.aspxcapflag & <a href=\""+url+"/help/browser/browser.aspx?cmd=description+fApogeeAspcapFlag+F\">dbo.fApogeeAspcapFlag</a>('STAR_BAD')) = 0 <br>\r\n";
-	cmd += "&nbsp;&nbsp;&nbsp;and a.teff > 0 and a.metals < -2<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;and a.teff > 0 and a.param_m_h < -2<br>\r\n";
 	cmd += "<br></td></tr>\r\n";
 	cmd += "</table>\r\n<br><br>";
 	showQuery( qName, qry, cmd, cmd );
@@ -1771,8 +1789,8 @@ Some hints on searching SkyServer:</p>
 	cmd += "SELECT TOP 100<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;s.apogee_id,s.ra, s.dec, s.glon, s.glat,<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;s.vhelio_avg,s.vscatter,<br>\r\n";
-	cmd += "&nbsp;&nbsp;&nbsp;a.teff, a.teff_err, a.logg, a.logg_err, a.metals, a.metals_err,<br>\r\n";
-	cmd += "&nbsp;&nbsp;&nbsp;a.alphafe,  a.alphafe_err,<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;a.teff, a.teff_err, a.logg, a.logg_err, a.param_m_h, a.param_m_h_err,<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;a.param_alpha_m,  a.param_alpha_m_err,<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;<a href=\""+url+"/help/browser/browser.aspx?cmd=description+fApogeeAspcapFlagN+F\">dbo.fApogeeAspcapFlagN</a>(a.aspxcapflag),<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;<a href=\""+url+"/help/browser/browser.aspx?cmd=description+fApogeeStarFlagN+F\">dbo.fApogeeStarFlagN</a>(s.starflag)<br>\r\n";
 	cmd += "FROM <a href=\""+url+"/help/browser/browser.aspx?cmd=description+apogeeStar+U\">apogeeStar</a> s<br>\r\n";
@@ -1800,7 +1818,7 @@ Some hints on searching SkyServer:</p>
 	cmd += "&nbsp;&nbsp;&nbsp;star.apogee_id, star.ra, star.dec, star.glon, star.glat, <br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;star.vhelio_avg, star.vscatter,<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;obj.j, obj.h, obj.k, obj.ak_targ, obj.ak_targ_method, obj.ak_wise,<br>\r\n";
-	cmd += "&nbsp;&nbsp;&nbsp;aspcap.teff, aspcap.logg, aspcap.metals<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;aspcap.teff, aspcap.logg, aspcap.param_m_h<br>\r\n";
 	cmd += "FROM <a href=\""+url+"/help/browser/browser.aspx?cmd=description+apogeeStar+U\">apogeeStar</a> star<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;JOIN <a href=\""+url+"/help/browser/browser.aspx?cmd=description+aspcapStar+U\">aspcapStar</a> aspcap on aspcap.apstar_id = star.apstar_id<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;JOIN <a href=\""+url+"/help/browser/browser.aspx?cmd=description+apogeeObject+U\">apogeeObject</a> obj on aspcap.target_id = obj.target_id<br>\r\n";
@@ -1824,7 +1842,7 @@ Some hints on searching SkyServer:</p>
 	cmd += "SELECT star.apstar_id,<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;star.apogee_id, star.ra, star.dec, star.glon, star.glat,<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;star.apogee_target1, star.apogee_target2, <br>\r\n";
-	cmd += "&nbsp;&nbsp;&nbsp;aspcap.teff,aspcap.logg,aspcap.metals<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;aspcap.teff,aspcap.logg,aspcap.param_m_h<br>\r\n";
 	cmd += "FROM <a href=\""+url+"/help/browser/browser.aspx?cmd=description+apogeeStar+U\">apogeeStar</a> star<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;JOIN <a href=\""+url+"/help/browser/browser.aspx?cmd=description+fGetNearbyApogeeStarEq+F\">dbo.fGetNearbyApogeeStarEq</a>(250.423458,36.461306,60) near on<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;star.apstar_id=near.apstar_id<br>\r\n";
@@ -1854,7 +1872,7 @@ Some hints on searching SkyServer:</p>
 	cmd += "-- with <a href=\""+url+"/help/browser/browser.aspx?cmd=description+apogeeStarAllVisit+U\">apogeeStarAllVisit</a> and visit_pk with all_visit_pk.<br>\r\n";
 	cmd += "<br>\r\n";
 	cmd += "SELECT  top 100<br>\r\n";
-	cmd += "  visit.*, aspcap.teff, aspcap.logg, aspcap.metals<br>\r\n";
+	cmd += "  visit.*, aspcap.teff, aspcap.logg, aspcap.param_m_h<br>\r\n";
 	cmd += "FROM apogeeVisit visit<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;JOIN <a href=\""+url+"/help/browser/browser.aspx?cmd=description+apogeeStarVisit+U\">apogeeStarVisit</a> starvisit on visit.visit_id = starvisit.visit_id<br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;JOIN <a href=\""+url+"/help/browser/browser.aspx?cmd=description+aspcapStar+U\">aspcapStar</a> aspcap on aspcap.apstar_id = starvisit.apstar_id<br>\r\n";
@@ -1910,7 +1928,7 @@ Some hints on searching SkyServer:</p>
 	cmd += "&nbsp;&nbsp;&nbsp;  photoobj.psfmag_i, photoobj.psfmag_z, <br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;  photoobj.ra as photoobj_ra, photoobj.dec as photoobj_dec, <br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;  star.apstar_id, star.ra as star_ra, star.dec as star_dec, <br>\r\n";
-	cmd += "&nbsp;&nbsp;&nbsp;  aspcap.teff, aspcap.metals, aspcap.logg<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;  aspcap.teff, aspcap.param_m_h, aspcap.logg<br>\r\n";
 	cmd += "FROM <a href=\""+url+"/help/browser/browser.aspx?cmd=description+apogeeStar+U\">apogeeStar</a> AS star <br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;   CROSS APPLY <a href=\""+url+"/help/browser/browser.aspx?cmd=description+fGetNearestObjEq+F\">dbo.fGetNearestObjEq</a>( star.ra, star.dec, 0.05) AS near <br>\r\n";
 	cmd += "&nbsp;&nbsp;&nbsp;   JOIN <a href=\""+url+"/help/browser/browser.aspx?cmd=description+PhotoObj+U\">photoobj</a> ON near.objid=photoobj.objid <br>\r\n";
@@ -1952,6 +1970,111 @@ Some hints on searching SkyServer:</p>
 	cmd += "</table>\r\n<br><br>";
 	showQuery( qName, qry, cmd, cmd );
 
+
+	qName = "mangaCubes";
+	qry = "MaNGA Data Cubes";
+	cmd = tableDef;
+	cmd += "-- <i>Find all MaNGA data cubes of galaxies in the main or ancillary target sample.</i> <br>\r\n";
+	cmd += "-- Get the unique observation identifier (plateifu), object identifier (mangaid),<br>\r\n";
+	cmd += "-- object coordinates, primary sample targeting bit (mngtarg1) and summary data<br>\r\n";
+	cmd += "-- reduction quality bit (drp3qual)<br>\r\n";
+	cmd += "-- A basic SELECT-FROM-WHERE query.<br>\r\n";
+	cmd += "<br>\r\n";
+	cmd += "SELECT TOP 2000 plateifu,        -- Get the unique object ID,<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;   mangaid, objra, objdec, mngtarg1, drp3qual -- and other quantities<br>\r\n";
+	cmd += "FROM mangadrpall        -- From the drpall catalog<br>\r\n";
+	cmd += "WHERE<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;   mngtarg1 != 0 or mngtarg3 != 0 -- Require that either mngtarg1 is nonzero<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;   -- (galaxy in the primary, secondary, or color-enhanced sample) or that<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;   -- mngtarg3 is nonzero (galaxy is an ancillary program target)<br>\r\n";
+	cmd += "<br></td></tr>\r\n";
+	cmd += "</table>\r\n<br><br>";
+	showQuery( qName, qry, cmd, cmd );
+
+
+	qName = "mangaCubesGood";
+	qry = "MaNGA Data Cubes of Good Quality";
+	cmd = tableDef;
+	cmd += "-- <i>Find all MaNGA data cubes of galaxies in the main<br>\r\n";
+	cmd += "-- or ancillary target sample that are of good reduction quality</i><br>\r\n";
+	cmd += "-- Use the largest 127-fiber bundles, have NSA redshift > 0.03,<br>\r\n";
+	cmd += "-- and have NSA elliptical petrosian stellar mass > 10^10 Msun.<br>\r\n";
+	cmd += "<br>\r\n";
+	cmd += "SELECT TOP 2000 plateifu,        -- Get the unique object ID,<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;  mangaid, objra, objdec, mngtarg1, drp3qual -- and other quantities<br>\r\n";
+	cmd += "FROM mangadrpall        -- From the drpall catalog<br>\r\n";
+	cmd += "WHERE<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;  ((mngtarg1 != 0 or mngtarg3 != 0)<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;    and (drp3qual < 10000)<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;    and (ifudesignsize = 127)<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;    and (nsa_z > 0.03)<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;    and (nsa_elpetro_mass >1e10))<br>\r\n";
+	cmd += "<br></td></tr>\r\n";
+	cmd += "</table>\r\n<br><br>";
+	showQuery( qName, qry, cmd, cmd );
+
+
+	qName = "mangaCubesPrimary";
+	qry = "MaNGA Data Cubes of Primary Sample";
+	cmd = tableDef;
+	cmd += "-- <i>Find all MaNGA data cubes of galaxies in the <br>\r\n";
+	cmd += "-- Primary+ (Primary v1_2_0 and color enhanced v1_2_0) sample<br>\r\n";
+	cmd += "-- that are of good reduction quality.</i><br>\r\n";
+	cmd += "<br>\r\n";
+	cmd += "SELECT TOP 2000 plateifu,  &nbsp;&nbsp;&nbsp;-- Get the unique object ID,<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;  mangaid, objra, objdec, mngtarg1, drp3qual -- and other quantities<br>\r\n";
+	cmd += "FROM mangadrpall -- From the drpall catalog<br>\r\n";
+	cmd += "WHERE<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;  (((mngtarg1 & (power(2,10)+power(2,12))) != 0) -- Either bit 10 or 12 of mngtarg1<br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;    and ((drp3qual & power(2,30))  = 0)) -- Not bit 30 of drp3qual<br>\r\n";
+	cmd += "<br></td></tr>\r\n";
+	cmd += "</table>\r\n<br><br>";
+	showQuery( qName, qry, cmd, cmd );
+
+
+	qName = "mangaTarget";
+	qry = "MaNGA Targets";
+	cmd = tableDef;
+	cmd += "-- <i>Find all MaNGA targets in the Primary sample allocated to a tile</i> <br>\r\n";
+	cmd += "-- Return the unique identifier (mangaID), the tile they were allocated <br>\r\n";
+	cmd += "-- to (manga_tileid) and the size of the IFU they were allocated <br>\r\n";
+	cmd += "-- (ifudesignsize) <br>\r\n";
+	cmd += " <br>\r\n";
+	cmd += "SELECT mangaID,manga_tileid,ifudesignsize  <br>\r\n";
+	cmd += "FROM mangatarget <br>\r\n";
+	cmd += "WHERE  (manga_target1 & (power(2,10)) != 0) AND manga_tileid > 0 AND IFUDESIGNSIZE > 0 <br>\r\n";
+	cmd += "   <br>\r\n";
+	cmd += "-- Find all of the MaNGA data cubes that were in the Primary+ sample <br>\r\n";
+	cmd += "-- match to the target catalog and return the minimum and maximum  <br>\r\n";
+	cmd += "-- redshift each target could have been observed over (ezmin, ezmax). <br>\r\n";
+	cmd += "-- These can be used to calculate Vmax weights. <br>\r\n";
+	cmd += " <br>\r\n";
+	cmd += "/* ( To run second query, click 'Load Query', delete first query, uncomment this one and press Submit)  <br>\r\n";
+	cmd += "SELECT m.plateifu,t.mangaID,t.ezmin,t.ezmax,m.mngtarg1  <br>\r\n";
+	cmd += "FROM mangatarget as t, mangadrpall as m <br>\r\n";
+	cmd += "WHERE  t.mangaID = m.mangaID AND ((mngtarg1 & (power(2,10)+power(2,12))) <br>\r\n";
+	cmd += "!= 0)  <br>\r\n";
+	cmd += "ORDER BY m.plateifu <br>\r\n";
+	cmd += "*/   <br>\r\n";
+	cmd += "<br></td></tr>\r\n";
+	cmd += "</table>\r\n<br><br>";
+	showQuery( qName, qry, cmd, cmd );
+
+	qName = "qsoVar";
+	qry = "eBOSS QSO Variability";
+	cmd = tableDef;
+	cmd += "-- <i>An example of how to use the eBOSS QSO Variability VAC</i> <br>\r\n";
+	cmd += "-- Get the structure function parameters (A,gamma) from PTF photometry for all quasar targets, except in the stripe region</i> <br>\r\n";
+	cmd += "-- The cut VAR_CHI2>2 and VAR_A>0.1 selects objects with a significantly varying lightcurve. <br>\r\n";
+	cmd += "  <br>\r\n";
+	cmd += "SELECT <br>\r\n";
+	cmd += "&nbsp;&nbsp;&nbsp;&nbsp; TOP 100 RA, DEC, VAR_A, VAR_GAMMA, VAR_CHI2 <br>\r\n";
+	cmd += "FROM qsoVarPTF <br>\r\n";
+	cmd += "WHERE qsoVarPTF.VAR_CHI2>2 AND qsoVarPTF.VAR_A>0.1 <br>\r\n";
+	cmd += " <br>\r\n";
+	cmd += "<br></td></tr>\r\n";
+	cmd += "</table>\r\n<br><br>";
+	showQuery( qName, qry, cmd, cmd );
 
 
 %>

@@ -48,10 +48,8 @@ spectrum of a real star is shown on the right.</p>
           Explore 4</strong>.
 
 Look at the <a href="spectra.aspx" target="new"><u>spectra of the same seven stars</u></a> you saw earlier (page will open in a new window). 
-These are the same seven stars from when you classified by line strength; they are available as a <a href="swf/7stars.swf" target="stars">FlashPaper</a> File 
-(requires free <a href="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash" target="offsite">
-Flash Player</a>) or as a <a href="pdf/7stars.pdf" target="stars">PDF</a> (requires free <a href="http://www.adobe.com/products/acrobat/readstep2.html" target="offsite">Adobe 
-Reader</a>).</p>
+These are the same seven stars from when you classified by line strength; they are available as a <a href="pdf/7stars.pdf" target="stars">PDF</a> 
+              (requires free <a href="http://www.adobe.com/products/acrobat/readstep2.html" target="offsite">Adobe Reader</a>).</p>
 
 <p>For this exercise, you can ignore the zoom-in beneath each panel. For each spectrum, trace the underlying continuum shape - this is what 
 the spectrum would look like if it had no emission or absorption lines. Find the continuum peak wavelength for each star. If the peak is not shown on 

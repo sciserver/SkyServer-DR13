@@ -84,6 +84,38 @@ namespace SkyServer.Tools.GetImg
             } // using SqlCommand
         }
 
+        protected void writePlateHeader(SqlConnection oConn)
+        {
+            if (plateid.HasValue)
+                using (SqlCommand oCmd = oConn.CreateCommand())
+                {
+                    string cmd = "select plate,mjd,ra,dec from plateX where plateid = @plateID";
+                    oCmd.CommandText = cmd;
+                    oCmd.Parameters.AddWithValue("@plateid", plateid);
+                    using (SqlDataReader reader = oCmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Response.Write("<h2>Plate ");
+                            Response.Write(reader.GetSqlValue(0).ToString());
+                            Response.Write("</h2>");
+                            Response.Write("<p class='plateinfo'>Observed on MJD ");
+                            Response.Write(reader.GetSqlValue(1).ToString());
+                            Response.Write("</p>");
+                            Response.Write("<p class='plateinfo'>Plate center: RA = ");
+                            Response.Write(reader.GetSqlValue(2).ToString());
+                            Response.Write(", dec = ");
+                            Response.Write(reader.GetSqlValue(3).ToString());
+                            Response.Write("</p>");
+                            Response.Write("<p class='plateinfo'>");
+                            Response.Write("<a href='../chart/navi.aspx?ra=" + reader.GetSqlValue(2).ToString() + "&dec=" + reader.GetSqlValue(3).ToString());
+                            Response.Write("&scale=21.4&opt=Q'>");
+                            Response.Write("View in Navigate</a></p>");
+                        }   // while reader.read
+                    }    // using SqlDataReader
+                }   // using SqlCommand
+        }   // close writePlateHeader
+
         protected void writePlate()
         {
             if (plateid.HasValue)

@@ -14,11 +14,18 @@
 		        <tr><td align="middle"><a href="http://www.energy.gov"><img src="../images/logo_energy.jpg" width="48" height="48" border="0"></a></td></tr>
 		        <tr><td>&nbsp;</td></tr>
 		        <tr><td align="middle" class="smallbodytext">Powered by</td></tr>
-                <tr><td align="middle"><a href="http://www.sciserver.org"><img src="images/sciserver_icon_bkgd_blue_64px.png" width="48" height="48" border="0" alt="SciServer logo" /></a></td></tr>
+                <tr>
+                    <td align="middle">
+                        <a href="<%=globals.SciServerLink%>">
+                            <img src="../images/sciserver_icon_bkgd_blue_64px.png" alt="SciServer logo" /><br />
+                            <span class="smallbodytext">SciServer</span>
+                        </a>
+                    </td>
+                </tr>
 		        <tr><td align="middle"><a href="http://research.microsoft.com/"><img src="../images/logo_ms.jpg" width="64" height="21" border="0"></a></td></tr>
             </table>
         </div>
-        <div style="position:absolute;left:<%= logoleftpos%>px;top:430px;z-index:5;">
+        <div style="position:absolute;left:<%= logoleftpos%>px;top:450px;z-index:5;">
             <table width="80" border="0" cellpadding="0" cellspacing="0">
 		        <tr><td><hr class="hrule"></td></tr>
   		        <tr><td>		
@@ -126,7 +133,9 @@
 						<tr height="20">
 							<td nowrap class="menulink">
 							  <a class="menulink" href="tools/chart/navi.aspx">
-							    &nbsp;&nbsp;Navigate&nbsp;&nbsp;&nbsp;
+							    &nbsp;&nbsp;Navigate&nbsp;&nbsp;&nbsp;|
+<a class="menulink" href="tools/chart/chart.aspx">
+							    &nbsp;&nbsp;Finding Chart&nbsp;&nbsp;&nbsp;
 							  </a>
 							</td>
 						</tr>
@@ -137,6 +146,7 @@
 							    <a class="menulink" href="tools/explore/obj.aspx">&nbsp;&nbsp;Explore&nbsp;&nbsp;&nbsp;</a>
 							</td>
 						</tr>
+<!--
 						<tr height="20">
 							<td nowrap class="menulink">
 							  <a class="menulink" href="tools/chart/chart.aspx">
@@ -144,6 +154,7 @@
 							  </a>
 							</td>
 						</tr>
+-->
 						<tr height="20">
 							<td nowrap class="menulink">
 							  <a class="menulink" href="tools/chart/list.aspx">
@@ -226,12 +237,14 @@
 						<tr height="20">
 							<td nowrap class="menulink"><a class="menulink" href="proj/">&nbsp;&nbsp;Lesson Plans&nbsp;&nbsp;</a></td>
 						</tr>
+<!--
 						<tr height="20">
 							<td nowrap class="menulink"><a class="menulink" href="proj/basic/">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Middle School&nbsp;&nbsp;</a></td>
 						</tr>
 						<tr height="20">
 							<td nowrap class="menulink"><a class="menulink" href="proj/advanced/">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; High School&nbsp;&nbsp;</a></td>
 						</tr>
+-->
 						<tr height="20">
 							<td nowrap class="menulink"><a class="menulink" href="proj/advanced/">&nbsp;&nbsp;College Lab Activities&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
 						</tr>
@@ -274,7 +287,10 @@
 							<td nowrap class="menulink"><a class="menulink" target="offsite" href="<%=globals.SdssUrlBase%>dr<%=globals.ReleaseNumber%>/"> &nbsp;&nbsp;Data Release <%=globals.ReleaseNumber%> &nbsp;</a><img src="images/new_window.png" />&nbsp;&nbsp;</td>
 						</tr>
 						<tr height="20">
-							<td nowrap class="menulink"><a class="menulink" href="<%=globals.SdssUrlBase%>science/">&nbsp;&nbsp;SDSS-III Science &nbsp;</a><img src="images/offsite.png" />&nbsp;&nbsp;</td>
+							<td nowrap class="menulink"><a class="menulink" target="offsite"  href="<%=globals.SdssUrlBase%>/surveys/">&nbsp;&nbsp;Surveys&nbsp;</a><img src="images/new_window.png" />|<a class="menulink" target="offsite"  href="<%=globals.SdssUrlBase%>/instruments/">&nbsp;Instruments&nbsp;&nbsp;</a><img src="images/new_window.png" /></td>
+						</tr>												
+						<tr height="20">
+							<td nowrap class="menulink"><a class="menulink" href="<%=globals.SdssUrlBase%>science/">&nbsp;&nbsp;SDSS Science &nbsp;</a><img src="images/offsite.png" />&nbsp;&nbsp;</td>
 						</tr>
 						<tr height="20">
 							<td nowrap class="menulink"><a class="menulink" target="offsite" href="<%=globals.DasUrl %>">&nbsp;&nbsp;Science Archive Server&nbsp;</a><img src="images/new_window.png" />&nbsp;&nbsp;</td>
@@ -283,14 +299,13 @@
 							<td nowrap class="menulink"><a class="menulink" href="astro/">&nbsp;&nbsp;About Astronomy&nbsp;&nbsp;&nbsp;</a></td>
 						</tr>
 						<tr height="20">
-							<td nowrap class="menulink"><a class="menulink" href="sdss/">&nbsp;&nbsp;About the SDSS&nbsp;&nbsp;&nbsp;</a></td>
-						</tr>												
-						<tr height="20">
 							<td nowrap class="menulink"><a class="menulink" href="skyserver/">&nbsp;&nbsp;About SkyServer&nbsp;</a></td>
 						</tr>
+<!--
 						<tr height="20">
 							<td nowrap class="menulink"><a class="menulink" href="http://www.usvao.org/">&nbsp;&nbsp;VAO&nbsp;</a><img src="images/offsite.png" />&nbsp;&nbsp;</td>
 						</tr>
+-->
 						<tr height="20">
 							<td nowrap class="menulink"><a class="menulink" href="credits/">&nbsp;&nbsp;Credits</a></td>
 					    </tr>
@@ -317,8 +332,14 @@
 							&nbsp;&nbsp;</td>
 						</tr>
 						<tr height="20">
+							<td nowrap class="menulink"><a class="menulink" target="offsite" href="<%=globals.SdssUrl%>/algorithms">&nbsp;&nbsp;Algorithms &nbsp;</a><img src="images/new_window.png" />						
+							&nbsp;&nbsp;</td>
+						</tr>
+<!--
+						<tr height="20">
 							<td nowrap class="menulink"><a class="menulink" href="tools/started/">&nbsp;&nbsp;Tool User Guides&nbsp;&nbsp;&nbsp;</a></td>
 						</tr>
+-->
 						<tr height="20">
 							<td nowrap class="menulink"><a class="menulink" href="help/cooking/">&nbsp;&nbsp;Cooking with Sloan&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
 						</tr>
@@ -334,9 +355,11 @@
 						<tr height="20">
 							<td nowrap class="menulink"><a class="menulink" href="help/docs/realquery.aspx">&nbsp;&nbsp;Sample SQL Queries&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
 						</tr>
+<!--
 						<tr height="20">
 							<td nowrap class="menulink"><a class="menulink" href="sdss/pubs/">&nbsp;&nbsp;Data Release Papers&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
 						</tr>
+-->
 
 						<tr height="20">
 							<td nowrap>&nbsp;</td>
