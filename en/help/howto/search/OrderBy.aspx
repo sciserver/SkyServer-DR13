@@ -67,7 +67,7 @@ order by mjd
       
       <p>Modify the query in the textbox below to order by plate number instead of MJD. Which of the plates 
       was observed over more than one night?
-      &nbsp;&nbsp;&nbsp;<a href=javascript:popup('answers_orderby.html','sidebar',300,400)>Answer</a></p>
+      &nbsp;&nbsp;&nbsp;<a href=javascript:popup('answers_orderby.aspx','sidebar',300,400)>Answer</a></p>
       
       <p>See the <a href="<%=url%>/tools/getimg/plate.aspx">Plate Browser</a> for a list of the plates 
       available in Data Release <%=globals.ReleaseNumber%>.</p>

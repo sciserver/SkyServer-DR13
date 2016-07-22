@@ -88,14 +88,16 @@ catalog archive</p>
 <p> <a href="webbrowsers.aspx">Web Browsers</a> shows what parts of the site are supported by which web browsers</p>
 
 <p> <a href="known.aspx">Known Problems</a> lists known problems on this SkyServer site and in the SDSS data.</p>
+-->
 
 <hr />
 <h3>Detailed Reference Information</h3>
 
+<!-- 
 <p> <a href="../download/">Download  </a> lets you download selected papers and tools</p>
+-->
 
 <p> <a href="<%=url%>/sdss/pubs/">SDSS Data Publications</a> is a link to publications that describe the SDSS data in more detail</p>
--->
 
 <p> <a href="api.aspx">API</a> contains information on how to programatically access some of the SDSS services</p>
 

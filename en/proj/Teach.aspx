@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="ProjMaster.master" AutoEventWireup="true" CodeBehind="Teach.aspx.cs" Inherits="SkyServer.Proj.Teach" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ProjContent" runat="server">
-<!--<script>
+<script>
 
     var urlProjRegister = "<%=globals.UrlProjRegister%>";
 
@@ -9,7 +9,7 @@
         var w = window.open(link, "POPUP", "scrollbars=yes,status=yes,resizable=yes,width=640,height=600");
         w.focus();
     }
-</script>-->
+</script>
 
 <div id="transp">
 <table width="600" border="0" cellspacing="3" cellpadding="3">
@@ -82,7 +82,7 @@
       <a href="default.aspx">Projects</a> main page. All the 
       teacher's pages can be accessed from the <a href="teachers/default.aspx">
       teacher's site</a>.</p>
-<!--      <p>To view sample solutions or to use our evaluation 
+      <p>To view sample solutions or to use our evaluation 
       forms, please fill out a simple 
       <a href="javascript:register('teachers')" >
       registration form</a> (opens in a new window). 
@@ -90,7 +90,7 @@
       To register to see the sample solutions, E-mail Jordan Raddick at raddick@jhu.edu
       </noscript>
       We will not give your information to any other organization. 
-      For details, see our privacy policy.</p>-->
+      For details, see our privacy policy.</p>
       <p></p>
       <p>&nbsp;</p></td>
     </tr>

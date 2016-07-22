@@ -6,7 +6,7 @@
         <tr>
             <td colspan="2">
                 <h1 id="sdssname"><%= Functions.SDSSname(ra, dec)%></h1>
-                <h4 id="othernames">&nbsp;<input type="button" onclick=" findOtherNames(<%=ra%>, <%=dec%>);" value="Look up common name" />   <%=OtherObsText%>     </h4>
+                <h2 id="othernames">&nbsp;<input type="button" onclick=" findOtherNames(<%=ra%>, <%=dec%>);" value="Look up common name" /></h2>
             </td>
         </tr>
         <tr>

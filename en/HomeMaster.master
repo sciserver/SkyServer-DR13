@@ -1,4 +1,5 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="HomeMaster.master.cs" Inherits="SkyServer.HomeMaster" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -6,10 +7,8 @@
 <head runat="server">
   
   <link href="../skyserver.css" rel="stylesheet" type="text/css" />
-  <link href="../alerts.css" rel="stylesheet" type="text/css" />
+  <link href="../alerts.css" rel="Stylesheet" type="text/css" />
   <link href="../FavIcon.ICO" rel="SHORTCUT ICON" />
-
-    <asp:ContentPlaceHolder id="csscanister" runat="server"></asp:ContentPlaceHolder>  <!-- a place to hold page-specific css files -->
   
   <title>SDSS SkyServer <%= globals.Release %></title>
 
@@ -56,7 +55,6 @@
             </tr>
           </table>
         </td>       
-
         <td >
             <img alt="" src="<%= imgpath %>imageright2.png" />
         </td>
@@ -81,6 +79,7 @@
       </tr>
     </table>
   </div>
+
   <div id="div_nav">
     <table border="1" cellpadding="0" cellspacing="0" width="100%" style="height:25px;border-collapse:collapse;">
       <tr bgcolor="#313131" style="height:23px">
@@ -99,7 +98,7 @@
       </tr>            
     </table>
   </div>  
-
+  
   <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"></asp:ContentPlaceHolder>
 
   <script language="JavaScript" type="text/javascript" src="<%= url %>wz_tooltip.js"></script>

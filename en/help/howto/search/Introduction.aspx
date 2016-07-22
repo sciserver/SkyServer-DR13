@@ -48,7 +48,7 @@
       data of a different type. For example, all data related 
       to an object's spectrum are stored in a table called "specObj." 
       All data related to an object's image properties are 
-      stored in a table called "photoObj." SkyServer contains many tables,  
+      stored in a table called "photoObj." SkyServer contains 63 tables,  
       although most of the commonly accessed data are stored 
       in just three or four of them.</p> 
       <p>Each table contains a series of data <em>columns</em>. A column contains only 

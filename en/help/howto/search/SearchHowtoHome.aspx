@@ -19,11 +19,11 @@
       <p>Did you know that you can search through SkyServer's database 
       for only the objects you are interested in? For example, you might want 
       to find all the bright blue galaxies for which we have obtained spectra. 
-      Looking through all the hundreds of millions of SDSS objects with the Navigation tool 
+      Looking through all <%=globals.NObj%> objects with the Navigation tool 
       could take years. But using 
       <a href="" onclick="window.open('rightsearch.html','sidebar','width=350,height=600,resizeable,scrollbars');">
       the right search</a>, 
-      you could find 10 bright blue galaxies with spectra in seconds!</p>      
+      you could find all the bright blue galaxies with spectra in seconds!</p>      
       <p>If you know how to retrieve 
       the right data, you can ask millions of different questions. Searching 
       SkyServer is an incredibly powerful tool for conducting astronomy research; 

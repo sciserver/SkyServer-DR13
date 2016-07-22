@@ -97,7 +97,6 @@ of change. The expanding universe, a new idea based on modern physics, laid
 to rest the paradoxes that troubled astronomers from ancient times until the 
 early 20th Century.</p>
 
-    <!--
 <a name="properties"></a>
 <h1>Properties of the Expanding Universe</h1>
 <p>
@@ -124,12 +123,9 @@ then at an infinite distance away from the Earth, it will come to a stop (this
 is the flat universe). And lastly, if the ship is launched with more than enough energy 
 to escape, it will always have some speed, even when it is an infinite distance 
 away (the open universe).
-    -->
 
 <a name="fate"></a>
 <h1>The Fate of the Universe</h1>
-
-    <IMG align=right src="images/evol_model.jpg">
 <p>
 	For the last eighty years, astronomers have been making increasingly 
 accurate measurements of two important cosmological parameters: H<sub>o</sub>&nbsp;- the rate at which 

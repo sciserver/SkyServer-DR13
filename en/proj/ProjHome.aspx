@@ -3,7 +3,6 @@
 <STYLE>
 	#hint	{position:absolute;left:760px;top:240px;}
 </STYLE>
-    <!--
 <script>
 
     var urlProjRegister = "<%=globals.UrlProjRegister%>";
@@ -36,7 +35,7 @@
         var w = window.open(link, "POPUP", "scrollbars=yes,status=yes,resizable=yes,width=640,height=600");
         w.focus();
     }
-</script>-->
+</script>
 
 <div id="title">Education</div>
 
@@ -54,7 +53,7 @@
 stars and galaxies of the Sloan Digital Sky Survey (SDSS) - 
 the same objects that professional astronomers study. Most 
 of these objects have never been seen before by human eyes.</p>
-    <!--
+
 <p><font color=red><strong>STUDENTS:</strong></font></p>
 
 <ul>
@@ -67,21 +66,21 @@ SkyServer student user</p></li>
 <noscript>
 To register as a student user or to request answers, E-mail Jordan Raddick at raddick@jhu.edu
 </noscript>
-    -->
+
 <p><a href="teachers/"><font color=red><strong>TEACHERS:</strong></font></a></p>
 
 <ul>
 <li><p><a href="teach.aspx">Learn</a> how you can use SkyServer in your classroom</p></li>
 <li><p><a href="teachers/">See the teacher guides</a> for SkyServer projects</a></p></li>
-<!--<li><p><a href="javascript:register('teachers')">Register</a> as a 
+<li><p><a href="javascript:register('teachers')">Register</a> as a 
 SkyServer teacher</p></li>
 <li><p><a href="http://tech.groups.yahoo.com/group/skyserver/" target="offsite">Communicate</a> with 
        other teachers on the<br /><a href="http://tech.groups.yahoo.com/group/skyserver/" target="offsite">
-       SkyServer Yahoo group</a> (links open in new window)</p></li>-->
+       SkyServer Yahoo group</a> (links open in new window)</p></li>
 </ul>
-<!--<noscript>
+<noscript>
 To register as a teacher, E-mail Jordan Raddick at raddick@jhu.edu
-</noscript>-->
+</noscript>
 
 
 <p>Work through these projects at your own pace. Each consists of several 

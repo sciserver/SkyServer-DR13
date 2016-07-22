@@ -30,12 +30,16 @@ absorption line.</p>
 You can get a rough measure of the strength of the H&alpha; line by counting the number of grid squares you filled in when 
 you colored in the area below the line connecting the triangles.</p>
 
-<p>Here is an example of how the spectrum looks with the grid squares filled in, as a 
-    <a href="http://www.adobe.com/products/acrobat/readstep2.html">PDF</a> 
-    or as an image (links open in a new window):</p>
+<p>Here is an example of how the spectrum looks with the grid squares filled in, as a <a href="http://www.adobe.com/products/flashplayer/">Flash</a> or 
+<a href="http://www.adobe.com/products/acrobat/readstep2.html">PDF</a> file (links open in a new window), or as an image:</p>
 
 <table width="40%">
   <tr>
+    <td>
+        <a href="swf/filled_example.swf" target="example">
+        <img src="../../../../images/swf_icon.jpg" alt="Click here to view an example of the spectrum with squares filled in, as a Flash file" />
+        </a>
+    </td>
     <td>
         <a href="pdf/filled_example.pdf" target="example">
         <img src="../../../../images/pdf_icon.gif" alt="Click here to view an example of the spectrum with squares filled in, as a PDF file" />

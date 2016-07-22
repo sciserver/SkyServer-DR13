@@ -51,7 +51,7 @@
       you are really interested in.</p>
       <p>You want to be sure that you are looking at galaxies, not stars or quasars, 
       so include the line:</p>
-      <p>specPhoto.class = 'GALAXY'</p>
+      <p>specPhoto.class = 2</p>
       
       <p>To learn how to use SQL, see SkyServer's <a href="../../../help/howto/search/" target="help">Searching 
       for Data</a> how-to tutorial. You can find other SQL tutorials 

@@ -3,7 +3,7 @@
 <STYLE>
 	#hint	{position:absolute;left:760px;top:240px;}
 </STYLE>
-<!--<script>
+<script>
 
     var urlProjRegister = "http://skyserver.pha.jhu.edu/register/";
 
@@ -18,7 +18,7 @@
         var w = window.open(link, "POPUP", "scrollbars,resizable,menubar,toolbar");
         w.focus();
     }
-</script>-->
+</script>
 <div id="transp">
   <table WIDTH="600" border="0" cellspacing="3" cellpadding="3">
     <tr>
@@ -69,12 +69,9 @@
 
 <p>Because each team goes on the Scavenger Hunt independently, each team's answers should be different. SkyServer has thousands of examples of each type of object, so this project has many valid answers. The sample solutions below are just one possible set of answers.</p>
 
-<p>To view SkyServer sample solutions,
-    email us at <a href="sciserver-helpdesk@lists.johnshopkins.edu">sciserver-helpdesk@lists.johnshopkins.edu</a>.
-    
-     <!--you must be a <a href="#solutions" onclick="javascript:register('teachers')">registered SkyServer teacher</a>.</p>
+<p>To view SkyServer sample solutions, you must be a <a href="#solutions" onclick="javascript:register('teachers')">registered SkyServer teacher</a>.</p>
 
-<p><a href="#solutions" onclick="javascript:answers(13);">Sample solutions</a>--></p>
+<p><a href="#solutions" onclick="javascript:answers(13);">Sample solutions</a></p>
 
       
       </td>

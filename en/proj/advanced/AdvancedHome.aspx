@@ -75,7 +75,7 @@ cutting edge technology.</p></td>
 
 <td align=center><a href="quasars/"><img src="images/qso582.gif" border=0></td>
 </tr>
-<!--
+
 <tr>
 <tr><td><p><a href="processing/">Image Processing</a></p></td>
 
@@ -83,7 +83,7 @@ cutting edge technology.</p></td>
 never look at a picture of the sky the same way again!</p></td>
 
 <td align=center><a href="processing/"><img src="images/twoimgs.jpg" border=0></td>
-</tr>-->
+</tr>
 
 
 </table>

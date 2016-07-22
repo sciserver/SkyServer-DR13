@@ -3,7 +3,7 @@
 <STYLE>
 	#hint	{position:absolute;left:760px;top:240px;}
 </STYLE>
-<!--<script>
+<script>
 
     var urlProjRegister = "<%=globals.UrlProjRegister%>";
 
@@ -23,7 +23,7 @@
         var w = window.open(link, "POPUP", "scrollbars,resizable,menubar,toolbar");
         w.focus();
     }
-</script>-->
+</script>
 
 <div id="transp">
 <table WIDTH=600 border=0 cellspacing="3" cellpadding="3">
@@ -72,13 +72,13 @@ having to copy and paste.</p>
 
 <p><font color=red><strong>TEACHERS:</strong></font></p>
 <ul>
-<!--<li><p>
+<li><p>
 <a href="javascript:evaluate('teachers')">Evaluate</a> projects that your students 
 have completed. We want to know what you think!</li>
 <li><p>
 <a href="javascript:update('teachers')">Update</a> your registration information or password</li>
 <li><p>
-<a href="javascript:answers()">View</a> sample solutions(*) to SkyServer projects</li>-->
+<a href="javascript:answers()">View</a> sample solutions(*) to SkyServer projects</li>
 <li><p>
 <a href="mailto:raddick@pha.jhu.edu?subject=Project contact">Contact 
 us</a> if you are interested in helping us to develop or evaluate this site!

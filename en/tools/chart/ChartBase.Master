@@ -7,7 +7,6 @@
 
 
     <link href="../../tools.css" rel="stylesheet" type="text/css" />
-    <link href="../../../alerts.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
       #toc   {position:absolute;top:10px;left:10px;}
       #content {position:absolute;top:0px;left:200px;background-color:White;}
@@ -49,7 +48,7 @@
     <title>SDSS <%= globals.Release%> Finding Chart Tool</title>
 
     <asp:ContentPlaceHolder ID="head" runat="server">
-            
+
     </asp:ContentPlaceHolder>
 </head>
 <body>
@@ -196,14 +195,14 @@
 	<tr><td bgColor="lightblue" ONMOUSEOVER="this.T_TEMP='2000';this.T_WIDTH='140';return escape('Shows masks (pink) around bright objects and data artifacts')"><INPUT type="checkbox" onclick="setopt(this,'M')" name="Masks" id="Masks">SDSS Masks</td></tr>
 	<tr><td bgColor="lightblue" ONMOUSEOVER="this.T_TEMP='2000';this.T_WIDTH='140';return escape('Shows plates (lavender) used to collect spectra')"><INPUT type="checkbox" onclick="setopt(this,'Q')" name="Plates" id="Plates">SDSS Plates</td></tr>		
 
+           
            </table>
     </div>
-        <div id="content">               
+        <div id="content">
             <asp:ContentPlaceHolder ID="FCContent" runat="server">
+        
             </asp:ContentPlaceHolder>
         </div>
-
-
     </form>
     <script type="text/javascript">init('<%=def%>');</script>
     <script language="JavaScript" type="text/javascript" src="../../wz_tooltip.js"></script>

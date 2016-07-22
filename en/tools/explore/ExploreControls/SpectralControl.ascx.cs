@@ -34,7 +34,6 @@ namespace SkyServer.Tools.Explore
         protected double veldisp_err;
         protected string targeting_flags;
         protected long? specObjId;
-        protected string run2d;
 
         protected RunQuery runQuery;
 
@@ -114,8 +113,6 @@ namespace SkyServer.Tools.Explore
                         veldisp_err = reader["veldisp_err"] is DBNull ? -999.99 : (float)reader["veldisp_err"];
 
                         targeting_flags = reader["targeting_flags"] is DBNull ? "" : (string)reader["targeting_flags"];
- 
-                        run2d = reader["run2d"] is DBNull ? "" : (string)reader["run2d"];
                     }
                 }
             }

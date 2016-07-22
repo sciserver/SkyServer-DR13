@@ -18,10 +18,9 @@
               <p><br>select<br> 
               s.objid, s.ra, s.dec, s.u, s.g, s.r, s.i, s.z</p>
               <p>from<br>
-              star s</p>
-              <p>join<br />
-               dbo.fGetNearbyObjEq(229.0128,-0.1082,3) n<br />
-               on n.objid = s.objid</p>
+              star s, dbo.fGetNearbyObjEq(229.0128,-0.1082,3) n</p>
+              <p>where<br>
+              s.objid = n.objid</p>
               <p></p>
               </td>
             </tr>
@@ -39,9 +38,11 @@
 
        <a name="query"></a>
           <p>Now that you have your data, click the Previous button to go back to the previous page, 
-              where you will make your H-R diagram.<!-- If you are curious about the query you entered, click 
+              where you will make your H-R diagram. If you are curious about the query you entered, click 
               <a href="#query" onclick="window.open('query.html','sidebar','width=500,height=600,resizeable,scrollbars');">this 
-              link to learn more about it</a>.--></p>
+              link to learn more about it</a>.</p>
+        
+        <p>Click the Previous button to go back to the previous page, where you will study your H-R diagram.</p>
 
       </td>
     </tr>

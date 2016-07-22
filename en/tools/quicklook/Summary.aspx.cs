@@ -136,7 +136,6 @@ namespace SkyServer.Tools.QuickLook
                     objectInfo.spectralClass = reader["spectralClass"] is DBNull ? "" : (string)reader["spectralClass"];
                     objectInfo.flags = reader["flags"] is DBNull ? "" : (string)reader["flags"];
                     objectInfo.redshift = reader["redshift"] is DBNull ? null : (float?)reader["redshift"];
-                    objectInfo.run2d = reader["run2d"] is DBNull ? "" : (string)reader["run2d"];
                 }
             } // using DataTableReader
         }

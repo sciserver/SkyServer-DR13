@@ -54,7 +54,7 @@ namespace SkyServer.Tools.Explore
         public string apogeeTarget2N;      // APOGEE target flags 2
         public string apogeeStarFlagN;     // Star flags
         public string apogeeAspcapFlagN;   // Processing flags (ASPCAP)
-        public string apred_version;       // Visit reduction pipeline version
+
 
         /* TABLE apogeeVisit */
         public string visit_id;
@@ -104,8 +104,8 @@ namespace SkyServer.Tools.Explore
                 {
                     apogeeID(master.apid);
                     ReadInfoFromDbReader();
-                    ReadVisitsFromDbReader();
                     ReadApogeeLinks();
+                    ReadVisitsFromDbReader();
                 }
                 catch (Exception ex)
                 {
@@ -172,9 +172,9 @@ namespace SkyServer.Tools.Explore
             string specApogeeLink = globals.ApogeeSpectrumLink + "?apogee_id=" + apogee_id;
             string doWeNeedC = (commiss == 1) ? "C" : "";
 
-            apogeeSpecImage = globals.ApogeeFitsLink + "/stars/apo25m/" + location_id + "/plots/apStar" + doWeNeedC + "-r6-" + HttpUtility.UrlEncode(apogee_id) + ".jpg";
-            spectrumLink = globals.ApogeeSpectrumLink + "?locid=" + location_id + "&commiss=" + commiss + "&apogeeid=" + apogee_id + "&apred_ver=" + apred_version;
-            fitsLink = globals.ApogeeFitsLink + "/stars/apo25m/"+location_id+"/apStar" + doWeNeedC + "-r6-" + HttpUtility.UrlEncode(apogee_id) + ".fits";
+            apogeeSpecImage = globals.ApogeeFitsLink + "/stars/apo25m/" + location_id + "/plots/apStar" + doWeNeedC + "-r5-" + HttpUtility.UrlEncode(apogee_id) + ".jpg"; ;
+            spectrumLink = globals.ApogeeSpectrumLink + "?locid=" + location_id + "&commiss=" + commiss + "&apogeeid=" + apogee_id;
+            fitsLink = globals.ApogeeFitsLink + "/stars/apo25m/"+location_id+"/apStar" + doWeNeedC + "-r5-" + HttpUtility.UrlEncode(apogee_id) + ".fits";
         }
 
         protected void ReadVisitsFromDbReader()
@@ -201,7 +201,6 @@ namespace SkyServer.Tools.Explore
                     v.dateobs = (string)reader["dateobs"];
                     v.vrel = (float)reader["vrel"];
                     visits.Add(v);
-                    apred_version = reader["apred_version"] is DBNull ? "" : (string)reader["apred_version"];// assumes that the version in all rows is the same.
                 }
             }
         }
