@@ -66,7 +66,7 @@
           <tr>
             <td><b><i>Download More Images:</i></b></td>
                 <td class='l' colspan='10'><a class="content"
-	        href="<%=globals.DasUrl%>/fields"><%=globals.Release%> Science
+	        href="<%=globals.DasUrl%>fields"><%=globals.Release%> Science
 	        Archive Server (SAS) Image Download</a></td>
           </tr>
         </table>
