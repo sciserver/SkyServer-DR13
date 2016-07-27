@@ -87,7 +87,7 @@ describes the database organization and structure.
 <h3>The SDSS Catalog Data Model</h3>
 <p>
 The SDSS catalog data is stored in a commercial relational database management 
-system (DBMS) - Microsoft's SQL Server.  The data is therefore organized
+system (DBMS) - <a href="https://www.microsoft.com/en-us/cloud-platform/sql-server">Microsoft's SQL Server</a>.  The data is therefore organized
 in several 2-dimensional tables.  The tables and their relationships to each 
 other are referred to as the <i>schema</i> in database jargon.  The <a
 href="<%=url%>/help/browser/browser.aspx">Schema</a> link in the menubar
@@ -377,7 +377,7 @@ defined on the data.</u></a>
 <h2>Accessing the CAS Data <a href="#top"><img src="images/top.gif" ALT="Back to Top" NOSAVE BORDER="0" HEIGHT="25" ALIGN="TOP"></a></h2>
 <!-------"dataaccess.inc"------------->
 <p>
-The CAS uses a Microsoft SQL Server database to store and serve the data.
+The CAS uses a <a href="https://www.microsoft.com/en-us/cloud-platform/sql-server">Microsoft SQL Server</a> database to store and serve the data.
 Users can access this data by a number of methods.</p>
 <table class='v' border="0"  cellspacing="1" cellpadding="3">
 
