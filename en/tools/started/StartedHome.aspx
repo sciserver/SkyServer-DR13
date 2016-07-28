@@ -150,8 +150,8 @@ a tool for more information on what it does and how to use it.</p>
    your search.</p></td>
  </tr>
  <tr>
-   <td><p><a href="#list" onclick="window.open('crossid.aspx','popup','width=440,height=580,resizeable,scrollbars');">Object Upload</a></p></td>
-   <td><p>Lets you upload a list of sky positions or plate/fiber numbers, then returns a list 
+   <td><p><a href="#list" onclick="window.open('crossid.aspx','popup','width=440,height=480,resizeable,scrollbars');">Cross-ID</a></p></td>
+   <td><p>Lets you upload a list of sky positions, then returns a list 
    of all SDSS objects near those positions.</p></td>
    <td><p>you have a list of sky objects from another astronomical 
    database, and you want to find all SDSS objects near each of your 

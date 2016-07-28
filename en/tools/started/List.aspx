@@ -82,9 +82,6 @@
 	     <li><p><strong>InvertImage</strong> inverts the colors for the onscreen display 
 	     of the Image List (images are automatically inverted by the printing utility)</li>
 
-	  <p><a	href='javascript:launch("../chart/listinfo.aspx")'>See the Image List help page</a></p>
-
-
 	  <p><A href='javascript:done()'>Done</A></p>
 	  </td>
 	</tr>
