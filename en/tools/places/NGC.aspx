@@ -25,12 +25,12 @@
 
 	<td><% ResponseAux.pTable("ngc99",5.99747,15.770428,Response);%>
 	NGC99 is a fairly small spiral galaxy in Pisces.<br>
-	<a href="http://www.seds.org/~spider/ngc/ngc.cgi?99" target="offsite">SEDS page</a>
+	<a href="http://spider.seds.org/ngc/ngc.cgi?NGC99" target="offsite">SEDS page</a>
 	</td>
 
 	<td><%ResponseAux.pTable("ngc2681", 133.386477, 51.313909, Response);%>
 	NGC2681 is a large, bright galaxy in Ursa Major, with a bright nucleus.<br>
-	<a href="http://www.seds.org/~spider/ngc/ngc.cgi?2681" target="offsite">SEDS page</a>
+	<a href="http://spider.seds.org/ngc/ngc.cgi?NGC2681" target="offsite">SEDS page</a>
 	</td>
 
 </tr>
@@ -39,12 +39,12 @@
 <td>
 	<%ResponseAux.pTable("ngc2713", 134.33544, 2.921312, Response);%>
 	NGC2713 is a spiral galaxy in Hydra with loosely wound arms.<br>
-	<a href="http://www.seds.org/~spider/ngc/ngc.cgi?2713" target="offsite">SEDS page</a>
+	<a href="http://spider.seds.org/ngc/ngc.cgi?NGC2713" target="offsite">SEDS page</a>
 </td>
 <td>
 	<% ResponseAux.pTable("ngc3440", 163.456165, 57.118647, Response);%>
 	NGC3440 is a small irregular galaxy in Ursa Major.<br>
-	<a href="http://www.seds.org/~spider/ngc/ngc.cgi?3440" target="offsite">SEDS page</a>
+	<a href="http://spider.seds.org/ngc/ngc.cgi?NGC3440" target="offsite">SEDS page</a>
 
 </td>
 </tr>
@@ -53,12 +53,12 @@
 <td>
 	<%ResponseAux.pTable("ngc5348", 208.546937, 5.2274552, Response);%>
 	NGC5348 is an edge-on spiral galaxy in Virgo.<br>
-	<a href="http://www.seds.org/~spider/ngc/ngc.cgi?5348" target="offsite">SEDS page</a>
+	<a href="http://spider.seds.org/ngc/ngc.cgi?NGC5348" target="offsite">SEDS page</a>
 </td>
 <td>
 	<%ResponseAux.pTable("ngc7108", 325.473941, -6.708839, Response);%>
 	NGC7108 is a faint elliptical galaxy in Aquarius.<br>
-	<a href="http://www.seds.org/~spider/ngc/ngc.cgi?7108" target="offsite">SEDS page</a>
+	<a href="http://spider.seds.org/ngc/ngc.cgi?NGC7108" target="offsite">SEDS page</a>
 </td>
 </tr>
 
@@ -66,7 +66,7 @@
  <td colspan=2>
   <p>Click the "NGC Data" link below to see a CSV (comma-separated value) file containing locations for the 591 NGC objects in DR2. Most spreadsheet programs can open CSV files. See SkyServer's <a href="../../help/howto/graph" target="help">Graphing and Analyzing Data</a> tutorial for Microsoft Excel instructions, or check the help pages of your spreadsheet program.<br>
   <font size="+2"><a href="ngc.csv">NGC Data</a></font><br>
-  The NGC data is courtesy of astronomer Guy Maxim. See his <a href="http://www.altairfour.net/astro/sdss/NGC.htm" target="offsite">SkyServer notebook</a>.</p>
+  The NGC data is courtesy of astronomer Guy Maxim.</p>
  </td>
 </tr>
 
