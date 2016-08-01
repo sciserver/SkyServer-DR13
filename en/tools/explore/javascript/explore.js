@@ -70,3 +70,15 @@ function findOtherNames(thera, thedec) {
         }
     });
 }
+
+// KNOWN BROKEN LINKS
+// Add "comingsoon" and "broken_link" class to known broken Domain Names.
+(function ($) {
+	$(document).ready(function(){
+		var $dns = ["https://dr13.sdss.org" , "https://sas.sdss.org", "http://dr13.sdss.org" , "http://sas.sdss.org" ];
+		$dns.forEach( function( elem, indx, arr){
+			$('a[href^="'+elem+'"]').addClass("broken_link");
+			$('a[href^="'+elem+'"]').addClass("comingsoon");
+		});
+	});
+})(jQuery);
