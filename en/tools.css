@@ -278,3 +278,26 @@ IMG {
     position: relative;
 }
 
+.broken_link, a.broken_link {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+.comingsoon {
+    display: inline-block;
+    margin: 2px;
+}
+
+.comingsoon:after {
+    padding: 1px;
+    content: "Coming Soon";
+    font-size: .6em;
+    vertical-align: top;
+    color: black;
+    background-color: #EEE5FB;
+    border: solid 1px black;
+    border-radius: 4px;
+}
