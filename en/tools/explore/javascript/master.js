@@ -125,7 +125,7 @@ function resolveName() {
                 //$('#searchDec').val(s[2].substring(5));
                 var windowPage = "summary.aspx";
                 window.location = windowPage + '?ra=' + s[1].substring(4) + '&dec=' + s[2].substring(5);
-                
+
             }
         },
         error: function () {

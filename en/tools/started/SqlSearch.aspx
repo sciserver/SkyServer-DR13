@@ -40,20 +40,25 @@
 	  any effort you put in to learning SQL will be returned a thousand 
 	  times over when you use the SQL Search tool.</p>
   
-	  <p>For example, the following query returns the Object IDs, positions, 
+	  <p>For example, the following query returns the first 100 Object IDs, positions, 
 	  redshifts, and plate and fiber numbers of the most distant quasars 
 	  in the SDSS database (z > 4):</p>
 
       <table border="1" cellpadding="7" cellspacing="0" bgcolor="#552255">  
          <tr>
            <td width="100%">
-           <p>select<br> 
+           <p>select top 100<br> 
            p.objID,p.ra,p.dec,s.z as redshift,w.plate,s.fiberID</p>
-           <p>from<br>
-           SpecObj s, PhotoObj p, plateX w</p>
-           <p>where<br>
-           p.ObjID=s.bestObjID and w.plateID=s.plateID and<br>
-           s.z &gt; 4 and s.zConf &gt; 0.95 and s.class = 3</p>
+           <p>from<br />
+           SpecObj s</p>
+           <p>join<br />
+               photoObj p ON p.objID = s.bestObjID</p>
+           <p>join<br />
+               plateX w on w.plateID = s.plateID</p>
+           <p>where<br />
+           s.z &gt; 4<br /> 
+               and s.zWarning = 0<br />
+               and s.class = 'QSO'</p>
            </td>
          </tr>
        </table>

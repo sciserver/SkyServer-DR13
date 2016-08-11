@@ -193,7 +193,7 @@
             { %>
             <tr>
               <td nowrap align="middle" class="<%=cellClass %>">
-                <a href="<%=globals.ApogeeSpectrumLink%>?plateid=<%=v.plate %>&mjd=<%=v.mjd %>&fiber=<%=v.fiberid %>" class="content" target="_blank">
+                <a href="<%=globals.ApogeeSpectrumLink%>?apred_ver=<%=apred_version%>&plateid=<%=v.plate %>&mjd=<%=v.mjd %>&fiber=<%=v.fiberid %>" class="content" target="_blank">
                   <%= v.visit_id %>&nbsp;<img src="../../images/new_window_black.png" alt=" (new window)" />
                 </a>
               </td>

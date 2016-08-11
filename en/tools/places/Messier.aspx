@@ -23,12 +23,13 @@
 <tr valign=top>
 
 	<td><% ResponseAux.pTable("m2",323.36003,-0.82154,Response);%>
-	M2 is a globular cluster, an old cluster of stars just outside the Milky Way. The cluster is so dense that the SDSS camera can't distinguish individual stars in its center.<br><a href="http://seds.org/messier/m/m002.html" target="offsite">
-SEDS page</a>
+	M2 is a globular cluster, an old cluster of stars just outside the Milky Way. The cluster is so dense that the SDSS camera can't distinguish individual stars in its center.<br />
+        <a href="http://messier.seds.org/m/m002.html" target="offsite">SEDS page</a>
 	</td>
 
 	<td><%ResponseAux.pTable("m77", 40.66961, -0.0133, Response);%>
-	M77 is a spiral galaxy, one of the largest in Messier's catalog. It was also one of the first galaxies to be recognized as spiral.<br><a href="http://seds.org/messier/m/m077.html" target="offsite">SEDS page</a>
+	M77 is a spiral galaxy, one of the largest in Messier's catalog. It was also one of the first galaxies to be recognized as spiral.<br />
+        <a href="http://messier.seds.org/m/m077.html" target="offsite">SEDS page</a>
 	</td>
 
 </tr>
@@ -36,11 +37,13 @@ SEDS page</a>
 <tr valign="top">
 <td>
 	<%ResponseAux.pTable("m97", 168.69614, 55.02091, Response);%>
-	M97, also known as the Owl Nebula, is a planetary nebula. Planetary nebulae form when stars like the Sun eject their outer layers to become white dwarfs. Planetary nebulae don't last very long (they are the shortest stage of stellar evolution), so there are relatively few in the Milky Way at any time.<br><a href="http://seds.org/messier/m/m097.html" target="offsite">SEDS page</a>
+	M97, also known as the Owl Nebula, is a planetary nebula. Planetary nebulae form when stars like the Sun eject their outer layers to become white dwarfs. Planetary nebulae don't last very long (they are the shortest stage of stellar evolution), so there are relatively few in the Milky Way at any time.<br />
+    <a href="http://messier.seds.org/m/m097.html" target="offsite">SEDS page</a>
 </td>
 <td>
 	<% ResponseAux.pTable("m102", 226.62158, 55.76315, Response);%>
-	M102 is a lenticular (armless spiral) galaxy. Messier apparently made a mistake recording the galaxy's coordinates, so some versions of the Messier catalog don't include it.<br><a href="http://seds.org/messier/m/m102.html" target="offsite">SEDS page</a>
+	M102 is a lenticular (armless spiral) galaxy. Messier apparently made a mistake recording the galaxy's coordinates, so some versions of the Messier catalog don't include it.<br />
+    <a href="http://messier.seds.org/m/m102.html" target="offsite">SEDS page</a>
 
 </td>
 </tr>
@@ -48,11 +51,13 @@ SEDS page</a>
 <tr valign="top">
 <td>
 	<%ResponseAux.pTable("m108", 167.8768, 55.67332, Response);%>
-	M108 is a spiral galaxy. Its long, narrow shape makes it easy to spot with a small telescope.<br><a href="http://seds.org/messier/m/m108.html" target="offsite">SEDS page</a>
+	M108 is a spiral galaxy. Its long, narrow shape makes it easy to spot with a small telescope.<br />
+    <a href="http://messier.seds.org/m/m108.html" target="offsite">SEDS page</a>
 </td>
 <td>
 	<%ResponseAux.pTable("m109", 179.39937, 53.37548, Response);%>
-	M109 is a barred spiral galaxy - note the faint bar running NW-SE through the galaxy's center.<br><a href="http://seds.org/messier/m/m109.html" target="offsite">SEDS page</a>
+	M109 is a barred spiral galaxy - note the faint bar running NW-SE through the galaxy's center.<br />
+    <a href="http://messier.seds.org/m/m109.html" target="offsite">SEDS page</a>
 </td>
 </tr>
 

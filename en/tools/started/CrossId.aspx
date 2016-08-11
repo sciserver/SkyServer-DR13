@@ -23,18 +23,17 @@
   <table WIDTH="400" border="0" cellspacing="3" cellpadding="3">
     <tr>
       <td>
-      <h1>Object Upload</h1>
+      <h1>Cross-ID</h1>
 
-      <p><A href="../crossid/" target="tools">Launch the Object Upload tools</A></p>
+      <p><A href="../crossid/" target="tools">Launch the Cross-ID tool</A></p>
 
-	  <p>The Object Upload tools (cross-ID and Speclist) lets you search the 
+	  <p>The Cross-ID tool lets you search the 
 	  SDSS database to find objects 
 	  that match objects in your own list. If you have a list of stars or 
 	  galaxies from another survey, you can use this tool to find the same 
 	  objects in SDSS data. You can then use the Object Explorer to see what 
 	  the SDSS has learned about your objects. Cross-ID finds SDSS data based 
-	  on position, and Speclist finds SDSS photometric data based on SDSS 
-	  plate/fiber number.</p>
+	  on position.</p>
 	  
 	  <p>The cross-ID tool works by searching the SDSS database for objects 
 	  near the positions you specify in your list. You can enter your list 
@@ -47,12 +46,6 @@
 	  each SDSS object by selecting from the drop-down menu. You can have the 
 	  tool return the results as an HTML table, as an XML (eXtended 
 	  Markup Language) file, or as a CSV (Comma Separated Value) file.</p>
-
-	  <p>Speclist works just like cross-ID, except that you should enter SDSS 
-	  plate/MJD/fiber numbers instead of ra/dec. You can also enter a query in 
-	  the query window that searches the SDSS data based based on your uploaded 
-	  information. You can use the query window to specify what columns you 
-	  want the Speclist tool to return.</p>
 
       <p><A href='javascript:done()'>Done</A></p>     
 	</td>

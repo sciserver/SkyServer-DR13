@@ -1,12 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="SpectralTypesMaster.master" AutoEventWireup="true" CodeBehind="SpectralTypesHome.aspx.cs" Inherits="SkyServer.Proj.Teachers.Basic.SpectralTypes.SpectralTypesHome" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="SpectralTypesContent" runat="server">
-<script>
+<!--<script>
     function answers(id) {
         var link = "http://skyserver.pha.jhu.edu/register/answers/getanswer.asp?id=" + id;
         var w = window.open(link, "POPUP", "scrollbars,resizable,menubar,toolbar");
         w.focus();
     }
-</script>
+</script>-->
 <div id="transp">
   <table WIDTH="600" border="0" cellspacing="3" cellpadding="3">
     <tr>

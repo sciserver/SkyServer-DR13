@@ -27,7 +27,7 @@
 		        <table width=100%><tr>
 			        <td width='45'><a href=<%=userguide%>#PositionConeConstraint 
 				        onmouseover="return escape('FORMAT:  D.ddddd, HH:MM:SS.ss, or HH MM SS.ss (J2000)');">ra</a></td>
-			        <td align=right><input class='pos' type=text name=ra id="ra" size=3 value="271.75"></td>
+			        <td align=right><input class='pos' type=text name=ra id="ra" size=3 value="197.61445"></td>
 		        </tr></table>
 	        </td>
 		
@@ -35,7 +35,7 @@
 		        <table width=100%><tr>
 			        <td width='45'><a href=<%=userguide%>#PositionConeConstraint 
 				        onmouseover="return escape('FORMAT:  sD.ddddd, sDD:MM:SS.ss, or sDD MM SS.ss (J2000)');">dec</a></td>
-			        <td align=right><input class='pos' type=text name=dec id="dec"  size=3 value="-20.19"></td>
+			        <td align=right><input class='pos' type=text name=dec id="dec"  size=3 value="18.43816"></td>
 		        </tr></table>
 	        </td>
 	        <td class='q'>
@@ -58,7 +58,7 @@
 		        <table width=100%><tr>
 			        <td width='45'><a href=<%=userguide%>#PositionConeConstraint 
 				        onmouseover="return escape('FORMAT:  D.ddddd, HH:MM:SS.ss, or HH MM SS.ss (J2000)');"><i>l</i></a></td>
-			        <td align=right><input class='pos' type=text name=Lcenter id="Lcenter" size=3 value=<%=qsRaCenter%>></td>
+			        <td align=right><input class='pos' type=text name=Lcenter id="Lcenter" size=3 value="330.6607"></td>
 		        </tr></table>
 	        </td>
 		
@@ -66,7 +66,7 @@
 		        <table width=100%><tr>
 			        <td width='45'><a href=<%=userguide%>#PositionConeConstraint 
 				        onmouseover="return escape('FORMAT:  sD.ddddd, sDD:MM:SS.ss, or sDD MM SS.ss (J2000)');"><i>b</i></a></td>
-			        <td align=right><input class='pos' type=text name=Bcenter id="Bcenter" size=3 value=0.2></td>
+			        <td align=right><input class='pos' type=text name=Bcenter id="Bcenter" size=3 value="80.2696"></td>
 		        </tr></table>
 	        </td>
 	        <td class='q'>

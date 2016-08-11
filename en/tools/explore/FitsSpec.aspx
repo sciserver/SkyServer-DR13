@@ -54,7 +54,7 @@
           </tr>
           <tr>
             <td><b>Download More Spectra:</b></td>
-            <td class='l'><b><a class="content" href="<%=globals.DasUrl%>basicSpectra"><%=globals.Release%> Science Archive
+            <td class='l'><b><a class="content" href="<%=globals.DasUrl%>optical/spectrum/search"><%=globals.Release%> Science Archive
             Server (SAS) Spectrum Download</a></td>
           </tr>
         </table>

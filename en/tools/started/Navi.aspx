@@ -90,8 +90,6 @@
 	     (images are automatically inverted by the printing utility)</li>
 
 
-
-	  <p><a	href='javascript:launch("../chart/naviinfo.aspx")'>See the Navigation tool 	  help page</a></p>
 	  <p><A href='javascript:done()'>Done</A></p>	  
 	</td>
 	</tr>
