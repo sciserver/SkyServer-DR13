@@ -87,14 +87,12 @@ where
       </table>
       <p>
       
-      The select and from blocks tell the database to look in the
+      The SELECT and FROM blocks tell the database to look in the
       specObj table (which contains spectroscopic information) and return
       the redshift (z), the right ascension, the declination, and
-      the (final, or ``best'') object ID. The ``where'' block tells the
+      the (final, or "best") object ID. The WHERE block tells the
       database to look only at galaxies with redshifts above 0.3 and no
-      known problems with the redshift determination (zWarning = 0)
-
-      </p>
+      known problems with the redshift determination (zWarning = 0).</p>
 
 	  <h1>Logical Operators</h1>
 
@@ -163,11 +161,11 @@ where
       <p>SQL includes a variety of <em>mathematical operators</em> that perform 
       math functions in a query. You can use multiplication, division, addition and subtraction. SQL 
       uses the same symbols for these operators that most other computer languages 
-      use: + for addition, - for subtraction, * for multiplication, and / for 
+      use: +&nbsp;for addition, -&nbsp;for subtraction, *&nbsp;for multiplication, and /&nbsp;for 
       division. Other mathematical operators include COS(x), which returns the cosine 
       of column x, or SQRT(x), which returns the square root of column x. 
-      Here is a <a href="#math" onclick="window.open('http://www.redhat.com/docs/manuals/database/RHDB-7.1.3-Manual/sql/functions-math.html','offiste');">
-      complete list</a> of SQL's mathematical operators.</p>
+      Here is a <a href="https://msdn.microsoft.com/en-us/library/ms177516.aspx">
+      complete list <img src="../../../images/offsite.png" alt=" (new window)" /></a> of SQL's mathematical operators.</p>
       <p>You can also use the <em>conditional operators</em> summarized below.</p>
       <table border="1" cellpadding="1" cellspacing="1" width="55%" id="AutoNumber1" height="93">
         <tr>
@@ -208,8 +206,9 @@ where
       </table>
       <p>Let's say you wanted to find a list of very blue 
       stars. In astronomy, color is defined by the differences in 
-      magnitudes (see the <a href="../../../proj/advanced/color" target=tools>Color</a> 
-      project for more information). In the SDSS's system of measurement, 
+      magnitudes (see the 
+          <a href="../../../proj/advanced/color" target=tools>SkyServer Color Project</a> 
+      for more information). In the SDSS's system of measurement, 
       blue stars have u-g < 0.5. So to find blue stars, you might write a 
       query like the following:</p>
       
@@ -242,11 +241,11 @@ where
       buttons will make the three queries above (in the purple boxes) appear in the 
       query window. Press Submit to execute the queries. 
       Write down a few of the ObjIDs, then use SkyServer's 
-      <a href="../../../tools/explore/obj.aspx" target="tools">
-      Object Explorer</a> tool (<a href="../../../tools/explore/obj.aspx" target="tools">link 
-      opens in a new window</a>) to examine the objects. Do they have the characteristics 
+      <a href="../../../tools/explore/obj.aspx" target="tools">Explore <img src="../../../images/new_window.png" alt=" (new window)" /></a>
+      tool to examine the objects. Do they have the characteristics 
       you requested in the where block? What kinds of astronomy questions 
       do you think you could answer by studying these objects?</p>
+
       <p>Click Next to get some more practice in writing SQL queries.</p>
     
 

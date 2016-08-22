@@ -22,12 +22,13 @@
       will write will search through only a small subset of those tables. 
       And even the commonly used tables contain many technical, esoteric 
       items - most users will search for only a few columns.</p>
-      <p>Below is a list of some of the most commonly used tables and a short 
+      <p>Below is a list of some of the most commonly used tables (or views) and a short 
       description of them. Click on any of the table names to be taken to a list 
       of the most commonly used columns in that table. Take some time to 
       understand what these columns mean, because you will use them over 
-      and over again in your queries. Click on the table name to see some of the 
-      most common data entries in that table (links open in new windows).</p>
+      and over again in your queries. Click on a table (or view) name in the list 
+          below to launch a popup window showing the most commonly-searched data 
+          columns in that table/view.</p>
       
       <p><a href="#top" onclick="javascript:popup('photoobj.html','sidebar',650,790)">
       PhotoObj</a> - stores information about the images of 
@@ -69,10 +70,10 @@
       one from ra = 0 to ra = 1.5 and one from ra = 1.5 to ra = 3. Save 
       all the results of the queries until you have all the results you 
       want.</p>
-      <p>Or, if you have enough computer savvy, you can get around the limit 
-      completely by downloading and installing the <a target="help" href="../../download/sdssqa/">
-      SDSS Query Analyzer</a> (sdssQA). Or you could use <a target="help" href="http://casjobs.sdss.org/casjobs">
-      CasJobs</a>, which has no limits on search time or number of results.</p>
+      <p>Or, you can get around the limit 
+      completely writing your query in <a target="help" href="http://casjobs.sdss.org/casjobs">
+      CasJobs <img src="../../../images/new_window.png" alt=" (new window)" /></a>, 
+          which has no limits on search time or number of results.</p>
       <p>If you want the query to return <i>fewer</i> results, you can add 
       the statement "top <i>n</i>" to the select block, where n is some 
       integer from 1 to 1,000. 

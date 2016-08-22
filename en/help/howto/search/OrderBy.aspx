@@ -7,6 +7,13 @@ function popup(filename,target,w,h) {
     var w = window.open(link,target,'width='+w+',height='+h+',resizeable,scrollbars');
 	w.focus();
 }
+function showdiv(layer) {
+    document.getElementById(layer).style.display = "block";
+}
+
+function hidediv(layer) {
+    document.getElementById(layer).style.display = "none";
+}
 </script>
 <div id="title">SQL Tutorial</div>
 <div id="transp">
@@ -21,8 +28,9 @@ function popup(filename,target,w,h) {
       words "the most" and "the least." For example, you might want to know on which 
       dates specific SDSS spectroscopic plates were observed. One easy way to 
       answer this question would be to retrieve those plates ordered by the 
-      <a href="http://en.wikipedia.org/wiki/Julian_day#Alternatives">Modified 
-      Julian date (MJD)</a> on which they were observed, in order from the first 
+      <a href="http://en.wikipedia.org/wiki/Julian_day#Variants" target="_blank">Modified 
+      Julian date (MJD) <img src="../../../images/offsite.png" alt=" (new window)" /></a> on 
+          which they were observed, in order from the first 
       date to the last date. SQL's <em>ORDER BY</em> command will sort records in 
       ascending order according to a specified column.</p>
       
@@ -66,8 +74,27 @@ order by mjd
       <h1>Try It!</h1>
       
       <p>Modify the query in the textbox below to order by plate number instead of MJD. Which of the plates 
-      was observed over more than one night?
-      &nbsp;&nbsp;&nbsp;<a href=javascript:popup('answers_orderby.html','sidebar',300,400)>Answer</a></p>
+      was observed over more than one night?</p>
+
+                  <p><a href="javascript:showdiv('answers1')">Show Sample Solution</a></p>
+
+        <div id="answers1" class="answers" style="display:none;">
+          
+            <p>A query that accomplishes this task is:</p>
+<pre>
+select mjd,plate
+from plateX
+where plate <= 275
+order by plate
+</pre>
+            <p>Plates 266 and 269 were observed over more than one night. You can see 
+    this from the data because each of those plate values is paired with more than 
+    one MJD value.</p>
+
+            <p> <a href="javascript:hidediv('answers1')">Hide Sample Solution</a></p>
+        </div>
+
+
       
       <p>See the <a href="<%=url%>/tools/getimg/plate.aspx">Plate Browser</a> for a list of the plates 
       available in Data Release <%=globals.ReleaseNumber%>.</p>

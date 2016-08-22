@@ -69,12 +69,7 @@
       You can group all results containing a given trait with SQL's 
       <em>group by</em> command. For example, you could group the results 
       of the query above to show how many of the objects between z = 0.5 
-      and 1 are stars, galaxies, quasars, or other. You'll find out 
-      in a moment - but first, look at the <code>class</code> column of specObj 
-      table in the 
-      <a href="../../browser/browser.aspx" target="tools">Schema Browser</a> to 
-      remind yourself what types of objects the different <code>class</code>
-      numbers symbolize.</p>
+      and 1 are stars, galaxies, quasars, or other.</p>
       
       <p>To collect together all the different objects in the query above, you would use 
       the command <b>group by <code>class</code></b>. Add this command to the end 

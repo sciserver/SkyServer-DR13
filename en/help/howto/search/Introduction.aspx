@@ -46,9 +46,9 @@
       what information the database contains. The SkyServer database is  
       divided into a series of <em>tables</em>. Each table contains 
       data of a different type. For example, all data related 
-      to an object's spectrum are stored in a table called "specObj." 
+      to an object's spectrum are stored in a table called <em>specObjAll</em>. 
       All data related to an object's image properties are 
-      stored in a table called "photoObj." SkyServer contains many tables,  
+      stored in a table called <em>photoObjAll</em>. SkyServer contains many tables,  
       although most of the commonly accessed data are stored 
       in just three or four of them.</p> 
       <p>Each table contains a series of data <em>columns</em>. A column contains only 
@@ -75,7 +75,8 @@
       
       <p>A tool called the
       <a target="tools" href="../../browser/browser.aspx">
-      Schema Browser</a> allows you to study all the tables and data columns, to find where 
+      Schema Browser <img src="../../../images/new_window.png" alt=" (new window)" /></a> 
+          allows you to study all the tables and data columns, to find where 
       the data you want are located. The Schema Browser can be intimidating, but 
       it is easy to use. In the left-hand column, you can either browse through 
       various tables to find a specific column, or you can search for keywords in 
@@ -94,7 +95,8 @@
       <a name="browser"></a>      
 -->
       <p>Try it now. Open the <a target="tools" href="../../browser/browser.aspx">
-      Schema Browser</a>. In which table and data columns would you find the SDSS 
+      Schema Browser <img src="../../../images/new_window.png" alt=" (new window)" /></a>. 
+       In which table and data columns would you find the SDSS 
       run-camcol-field classification numbers for the image of a single object? 
       What about the object's type (star, galaxy, or other) as seen in its image? 
       What about the redshift of a spectrum?&nbsp;&nbsp;
@@ -102,14 +104,38 @@
 
         <div id="answers1" class="answers" style="display:none;">
             <p>The run, camcol, and field image classification numbers are stored in the 
-                data columns run, camcol, and field of the photoObj table. In the 
-                Schema Browser, look under "Views" for photoObj, then for these parameters. 
-                The parameters will be stored under name.</p>
+                data columns run, camcol, and field of the <em>photoObjAll</em> table.</p>
             <p>The object type (as seen in an image) is in the type data column of the 
                 photoObj table (under "Views"). The redshift of a spectrum is in the z 
-                column of the specObj table (also under "Views").</p>
+                column of the <em>specObjAll</em> table (also under "Views").</p>
+            <p>These columns are also available in the <em>photoObj</em> and <em>SpecObj</em> 
+                views, which are versions of the photoObjAll and specObjAll tables containing 
+                only the best SDSS observation of each object. photoObj and specObj are actually 
+                <em>views</em>, and are available under the Views dropdown in the 
+                Schema Browser.</p>
             <p> <a href="javascript:hidediv('answers1')">Hide Answer</a></p>
         </div>
+
+      <p>Although you have looked up data in the photoObjAll and specObjAll tables, for most 
+          queries you write you will not use those tables. Instead, you can use their associated 
+          <em>views</em>, which contain only the best SDSS observation for each object. Views you 
+          might use include:</p>
+
+      <ul>
+          <li><a href="../../browser/browser.aspx#&&history=description+PhotoObj+V" target="blank">
+                photoObj <img src="../../../images/new_window.png" alt=" (new window)" /></a>: contains photometric (imaging) 
+              data for only the best observation of each sky object
+          </li>
+          <li><a href="../../browser/browser.aspx#&&history=description+Star+V" target="blank">
+                star <img src="../../../images/new_window.png" alt=" (new window)" /></a>: contains best SDSS observations for 
+                stars only</li>
+          <li><a href="../../browser/browser.aspx#&&history=description+Galaxy+V" target="_blank">
+                galaxy <img src="../../../images/new_window.png" alt=" (new window)" /></a>: contains best SDSS observations for 
+                galaxies only</li>
+          <li><a href="../../browser/browser.aspx#&&history=description+SpecObj+V" target="_blank">
+                specObj <img src="../../../images/new_window.png" alt=" (new window)" /></a>: contains spectroscopic data for only the 
+              best observation of each sky object observed by the SDSS spectrograph</li>
+      </ul>
 
       <p>Now that you know how to find the information you need, you're ready 
       to start querying the database for that information. Click Next to learn 
