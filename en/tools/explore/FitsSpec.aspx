@@ -53,9 +53,9 @@
 	        <td class='l'><a class="content" href="<%=hrefsSpec[0]%>">Download</a></td><td>&nbsp;</td>
           </tr>
           <tr>
-            <td><b>Download More Spectra:</b></td>
-            <td class='l'><b><a class="content" href="<%=globals.DasUrl%>optical/spectrum/search"><%=globals.Release%> Science Archive
-            Server (SAS) Spectrum Download</a></td>
+            <td><b>Download more spectra from Science Archive Webapp (SAW):</b></td>
+            <td class='l'><b><a class="content" href="<%=globals.DasUrl%>optical/spectrum/search"><%=globals.Release%> Optical Spectrum Search </a></td>
+            <td class='l'><b><a class="content" href="<%=globals.DasUrl%>optical/plate/search"><%=globals.Release%> Optical Plate Search </a></td>
           </tr>
         </table>
         </ul>

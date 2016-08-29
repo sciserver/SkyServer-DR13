@@ -75,7 +75,8 @@ function findOtherNames(thera, thedec) {
 // Add "comingsoon" and "broken_link" class to known broken Domain Names.
 (function ($) {
     $(document).ready(function () {
-        var $dns = ["https://dr13.sdss.org/infrared", "https://dr13.sdss.org/optical", "http://dr13.sdss.org/infrared", "http://dr13.sdss.org/optical"];
+        //var $dns = ["https://dr13.sdss.org/infrared", "https://dr13.sdss.org/optical", "http://dr13.sdss.org/infrared", "http://dr13.sdss.org/optical"];
+        var $dns = [];
         $dns.forEach(function (elem, indx, arr) {
             $('a[href^="' + elem + '"]').addClass("broken_link");
             $('a[href^="' + elem + '"]').addClass("comingsoon");
