@@ -255,7 +255,7 @@
                     <tr><td>ra, dec</td><td>sky cordinates to search</td></tr>               
                     <tr><td>radius</td><td>search radius in arcmin</td></tr>               
                     <tr><td>u,g,r,i,z</td><td>magnitudes of the objects in the SDSS</td></tr>               
-                    <tr><td>ug,gr,ri,iz</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>ug,gr,ri,iz</td><td>colors of the objects in the SDSS</td></tr>               
                     <tr><td>objType</td><td>To select star or galaxy</td></tr>               
                     <tr><td>magType</td><td>magnitudes of the objects in the SDSS</td></tr>               
                     <tr><td>imgparams</td><td> imaging parameters</td></tr>               
@@ -273,7 +273,7 @@
                     <tr><td>limit</td><td>limit the number of rows in result</td></tr>
                     <tr><td>format</td><td>result format</td></tr>               
                     <tr><td>u,g,r,i,z</td><td>magnitudes of the objects in the SDSS</td></tr>               
-                    <tr><td>ug,gr,ri,iz</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>ug,gr,ri,iz</td><td>colors of the objects in the SDSS</td></tr>               
                     <tr><td>objType</td><td>To select star or galaxy</td></tr>               
                     <tr><td>magType</td><td>magnitudes of the objects in the SDSS</td></tr>               
                     <tr><td>imgparams</td><td> imaging parameters</td></tr>               
@@ -292,7 +292,7 @@
                     <tr><td>limit</td><td>limit the number of rows in result</td></tr>
                     <tr><td>format</td><td>result format</td></tr>               
                     <tr><td>u,g,r,i,z</td><td>magnitudes of the objects in the SDSS</td></tr>               
-                    <tr><td>ug,gr,ri,iz</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>ug,gr,ri,iz</td><td>colors of the objects in the SDSS</td></tr>               
                     <tr><td>objType</td><td>To select star or galaxy</td></tr>               
                     <tr><td>magType</td><td>magnitudes of the objects in the SDSS</td></tr>               
                     <tr><td>imgparams</td><td> imaging parameters</td></tr>               
@@ -313,7 +313,7 @@
                     <tr><td>raMin,raMax,decMin,decMax</td><td>sky cordinates to search</td></tr>               
                     <tr><td>radius</td><td>search radius in arcmin</td></tr>               
                     <tr><td>u,g,r,i,z</td><td>magnitudes of the objects in the SDSS</td></tr>               
-                    <tr><td>ug,gr,ri,iz</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>ug,gr,ri,iz</td><td>colors of the objects in the SDSS</td></tr>               
                     <tr><td>objType</td><td>To select star or galaxy</td></tr>               
                     <tr><td>magType</td><td>magnitudes of the objects in the SDSS</td></tr>               
                     <tr><td>imgparams</td><td> imaging parameters</td></tr>               
@@ -338,7 +338,7 @@
                     <tr><td>limit</td><td>limit the number of rows in result</td></tr>
                     <tr><td>format</td><td>result format</td></tr>                                                
                     <tr><td>u,g,r,i,z</td><td>magnitudes of the objects in the SDSS</td></tr>               
-                    <tr><td>ug,gr,ri,iz</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>ug,gr,ri,iz</td><td>colors of the objects in the SDSS</td></tr>               
                     <tr><td>objType</td><td>To select star or galaxy</td></tr>               
                     <tr><td>magType</td><td>magnitudes of the objects in the SDSS</td></tr>               
                     <tr><td>imgparams</td><td> imaging parameters</td></tr>               
@@ -361,7 +361,7 @@
                     <tr><td>limit</td><td>limit the number of rows in result</td></tr>
                     <tr><td>format</td><td>result format</td></tr>               
                     <tr><td>u,g,r,i,z</td><td>magnitudes of the objects in the SDSS</td></tr>               
-                    <tr><td>ug,gr,ri,iz</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>ug,gr,ri,iz</td><td>colors of the objects in the SDSS</td></tr>               
                     <tr><td>objType</td><td>To select star or galaxy</td></tr>               
                     <tr><td>magType</td><td>magnitudes of the objects in the SDSS</td></tr>               
                     <tr><td>imgparams</td><td> imaging parameters</td></tr>               
@@ -383,7 +383,7 @@
                     <tr><td>limit</td><td>limit the number of rows in result</td></tr>
                     <tr><td>format</td><td>result format</td></tr>               
                     <tr><td>u,g,r,i,z</td><td>magnitudes of the objects in the SDSS</td></tr>               
-                    <tr><td>ug,gr,ri,iz</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>ug,gr,ri,iz</td><td>colors of the objects in the SDSS</td></tr>               
                     <tr><td>objType</td><td>To select star or galaxy</td></tr>               
                     <tr><td>magType</td><td>magnitudes of the objects in the SDSS</td></tr>               
                     <tr><td>imgparams</td><td> imaging parameters</td></tr>               
@@ -406,7 +406,7 @@
                     <tr><td>limit</td><td>limit the number of rows in result</td></tr>
                     <tr><td>format</td><td>result format</td></tr>                    
                     <tr><td>u,g,r,i,z</td><td>magnitudes of the objects in the SDSS</td></tr>               
-                    <tr><td>ug,gr,ri,iz</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>ug,gr,ri,iz</td><td>colors of the objects in the SDSS</td></tr>               
                     <tr><td>objType</td><td>To select star or galaxy</td></tr>               
                     <tr><td>magType</td><td>magnitudes of the objects in the SDSS</td></tr>               
                     <tr><td>imgparams</td><td> imaging parameters</td></tr>               

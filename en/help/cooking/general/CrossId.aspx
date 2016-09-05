@@ -27,7 +27,7 @@
 
 <p>You can provide a list of your own objects, then see what those objects look like in 
 the SDSS. This is especially useful when looking for optical counterparts to objects seen in 
-other wavelengths. The tool to do this is the <a href="../../../tools/crossid/upload.aspx" target="tools">Imaging Cross-Identification</a> 
+other wavelengths. The tool to do this is the <a href="../../../tools/crossid/crossid.aspx" target="tools">Imaging Cross-Identification</a> 
 tool (link opens in a new window). From the astronomers' home page, look under <i>Search Tools</i>. From the 
 public home page, look under <i>SkyServer Tools</i>, then <i>Object Crossid</i>.</p>
 
