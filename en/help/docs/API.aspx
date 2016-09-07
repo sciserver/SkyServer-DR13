@@ -188,20 +188,18 @@
 	<h4>1. Radial Search</h4><br />GET or POST /radialSearch
            <table>
                <tr><td class="b">Prameters</td><td class="b">Expected Values</td></tr>
-               <tr><td>Ra</td><td>Right Ascention in degrees</td></tr>
-               <tr><td>Dec</td><td>Declination in degrees</td></tr>
+               <tr><td>ra</td><td>Right Ascention in degrees</td></tr>
+               <tr><td>dec</td><td>Declination in degrees</td></tr>
                <tr><td>radius</td><td>Radius in arcminutes</td></tr>
-               <tr><td>format</td><td>output file format. E.g. csv,html,xml</td></tr>               
-               <tr><td>whichway</td><td>Specify Equitorial or Galactic</td></tr>               
-               <tr><td>uband</td><td>Specify comma seperated range e.g 0,20. This is an optional parameter for SDSS U band.</td></tr>               
-               <tr><td>gband</td><td>Specify comma seperated range e.g 0,20. This is an optional parameter for SDSS G band.</td></tr>               
-               <tr><td>rband</td><td>Specify comma seperated range e.g 0,20. This is an optional parameter for SDSS R band.</td></tr>               
-               <tr><td>iband</td><td>Specify comma seperated range e.g 0,20. This is an optional parameter for SDSS I band.</td></tr>               
-               <tr><td>zband</td><td>Specify comma seperated range e.g 0,20. This is an optional parameter for SDSS Z band.</td></tr>               
-               <tr><td>whichquery</td><td>imaging or spectra</td></tr>               
+               <tr><td>format</td><td>output file format. E.g. csv,html,xml,votable,json,fits,mydb</td></tr>
+               <tr><td>limit</td><td>maximum number of rows retrieved. If set to 0, then all rows will be retrieved.</td></tr>               
+               <tr><td>coordtype</td><td>set to equatorial or galactic, depending on the coordinate system which the ra,dec values are based.</td></tr>
+               <tr><td>whichphotometry</td><td>set to optical or infrared, in order to choose between SDSS  legacy or Apogee data.</td></tr>
+               <tr><td>*band</td><td>* is a wildcard for u, g, r, i, z, j, h, or k, which represent photmetric bands. These are optional parameters for the aparent magnitude limits of the objects. They are defined as a comma seperated range e.g uband=0,20.</td></tr>
+               <tr><td>check_*</td><td>* is a wildcard for u, g, r, i, z, j, h, or k, which represent photmetric bands. These are optional parameters that make effective the aparent magnitude limits defined by the paremeter *band. They take the values u, g, r, i, z, j, h, or k, respectively, e.g check_u=u.</td></tr>
            </table>    
             <br><span>Example:
-            <pre><a target="api"  class='sml' href="<%=globals.RadialSearchWS%>?ra=258.2&dec=64&radius=4.1&whichway=equitorial&limit=10&format=json&fp=none&uband=0,17&gband=0,15&whichquery=imaging"><%=globals.RadialSearchWS%>?ra=258.2&dec=64&radius=4.1&whichway=equitorial&limit=10&format=json&fp=none&uband=0,17&gband=0,15&whichquery=imaging</a></pre>
+            <pre><a target="api"  class='sml' href="<%=globals.RadialSearchWS%>?ra=258.2&dec=64&radius=4.1&whichway=equatorial&limit=10&format=html&fp=none&uband=0,17&check_u=u&gband=0,15&check_g=g&whichquery=imaging"><%=globals.RadialSearchWS%>?ra=258.2&dec=64&radius=4.1&whichway=equatorial&limit=10&format=html&fp=none&uband=0,17&check_u=u&gband=0,15&check_g=g&whichquery=imaging</a></pre>
             </span>
 	
 	<hr>
@@ -212,29 +210,24 @@
                <tr><td>min_dec</td><td>Declination in degrees in one corner</td></tr>
                <tr><td>max_ra</td><td>Right Ascention in degrees in other corner</td></tr>
                <tr><td>max_dec</td><td>Declination in degrees in other corner</td></tr>
-               <tr><td>radius</td><td>Radius in arcminutes</td></tr>
-               <tr><td>format</td><td>output file format. E.g. csv,html,xml,json</td></tr>               
-               <tr><td>searchtype</td><td>Specify Equitorial or Galactic</td></tr>               
-               <tr><td>uband</td><td>Specify comma seperated range e.g 0,20. This is an optional parameter for SDSS U band.</td></tr>               
-               <tr><td>gband</td><td>Specify comma seperated range e.g 0,20. This is an optional parameter for SDSS G band.</td></tr>               
-               <tr><td>rband</td><td>Specify comma seperated range e.g 0,20. This is an optional parameter for SDSS R band.</td></tr>               
-               <tr><td>iband</td><td>Specify comma seperated range e.g 0,20. This is an optional parameter for SDSS I band.</td></tr>               
-               <tr><td>zband</td><td>Specify comma seperated range e.g 0,20. This is an optional parameter for SDSS Z band.</td></tr>               
-               <tr><td>whichquery</td><td>imaging or irspectra</td></tr>               
-               <tr><td>limit</td><td>number of output rows</td></tr>               
+               <tr><td>format</td><td>output file format. E.g. csv,html,xml,votable,json,fits,mydb</td></tr>
+               <tr><td>limit</td><td>maximum number of rows retrieved. If set to 0, then all rows will be retrieved.</td></tr>               
+               <tr><td>coordtype</td><td>set to equatorial or galactic, depending on the coordinate system which the ra,dec values are based.</td></tr>
+               <tr><td>whichphotometry</td><td>set to optical or infrared, in order to choose between SDSS  legacy or Apogee data.</td></tr>
+               <tr><td>*band</td><td>* is a wildcard for u, g, r, i, z, j, h, or k, which represent photmetric bands. These are optional parameters for the aparent magnitude limits of the objects. They are defined as a comma seperated range e.g uband=0,20.</td></tr>
+               <tr><td>check_*</td><td>* is a wildcard for u, g, r, i, z, j, h, or k, which represent photmetric bands. These are optional parameters that make effective the aparent magnitude limits defined by the paremeter *band. They take the values u, g, r, i, z, j, h, or k, respectively, e.g check_u=u.</td></tr>
            </table>    
             <br><span>Example:
-            <pre><a target="api"  class='sml' href="<%=globals.RectangularSearchWS%>?min_ra=250.2&max_ra=250.5&min_dec=35.1&max_dec=35.5&searchtype=equitorial&limit=10&format=json&whichquery=irspectra"><%=globals.RectangularSearchWS%>?min_ra=250.2&max_ra=250.5&min_dec=35.1&max_dec=35.5&searchtype=equitorial&limit=10&format=json&whichquery=irspectra</a></pre>
+            <pre><a target="api"  class='sml' href="<%=globals.RectangularSearchWS%>?min_ra=250.2&max_ra=250.5&min_dec=35.1&max_dec=35.5&whichway=equatorial&limit=10&format=html&fp=none&uband=0,17&check_u=u&gband=0,15&check_g=g&whichquery=imaging"><%=globals.RadialSearchWS%>?min_ra=250.2&max_ra=250.5&min_dec=35.1&max_dec=35.5&whichway=equatorial&limit=10&format=html&fp=none&uband=0,17&check_u=u&gband=0,15&check_g=g&whichquery=imaging</a></pre>
             </span>
 	<hr>	
      <h4>3. SQL Search</h4><br />GET or POST /sqlSearch
            <table>
                <tr><td class="b">Prameters</td><td class="b">Expected Values</td></tr>
                <tr><td>cmd</td><td>SQL query</td></tr>
-               <tr><td>format</td><td>output file format. E.g. csv,html,xml,json</td></tr>               
-               <tr><td>searchtype</td><td>Specify Equitorial or Galactic</td></tr>               
-               <tr><td>whichquery</td><td>imaging or irspectra</td></tr>               
-               <tr><td>limit</td><td>number of output rows</td></tr>               
+               <tr><td>format</td><td>output file format. E.g. csv,html,xml,votable,json,fits,mydb</td></tr>
+               <tr><td>limit</td><td>maximum number of rows retrieved. If set to 0, then all rows will be retrieved.</td></tr>               
+               <tr><td>syntax</td><td>If set to Syntax, then only a syntax check is performed on the SQL query and no result table is returned.</td></tr>               
            </table>    
             <br><span>Example:
             <pre><a target="api"  class='sml' href="<%=globals.SQLSearchWS%>?cmd=select%20top%2010%20ra,dec%20from%20Frame&format=csv"><%=globals.SQLSearchWS%>?cmd=select%20top%2010%20ra,dec%20from%20Frame&format=csv</a></pre>
@@ -254,8 +247,10 @@
                     <tr><td>format</td><td>result format</td></tr>               
                     <tr><td>ra, dec</td><td>sky cordinates to search</td></tr>               
                     <tr><td>radius</td><td>search radius in arcmin</td></tr>               
-                    <tr><td>u,g,r,i,z</td><td>magnitudes of the objects in the SDSS</td></tr>               
-                    <tr><td>ug,gr,ri,iz</td><td>colors of the objects in the SDSS</td></tr>               
+                    <tr><td>uMin,gMin,rMin,iMin,zMin</td><td>Lower bounds of the magnitudes of objects in the SDSS</td></tr>               
+                    <tr><td>uMax,gMax,rMax,iMax,zMax</td><td>Upper bounds of the magnitudes of objects in the SDSS</td></tr>               
+                    <tr><td>ugMin,grMin,riMin,izMin</td><td>Lower bounds of the colors of objects in the SDSS</td></tr>               
+                    <tr><td>ugMax,grMax,riMax,izMax</td><td>Upper bound of the colors of the objects in the SDSS</td></tr>               
                     <tr><td>objType</td><td>To select star or galaxy</td></tr>               
                     <tr><td>magType</td><td>magnitudes of the objects in the SDSS</td></tr>               
                     <tr><td>imgparams</td><td> imaging parameters</td></tr>               
