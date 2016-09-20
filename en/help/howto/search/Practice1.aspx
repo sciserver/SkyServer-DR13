@@ -7,6 +7,13 @@
         var w = window.open(link, target, 'width=' + w + ',height=' + h + ',resizeable,scrollbars');
         w.focus();
     }
+    function showdiv(layer) {
+        document.getElementById(layer).style.display = "block";
+    }
+
+    function hidediv(layer) {
+        document.getElementById(layer).style.display = "none";
+    }
 </script>
 <div id="title">SQL Tutorial</div>
 <div id="transp">
@@ -29,6 +36,28 @@
           dec is between 20.25 and 20.75. About how many objects did the query 
           return? Does this seem to make sense, given the smaller area you searched 
           here?</p>
+
+          <p><a href="javascript:showdiv('answers1')">Show Sample Solution</a></p>
+
+        <div id="answers1" class="answers" style="display:none;">
+          
+            <p>A query that accomplishes this task is:</p>
+<pre>
+SELECT
+    ra, dec
+FROM
+    specObj
+WHERE
+    ra BETWEEN 140.25 and 140.75 
+    AND dec BETWEEN 20.25 and 20.75
+</pre>
+
+            <p>In SDSS Data Release 13, this query returns 89 results, compared to 328 for the previous query.</p>
+
+            <p> <a href="javascript:hidediv('answers1')">Hide Sample Solution</a></p>
+        </div>
+
+
           </td>
         </tr>
       </table>
@@ -39,17 +68,41 @@
           <p><strong>Practice 2.</strong> Which of the objects you found in 
           Practice 1 are galaxies?</p>
           <p>Open the
-          <a target="tools" href="../../browser/browser.aspx">
-          Schema Browser</a>. Click on views and select SpecObj. 
-          You will see a list of all the columns in the SpecObj 
+           <a target="tools" href="../../browser/browser.aspx">
+            Schema Browser <img src="../../../images/new_window.png" alt=" (new window)" /></a>.
+          Click on views and select SpecObj. You will see a list of all the columns in the SpecObj 
           table, along with short descriptions of what they mean and 
-	  if applpicable, what values the column may have. For instance, 
+	  if applicable, what values the column may have.</p>
+              
+          <p>For instance, 
           if you scroll down to the "class" column, its description says 
           that it may have one of the following values: 'STAR',
 	  'GALAXY', or 'QSO'.  
 	  Modify your query so that it returns the ra, dec, and best 
 	  object ID for galaxies (and only galaxies) whose ra is 
-          between 140.25 and 140.75 and whose dec is between 20.25 and 20.75.
+          between 140.25 and 140.75 and whose dec is between 20.25 and 20.75.</p>
+
+        <p><a href="javascript:showdiv('answers2')">Show Sample Solution</a></p>
+
+        <div id="answers2" class="answers" style="display:none;">
+            <p>A query that accomplishes this task is:</p>
+<pre>
+SELECT
+    ra, dec
+FROM
+    specObj
+WHERE
+    ra BETWEEN 140.25 and 140.75 
+    AND dec BETWEEN 20.25 and 20.75
+    AND class='GALAXY'
+</pre>
+
+            <p>In SDSS Data Release 13, this query returns 41 results, meaning that 41 of the 89 
+                objects in this part of the sky are galaxies.</p>
+
+            <p> <a href="javascript:hidediv('answers2')">Hide Sample Solution</a></p>
+        </div>
+
         </td>
       </tr>
     </table>

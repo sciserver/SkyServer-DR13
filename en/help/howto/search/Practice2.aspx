@@ -7,6 +7,13 @@
         var w = window.open(link, target, 'width=' + w + ',height=' + h + ',resizeable,scrollbars');
         w.focus();
     }
+    function showdiv(layer) {
+        document.getElementById(layer).style.display = "block";
+    }
+
+    function hidediv(layer) {
+        document.getElementById(layer).style.display = "none";
+    }
 </script>
 <div id="title">SQL Tutorial</div>
 <div id="transp">
@@ -29,6 +36,25 @@
           and ra = 141.1 brighter than <br>g = 18.0 
           for which u - g &gt; 2.2. Retrieve the Object ID, ra, 
           dec, and the five final magnitudes.</p>
+
+        <p><a href="javascript:showdiv('answers1')">Show Sample Solution</a></p>
+
+        <div id="answers1" class="answers" style="display:none;">
+          
+            <p>A query that accomplishes this task is:</p>
+<pre>
+    select
+        objID, ra, dec, u, g, r, i, z
+    from
+        galaxy
+    where
+        ra BETWEEN 140.9 and 141.1 
+        AND g < 18.0 
+        AND u - g > 2.2
+</pre>
+
+            <p> <a href="javascript:hidediv('answers1')">Hide Sample Solution</a></p>
+        </div>
           </td>
         </tr>
       </table>
@@ -43,16 +69,31 @@
           <p>Write a query to search for quasars for which we have 
           obtained spectra (search the specObj table) with  
           redshifts greater than 4.5 and good measurements (zWarning = 0). 
-          Retrieve each quasar's Photo ID, ra, dec, and redshift.</p>
-          <p>How many results do you get?</p></td>       
+          Retrieve each quasar's Photo ID, ra, dec, and redshift.</p>       
+
+                      <p><a href="javascript:showdiv('answers2')">Show Sample Solution</a></p>
+
+        <div id="answers2" class="answers" style="display:none;">
           
+            <p>A query that accomplishes this task is:</p>
+<pre>
+    select
+        bestObjID, ra, dec, z
+    from
+        specObj
+    where
+        class='qso' 
+        AND z > 4.5 
+        AND zWarning = 0
+</pre>
+
+            <p> <a href="javascript:hidediv('answers2')">Hide Sample Solution</a></p>
+        </div>
+
+        </td>  
         </tr>
       </table>
-          
-      <a name="answers"></a>
-      <p><a href="#answers" onclick="javascript:popup('answers2.html','sidebar',400,600)">Answers</a></p>
-      <p></p>
-      
+               
 
 	</td></tr>
 

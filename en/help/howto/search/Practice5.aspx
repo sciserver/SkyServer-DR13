@@ -7,6 +7,13 @@
         var w = window.open(link, target, 'width=' + w + ',height=' + h + ',resizeable,scrollbars');
         w.focus();
     }
+    function showdiv(layer) {
+        document.getElementById(layer).style.display = "block";
+    }
+
+    function hidediv(layer) {
+        document.getElementById(layer).style.display = "none";
+    }
 </script>
 <div id="title">SQL Tutorial</div>
 <div id="transp">  <table WIDTH="600" border="0" cellspacing="3" cellpadding="3">
@@ -28,6 +35,50 @@
           </p>
           <p><b>Hint:</b> Use two searches, one with a flag and one 
           without. Search run=5112, camcol=6, field=119. </p>
+        <p><a href="javascript:showdiv('answers1')">Show Sample Solution</a></p>
+
+        <div id="answers1" class="answers" style="display:none;">
+          
+<p>To find the number of objects in the field too close to the edge of their fields, 
+    use the "EDGE" flag in the following query:</p>
+
+<pre>
+    select 
+        count(objID)
+    from 
+        photoObj
+    where 
+        run=5112 
+        and camcol=6 
+        and field=119
+        and (flags & dbo.fPhotoFlags('EDGE')) > 0
+</pre>
+
+
+<p>The query returns a count of 17.</p>
+
+<p>To find the total number of objects in the field, use the same query without 
+the flag:</p>
+
+<pre>
+    SELECT 
+        count(objID)
+    FROM
+        photoObj
+    WHERE
+        run=5112
+        and camcol=6 
+        and field=119
+</pre>
+
+<p>This query returns a count of 670.</p>
+
+<p>So the percentage of objects too close to the field edge to trust is 
+17 / 670, or about 3%.</p>
+
+            <p> <a href="javascript:hidediv('answers1')">Hide Sample Solution</a></p>
+        </div>
+
           </td>
         </tr>
       </table>
@@ -47,6 +98,47 @@
           have in common. Guess the center position and radius of 
           the galaxies. Then, write a query that uses what you have learned 
           to search for cluster galaxies.</p>                  
+
+        <p><a href="javascript:showdiv('answers2')">Show Sample Solution</a></p>
+
+                      <div id="answers2" class="answers" style="display:none;">
+          
+<p>First, select a galaxy cluster from the Famous Places 
+tool and look at it in the Navigation Tool. As an example, these answers 
+will use Abell 0957.</p>
+
+<p>Galaxy clusters tend to have similar colors, or differences in 
+magnitudes. Color is one of the most reliable ways to identify which 
+galaxies are in a cluster. Most of the galaxies in Abell 0957 have a 
+g-r color of about 0.8. So a search should consider galaxies with g-r 
+of about 0.6 to 1.</p>
+
+<p>The galaxies in Abell 0958 appear to extend about 0.15 degrees, or 
+9 arcminutes. The brightest galaxy in Abell 0958 appears to have an r 
+magnitude of about 13. The faintest galaxy appears to be at about r = 18.</p>
+
+<p>Combining all these results into one query:</p>
+
+<pre>
+    SELECT 
+        p.objID, p.ra, p.dec, p.u, p.g, p.r, p.i, p.z
+    FROM photoObj p
+    JOIN dbo.fGetNearbyObjEq(153.378,-0.85,9) n ON n.objID = p.objID
+    WHERE
+        p.type = 3 
+        and p.r BETWEEN 13 and 18 
+        and p.g-p.r BETWEEN 0.6 and 1
+</pre>
+
+<p>The query returns 46 objects. Not every galaxy is part of the cluster, but most are.</p> 
+
+<p>Your results will be different, depending on which cluster you chose, what 
+criteria you chose, and how big you thought the cluster was. The 
+important thing is that you think carefully about how to search for 
+galaxies in a cluster, then write a query that reflects your thinking.</p>
+
+            <p> <a href="javascript:hidediv('answers2')">Hide Sample Solution</a></p>
+        </div>
           </td>
         </tr>
       </table>

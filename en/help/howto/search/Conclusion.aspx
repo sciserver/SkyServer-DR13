@@ -29,8 +29,7 @@
       
       <p>Here are a few challenge questions that will give you more practice with SQL. With everything you 
       now know, you should be able to write SQL queries to answer these 
-      questions. If you figure them out, <a href="mailto:raddick@pha.jhu.edu?subject=SQL tutorial challenge">
-      E-mail the queries to us</a>, and we just might put them up on these pages!</p>
+      questions.</p>
       
 	  <table class=rchallenge width=600 cellpadding=5 cellspacing=0>
         <tr>

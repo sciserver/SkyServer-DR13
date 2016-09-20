@@ -34,7 +34,7 @@
       just called "spiral galaxies."</p>
       <p>Spiral galaxies are further classified by how tightly their arms are 
       wound. Type a galaxies have their arms wound very tightly and have  
-      large central bulges. Type c galaxies have very their arms would loosely and 
+      large central bulges. Type c galaxies have their arms wound loosely and 
       have small central bulges.</p>
       <p>Some galaxies are a transition type between the elliptical and spiral galaxies, 
       labeled S0 on the tuning fork. These are called "lenticular galaxies." 

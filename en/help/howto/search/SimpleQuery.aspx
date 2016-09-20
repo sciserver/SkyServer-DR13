@@ -32,7 +32,7 @@
       <p>The <em>where</em> block allows you to search for records with certain 
       characteristics. Your list of characteristics must be separated by the word 
       "AND". Suppose you wanted to limit your search to a patch 
-      of sky with ra between 140 and 141 degrees and dec between 20 and 21
+      of sky with ra between 140 and 141 degrees <em>and</em> dec between 20 and 21
       degrees. To search only this patch of sky, your where block would read</p>
       <p>where<br>
       ra BETWEEN 140 AND 141 AND<br>
@@ -40,8 +40,9 @@
       <p>The database will return only those records that have an ra between 
       140 and 141 <i>and</i> a dec between 20 and 21.</p>
       <p>This query is shown in the query window below. Click Submit to send the 
-      query to the database. When you see the results, scroll through them to 
-      verify that all records have ra between 140 and 141 and dec between 20 and 21.</p>
+      query to the database. Results will appear in a new window. When you see the results, 
+      scroll through them to verify that all records have ra between 140 and 141 and dec 
+      between 20 and 21.</p>
 
     
 	</td></tr>

@@ -55,7 +55,7 @@
       <tr>
       <td>
       <pre>
-SELECT
+SELECT top 100
     x.plate, x.mjd, 
     s.fiberID, 
     p.modelMag_u, p.modelMag_g, 
@@ -68,8 +68,8 @@ JOIN specObj s ON s.bestObjID = p.objID
 JOIN plateX x ON x.plateID = s.plateID          
 WHERE
     s.class = 'qso' 
-    s.zWarning = 0 
-    s.z between 0.3 and 0.4
+    and s.zWarning = 0 
+    and s.z between 0.3 and 0.4
       </pre>
       
       </td>
@@ -120,7 +120,7 @@ WHERE
 	</td></tr>
 
 <%  
-	string query="SELECT\n";
+	string query="SELECT top 100\n";
 	query+="x.plate, x.mjd, s.fiberID, p.modelMag_u, p.modelMag_g, \n";
 	query+="p.modelMag_r, p.modelMag_i, p.modelMag_z,\n"; 
 	query+="p.ra, p.dec,\n"; 

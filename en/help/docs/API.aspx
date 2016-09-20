@@ -188,20 +188,18 @@
 	<h4>1. Radial Search</h4><br />GET or POST /radialSearch
            <table>
                <tr><td class="b">Prameters</td><td class="b">Expected Values</td></tr>
-               <tr><td>Ra</td><td>Right Ascention in degrees</td></tr>
-               <tr><td>Dec</td><td>Declination in degrees</td></tr>
+               <tr><td>ra</td><td>Right Ascention in degrees</td></tr>
+               <tr><td>dec</td><td>Declination in degrees</td></tr>
                <tr><td>radius</td><td>Radius in arcminutes</td></tr>
-               <tr><td>format</td><td>output file format. E.g. csv,html,xml</td></tr>               
-               <tr><td>whichway</td><td>Specify Equitorial or Galactic</td></tr>               
-               <tr><td>uband</td><td>Specify comma seperated range e.g 0,20. This is an optional parameter for SDSS U band.</td></tr>               
-               <tr><td>gband</td><td>Specify comma seperated range e.g 0,20. This is an optional parameter for SDSS G band.</td></tr>               
-               <tr><td>rband</td><td>Specify comma seperated range e.g 0,20. This is an optional parameter for SDSS R band.</td></tr>               
-               <tr><td>iband</td><td>Specify comma seperated range e.g 0,20. This is an optional parameter for SDSS I band.</td></tr>               
-               <tr><td>zband</td><td>Specify comma seperated range e.g 0,20. This is an optional parameter for SDSS Z band.</td></tr>               
-               <tr><td>whichquery</td><td>imaging or spectra</td></tr>               
+               <tr><td>format</td><td>output file format. E.g. csv,html,xml,votable,json,fits,mydb</td></tr>
+               <tr><td>limit</td><td>maximum number of rows retrieved. If set to 0, then all rows will be retrieved.</td></tr>               
+               <tr><td>coordtype</td><td>set to equatorial or galactic, depending on the coordinate system which the ra,dec values are based.</td></tr>
+               <tr><td>whichphotometry</td><td>set to optical or infrared, in order to choose between SDSS  legacy or Apogee data.</td></tr>
+               <tr><td>*band</td><td>* is a wildcard for u, g, r, i, z, j, h, or k, which represent photmetric bands. These are optional parameters for the aparent magnitude limits of the objects. They are defined as a comma seperated range e.g uband=0,20.</td></tr>
+               <tr><td>check_*</td><td>* is a wildcard for u, g, r, i, z, j, h, or k, which represent photmetric bands. These are optional parameters that make effective the aparent magnitude limits defined by the paremeter *band. They take the values u, g, r, i, z, j, h, or k, respectively, e.g check_u=u.</td></tr>
            </table>    
             <br><span>Example:
-            <pre><a target="api"  class='sml' href="<%=globals.RadialSearchWS%>?ra=258.2&dec=64&radius=4.1&whichway=equitorial&limit=10&format=json&fp=none&uband=0,17&gband=0,15&whichquery=imaging"><%=globals.RadialSearchWS%>?ra=258.2&dec=64&radius=4.1&whichway=equitorial&limit=10&format=json&fp=none&uband=0,17&gband=0,15&whichquery=imaging</a></pre>
+            <pre><a target="api"  class='sml' href="<%=globals.RadialSearchWS%>?ra=258.2&dec=64&radius=4.1&whichway=equatorial&limit=10&format=html&fp=none&uband=0,17&check_u=u&gband=0,15&check_g=g&whichquery=imaging"><%=globals.RadialSearchWS%>?ra=258.2&dec=64&radius=4.1&whichway=equatorial&limit=10&format=html&fp=none&uband=0,17&check_u=u&gband=0,15&check_g=g&whichquery=imaging</a></pre>
             </span>
 	
 	<hr>
@@ -212,29 +210,24 @@
                <tr><td>min_dec</td><td>Declination in degrees in one corner</td></tr>
                <tr><td>max_ra</td><td>Right Ascention in degrees in other corner</td></tr>
                <tr><td>max_dec</td><td>Declination in degrees in other corner</td></tr>
-               <tr><td>radius</td><td>Radius in arcminutes</td></tr>
-               <tr><td>format</td><td>output file format. E.g. csv,html,xml,json</td></tr>               
-               <tr><td>searchtype</td><td>Specify Equitorial or Galactic</td></tr>               
-               <tr><td>uband</td><td>Specify comma seperated range e.g 0,20. This is an optional parameter for SDSS U band.</td></tr>               
-               <tr><td>gband</td><td>Specify comma seperated range e.g 0,20. This is an optional parameter for SDSS G band.</td></tr>               
-               <tr><td>rband</td><td>Specify comma seperated range e.g 0,20. This is an optional parameter for SDSS R band.</td></tr>               
-               <tr><td>iband</td><td>Specify comma seperated range e.g 0,20. This is an optional parameter for SDSS I band.</td></tr>               
-               <tr><td>zband</td><td>Specify comma seperated range e.g 0,20. This is an optional parameter for SDSS Z band.</td></tr>               
-               <tr><td>whichquery</td><td>imaging or irspectra</td></tr>               
-               <tr><td>limit</td><td>number of output rows</td></tr>               
+               <tr><td>format</td><td>output file format. E.g. csv,html,xml,votable,json,fits,mydb</td></tr>
+               <tr><td>limit</td><td>maximum number of rows retrieved. If set to 0, then all rows will be retrieved.</td></tr>               
+               <tr><td>coordtype</td><td>set to equatorial or galactic, depending on the coordinate system which the ra,dec values are based.</td></tr>
+               <tr><td>whichphotometry</td><td>set to optical or infrared, in order to choose between SDSS  legacy or Apogee data.</td></tr>
+               <tr><td>*band</td><td>* is a wildcard for u, g, r, i, z, j, h, or k, which represent photmetric bands. These are optional parameters for the aparent magnitude limits of the objects. They are defined as a comma seperated range e.g uband=0,20.</td></tr>
+               <tr><td>check_*</td><td>* is a wildcard for u, g, r, i, z, j, h, or k, which represent photmetric bands. These are optional parameters that make effective the aparent magnitude limits defined by the paremeter *band. They take the values u, g, r, i, z, j, h, or k, respectively, e.g check_u=u.</td></tr>
            </table>    
             <br><span>Example:
-            <pre><a target="api"  class='sml' href="<%=globals.RectangularSearchWS%>?min_ra=250.2&max_ra=250.5&min_dec=35.1&max_dec=35.5&searchtype=equitorial&limit=10&format=json&whichquery=irspectra"><%=globals.RectangularSearchWS%>?min_ra=250.2&max_ra=250.5&min_dec=35.1&max_dec=35.5&searchtype=equitorial&limit=10&format=json&whichquery=irspectra</a></pre>
+            <pre><a target="api"  class='sml' href="<%=globals.RectangularSearchWS%>?min_ra=250.2&max_ra=250.5&min_dec=35.1&max_dec=35.5&whichway=equatorial&limit=10&format=html&fp=none&uband=0,17&check_u=u&gband=0,15&check_g=g&whichquery=imaging"><%=globals.RadialSearchWS%>?min_ra=250.2&max_ra=250.5&min_dec=35.1&max_dec=35.5&whichway=equatorial&limit=10&format=html&fp=none&uband=0,17&check_u=u&gband=0,15&check_g=g&whichquery=imaging</a></pre>
             </span>
 	<hr>	
      <h4>3. SQL Search</h4><br />GET or POST /sqlSearch
            <table>
                <tr><td class="b">Prameters</td><td class="b">Expected Values</td></tr>
                <tr><td>cmd</td><td>SQL query</td></tr>
-               <tr><td>format</td><td>output file format. E.g. csv,html,xml,json</td></tr>               
-               <tr><td>searchtype</td><td>Specify Equitorial or Galactic</td></tr>               
-               <tr><td>whichquery</td><td>imaging or irspectra</td></tr>               
-               <tr><td>limit</td><td>number of output rows</td></tr>               
+               <tr><td>format</td><td>output file format. E.g. csv,html,xml,votable,json,fits,mydb</td></tr>
+               <tr><td>limit</td><td>maximum number of rows retrieved. If set to 0, then all rows will be retrieved.</td></tr>               
+               <tr><td>syntax</td><td>If set to Syntax, then only a syntax check is performed on the SQL query and no result table is returned.</td></tr>               
            </table>    
             <br><span>Example:
             <pre><a target="api"  class='sml' href="<%=globals.SQLSearchWS%>?cmd=select%20top%2010%20ra,dec%20from%20Frame&format=csv"><%=globals.SQLSearchWS%>?cmd=select%20top%2010%20ra,dec%20from%20Frame&format=csv</a></pre>
@@ -254,14 +247,16 @@
                     <tr><td>format</td><td>result format</td></tr>               
                     <tr><td>ra, dec</td><td>sky cordinates to search</td></tr>               
                     <tr><td>radius</td><td>search radius in arcmin</td></tr>               
-                    <tr><td>u,g,r,i,z</td><td>magnitudes of the objects in the SDSS</td></tr>               
-                    <tr><td>ug,gr,ri,iz</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>uMin,gMin,rMin,iMin,zMin</td><td>Lower bounds of the magnitudes of objects in the SDSS</td></tr>               
+                    <tr><td>uMax,gMax,rMax,iMax,zMax</td><td>Upper bounds of the magnitudes of objects in the SDSS</td></tr>               
+                    <tr><td>ugMin,grMin,riMin,izMin</td><td>Lower bounds of the colors of objects in the SDSS</td></tr>               
+                    <tr><td>ugMax,grMax,riMax,izMax</td><td>Upper bound of the colors of the objects in the SDSS</td></tr>               
                     <tr><td>objType</td><td>To select star or galaxy</td></tr>               
                     <tr><td>magType</td><td>magnitudes of the objects in the SDSS</td></tr>               
                     <tr><td>imgparams</td><td> imaging parameters</td></tr>               
                     <tr><td>specparams</td><td>spectroscopy parameters</td></tr>               
-                    <tr><td>flags</td><td>object flags</td></tr>               
-                       
+                    <tr><td>flagsOnList</td><td>comma separated list of photometric flags set to on</td></tr>        
+                    <tr><td>flagsOffList</td><td>comma separated list of photometric flags set to off</td></tr>        
               </table>    
             <br><span>Example:
             <pre><a target="api"  class='sml' href="<%=globals.ConeImaging%>?limit=50&format=csv&imgparams=minimal&specparams=none&ra=10&dec=0.2&radius=5.0&magType=model"><%=globals.ConeImaging%>?limit=50&format=csv&imgparams=minimal&specparams=none&ra=10&dec=0.2&radius=5.0&magType=model</a></pre>
@@ -273,12 +268,13 @@
                     <tr><td>limit</td><td>limit the number of rows in result</td></tr>
                     <tr><td>format</td><td>result format</td></tr>               
                     <tr><td>u,g,r,i,z</td><td>magnitudes of the objects in the SDSS</td></tr>               
-                    <tr><td>ug,gr,ri,iz</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>ug,gr,ri,iz</td><td>colors of the objects in the SDSS</td></tr>               
                     <tr><td>objType</td><td>To select star or galaxy</td></tr>               
                     <tr><td>magType</td><td>magnitudes of the objects in the SDSS</td></tr>               
                     <tr><td>imgparams</td><td> imaging parameters</td></tr>               
                     <tr><td>specparams</td><td>spectroscopy parameters</td></tr>               
-                    <tr><td>flags</td><td>object flags</td></tr>               
+                    <tr><td>flagsOnList</td><td>comma separated list of photometric flags set to on</td></tr>        
+                    <tr><td>flagsOffList</td><td>comma separated list of photometric flags set to off</td></tr>        
               </table>    
                 <br><span>Example:
                 <pre><a target="api"  class='sml' href="<%=globals.NoPositionImaging%>?format=html&limit=30&izMin=3&izMax=4&riMin=&riMax=&flagsonlist=BRIGHT,EDGE&magType=model&uMin=0"><%=globals.NoPositionImaging%>?format=html&limit=30&izMin=3&izMax=4&riMin=&riMax=&flagsonlist=BRIGHT,EDGE&magType=model&uMin=0</a></pre>
@@ -291,12 +287,13 @@
                     <tr><td>limit</td><td>limit the number of rows in result</td></tr>
                     <tr><td>format</td><td>result format</td></tr>               
                     <tr><td>u,g,r,i,z</td><td>magnitudes of the objects in the SDSS</td></tr>               
-                    <tr><td>ug,gr,ri,iz</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>ug,gr,ri,iz</td><td>colors of the objects in the SDSS</td></tr>               
                     <tr><td>objType</td><td>To select star or galaxy</td></tr>               
                     <tr><td>magType</td><td>magnitudes of the objects in the SDSS</td></tr>               
                     <tr><td>imgparams</td><td> imaging parameters</td></tr>               
                     <tr><td>specparams</td><td>spectroscopy parameters</td></tr>               
-                    <tr><td>flags</td><td>object flags</td></tr>        
+                    <tr><td>flagsOnList</td><td>comma separated list of photometric flags set to on</td></tr>        
+                    <tr><td>flagsOffList</td><td>comma separated list of photometric flags set to off</td></tr>        
                     <tr><td>radecTextarea</td><td>comma separated values of (RA,Dec) coordinates of the objects in the first 2 columns. The optional third column is search radius. Column names should be included in the first row.</td></tr>
                </table>    
             <br><span>Example:
@@ -311,12 +308,13 @@
                     <tr><td>raMin,raMax,decMin,decMax</td><td>sky cordinates to search</td></tr>               
                     <tr><td>radius</td><td>search radius in arcmin</td></tr>               
                     <tr><td>u,g,r,i,z</td><td>magnitudes of the objects in the SDSS</td></tr>               
-                    <tr><td>ug,gr,ri,iz</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>ug,gr,ri,iz</td><td>colors of the objects in the SDSS</td></tr>               
                     <tr><td>objType</td><td>To select star or galaxy</td></tr>               
                     <tr><td>magType</td><td>magnitudes of the objects in the SDSS</td></tr>               
                     <tr><td>imgparams</td><td> imaging parameters</td></tr>               
                     <tr><td>specparams</td><td>spectroscopy parameters</td></tr>               
-                    <tr><td>flags</td><td>object flags</td></tr>                      
+                    <tr><td>flagsOnList</td><td>comma separated list of photometric flags set to on</td></tr>        
+                    <tr><td>flagsOffList</td><td>comma separated list of photometric flags set to off</td></tr>        
               </table>    
             <br><span>Example:
             <pre><a target="api"  class='sml' href="<%=globals.RectangularImaging%>?limit=50&raMin=258&raMax=258.2&decMin=64&decMax=64.1&imgparams=typical,minimal&magType=model&format=csv"><%=globals.RectangularImaging%>?limit=50&raMin=258&raMax=258.2&decMin=64&decMax=64.1&imgparams=typical,minimal&magType=model&format=csv</a></pre>
@@ -335,12 +333,17 @@
                     <tr><td>limit</td><td>limit the number of rows in result</td></tr>
                     <tr><td>format</td><td>result format</td></tr>                                                
                     <tr><td>u,g,r,i,z</td><td>magnitudes of the objects in the SDSS</td></tr>               
-                    <tr><td>ug,gr,ri,iz</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>ug,gr,ri,iz</td><td>colors of the objects in the SDSS</td></tr>               
                     <tr><td>objType</td><td>To select star or galaxy</td></tr>               
                     <tr><td>magType</td><td>magnitudes of the objects in the SDSS</td></tr>               
                     <tr><td>imgparams</td><td> imaging parameters</td></tr>               
                     <tr><td>specparams</td><td>spectroscopy parameters</td></tr>               
-                    <tr><td>flags</td><td>object flags</td></tr>               
+                    <tr><td>priFlagsOnList</td><td>comma separated list of primary flags set to on</td></tr>        
+                    <tr><td>priFlagsOffList</td><td>comma separated list of primary flags set to off</td></tr>        
+                    <tr><td>secFlagsOnList</td><td>comma separated list of secondary flags set to on</td></tr>        
+                    <tr><td>secFlagsOffList</td><td>comma separated list of secondary flags set to off</td></tr>        
+                    <tr><td>flagsOnList</td><td>comma separated list of photometric flags set to on</td></tr>        
+                    <tr><td>flagsOffList</td><td>comma separated list of photometric flags set to off</td></tr>        
                        
               </table>    
             <br><span>Example:
@@ -353,12 +356,17 @@
                     <tr><td>limit</td><td>limit the number of rows in result</td></tr>
                     <tr><td>format</td><td>result format</td></tr>               
                     <tr><td>u,g,r,i,z</td><td>magnitudes of the objects in the SDSS</td></tr>               
-                    <tr><td>ug,gr,ri,iz</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>ug,gr,ri,iz</td><td>colors of the objects in the SDSS</td></tr>               
                     <tr><td>objType</td><td>To select star or galaxy</td></tr>               
                     <tr><td>magType</td><td>magnitudes of the objects in the SDSS</td></tr>               
                     <tr><td>imgparams</td><td> imaging parameters</td></tr>               
                     <tr><td>specparams</td><td>spectroscopy parameters</td></tr>               
-                    <tr><td>flags</td><td>object flags</td></tr>               
+                    <tr><td>priFlagsOnList</td><td>comma separated list of primary flags set to on</td></tr>        
+                    <tr><td>priFlagsOffList</td><td>comma separated list of primary flags set to off</td></tr>        
+                    <tr><td>secFlagsOnList</td><td>comma separated list of secondary flags set to on</td></tr>        
+                    <tr><td>secFlagsOffList</td><td>comma separated list of secondary flags set to off</td></tr>        
+                    <tr><td>flagsOnList</td><td>comma separated list of photometric flags set to on</td></tr>        
+                    <tr><td>flagsOffList</td><td>comma separated list of photometric flags set to off</td></tr>        
               </table>    
                 <br><span>Example:
                 <pre><a target="api"  class='sml' href="<%=globals.NoPositionSpectroWS%>?limit=30&izMin=3&izMax=4&riMin=&riMax=&flagsonlist=BRIGHT,EDGE&magType=model&uMin=0&format=html"><%=globals.NoPositionSpectroWS%>?limit=30&izMin=3&izMax=4&riMin=&riMax=&flagsonlist=BRIGHT,EDGE&magType=model&uMin=0&format=html</a></pre>
@@ -370,12 +378,17 @@
                     <tr><td>limit</td><td>limit the number of rows in result</td></tr>
                     <tr><td>format</td><td>result format</td></tr>               
                     <tr><td>u,g,r,i,z</td><td>magnitudes of the objects in the SDSS</td></tr>               
-                    <tr><td>ug,gr,ri,iz</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>ug,gr,ri,iz</td><td>colors of the objects in the SDSS</td></tr>               
                     <tr><td>objType</td><td>To select star or galaxy</td></tr>               
                     <tr><td>magType</td><td>magnitudes of the objects in the SDSS</td></tr>               
                     <tr><td>imgparams</td><td> imaging parameters</td></tr>               
                     <tr><td>specparams</td><td>spectroscopy parameters</td></tr>               
-                    <tr><td>flags</td><td>object flags</td></tr>        
+                    <tr><td>priFlagsOnList</td><td>comma separated list of primary flags set to on</td></tr>        
+                    <tr><td>priFlagsOffList</td><td>comma separated list of primary flags set to off</td></tr>        
+                    <tr><td>secFlagsOnList</td><td>comma separated list of secondary flags set to on</td></tr>        
+                    <tr><td>secFlagsOffList</td><td>comma separated list of secondary flags set to off</td></tr>        
+                    <tr><td>flagsOnList</td><td>comma separated list of photometric flags set to on</td></tr>        
+                    <tr><td>flagsOffList</td><td>comma separated list of photometric flags set to off</td></tr>        
                </table>    
                 <br><span>Example:
                 <pre><a target="api"  class='sml' href="<%=globals.ProximitySpectroWS%>?searchtool=Spectro&limit=50&format=html&imgparams=minimal&specparams=minimal&raMin=10&decMin=0.20&raMax=10.2&decMax=0.22&positionType=proximity&radecTextarea=ra%2Cdec%2Csep%0D%0A256.443154%2C58.0255%2C1.0%0D%0A29.94136%2C0.08930%2C1.0%0D%0A&searchNearBy=nearest&radiusDefault=1.0"><%=globals.ProximitySpectroWS%>?searchtool=Spectro&limit=50&format=html&imgparams=minimal&specparams=minimal&raMin=10&decMin=0.20&raMax=10.2&decMax=0.22&positionType=proximity&radecTextarea=ra%2Cdec%2Csep%0D%0A256.443154%2C58.0255%2C1.0%0D%0A29.94136%2C0.08930%2C1.0%0D%0A&searchNearBy=nearest&radiusDefault=1.0</a></pre>
@@ -388,12 +401,17 @@
                     <tr><td>limit</td><td>limit the number of rows in result</td></tr>
                     <tr><td>format</td><td>result format</td></tr>                    
                     <tr><td>u,g,r,i,z</td><td>magnitudes of the objects in the SDSS</td></tr>               
-                    <tr><td>ug,gr,ri,iz</td><td>magnitudes of the objects in the SDSS</td></tr>               
+                    <tr><td>ug,gr,ri,iz</td><td>colors of the objects in the SDSS</td></tr>               
                     <tr><td>objType</td><td>To select star or galaxy</td></tr>               
                     <tr><td>magType</td><td>magnitudes of the objects in the SDSS</td></tr>               
                     <tr><td>imgparams</td><td> imaging parameters</td></tr>               
                     <tr><td>specparams</td><td>spectroscopy parameters</td></tr>               
-                    <tr><td>flags</td><td>object flags</td></tr>                      
+                    <tr><td>priFlagsOnList</td><td>comma separated list of primary flags set to on</td></tr>        
+                    <tr><td>priFlagsOffList</td><td>comma separated list of primary flags set to off</td></tr>        
+                    <tr><td>secFlagsOnList</td><td>comma separated list of secondary flags set to on</td></tr>        
+                    <tr><td>secFlagsOffList</td><td>comma separated list of secondary flags set to off</td></tr>        
+                    <tr><td>flagsOnList</td><td>comma separated list of photometric flags set to on</td></tr>        
+                    <tr><td>flagsOffList</td><td>comma separated list of photometric flags set to off</td></tr>        
               </table>    
                 <br><span>Example:
                 <pre><a target="api"  class='sml' href="<%=globals.RectangularSpectroWS%>?limit=50&raMin=258&raMax=258.2&decMin=64&decMax=64.1&imgparams=typical,minimal&magType=model&format=csv"><%=globals.RectangularSpectroWS%>?limit=50&raMin=258&raMax=258.2&decMin=64&decMax=64.1&imgparams=typical,minimal&magType=model&format=csv</a></pre>
@@ -418,7 +436,10 @@
                     <tr><td>snr, vhelio, scatter (min and max)</td><td>Observational Parameters</td></tr>               
                     <tr><td>Temp,logg,feh,afe (min and max)</td><td>Stellar Parameters</td></tr>                                   
                     <tr><td>irspecparams</td><td>IR spectroscopy parameters</td></tr>               
-                    <tr><td>irTargetflags</td><td>APOGEE_Target flags (on and off list)</td></tr>                                      
+                    <tr><td>irTargetFlagsOnList</td><td>list of APOGEE_Target1 flags set to on</td></tr>   
+                    <tr><td>irTargetFlagsOffList</td><td>list of APOGEE_Target1 flags set to off</td></tr>
+                    <tr><td>irTargetFlags2OnList</td><td>list of APOGEE_Target2 flags set to on</td></tr>   
+                    <tr><td>irTargetFlags2OffList</td><td>list of APOGEE_Target2 flags set to off</td></tr>
                    </table>    
                 <br><span>Example:
                 <pre><a target="api"  class='sml' href="<%=globals.ConeIRWS%>?limit=50&format=json&irspecparams=typical&ra=271.75&dec=-20.19&radius=5.0&Lcenter=10&Bcenter=0.2&lbRadius=5.0&jMin=&hMin=&kMin=&jMax=&hMax=&kMax=&jhMin=&hkMin=&jhMax=&hkMax=&snrMin=&vhelioMin=&scatterMin=&snrMax=&vhelioMax=&scatterMax=&tempMin=&loggMin=&fehMin=&afeMin=&tempMax=&loggMax=&fehMax=&afeMax=&irTargetFlagsOnList=ignore&irTargetFlagsOffList=ignore&irTargetFlags2OnList=ignore&irTargetFlags2OffList=ignore"><%=globals.ConeIRWS%>?limit=50&format=json&irspecparams=typical&ra=271.75&dec=-20.19&radius=5.0&Lcenter=10&Bcenter=0.2&lbRadius=5.0&jMin=&hMin=&kMin=&jMax=&hMax=&kMax=&jhMin=&hkMin=&jhMax=&hkMax=&snrMin=&vhelioMin=&scatterMin=&snrMax=&vhelioMax=&scatterMax=&tempMin=&loggMin=&fehMin=&afeMin=&tempMax=&loggMax=&fehMax=&afeMax=&irTargetFlagsOnList=ignore&irTargetFlagsOffList=ignore&irTargetFlags2OnList=ignore&irTargetFlags2OffList=ignore</a></pre>
@@ -436,7 +457,10 @@
                     <tr><td>snr, vhelio, scatter (min and max)</td><td>Observational Parameters</td></tr>               
                     <tr><td>Temp,logg,feh,afe (min and max)</td><td>Stellar Parameters</td></tr>                                   
                     <tr><td>irspecparams</td><td>IR spectroscopy parameters</td></tr>               
-                    <tr><td>irTargetflags</td><td>APOGEE_Target flags (on and off list)</td></tr>                                      
+                    <tr><td>irTargetFlagsOnList</td><td>list of APOGEE_Target1 flags set to on</td></tr>   
+                    <tr><td>irTargetFlagsOffList</td><td>list of APOGEE_Target1 flags set to off</td></tr>
+                    <tr><td>irTargetFlags2OnList</td><td>list of APOGEE_Target2 flags set to on</td></tr>   
+                    <tr><td>irTargetFlags2OffList</td><td>list of APOGEE_Target2 flags set to off</td></tr>
                    </table>    
                 <br><span>Example:
                 <pre><a target="api"  class='sml' href="<%=globals.GalacticIRWS%>?limit=50&format=csv&irspecparams=typical&Lcenter=10&Bcenter=0.2&lbRadius=5.0&jMin=&hMin=&kMin=&jMax=&hMax=&kMax=&jhMin=&hkMin=&jhMax=&hkMax=&snrMin=&vhelioMin=&scatterMin=&snrMax=&vhelioMax=&scatterMax=&tempMin=&loggMin=&fehMin=&afeMin=&tempMax=&loggMax=&fehMax=&afeMax=&irTargetFlagsOnList=ignore&irTargetFlagsOffList=ignore&irTargetFlags2OnList=ignore&irTargetFlags2OffList=ignore"><%=globals.GalacticIRWS%>IRSpectraQuery/GalacticIR?limit=50&format=csv&irspecparams=typical&Lcenter=10&Bcenter=0.2&lbRadius=5.0&jMin=&hMin=&kMin=&jMax=&hMax=&kMax=&jhMin=&hkMin=&jhMax=&hkMax=&snrMin=&vhelioMin=&scatterMin=&snrMax=&vhelioMax=&scatterMax=&tempMin=&loggMin=&fehMin=&afeMin=&tempMax=&loggMax=&fehMax=&afeMax=&irTargetFlagsOnList=ignore&irTargetFlagsOffList=ignore&irTargetFlags2OnList=ignore&irTargetFlags2OffList=ignore</a></pre>
@@ -453,7 +477,10 @@
                     <tr><td>snr, vhelio, scatter (min and max)</td><td>Observational Parameters</td></tr>               
                     <tr><td>Temp,logg,feh,afe (min and max)</td><td>Stellar Parameters</td></tr>                                   
                     <tr><td>irspecparams</td><td>IR spectroscopy parameters</td></tr>               
-                    <tr><td>irTargetflags</td><td>APOGEE_Target flags (on and off list)</td></tr>     
+                    <tr><td>irTargetFlagsOnList</td><td>list of APOGEE_Target1 flags set to on</td></tr>   
+                    <tr><td>irTargetFlagsOffList</td><td>list of APOGEE_Target1 flags set to off</td></tr>
+                    <tr><td>irTargetFlags2OnList</td><td>list of APOGEE_Target2 flags set to on</td></tr>   
+                    <tr><td>irTargetFlags2OffList</td><td>list of APOGEE_Target2 flags set to off</td></tr>
                </table>    
             <br><span>Example:
             <pre><a target="api"  class='sml' href="<%=globals.NoPositionIRWS%>?limit=50&format=csv&irspecparams=typical&jMin=&hMin=&kMin=&jMax=&hMax=&kMax=&jhMin=&hkMin=&jhMax=&hkMax=&snrMin=&vhelioMin=&scatterMin=&snrMax=&vhelioMax=&scatterMax=&tempMin=&loggMin=&fehMin=&afeMin=&tempMax=&loggMax=&fehMax=&afeMax=&irTargetFlagsOnList=ignore&irTargetFlagsOffList=ignore&irTargetFlags2OnList=ignore&irTargetFlags2OffList=ignore"><%=globals.NoPositionIRWS%>?limit=50&format=csv&irspecparams=typical&jMin=&hMin=&kMin=&jMax=&hMax=&kMax=&jhMin=&hkMin=&jhMax=&hkMax=&snrMin=&vhelioMin=&scatterMin=&snrMax=&vhelioMax=&scatterMax=&tempMin=&loggMin=&fehMin=&afeMin=&tempMax=&loggMax=&fehMax=&afeMax=&irTargetFlagsOnList=ignore&irTargetFlagsOffList=ignore&irTargetFlags2OnList=ignore&irTargetFlags2OffList=ignore</a></pre>

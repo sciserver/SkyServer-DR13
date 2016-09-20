@@ -18,8 +18,10 @@ function done() {
       <p>This table contains all information on spectra measured by the SDSS. The 
       list below shows the columns most commonly searched. For a complete 
       list, see the 
-      <a target=tools href="../../docs/browser.asp">
-      <font color=gold>Schema Browser</font></a>.</p>
+          <A href="../../browser/browser.aspx#&&history=description+SpecObj+U" target='_blank'>
+              <font color=gold>Schema Browser <img src='../../../images/new_window.png' /></font>
+          </A>.
+       </p>
       <table border="3" cellspacing="1" cellpadding=3 width="100%" id="AutoNumber1">
         <tr>
           <td width="24%"><font face="Arial" color="white">specObjID</font></td>
@@ -34,15 +36,24 @@ function done() {
           <td width="24%"><font face="Arial" color="white">z</font></td>
           <td width="76%"><font face="Arial" color="white">redshift</font></td>
         </tr>
-        <tr>
+<!--        <tr>
           <td width="24%"><font face="Arial" color="white">zconf</font></td>
           <td width="76%"><font face="Arial" color="white">confidence level in 
           redshift</font></td>
-        </tr>
+        </tr>-->
         <tr>
           <td width="24%"><font face="Arial" color="white">zErr</font></td>
           <td width="76%"><font face="Arial" color="white">error in redshift</font></td>
         </tr>
+          <tr>
+              <td width="24%"><font face="Arial" color="white">zWarning</font></td>
+              <td width="76%">
+                  <font face="Arial" color="white">
+                      a flag marking any errors in the redshift measurement
+                      for this spectrum; a value of 0 means the redshift is reliable
+                  </font>
+              </td>
+          </tr>
         <tr>
           <td width="24%"><font face="Arial" color="white">class </font>
           </td>

@@ -173,7 +173,7 @@ namespace SkyServer.Tools.Explore
             string doWeNeedC = (commiss == 1) ? "C" : "";
 
             apogeeSpecImage = globals.ApogeeFitsLink + "/stars/apo25m/" + location_id + "/plots/apStar" + doWeNeedC + "-r6-" + HttpUtility.UrlEncode(apogee_id) + ".jpg";
-            spectrumLink = globals.ApogeeSpectrumLink + "?locid=" + location_id + "&commiss=" + commiss + "&apogeeid=" + apogee_id + "&apred_ver=" + apred_version;
+            spectrumLink = globals.ApogeeSpectrumLink + "/stars?location_id=" + location_id + "&commiss=" + commiss + "&apogee_id=" + apogee_id + "&action=search";
             fitsLink = globals.ApogeeFitsLink + "/stars/apo25m/"+location_id+"/apStar" + doWeNeedC + "-r6-" + HttpUtility.UrlEncode(apogee_id) + ".fits";
         }
 
