@@ -286,7 +286,7 @@ namespace SkyServer.Tools.Search
                                      httpResponse.AddHeader("Content-Disposition", "attachment;filename=\"" + FileName + ".fits\"");
                                  break;
                 case "mydb"   :
-                case "html"   :  httpResponse.ContentType = "";
+                case "html"   :  httpResponse.ContentType = "text/html";
                                  break;
                 default       :  httpResponse.ContentType = "text/plain";
                                  if (SaveResponseToFile)
