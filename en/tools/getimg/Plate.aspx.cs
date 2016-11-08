@@ -133,7 +133,12 @@ namespace SkyServer.Tools.GetImg
                     string URIparams = "?plateId=" + plateid.ToString() + "&query=FiberList&TaskName=Skyserver.GetImg.Plate";
                     DataSet ds = rs.GetObjectInfoFromWebService(globals.ExploreWS, URIparams);
                     //DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.getimg.Plate.spGetFiberList");
-                    using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+
+                    DataView dv = ds.Tables[0].DefaultView;
+                    dv.Sort = "fiberId asc";
+                    DataTable sortedDT = dv.ToTable();
+
+                    using (DataTableReader reader = sortedDT.CreateDataReader())
                     {
                         while (reader.Read())
                         {
