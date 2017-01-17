@@ -243,20 +243,20 @@
                 Conical search on the imaging data.
                 <table>
                     <tr><td class="b">Prameters</td><td class="b">Expected Values</td></tr>
-                    <tr><td>limit</td><td>limit the number of rows in result</td></tr>
-                    <tr><td>format</td><td>result format</td></tr>               
+                    <tr><td>limit</td><td>maximum number of rows retrieved. If set to 0, then all rows will be retrieved.</td></tr>               
+                    <tr><td>format</td><td>output file format. E.g. csv,html,xml,votable,json,fits,mydb</td></tr>
                     <tr><td>ra, dec</td><td>sky cordinates to search</td></tr>               
                     <tr><td>radius</td><td>search radius in arcmin</td></tr>               
-                    <tr><td>uMin,gMin,rMin,iMin,zMin</td><td>Lower bounds of the magnitudes of objects in the SDSS</td></tr>               
-                    <tr><td>uMax,gMax,rMax,iMax,zMax</td><td>Upper bounds of the magnitudes of objects in the SDSS</td></tr>               
-                    <tr><td>ugMin,grMin,riMin,izMin</td><td>Lower bounds of the colors of objects in the SDSS</td></tr>               
+                    <tr><td>uMin,gMin,rMin,iMin,zMin</td><td>Lower bounds of the magnitudes of objects (in the SDSS photometric bands)</td></tr>               
+                    <tr><td>uMax,gMax,rMax,iMax,zMax</td><td>Upper bounds of the magnitudes of objects (in the SDSS photometric bands)</td></tr>               
+                    <tr><td>ugMin,grMin,riMin,izMin</td><td>Lower bounds of the colors of objects (in the SDSS photometric bands)</td></tr>               
                     <tr><td>ugMax,grMax,riMax,izMax</td><td>Upper bound of the colors of the objects in the SDSS</td></tr>               
                     <tr><td>objType</td><td>To select star or galaxy</td></tr>               
                     <tr><td>magType</td><td>magnitudes of the objects in the SDSS</td></tr>               
-                    <tr><td>imgparams</td><td> imaging parameters</td></tr>               
-                    <tr><td>specparams</td><td>spectroscopy parameters</td></tr>               
+                    <tr><td>imgparams</td><td> imaging parameters: imaging fields to be included as columns in the resuts table.</td></tr>               
+                    <tr><td>specparams</td><td>spectroscopy parameters: spectroscopic fields to be included as columns in the resuts table.</td></tr>               
                     <tr><td>flagsOnList</td><td>comma separated list of photometric flags set to on</td></tr>        
-                    <tr><td>flagsOffList</td><td>comma separated list of photometric flags set to off</td></tr>        
+                    <tr><td>flagsOffList</td><td>comma separated list of photometric flags set to off</td></tr>
               </table>    
             <br><span>Example:
             <pre><a target="api"  class='sml' href="<%=globals.ConeImaging%>?limit=50&format=csv&imgparams=minimal&specparams=none&ra=10&dec=0.2&radius=5.0&magType=model"><%=globals.ConeImaging%>?limit=50&format=csv&imgparams=minimal&specparams=none&ra=10&dec=0.2&radius=5.0&magType=model</a></pre>
