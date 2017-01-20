@@ -95,6 +95,8 @@
                             </table>
                         <% string csvlink = globals.DasUrlBase + "optical/spectrum/view/data/format=csv?plateid=" + plate + "&mjd=" + mjd + "&fiberid=" + fiberid + "&reduction2d=v5_7_0"; %>
                         <a href="<%= csvlink %>" target='_blank' class='content'> <h3>Get spectrum as CSV</h3></a>
+                        <% string fitslink = globals.DasUrlBase + "optical/spectrum/view/data/format=fits?plateid=" + plate + "&mjd=" + mjd + "&fiberid=" + fiberid + "&reduction2d=v5_7_0"; %>
+                        <a href="<%= fitslink %>" target='_blank' class='content'> <h3>Get spectrum as FITS</h3></a>
                     </td>
 
                     <%} %>
