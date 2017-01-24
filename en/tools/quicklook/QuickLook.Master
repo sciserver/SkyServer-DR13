@@ -304,7 +304,7 @@
                </td>
                <td>
                 <table>
-                <tr><td align="right" class="s">SpecID or APOGEE ID:</td><td><input type="text" name="searchSpecID" value="2947691243863304192"></input></td><td><input type="button" onclick="press_ok('specid')" value="Go"></input></td></tr>
+                <tr><td align="right" class="s">SpecObjID, apstar_id or apogee_id:</td><td><input type="text" name="searchSpecID" value="2947691243863304192"></input></td><td><input type="button" onclick="press_ok('specid')" value="Go"></input></td></tr>
                 <tr><td align="right" class="s">5-part SDSS:</td><td><input type="text" name="searchSDSS" value="5314-301-1-136-96"></input></td><td><input type="button" onclick="press_ok('sdss')" value="Go"></input></td></tr>
                 <tr><td align="right" class="s">Plate-MJD-Fiber:</td><td><input type="text" size="4" name="searchPlate" value="2618"></input>-<input type="text" size="4" name="searchMJD" value="54506"></input>-<input type="text" size="4" name="searchFiber" value="310"></input></td><td><input type="button" onclick="press_ok('plfib')" value="Go"></input></td></tr>
                 </table>

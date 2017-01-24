@@ -53,7 +53,7 @@
         <div id="search" style="display:none;">
           <table>
             <tr>
-              <td width="120px" align="center"><h2>Search3 by</h2><input type="button" onclick="toggleSearch()" value="Hide" ONMOUSEOVER="this.T_WIDTH='140';return escape('Search for specific objects.')"></input></td>
+              <td width="120px" align="center"><h2>Search by</h2><input type="button" onclick="toggleSearch()" value="Hide" ONMOUSEOVER="this.T_WIDTH='140';return escape('Search for specific objects.')"></input></td>
               <td>
                 <table>
                   <form id="formNAME" action="summary.aspx" autocomplete="on"> <tr><td align="right" class="s">Name:</td><td><input type="text" id="searchName" name="searchName" value="ACO  2255"></input></td><td><input type="submit" onclick="resolveName()" value="Find"/></td></tr></form>
@@ -64,7 +64,7 @@
                <td>
                 <table>
                 <form id="formSPEC" action="summary.aspx" autocomplete="on">
-                    <tr><td align="right" class="s">SpecID or APOGEE ID:</td><td>
+                    <tr><td align="right" class="s">SpecObjID, apstar_id or apogee_id:</td><td>
                     <input type="text" id="searchSpecID" value="2947691243863304192">
                     </input></td><td><input type="button" onclick="press_ok('specid')" value="Go"></input></td></tr>
                     <input type="hidden" id="sid" name="sid">
