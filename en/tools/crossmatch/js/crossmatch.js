@@ -2,11 +2,16 @@
 var xAuth = "";
 var selectedQueue = "long";
 var sampleQueries = [
-    "Select top 10 ra,dec from  SDSSDR7:Field",
-    "Select top 10 ra,dec from  SDSSDR7:Field",
-    "SELECT s.objid, s.ra, s.dec, g.objid, g.ra, g.dec, x.ra, x.dec INTO twowayxmatch FROM SDSSDR7:PhotoObjAll AS s WITH(POINT(s.ra, s.dec), ERROR(0.1, 0.1, 0.1))     CROSS JOIN GALEX:PhotoObjAll AS g WITH(POINT(g.ra, g.dec), ERROR(0.2, 0.2, 0.2)) XMATCH BAYESFACTOR x MUST EXIST s MUST EXIST g HAVING LIMIT 1e3     WHERE s.ra BETWEEN 0 AND 5 AND s.dec BETWEEN 0 AND 5  AND g.ra BETWEEN 0 AND 5 AND g.dec BETWEEN 0 AND 5",
-    "SELECT s.objid, s.ra, s.dec, g.objid, g.ra, g.dec, x.ra, x.dec INTO twowayxmatch FROM SDSSDR7:PhotoObjAll AS s WITH(POINT(s.ra, s.dec), ERROR(0.1, 0.1, 0.1))     CROSS JOIN GALEX:PhotoObjAll AS g WITH(POINT(g.ra, g.dec), ERROR(0.2, 0.2, 0.2)) XMATCH BAYESFACTOR x MUST EXIST s MUST EXIST g HAVING LIMIT 1e3     WHERE s.ra BETWEEN 0 AND 5 AND s.dec BETWEEN 0 AND 5  AND g.ra BETWEEN 0 AND 5 AND g.dec BETWEEN 0 AND 5",
-];
+    "Select top 10 ra,dec from  SDSSDR7:PhotoObj",
+    "SELECT s.objid, s.ra, s.dec, g.objid, g.ra, g.dec, x.ra, x.dec \n" + 
+    "INTO twowayxmatch \n" +
+    "FROM XMATCH \n" +
+    "    (MUST EXIST IN SDSSDR7:PhotoObjAll AS s WITH(POINT(s.ra, s.dec), ERROR(0.1, 0.1, 0.1)), \n" +
+    "     MUST EXIST IN GALEX:PhotoObjAll AS g WITH(POINT(g.ra, g.dec), ERROR(0.2, 0.2, 0.2)), \n" +
+    "     LIMIT BAYESFACTOR TO 1e3) AS x"
+    ];
+
+var crossMatchQuery = [];
 
 
 function init() {
@@ -30,7 +35,7 @@ function readCookie(name) {
             var temp = c.substring(nameEQ.length, c.length);
             if (temp.indexOf("token") > -1)
                 xAuth = temp.replace("token=", "");
-            console.log(xAuth);
+            //console.log(xAuth);
             return c.substring(nameEQ.length, c.length);
         }
     }
@@ -52,6 +57,8 @@ function callServices() {
         //console.log("Selected Option:" + $(this).text());
         tablesUrl = datasetsUrl + "/" + $(this).text() + "/tables";
         skyQueryConnect(tablesUrl, xAuth, "GET", "tablelist");
+        var listColumns = $('#ListColumns');
+        $('#ListColumns').empty();
     });
 
     //update columns dropdown menu on table select
@@ -77,7 +84,7 @@ function callServices() {
     /// select sample queries
     $(document).on('click', '#samples a', function () {
         var index = $(this).attr("tabindex");
-        console.log("Selected sample Option:" + index);//$(this).find(":selected").index());
+        //console.log("Selected sample Option:" + index);//$(this).find(":selected").index());
         $("textarea#query").val(sampleQueries[index]);
     });
 }
@@ -85,7 +92,7 @@ function callServices() {
 function callJobs(whichqueue) {
     //load Jobs 
     var jobsurl = skyqueryUrl + "Api/V1/Jobs.svc/queues/" + whichqueue + "/jobs";
-    console.log(jobsurl);
+    //console.log(jobsurl);
     skyQueryConnect(jobsurl, xAuth, "GET", "jobs");
 }
 
@@ -104,12 +111,12 @@ function callSubmit() {
 
     // to open more information about skyquery apis
     $(document).on('click', "#info", function () {
-        window.location = skyqueryUrl+"/Api/Default.aspx";
+        window.location = skyqueryUrl + "Apps/Api/Default.aspx?" + xAuth;
     });
 
     // to open more information about skyquery apis
     $(document).on('click', "#refresh", function () {
-        console.log("Test");
+        //console.log("Test");
         callJobs(selectedQueue);
     });
     
@@ -138,7 +145,6 @@ function updateDropDown(response) {
     $('#ListDataSets').empty();
     $.each(temp, function (val, text) {
         $.each(text, function (val1, text1) {
-    
             mydbs.append($("<a href=\"#\" class=\"list-group-item\">" + text1.name + "</a>").val(val1));
         });
     });
@@ -153,7 +159,6 @@ function updatetables(response) {
     $('#ListTables').empty();
     $.each(temp, function (val, text) {
         $.each(text, function (val1, text1) {
-    
             listTables.append($("<a href=\"#\" class=\"list-group-item\">" + text1.name + "</a>").val(val1));
         });
     });
@@ -175,9 +180,12 @@ function updateColumns(response) {
 function updateJobs(response) {
     //alert(JSON.stringify(response));
     var temp = $.parseJSON(JSON.stringify(response));
-    var mySelect = $('#bjobsList');
-    $('#bjobsList').empty();
+    //var mySelect = $('#bjobsList');
+    //$('#bjobsList').empty();
     var tablerow = "";
+
+    var rows = [];
+
     $.each(temp, function (val, text) {       
         $.each(text, function (val1, text1) {            
             tablerow = "<tr>";
@@ -191,27 +199,93 @@ function updateJobs(response) {
                 //    }                    
                 //});
                 var cls = "label label-default";
-                tablerow += "<td><span class=\""+cls+"\">" + text2.canCancel + "</span></td>";
+                //tablerow += "<td><span class=\""+cls+"\">" + text2.canCancel + "</span></td>";
                 tablerow += "<td><span class=\"" + cls + "\">" + text2.dateCreated + "</span></td>";
                 tablerow += "<td><span class=\"" + cls + "\">" + text2.dateStarted + "</span></td>";
                 tablerow += "<td><span class=\"" + cls + "\">" + text2.dateFinished + "</span></td>";
-                tablerow += "<td><span class=\""+cls+"\">" +"<a tabindex=\"-1\" href=\"#\" onclick=\"updateJobDetails('" + text2.guid + "')\">" + text2.guid + "</a></span></td>";
+                //tablerow += "<td><span class=\""+cls+"\">" +"<a tabindex=\"-1\" href=\"#\" onclick=\"updateJobDetails('" + text2.guid + "')\">" + text2.guid + "</a></span></td>";
                 
-                tablerow += "<td><span class=\"" + cls + "\">" + text2.queue + "</span></td>";
+                tablerow += "<td><span  class=\"" + cls + "\">" + text2.queue + "</span></td>";
+                var status = "<td><span class=\"" + getLabelCls(text2.status) + "\">" + text2.status + "</span></td>";
                 tablerow += "<td><span class=\"" + getLabelCls(text2.status) + "\">" + text2.status + "</span></td>";
                 var dbtb = "";
                 //if (text2.output.indexOf(":") >= 0)
                 if (typeof text2.output != 'undefined')
                      dbtb = text2.output.split(":");
                 var link = skyqueryUrl + "Api/V1/Data.svc/" + dbtb[0] + "/" + dbtb[1] + "?token=" + xAuth;
-                var dnlink = "<a href=" + link + "  download><span class=\"" + getLabelCls(text2.status) + "\"> " + text2.output + "</span></a>";
-                tablerow += "<td>"+dnlink+"</td>";
+                var dnlink = "";
+                if (text2.output != undefined)
+                    dnlink = "<a href=" + link + "  download><span> " + "see" + "</span></a>";
+                tablerow += "<td>" + dnlink + "</td>";
+
+                dateCreated = getDateString(text2.dateCreated == undefined ? "" : text2.dateCreated, true, false);
+                dateStarted = getDateString(text2.dateStarted == undefined ? "" : text2.dateStarted, true, false);
+                dateFinished = getDateString(text2.dateFinished == undefined ? "" : text2.dateFinished, true, false);
+                query = text2.query == undefined ? "" : text2.query
+
+                //console.log(text2.dateFinished);
+
+
+
+
+                rows.push({
+                    0: dateCreated, 1: dateStarted, 2: dateFinished, 3: text2.queue, 4: status, 5: dnlink, 6: text2.query
+                });
+
+                crossMatchQuery.push(text2.query);
+
             });
             tablerow += "</tr>";
-            mySelect.append(tablerow);           
+            //mySelect.append(tablerow);
+
+
         });
     });
+
+
+    if ($.fn.dataTable.isDataTable('#jobsTable')) {//trying to refresh the table
+        var table = $("#jobsTable").DataTable();
+        table.clear();
+        table.rows.add(rows).draw(false);
+    } else {
+
+        var myTable = $("#jobsTable").DataTable(
+            {
+                "data": rows,
+                "bFilter": true,// text search
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All "]],
+                "stateSave": false,
+                "oLanguage": {
+                    "sLengthMenu": "_MENU_ rows per page"
+                },
+                "paging": true,
+                "order": [[0, 'desc']],//"order": [[1,'asc']],//sorts the columns "order": []
+                "rowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                    // Row click
+                    $(nRow).on('click', function () {
+                        //console.log('Row Clicked. Look I have access to all params, thank You closures.', this, aData, iDisplayIndex, iDisplayIndexFull);
+                        getSqlQuery(iDisplayIndexFull);
+                    });
+                }
+
+            });
+    }
+
+    getSqlQuery(0);
+
+
 }
+
+function getSqlQuery(queryIndex) {
+
+    var table = $("#jobsTable").DataTable();
+    table.rows('').deselect();
+    table.row(queryIndex).select();
+    document.getElementById("crossMatchQuery").value = crossMatchQuery[queryIndex];
+
+}
+
+
 function getLabelCls(status) {
     var cls = "";
     switch(status){
@@ -220,12 +294,15 @@ function getLabelCls(status) {
         case "canceled": cls = "label label-warning"; break;
         case "waiting": cls = "label label-primary"; break;
         case "executing": cls = "label label-default"; break;
+        case "timedout": cls = "label label-danger"; break;
+        default:
+            cls = ""; break;
     }
     return cls;
 }
 
 function updateJobDetails(id) {
-    alert(id);
+    //alert(id);
 }
 
 function skyQueryConnect(url, authToken, method, caller, senddata) {
@@ -284,5 +361,78 @@ function testFunction() {
     });
 }
 
+function getDateString(dateString, isForUSerDisplay, doAddTimeZone) {
+
+    try {
+        if (dateString != "" & dateString != null) {
+            var date = new Date(dateString);
+
+            var month = String(date.getMonth() + 1);
+            if (month.length == 1)
+                month = "0" + month;
+
+            var day = String(date.getDate());
+            if (day.length == 1)
+                day = "0" + day;
+
+            var hours = String(date.getHours());
+            if (hours.length == 1)
+                hours = "0" + hours;
+
+            var minutes = String(date.getMinutes());
+            if (minutes.length == 1)
+                minutes = "0" + minutes;
+
+            var seconds = String(date.getSeconds());
+            if (seconds.length == 1)
+                seconds = "0" + seconds;
+
+            var milliseconds = String(date.getMilliseconds());
+            milliseconds = ("000" + milliseconds).substr(-3, 3);
+
+            var utcOffset = date.getTimezoneOffset();
+
+            var utcOffsetHours = parseInt(utcOffset / 60.0);
+            var utcOffsetMinutes = utcOffset - utcOffsetHours * 60;
+            utcOffsetHours = String(utcOffsetHours)
+            if (utcOffsetHours.length == 1)
+                utcOffsetHours = "0" + utcOffsetHours;
+            utcOffsetMinutes = String(utcOffsetMinutes)
+            if (utcOffsetMinutes.length == 1)
+                utcOffsetMinutes = "0" + utcOffsetMinutes;
+
+            var timeZone = "";
+
+            if (utcOffset > 0)
+                timeZone += "+" + utcOffsetHours + "" + utcOffsetMinutes;
+            else
+                timeZone += "-" + utcOffsetHours + "" + utcOffsetMinutes;
+
+            //var s = date.getUTCFullYear() + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds + "." + milliseconds + "" + timeZone;
+
+            var s = "";
+
+            if (isForUSerDisplay)
+                s = date.getUTCFullYear() + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
+            else
+                s = date.getUTCFullYear() + "-" + month + "-" + day + "T" + hours + ":" + minutes + ":" + seconds
+
+            if (doAddTimeZone)
+                s = s + " " + timeZone;
+
+            if (s.indexOf("NaN") >= 0)
+                return "";
+            else
+                return s;
+
+        } else {
+            return "";
+        }
+
+    } catch (err) {
+        return "";
+    }
+
+}
 
 
