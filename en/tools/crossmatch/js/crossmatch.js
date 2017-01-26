@@ -207,7 +207,7 @@ function updateJobs(response) {
                 var link = skyqueryUrl + "Api/V1/Data.svc/" + dbtb[0] + "/" + dbtb[1] + "?token=" + xAuth;
                 var dnlink = "";
                 if (text2.output != undefined)
-                    dnlink = "<a href=" + link + "  download><span> " + "get" + "</span></a>";
+                    dnlink = "<a href=" + link + "  download><span> " + "save" + "</span></a>";
 
                 dateCreated = getDateString(text2.dateCreated == undefined ? "" : text2.dateCreated, true, false);
                 dateStarted = getDateString(text2.dateStarted == undefined ? "" : text2.dateStarted, true, false);
