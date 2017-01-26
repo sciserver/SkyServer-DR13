@@ -97,6 +97,10 @@ function callServices() {
 function callJobs(whichqueue) {
     //load Jobs 
     var jobsurl = skyqueryUrl + "Api/V1/Jobs.svc/queues/" + whichqueue + "/jobs";
+    var numberOfJobs = $("#numberOfJobs").val().trim();
+    if (numberOfJobs != "")
+        jobsurl += "?Max=" + numberOfJobs
+
     //console.log(jobsurl);
     skyQueryConnect(jobsurl, xAuth, "GET", "jobs");
 }

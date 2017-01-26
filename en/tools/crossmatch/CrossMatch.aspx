@@ -83,7 +83,6 @@
             <a href="http://scholar.google.hu/citations?view_op=view_citation&hl=hu&user=kllQz-YAAAAJ&cstart=20&sortby=pubdate&citation_for_view=kllQz-YAAAAJ:YsMSGLbcyi4C" target="_blank">Paper 1</a>, 
             <a href="http://scholar.google.hu/citations?view_op=view_citation&hl=hu&user=kllQz-YAAAAJ&cstart=20&sortby=pubdate&citation_for_view=kllQz-YAAAAJ:qxL8FJ1GzNcC" target="_blank">Paper 2</a>, 
             <a href="http://scholar.google.hu/citations?view_op=view_citation&hl=hu&user=kllQz-YAAAAJ&cstart=20&sortby=pubdate&citation_for_view=kllQz-YAAAAJ:roLk4NBRz8UC" target="_blank">Paper 3.</a>
-                                   
         </p>
       </div>
 
@@ -151,18 +150,12 @@ AND g.ra BETWEEN 0 AND 5 AND g.dec BETWEEN 0 AND 5 </textarea>
 
         <div class="col-sm-7">
 
-      <div class="row">  
+      
         <h3 align="center">My CrossMatch History</h3>
-        <div class="col-sm-4"> </div>
-        <div class="col-sm-4">
-            <span align="center"><input id="quickList" type="checkbox" aria-label="..."/> Show Quick Queries</span>
-            <button align="center" type="button" class="glyphicon glyphicon-refresh" id="refresh"></button>
-        </div>
-        <div class="col-sm-4"> </div>
-        </div>
+        <h5 align="center"><span align="left"> <input id="quickList" type="checkbox" aria-label="..."/></span> Show Quick Queries <button align="center" type="button" class="glyphicon glyphicon-refresh" id="refresh"></button></h5>  
 
             <div class="table-responsive">
-                <br/>
+                <p align="left"> Top # of jobs:<input name="numberOfJobs" id="numberOfJobs"  type="text" value="20" size="4"/></p>
 		        <table id="jobsTable" class="table-bordered hover order-column compact hidden7thColumn">
 			        <thead>
 				        <tr>
