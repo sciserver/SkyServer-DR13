@@ -64,3 +64,9 @@ input[type=checkbox] {
 .hidden7thColumn tr > *:nth-child(7) {
     display: none;
 }
+
+
+tbody tr {
+    cursor: pointer;
+}
+
