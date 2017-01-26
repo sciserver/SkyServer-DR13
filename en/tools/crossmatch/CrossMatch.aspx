@@ -75,8 +75,15 @@
 
         <h2 align="center">SkyQuery CrossMatch Client</h2>
         <p align="center">
-            This tool uses <a href="<%=string.IsNullOrEmpty(token) ? skyqueryurl : skyqueryurl + "?token="+token%>" target="_blank">SkyQuery</a>  web services to run a crossmatch between catalogs of astronomical sources. More about SkyQuery is available 
-            <a href="<%=string.IsNullOrEmpty(token) ? skyqueryurl + "Apps/Docs/Default.aspx" : skyqueryurl + "Apps/Docs/Default.aspx?token="+token%>" target="_blank">HERE</a>
+            This tool uses <a href="<%=string.IsNullOrEmpty(token) ? skyqueryurl : skyqueryurl + "?token="+token%>" target="_blank">SkyQuery</a>  web services to run a crossmatch between catalogs of astronomical sources. 
+            <br />
+            SkyQuery documentation available <a href="<%=string.IsNullOrEmpty(token) ? skyqueryurl + "Apps/Docs/Default.aspx" : skyqueryurl + "Apps/Docs/Default.aspx?token="+token%>" target="_blank">HERE.</a>
+            
+            References to SkyQuery technical papers:  
+            <a href="http://scholar.google.hu/citations?view_op=view_citation&hl=hu&user=kllQz-YAAAAJ&cstart=20&sortby=pubdate&citation_for_view=kllQz-YAAAAJ:YsMSGLbcyi4C" target="_blank">Paper 1</a>, 
+            <a href="http://scholar.google.hu/citations?view_op=view_citation&hl=hu&user=kllQz-YAAAAJ&cstart=20&sortby=pubdate&citation_for_view=kllQz-YAAAAJ:qxL8FJ1GzNcC" target="_blank">Paper 2</a>, 
+            <a href="http://scholar.google.hu/citations?view_op=view_citation&hl=hu&user=kllQz-YAAAAJ&cstart=20&sortby=pubdate&citation_for_view=kllQz-YAAAAJ:roLk4NBRz8UC" target="_blank">Paper 3.</a>
+                                   
         </p>
       </div>
 
@@ -86,7 +93,7 @@
 
         <div class="col-sm-7">
 
-             <h3 align="center">CrossMatch Query</h3>
+             <h3 align="center">CrossMatch Query:</h3>
              <div class="dropdown">
               <label class="dropdown-toggle sample-queries-button" data-toggle="dropdown" role="button" aria-expanded="false">Sample Queries <span class="caret"></span></label>
                 <ul class="dropdown-menu scrollable-menu" role="menu" id="samples" aria-labelledby="dropdownMenu">
