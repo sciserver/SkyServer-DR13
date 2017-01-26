@@ -343,7 +343,8 @@ function skyQueryConnect(url, authToken, method, caller, senddata) {
             }
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
-            alert("Error when connecting with SkyQuery:\n\n" + errorThrown);
+            //alert("Error when connecting with SkyQuery:\n\n" + errorThrown);
+            console.log("Error when connecting with SkyQuery:\n" + errorThrown + "\n" + textStatus);
         }
     });
 }
