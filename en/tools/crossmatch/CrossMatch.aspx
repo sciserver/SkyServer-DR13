@@ -125,13 +125,13 @@ AND g.ra BETWEEN 0 AND 5 AND g.dec BETWEEN 0 AND 5 </textarea>
 
         <div class="col-sm-5">
 
-        <h3 align="center">Browse Catalogs</h3>
+        <h3 align="center">Browse Catalogs:</h3>
 
           <label></label>
           <div class="mylist-group schema-browser" id="ListDataSets"></div>
-          <h4 align="center">Tables:</h4>
+          <h4 align="center">Catalog Tables:</h4>
           <div class="mylist-group schema-browser" id="ListTables"></div>
-          <h4 align="center">Columns:</h4>
+          <h4 align="center">Table Columns:</h4>
           <div class="mylist-group schema-browser" id="ListColumns"></div>
         </div>
 
@@ -144,12 +144,18 @@ AND g.ra BETWEEN 0 AND 5 AND g.dec BETWEEN 0 AND 5 </textarea>
 
         <div class="col-sm-7">
 
-        <h3 align="center">My CrossMatch History</h3>  
-        <span><input id="quickList" type="checkbox" aria-label="..."/> Quick</span>
-        <button type="button" class="glyphicon glyphicon-refresh" id="refresh"></button>
-
+      <div class="row">  
+        <h3 align="center">My CrossMatch History</h3>
+        <div class="col-sm-4"> </div>
+        <div class="col-sm-4">
+            <span align="center"><input id="quickList" type="checkbox" aria-label="..."/> Show Quick Queries</span>
+            <button align="center" type="button" class="glyphicon glyphicon-refresh" id="refresh"></button>
+        </div>
+        <div class="col-sm-4"> </div>
+        </div>
 
             <div class="table-responsive">
+                <br/>
 		        <table id="jobsTable" class="table-bordered hover order-column compact hidden7thColumn">
 			        <thead>
 				        <tr>
@@ -169,7 +175,7 @@ AND g.ra BETWEEN 0 AND 5 AND g.dec BETWEEN 0 AND 5 </textarea>
          </div>
         <div class="col-sm-5">
             <h3 align="center">Query</h3>  
-            <br/>
+            <br/><br/>
             <textarea class="form-control" id="crossMatchQuery" rows="19">dsedsd</textarea>
         </div>
     </div>

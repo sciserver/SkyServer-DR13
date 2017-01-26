@@ -3,13 +3,18 @@ var xAuth = "";
 var selectedQueue = "long";
 var sampleQueries = [
     "Select top 10 ra,dec from  SDSSDR7:PhotoObj",
-    "SELECT s.objid, s.ra, s.dec, g.objid, g.ra, g.dec, x.ra, x.dec \n" + 
-    "INTO twowayxmatch \n" +
-    "FROM XMATCH \n" +
-    "    (MUST EXIST IN SDSSDR7:PhotoObjAll AS s WITH(POINT(s.ra, s.dec), ERROR(0.1, 0.1, 0.1)), \n" +
-    "     MUST EXIST IN GALEX:PhotoObjAll AS g WITH(POINT(g.ra, g.dec), ERROR(0.2, 0.2, 0.2)), \n" +
-    "     LIMIT BAYESFACTOR TO 1e3) AS x"
-    ];
+"SELECT s.objid, s.ra, s.dec, g.objid, g.ra, g.dec, x.ra, x.dec \n" +
+"INTO twowayxmatch  \n" +
+"FROM XMATCH( \n" +
+"     MUST EXIST IN SDSSDR7:PhotoObjAll AS s  \n" +
+"          WITH(POINT(s.ra, s.dec), ERROR(0.1, 0.1, 0.1)),  \n" +
+"     MUST EXIST IN GALEX:PhotoObjAll AS g  \n" +
+"          WITH(POINT(g.ra, g.dec), ERROR(0.2, 0.2, 0.2)),  \n" +
+"     LIMIT BAYESFACTOR TO 1e3 \n" +
+") AS x \n" +
+"WHERE s.ra BETWEEN 0 AND 5 AND s.dec BETWEEN 0 AND 5  \n" +
+"AND g.ra BETWEEN 0 AND 5 AND g.dec BETWEEN 0 AND 5 " 
+];
 
 var crossMatchQuery = [];
 
@@ -215,7 +220,7 @@ function updateJobs(response) {
                 var link = skyqueryUrl + "Api/V1/Data.svc/" + dbtb[0] + "/" + dbtb[1] + "?token=" + xAuth;
                 var dnlink = "";
                 if (text2.output != undefined)
-                    dnlink = "<a href=" + link + "  download><span> " + "see" + "</span></a>";
+                    dnlink = "<a href=" + link + "  download><span> " + "get" + "</span></a>";
                 tablerow += "<td>" + dnlink + "</td>";
 
                 dateCreated = getDateString(text2.dateCreated == undefined ? "" : text2.dateCreated, true, false);
@@ -281,8 +286,10 @@ function getSqlQuery(queryIndex) {
     var table = $("#jobsTable").DataTable();
     table.rows('').deselect();
     table.row(queryIndex).select();
-    document.getElementById("crossMatchQuery").value = crossMatchQuery[queryIndex];
-
+    if (crossMatchQuery[queryIndex] != undefined)
+        document.getElementById("crossMatchQuery").value = crossMatchQuery[queryIndex];
+    else
+        document.getElementById("crossMatchQuery").value = "";
 }
 
 
