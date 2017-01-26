@@ -175,7 +175,7 @@ AND g.ra BETWEEN 0 AND 5 AND g.dec BETWEEN 0 AND 5 </textarea>
          </div>
         <div class="col-sm-5">
             <h3 align="center">Query</h3>  
-            <br/><br/>
+            <br/><br/><br/>
             <textarea class="form-control" id="crossMatchQuery" rows="19">dsedsd</textarea>
         </div>
     </div>
