@@ -187,60 +187,35 @@ function updateJobs(response) {
     var temp = $.parseJSON(JSON.stringify(response));
     //var mySelect = $('#bjobsList');
     //$('#bjobsList').empty();
-    var tablerow = "";
 
     var rows = [];
+    crossMatchQuery = [];
 
     $.each(temp, function (val, text) {       
         $.each(text, function (val1, text1) {            
             tablerow = "<tr>";
             $.each(text1, function (val2, text2) {
-                //$.each(text2, function (val3, text3) {                
-                //    if (val3 != "query" && val3 != "name" && val3 != "comments" && val3 != "error") {
-                //        var cls = "label label-default";
-                //        if (val3 == "status") cls = getLabelCls(text3);
-                //        tablerow += "<td><span class=\""+cls+"\">" + text3 + "</span></td>";
-                //        //console.log(cls);//(val2 + "::" + val3 + "::" + text3);
-                //    }                    
-                //});
                 var cls = "label label-default";
-                //tablerow += "<td><span class=\""+cls+"\">" + text2.canCancel + "</span></td>";
-                tablerow += "<td><span class=\"" + cls + "\">" + text2.dateCreated + "</span></td>";
-                tablerow += "<td><span class=\"" + cls + "\">" + text2.dateStarted + "</span></td>";
-                tablerow += "<td><span class=\"" + cls + "\">" + text2.dateFinished + "</span></td>";
-                //tablerow += "<td><span class=\""+cls+"\">" +"<a tabindex=\"-1\" href=\"#\" onclick=\"updateJobDetails('" + text2.guid + "')\">" + text2.guid + "</a></span></td>";
-                
-                tablerow += "<td><span  class=\"" + cls + "\">" + text2.queue + "</span></td>";
                 var status = "<td><span class=\"" + getLabelCls(text2.status) + "\">" + text2.status + "</span></td>";
-                tablerow += "<td><span class=\"" + getLabelCls(text2.status) + "\">" + text2.status + "</span></td>";
                 var dbtb = "";
-                //if (text2.output.indexOf(":") >= 0)
                 if (typeof text2.output != 'undefined')
                      dbtb = text2.output.split(":");
                 var link = skyqueryUrl + "Api/V1/Data.svc/" + dbtb[0] + "/" + dbtb[1] + "?token=" + xAuth;
                 var dnlink = "";
                 if (text2.output != undefined)
                     dnlink = "<a href=" + link + "  download><span> " + "get" + "</span></a>";
-                tablerow += "<td>" + dnlink + "</td>";
 
                 dateCreated = getDateString(text2.dateCreated == undefined ? "" : text2.dateCreated, true, false);
                 dateStarted = getDateString(text2.dateStarted == undefined ? "" : text2.dateStarted, true, false);
                 dateFinished = getDateString(text2.dateFinished == undefined ? "" : text2.dateFinished, true, false);
                 query = text2.query == undefined ? "" : text2.query
-
-                //console.log(text2.dateFinished);
-
+                queue = text2.queue == undefined ? "" : text2.queue
 
 
-
-                rows.push({
-                    0: dateCreated, 1: dateStarted, 2: dateFinished, 3: text2.queue, 4: status, 5: dnlink, 6: text2.query
-                });
-
-                crossMatchQuery.push(text2.query);
+                rows.push({0: dateCreated, 1: dateStarted, 2: dateFinished, 3: queue, 4: status, 5: dnlink, 6: query});
+                crossMatchQuery.push(query);
 
             });
-            tablerow += "</tr>";
             //mySelect.append(tablerow);
 
 
@@ -264,7 +239,7 @@ function updateJobs(response) {
                     "sLengthMenu": "_MENU_ rows per page"
                 },
                 "paging": true,
-                "order": [[0, 'desc']],//"order": [[1,'asc']],//sorts the columns "order": []
+                "order": false, //[[0, 'desc']],//"order": [[1,'asc']],//sorts the columns "order": []
                 "rowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                     // Row click
                     $(nRow).on('click', function () {
