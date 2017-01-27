@@ -39,45 +39,10 @@
 
 	<div id="public">
 
-        <div class="migrationAlert">
-
-            <h2>Welcome to the new SkyServer!</h2>
-
-            <p><strong>NEW:</strong> <a href="http://www.sciserver.org/support/updates/" target="_blank">SciServer 
-                <em>Altair</em> Update 2&nbsp;<img alt=" (new window)" src="images/new_window_cyan.png"></a> 
-                 is available! The update includes the first release of 
-                <a href="http://compute.sciserver.org" target="_blank">SciServer 
-                 Compute&nbsp;<img alt=" (new window)" src="images/new_window_cyan.png"></a>, a new resource 
-                that lets you run sophisticated analyses on big data using Python or R scripts 
-                through Jupyter notebooks.</p>
-
-            <p>We are proud to announce that SkyServer now connects to the new 
-                <a href="http://www.sciserver.org" target="_blank">SciServer&nbsp;<img alt=" (new window)" src="images/new_window_cyan.png"></a> 
-                science framework! If you have a login through SciServer, you can log in using the control on the top right. 
-                Logging in allows you to connect seamlessly with the updated CasJobs and the brand-new SciDrive datafile 
-                management tool.
-            </p>
-
-            <p>
-                 <a href="<%=ConfigurationManager.AppSettings["Keystone.Login"]+ConfigurationManager.AppSettings["skyserverBase"]+ HttpUtility.UrlEncode(Request.Url.AbsolutePath) %>">
-                     Log in</a> or 
-                <a href="<%=ConfigurationManager.AppSettings["Keystone.Portal"]+"Account/Register"+ConfigurationManager.AppSettings["skyserverBase"]+ HttpUtility.UrlEncode(Request.Url.AbsolutePath) %>">
-                register</a> on the <a href="<%=ConfigurationManager.AppSettings["Keystone.Portal"]%>Account/Register" target="_blank">SciServer 
-                Login Portal<img alt=" (new window)" src="images/new_window_cyan.png"></a>.
-            </p>
-                
-                <p>These new features come from the first release of the SciServer framework, which we call 
-                    <em class="headerAlert">SciServer Altair</em>. 
-                    For more information the new features of SciServer Altair, please see our 
-                    <a href="http://www.sciserver.org/building-blocks/updates/" target="_blank">New Features
-                        <img alt=" (new window)" src="images/new_window_cyan.png"></a> section on the SciServer website.
-                </p>
-
-        </div>
+        <!-- #include file="motd.inc" -->
 
 		<table border="0" cellpadding="0" cellspacing="2" width="668">
 			<tr><td colspan=5 class="midbodytext" style="color=#ffff00"><b>
-			<!-- #include file="motd.inc" -->
 			</b></td></tr>
 			<tr>
 				<td colspan="5" class="smallbodytext">&nbsp;</td>
