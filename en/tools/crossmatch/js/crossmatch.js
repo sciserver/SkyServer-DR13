@@ -352,6 +352,7 @@ function getDateString(dateString, isForUSerDisplay, doAddTimeZone) {
 
     try {
         if (dateString != "" & dateString != null) {
+            dateString = dateString.replace("T", " ");
             var date = new Date(dateString);
 
             var month = String(date.getMonth() + 1);
