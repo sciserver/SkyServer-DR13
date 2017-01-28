@@ -60,6 +60,8 @@ function callServices() {
     //update tables dropdown menu on selecting database
     $(document).on('click', '#ListDataSets a', function () {
         //console.log("Selected Option:" + $(this).text());
+        $('#ListDataSets a').removeClass('active');
+        $(this).addClass('active');
         tablesUrl = datasetsUrl + "/" + $(this).text() + "/tables";
         skyQueryConnect(tablesUrl, xAuth, "GET", "tablelist");
         var listColumns = $('#ListColumns');
@@ -69,6 +71,8 @@ function callServices() {
     //update columns dropdown menu on table select
     $(document).on('click', '#ListTables a', function () {
         //console.log("Selected table Option:" + $(this).text());
+        $('#ListTables a').removeClass('active');
+        $(this).addClass('active');
         var columnsurl = tablesUrl + "/" + $(this).text() + "/columns";
         skyQueryConnect(columnsurl, xAuth, "GET", "columnlist");
     });

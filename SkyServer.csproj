@@ -2128,7 +2128,6 @@
     <Content Include="images\tick.jpg" />
     <Content Include="images\word_icon.gif" />
     <Content Include="en\motd.inc" />
-    <Content Include="motd.inc" />
     <Content Include="robots.txt" />
     <Content Include="scroll.js" />
     <Content Include="skyserver.css" />
