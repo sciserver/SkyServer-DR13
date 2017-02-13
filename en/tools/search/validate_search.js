@@ -281,8 +281,8 @@ function validate_onsubmit(SearchFormID) {
             submit = submit && !validate(document.getElementById('decMin'), 'dec', '', -90, 90, 0);
             submit = submit && !validate(document.getElementById('raMax'), 'raMax', '', 0, 360, 1);
             submit = submit && !validate(document.getElementById('decMax'), 'decMax', '', -90, 90, 0);
-            if (document.getElementById('raMin').value >= document.getElementById('raMax').value) { alert("Error: min RA should be smaller than max RA"); submit = false }
-            if (document.getElementById('decMin').value >= document.getElementById('decMax').value) { alert("Error: min Dec should be smaller than max Dec"); submit = false }
+            if (Number(document.getElementById('raMin').value)  >= Number(document.getElementById('raMax').value) ) { alert("Error: min RA should be smaller than max RA"); submit = false }
+            if (Number(document.getElementById('decMin').value) >= Number(document.getElementById('decMax').value)) { alert("Error: min Dec should be smaller than max Dec"); submit = false }
         }
         if (document.getElementById('positionType_proximity').checked == true) {
             submit = submit && !validate(document.getElementById('proximity_radius'), 'proximity radius', '', 0, 10, 1);
