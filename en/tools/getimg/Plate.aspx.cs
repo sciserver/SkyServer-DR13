@@ -86,12 +86,22 @@ namespace SkyServer.Tools.GetImg
 
         protected void writePlateHeader(SqlConnection oConn)
         {
-            if (plateid.HasValue)
+            if (plateid.HasValue || apogeeplateid != null)
                 using (SqlCommand oCmd = oConn.CreateCommand())
                 {
-                    string cmd = "select plate,mjd,ra,dec from plateX where plateid = @plateID";
-                    oCmd.CommandText = cmd;
-                    oCmd.Parameters.AddWithValue("@plateid", plateid);
+                    if (apogeeplateid == null)
+                    {
+                        string cmd = "select plate,mjd,ra,dec from plateX where plateid = @plateID";
+                        oCmd.CommandText = cmd;
+                        oCmd.Parameters.AddWithValue("@plateid", plateid);
+                    }
+                    else
+                    {
+                        string cmd = "select plate,mjd,racen,deccen from apogeePlate where plate_visit_id = @apogeeplateid";
+                        oCmd.CommandText = cmd;
+                        oCmd.Parameters.AddWithValue("@apogeeplateid", apogeeplateid);
+                    }
+
                     using (SqlDataReader reader = oCmd.ExecuteReader())
                     {
                         while (reader.Read())
