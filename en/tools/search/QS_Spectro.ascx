@@ -186,9 +186,130 @@
                 }
             } // using SqlDataReader
         } // using SqlCommand
+      %>
+        </tr>
+
+  <tr>
+	<td class='q' align=center width=75> 
+		<a href=<%=userguide%>#Sectarget 
+		onmouseover="return escape('Apply constraints based upon BOSS target selection information bits at plate');">
+		BOSS Flags<br>(BossTarget1)</a>
+	</td>
+<%  
+      using (SqlCommand oCmd = oConn.CreateCommand())
+        {
+            string cmd = "SELECT [name] FROM DataConstants WHERE field='BossTarget1' ORDER BY value";
+            oCmd.CommandText = cmd;
+            using (SqlDataReader reader = oCmd.ExecuteReader())
+            {
+                 if (!reader.HasRows)
+                {
+      %>
+                   <td colspan=4><b>No BossTarget1 flags found in DataConstants table</b></td>
+      <%
+                }
+                else
+                {
+       %>
+                    <td class='q' colspan=2><a href="<%=url %>/help/docs/QS_UserGuide.aspx#SecTarget" onmouseover="return escape('The bit-wise OR of all these bits must be greater than 0.');"><strong>At least one of these bits ON</strong></a><br>
+                    <SELECT name='bossFlagsOnList' multiple='multiple+' size=5>
+                    <OPTION value="ignore" selected>ignore</OPTION>
+        <%
+                    List<string> values = new List<string>();
+                    while (reader.Read())
+                    {
+                        values.Add(reader.GetValue(0).ToString());
+                    }
+
+                    foreach (string v in values)
+                    {
+          %>
+                        <OPTION value='<%=v %>'><%=v %>
+          <%
+                    }
+          %>
+                    </OPTION></SELECT>
+
+                    </td><td class='q' colspan=2><a href="<%=url%>/help/docs/QS_UserGuide.aspx#SecTarget" onmouseover="return escape('The bit-wise AND of all these bits must be equal to 0.');"><strong>All of these bits OFF</strong></a><br>
+
+                    <SELECT name="bossFlagsOffList" multiple="multiple+" size="5">
+                    <OPTION value="ignore" selected>ignore</OPTION>
+            <%        foreach (string v in values)
+                    {
+            %>           <OPTION value="<%=v %>"><%=v %>
+            <%        }
+             %>      </OPTION></SELECT></td>
+      <%
+                }
+            } // using SqlDataReader
+        } // using SqlCommand
+      %>
+        </tr>
+
+  <tr>
+	<td class='q' align=center width=75> 
+		<a href=<%=userguide%>#Sectarget 
+		onmouseover="return escape('Apply constraints based upon EBOSS target selection information bits at plate');">
+		EBOSS Flags<br>(EbossTarget0)</a>
+	</td>
+<%  
+      using (SqlCommand oCmd = oConn.CreateCommand())
+        {
+            string cmd = "SELECT [name] FROM DataConstants WHERE field='EbossTarget0' ORDER BY value";
+            oCmd.CommandText = cmd;
+            using (SqlDataReader reader = oCmd.ExecuteReader())
+            {
+                 if (!reader.HasRows)
+                {
+      %>
+                   <td colspan=4><b>No EbossTarget1 flags found in DataConstants table</b></td>
+      <%
+                }
+                else
+                {
+       %>
+                    <td class='q' colspan=2><a href="<%=url %>/help/docs/QS_UserGuide.aspx#SecTarget" onmouseover="return escape('The bit-wise OR of all these bits must be greater than 0.');"><strong>At least one of these bits ON</strong></a><br>
+                    <SELECT name='ebossFlagsOnList' multiple='multiple+' size=5>
+                    <OPTION value="ignore" selected>ignore</OPTION>
+        <%
+                    List<string> values = new List<string>();
+                    while (reader.Read())
+                    {
+                        values.Add(reader.GetValue(0).ToString());
+                    }
+
+                    foreach (string v in values)
+                    {
+          %>
+                        <OPTION value='<%=v %>'><%=v %>
+          <%
+                    }
+          %>
+                    </OPTION></SELECT>
+
+                    </td><td class='q' colspan=2><a href="<%=url%>/help/docs/QS_UserGuide.aspx#SecTarget" onmouseover="return escape('The bit-wise AND of all these bits must be equal to 0.');"><strong>All of these bits OFF</strong></a><br>
+
+                    <SELECT name="ebossFlagsOffList" multiple="multiple+" size="5">
+                    <OPTION value="ignore" selected>ignore</OPTION>
+            <%        foreach (string v in values)
+                    {
+            %>           <OPTION value="<%=v %>"><%=v %>
+            <%        }
+             %>      </OPTION></SELECT></td>
+      <%
+                }
+            } // using SqlDataReader
+        } // using SqlCommand
+      %>
+        </tr>
+        
+<%        
     } // using SqlConnection
 %>
-  </tr>
+  
+
+
+
   </table>
 
 <table width="100%">
