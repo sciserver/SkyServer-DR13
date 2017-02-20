@@ -46,8 +46,8 @@
 
 	<div id="public">
 
-        <!--#include file="motd.inc"-->
-
+        <%=MessageOfTheDay%>
+        
 		<table border="0" cellpadding="0" cellspacing="2" width="668">
 			<tr><td colspan=5 class="midbodytext" style="color=#ffff00"><b>
 			</b></td></tr>
