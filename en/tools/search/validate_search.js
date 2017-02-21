@@ -365,10 +365,10 @@ if(str.length == 0){
 	}
 	else error = false;
 } else {
-	if( name == 'ra' ) {
+    if (name == 'ra' || name == 'raMin' || name == 'raMax' || name == 'Lcenter') {
 	   str = parseRA( str );
 	}
-	if( name == 'dec' ) {
+    if (name == 'dec' || name == 'decMin' || name == 'decMax' || name == 'Bcenter') {
 	   str = parseDec( str );
 	}
 	// check if user has entered a valid number
