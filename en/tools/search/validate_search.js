@@ -365,13 +365,13 @@ if(str.length == 0){
 	}
 	else error = false;
 } else {
-	if( name == 'ra' ) {
-	   str = parseRA( str );
-	}
-	if( name == 'dec' ) {
-	   str = parseDec( str );
-	}
-	// check if user has entered a valid number
+    if (name == 'ra' || name == 'raMin' || name == 'raMax' || name == 'Lcenter') {
+        str = parseRA(str);
+    }
+    if (name == 'dec' || name == 'decMin' || name == 'decMax' || name == 'Bcenter') {
+        str = parseDec(str);
+    }
+    // check if user has entered a valid number
 //	if (/^[-+]?\d+(\.\d+)?$/.test(str)) {   old code didn't accept values of form .5
 	if ((/^[-+]?\d+(\.\d+)?$/.test(str)) | (/^[-+]?(\.\d+)?$/.test(str)) ) { 
 

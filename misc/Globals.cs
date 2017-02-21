@@ -73,7 +73,12 @@ namespace SkyServer
         private string casjobsRESTapi;
         private string contentDataset;
         //private string skyServerWSsql;
+        private string motd;
 
+        public string MessageOfTheDay
+        {
+            get { return motd; }
+        }
         public string username
         {
             get;
@@ -559,6 +564,7 @@ namespace SkyServer
             this.timeoutSkyserverWS = int.Parse(appSettings["TimeoutSkyserverWS"] ?? "100000");// time in milliseconds
             this.skyserverRESTservice = appSettings["restwebservice"];
             this.casjobsRESTapi = appSettings["casjobsRESTapi"];
+            this.motd = appSettings["MessageOfTheDayPath"];
 
             if (releaseNumber == 8)
             {
