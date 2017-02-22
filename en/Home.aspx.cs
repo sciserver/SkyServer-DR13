@@ -22,7 +22,14 @@ namespace SkyServer
 
             try { MessageOfTheDay = System.IO.File.ReadAllText(globals.MessageOfTheDay); }
             catch {
-                MessageOfTheDay = globals.MessageOfTheDay;
+                try
+                {
+                    MessageOfTheDay = System.IO.File.ReadAllText(Server.MapPath(globals.MessageOfTheDay));// path relative to project
+                }
+                catch
+                {
+                    MessageOfTheDay = globals.MessageOfTheDay;
+                }
             }
 
             if (globals.SiteName != globals.Release)
