@@ -243,7 +243,7 @@
       <P>1 + z = d(0) / d(z) . </P>
       <P>We interpret this formula as 
       follows: at the time corresponding to redshift z =          
-           1,  all galaxies were 10% closer 
+           0.1,  all galaxies were 10% closer 
       together. We can also say that the universe has stretched by the same 
       factor as have the wavelengths. A measured value of z =   0.2 
       corresponds to a time when galaxies were 20% closer together than 
