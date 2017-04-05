@@ -60,7 +60,7 @@ If you select "around: " for the region, be sure to enter an ra, dec, and radius
 <h3>Check SDSS Footprint</h3>
 
 <p>This button will allow you to check whether the region you chose has been seen by the SDSS. After you have entered your 
-region, click the button. A new window will open telling you whether or not this region is part of the SDSS.</p>
+region, click the button. A new window will open telling you whether or not this region is part of the SDSS. The maximum allowed radius is 60 arcminutes.</p>
 
 <a name="mags"></a>
 <h3>Magnitudes and Colors</h3>

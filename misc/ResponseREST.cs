@@ -226,8 +226,13 @@ namespace SkyServer.Tools.Search
                 content.Headers.Add("X-Auth-Token", token);
 
             if (!HttpContext.Current.Request.Cookies.AllKeys.Contains("ASP.NET_SessionId"))
-                HttpContext.Current.Request.Cookies.Add(new HttpCookie("ASP.NET_SessionId", System.Web.HttpContext.Current.Session.SessionID));
-            
+            {
+                try
+                {
+                    HttpContext.Current.Request.Cookies.Add(new HttpCookie("ASP.NET_SessionId", System.Web.HttpContext.Current.Session.SessionID));
+                }
+                catch { };
+            }
             //posting the request and getting the result back.
             respMessage = client.PostAsync(requestUri, content).Result;
 
@@ -286,7 +291,7 @@ namespace SkyServer.Tools.Search
                                      httpResponse.AddHeader("Content-Disposition", "attachment;filename=\"" + FileName + ".fits\"");
                                  break;
                 case "mydb"   :
-                case "html"   :  httpResponse.ContentType = "";
+                case "html"   :  httpResponse.ContentType = "text/html";
                                  break;
                 default       :  httpResponse.ContentType = "text/plain";
                                  if (SaveResponseToFile)
@@ -496,8 +501,13 @@ namespace SkyServer.Tools.Search
                     req.Headers.Add("X-Auth-Token", token);
 
                 if (!HttpContext.Current.Request.Cookies.AllKeys.Contains("ASP.NET_SessionId"))
-                    HttpContext.Current.Request.Cookies.Add(new HttpCookie("ASP.NET_SessionId", System.Web.HttpContext.Current.Session.SessionID));
-
+                {
+                    try
+                    {
+                        HttpContext.Current.Request.Cookies.Add(new HttpCookie("ASP.NET_SessionId", System.Web.HttpContext.Current.Session.SessionID));
+                    }
+                    catch { };
+                }
                 req.Headers.Add(ClientIpHeaderName, GetClientIP());
 
                 string Referrer = HttpContext.Current.Request.UrlReferrer != null ? HttpContext.Current.Request.UrlReferrer.ToString() : HttpContext.Current.Request.Url.ToString();

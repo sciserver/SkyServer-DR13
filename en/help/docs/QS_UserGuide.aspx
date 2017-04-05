@@ -40,6 +40,8 @@ database for objects in the <%=globals.Release.ToLower()%> imaging (spectroscopi
     <li> <a href="#SpectralClassification"> Spectral Classification </a> </li>
     <li> <a href="#Primtarget"> Primtarget </a> </li>
     <li> <a href="#Sectarget"> Sectarget </a> </li>
+    <li> <a href="#BossTarget"> BossTarget </a> </li>
+    <li> <a href="#EbossTarget"> EbossTarget </a> </li>
     <li> <a href="#ImagingConstraints"> Imaging Constraints </a> </li>
     <li> <a href="#SkyVersion"> Sky Version </a> </li>
     <li> <a href="#MagnitudeType"> Magnitude Type </a> </li>
@@ -306,6 +308,42 @@ then the <u>bit-wise AND</u> of all those bits is computed and it must be <u>equ
             The bits are defined as:
 <%
     showEnumQS(oConn, "SecTarget");
+%>
+
+        <hr>
+        <p>
+            <a name= "BossTarget">
+        <h3>
+            BossTarget
+        </h3>
+        </a>
+The boss_target1 field is a bit mask specifying which BOSS target categories the object was selected in.  If you select 
+one or more bits in the <b>At least one of these bits ON</b> menu, then the <u>bit-wise OR</u> of each of those bits is 
+computed and it must be <u>greater than 0</u>.  If you select one or more of the bits in the 
+            <b>All of these bits OFF</b> menu, 
+then the <u>bit-wise AND</u> of all those bits is computed and it must be <u>equal to 0</u>.
+        <p>
+            The bits are defined as:
+<%
+      showEnumQS(oConn, "BossTarget1");
+%>
+
+        <hr>
+        <p>
+            <a name= "EbossTarget">
+        <h3>
+           EbossTarget
+        </h3>
+        </a>
+The eboss_target0 field is a bit mask specifying which EBOSS target categories the object was selected in.  If you select 
+one or more bits in the <b>At least one of these bits ON</b> menu, then the <u>bit-wise OR</u> of each of those bits is 
+computed and it must be <u>greater than 0</u>.  If you select one or more of the bits in the 
+            <b>All of these bits OFF</b> menu, 
+then the <u>bit-wise AND</u> of all those bits is computed and it must be <u>equal to 0</u>.
+        <p>
+            The bits are defined as:
+<%
+      showEnumQS(oConn, "EbossTarget0");
 %>
 
 

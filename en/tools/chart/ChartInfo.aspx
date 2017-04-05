@@ -233,7 +233,7 @@
 						<p>
 							<samp><font color="blue">&lt;IMG SRC="<%=chartUrl%>
 									<br>
-									&nbsp;&nbsp;/getjpeg.aspx?ra=<%= globals.VisualRA%>&amp;dec=<%= globals.VisualDec%>&amp;scale=<%= globals.VisualScale%> 
+									&nbsp;&nbsp;/getjpeg?ra=<%= globals.VisualRA%>&amp;dec=<%= globals.VisualDec%>&amp;scale=<%= globals.VisualScale%> 
 									&nbsp;&nbsp;&amp;width=400&amp;height=400&amp;opt=GST&amp;query=SR(10,20)"&gt;</font></samp>
 							<br>
 						</p>

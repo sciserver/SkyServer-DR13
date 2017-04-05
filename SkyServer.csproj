@@ -469,6 +469,7 @@
     <Content Include="en\images\sciserverlogo.png" />
     <Content Include="en\images\sciserver_icon_bkgd_blk_150px.png" />
     <Content Include="en\images\sciserver_logo_inverted.png" />
+    <Content Include="en\images\sciserver_logo_inverted_vertical.png" />
     <Content Include="en\images\sciserver_logo_usermsg.png" />
     <Content Include="en\images\sciserverlogo.png" />
     <Content Include="en\images\sciserver_icon_bkgd_blue_64px.png" />

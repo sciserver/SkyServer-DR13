@@ -110,7 +110,7 @@ namespace SkyServer.Tools.Explore
                     dmsDec = Functions.dmsPad(dec ?? 0);
                 dmsDec = dmsDec.Replace(" ", "+");
 
-            hrefs.SIMBAD = "http://simbad.u-strasbg.fr/sim-id.pl?protocol=html&Ident=" + hmsRA + "+" + dmsDec + "&NbIdent=1"
+                hrefs.SIMBAD = "http://simbad.u-strasbg.fr/simbad/sim-coo?Coord=" + hmsRA + "+" + dmsDec + "&NbIdent=1"
                                     + "&Radius=1.0&Radius.unit=arcmin&CooFrame=FK5&CooEpoch=2000&CooEqui=2000"
                                     + "&output.max=all&o.catall=on&output.mesdisp=N&Bibyear1=1983&Bibyear2=2005"
                                     + "&Frame1=FK5&Frame2=FK4&Frame3=G&Equi1=2000.0&Equi2=1950.0&Equi3=2000.0"

@@ -27,7 +27,7 @@
                         <td align="center" class="h" colspan="2">camcol</td>
                         <td align="center" class="h" colspan="2">field</td>
                         <td align="center" class="h" colspan="2">obj</td>
-                        <td align="center" class="h" colspan="2">SDSS Object ID</td>
+                        <td align="center" class="h" colspan="2">SDSS ObjID</td>
                     </tr>
                     <tr>
                         <td class="t" align="center" colspan="2"><b><%=otype%></b></td>

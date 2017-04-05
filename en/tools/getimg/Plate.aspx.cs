@@ -86,12 +86,22 @@ namespace SkyServer.Tools.GetImg
 
         protected void writePlateHeader(SqlConnection oConn)
         {
-            if (plateid.HasValue)
+            if (plateid.HasValue || apogeeplateid != null)
                 using (SqlCommand oCmd = oConn.CreateCommand())
                 {
-                    string cmd = "select plate,mjd,ra,dec from plateX where plateid = @plateID";
-                    oCmd.CommandText = cmd;
-                    oCmd.Parameters.AddWithValue("@plateid", plateid);
+                    if (apogeeplateid == null)
+                    {
+                        string cmd = "select plate,mjd,ra,dec from plateX where plateid = @plateID";
+                        oCmd.CommandText = cmd;
+                        oCmd.Parameters.AddWithValue("@plateid", plateid);
+                    }
+                    else
+                    {
+                        string cmd = "select plate,mjd,racen,deccen from apogeePlate where plate_visit_id = @apogeeplateid";
+                        oCmd.CommandText = cmd;
+                        oCmd.Parameters.AddWithValue("@apogeeplateid", apogeeplateid);
+                    }
+
                     using (SqlDataReader reader = oCmd.ExecuteReader())
                     {
                         while (reader.Read())
@@ -133,7 +143,12 @@ namespace SkyServer.Tools.GetImg
                     string URIparams = "?plateId=" + plateid.ToString() + "&query=FiberList&TaskName=Skyserver.GetImg.Plate";
                     DataSet ds = rs.GetObjectInfoFromWebService(globals.ExploreWS, URIparams);
                     //DataSet ds = runQuery.RunDatabaseSearch(cmd, globals.ContentDataset, ClientIP, "Skyserver.getimg.Plate.spGetFiberList");
-                    using (DataTableReader reader = ds.Tables[0].CreateDataReader())
+
+                    DataView dv = ds.Tables[0].DefaultView;
+                    dv.Sort = "fiberId asc";
+                    DataTable sortedDT = dv.ToTable();
+
+                    using (DataTableReader reader = sortedDT.CreateDataReader())
                     {
                         while (reader.Read())
                         {

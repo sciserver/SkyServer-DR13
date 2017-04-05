@@ -13,12 +13,24 @@ namespace SkyServer
         protected int logoleftpos;
         protected string siteTitle;
         protected string version;
-
+        public string MessageOfTheDay = "";//
         protected Globals globals;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             globals = (Globals)Application[Globals.PROPERTY_NAME];
+
+            try { MessageOfTheDay = System.IO.File.ReadAllText(globals.MessageOfTheDay); }
+            catch {
+                try
+                {
+                    MessageOfTheDay = System.IO.File.ReadAllText(Server.MapPath(globals.MessageOfTheDay));// path relative to project
+                }
+                catch
+                {
+                    MessageOfTheDay = globals.MessageOfTheDay;
+                }
+            }
 
             if (globals.SiteName != globals.Release)
                 siteTitle = globals.Release + " " + globals.SiteName;
