@@ -68,6 +68,7 @@ IMG {
       padding:0px;
       margin:0px;
   }
+
   p.content 
   {
       margin-left:10px;
@@ -302,4 +303,19 @@ IMG {
     border: solid 1px black;
     border-radius: 4px;
 }
+
+#poweredby
+{
+    z-index:9999 !important;
+    margin-left:0px;
+    text-align:center;
+    padding-top:10px;
+    padding-bottom:10px;
+}
+
+    #poweredby img {
+        width:72px;
+        height:87px;
+        margin-top:6px;
+    }
 

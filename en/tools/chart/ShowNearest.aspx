@@ -4,6 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    <link href="../../tools.css" rel="stylesheet" type="text/css" />
     <script src="naviClass.js"></script>
     <style>
 	    a       {font-family:sans-serif;font-weight:bold;color:#000000;font-size:9pt;}
@@ -111,10 +112,7 @@
         }
     }
 %>
-    <div id="poweredby" style="top:475px;z-index:9999 !important;position:absolute;margin-left:0px;text-align:center;">
-        <b>Powered by</b>
-        <img src="../../images/sciserver_logo_inverted_vertical.png" alt="SciServer" style="width:72px;height:87px;margin-top:6px;" align="middle" />
-    </div>
+
  <!--Iframe for shownearest test-->
 <iframe id="test" name='test' width ="0" height="0" scrolling="no"  src="blank.html"/>	
 </body>

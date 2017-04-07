@@ -315,6 +315,14 @@
     
     <%--<tr><td align=middle bgcolor="skyblue">Imaging options</td></tr>	    
 	<tr><td bgColor="lightblue" ONMOUSEOVER="this.T_TEMP='2000';this.T_WIDTH='140';return escape('Gets TwoMass Images')"><INPUT type="checkbox" onclick="setopt(this,'5')" name="2MASS" id="Checkbox2"> TwoMass</td></tr>--%>
+    <tr>
+        <td>
+            <div id="poweredby">
+                <b>Powered by</b><br />
+                <img src="../../images/sciserver_logo_inverted_vertical.png" alt="SciServer" align="middle" />
+            </div>
+        </td>
+    </tr>
 </table>
 </div>
 <input type="hidden" value="512"   name="size" id="size">
