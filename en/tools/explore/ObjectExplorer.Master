@@ -193,6 +193,15 @@
 	            <tr><td class="s" align="right" ><a href='<%=hrefs.ShowBook%>' title="View your saved notes, if any.">Show Notes</a></td></tr>
 	            <tr><td align="right"><hr width="90"/></td></tr>
 	            <tr><td><a class="med" href=# onclick="<%=hrefs.Print%>"> Print </a></td></tr>
+                <tr><td align="right"><hr width="90"/></td></tr>
+                <tr>
+                    <td>
+                        <div id="poweredby">
+                            <b>Powered by</b><br />
+                            <img src="../../images/sciserver_logo_inverted_vertical.png" alt="SciServer" align="middle" />
+                        </div>
+                    </td>
+                </tr>
             </table>
         </div>
      

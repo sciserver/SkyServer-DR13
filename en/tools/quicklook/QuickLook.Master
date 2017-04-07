@@ -344,7 +344,14 @@
 	    <tr><td align="right" class="s"><a class="quicklook" target="OMAIN" href='<%=hrefs.Tutorial%>' ONMOUSEOVER="this.T_WIDTH='140';return escape('View the Quick Look tutorial video.')">Tutorial</a></td></tr>		
 	    <tr><td align="right" class="s"><a class="quicklook" target="OMAIN" href='<%=hrefs.Examples%>' ONMOUSEOVER="this.T_WIDTH='140';return escape('See some more examples of what you can see in Quick Look.')">Examples</a></td></tr>		
 	    <tr><td align="right"><hr width="90"></td></tr>
-
+        <tr>
+            <td>
+                <div id="poweredby">
+                    <b>Powered by</b><br />
+                    <img src="../../images/sciserver_logo_inverted_vertical.png" alt="SciServer" align="middle" />
+                </div>
+            </td>
+        </tr>
       </table>
     </div>
     <div id="content">
