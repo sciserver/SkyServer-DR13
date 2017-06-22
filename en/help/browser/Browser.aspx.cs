@@ -529,7 +529,8 @@ namespace SkyServer.Help.Browser
 
         private void showTable(SqlConnection oConn, string name, HttpRequest Request, StringWriter Response, Globals globals)
         {
-            string cmd = "select * from dbo.fDocColumns('" + name + "')";
+     
+           string cmd = "select [enum], [name], [type], [length], [unit], [ucd], [description] from dbo.fDocColumns('" + name + "') ORDER BY [columnID]";
 
             using (SqlCommand oCmd = oConn.CreateCommand())
             {
