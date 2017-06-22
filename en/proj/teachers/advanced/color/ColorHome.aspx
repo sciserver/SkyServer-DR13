@@ -150,7 +150,7 @@ should <b>not</b> be done in the classroom for credit. It is designed to be a co
 open-ended and independent scientific investigation, and it should take many hours to 
 complete. You may wish to give extra credit for completing it. Invite students to discuss 
 their research questions and approaches with you. When students finish Exercise 13 on 
-their own, encourage them to <A href="mailto:raddick@pha.jhu.edu" >E-mail their 
+their own, encourage them to <A href="mailto:<%=ConfigurationManager.AppSettings["helpdesk"].ToString()%>" >E-mail their 
 results to us</A>. We will look at all the results we receive, and we will put 
 them best of them up on the project web site.</p>
 
@@ -167,7 +167,7 @@ exercises let students practice using the concepts introduced in the project.
 Explore exercises are designed to get students to explore SkyServer data to 
 discover concepts on their own. For answers to all Questions and Practice 
 exercises, and sample responses to all Explore exercises, 
-    email us at <a href="sciserver-helpdesk@lists.johnshopkins.edu">sciserver-helpdesk@lists.johnshopkins.edu</a>.
+    email us at <a href="mailto:<%=ConfigurationManager.AppSettings["helpdesk"].ToString()%>"> <%=ConfigurationManager.AppSettings["helpdesk"].ToString()%></a>.
     
 <!--    click <A href="#questions" 
   onclick="javascript:answers(1);">here</a>. To see the answers, you must have 

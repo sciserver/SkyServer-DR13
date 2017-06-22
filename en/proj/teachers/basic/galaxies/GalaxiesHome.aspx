@@ -109,7 +109,7 @@
       scientists work. Exercises are designed to get students to explore using 
       SkyServer data to solve problems. For sample solutions to all 
       questions and exercises, 
-          email us at <a href="sciserver-helpdesk@lists.johnshopkins.edu">sciserver-helpdesk@lists.johnshopkins.edu</a>.
+          email us at <a href="mailto:<%=ConfigurationManager.AppSettings["helpdesk"].ToString()%>"> <%=ConfigurationManager.AppSettings["helpdesk"].ToString()%></a>.
           <!--click <a onclick="window.open('<%=globals.UrlProjRegister%>/answers/getanswer.asp?id=12')" href="#questions">here</a>. 
       To see the answers, you must have the Adobe Acrobat PDF viewer installed 
       on your computer. Acrobat is available for free download at

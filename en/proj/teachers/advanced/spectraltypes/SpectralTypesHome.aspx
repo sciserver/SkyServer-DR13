@@ -106,7 +106,7 @@
 <p>Questions are designed to get students thinking about the way scientists work. Exercises 
 are designed to get students to explore SkyServer data to solve problems. 
 For answers to all questions, 
-    email us at <a href="sciserver-helpdesk@lists.johnshopkins.edu">sciserver-helpdesk@lists.johnshopkins.edu</a>.
+    email us at <a href="mailto:<%=ConfigurationManager.AppSettings["helpdesk"].ToString()%>"> <%=ConfigurationManager.AppSettings["helpdesk"].ToString()%></a>.
     
     <!--click <A href="#questions" 
   onclick="javascript:answers(8);">here</a>. To see the answers, you must have 

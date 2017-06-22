@@ -65,7 +65,7 @@ stars.</p>
 <h2>Sample Solutions</h2>
 
 <p>To get a copy of the sample solutions, email us at 
-    <a href="sciserver-helpdesk@lists.johnshopkins.edu">sciserver-helpdesk@lists.johnshopkins.edu</a>.
+    <a href="mailto:<%=ConfigurationManager.AppSettings["helpdesk"].ToString()%>"> <%=ConfigurationManager.AppSettings["helpdesk"].ToString()%></a>.
 
       </td>
     </tr>

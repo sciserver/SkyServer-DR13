@@ -161,7 +161,7 @@ diagrams to us</A> so we can put them up on the project web site.</p>
 <p>Questions are designed to get students thinking about the way scientists work. Exercises 
 are designed to get students to explore how the SkyServer data suggests that the universe 
 is expanding. For answers to all questions, 
-    email us at <a href="sciserver-helpdesk@lists.johnshopkins.edu">sciserver-helpdesk@lists.johnshopkins.edu</a>.
+    email us at <a href="mailto:<%=ConfigurationManager.AppSettings["helpdesk"].ToString()%>"> <%=ConfigurationManager.AppSettings["helpdesk"].ToString()%></a>.
     <!--click <A href="#" 
   onclick="javascript:answers(4);">here</a>. To see the answers, you must have 
 the Adobe Acrobat PDF viewer installed on your computer. Acrobat is available for 

@@ -70,7 +70,7 @@
 <p>Because each team goes on the Scavenger Hunt independently, each team's answers should be different. SkyServer has thousands of examples of each type of object, so this project has many valid answers. The sample solutions below are just one possible set of answers.</p>
 
 <p>To view SkyServer sample solutions,
-    email us at <a href="sciserver-helpdesk@lists.johnshopkins.edu">sciserver-helpdesk@lists.johnshopkins.edu</a>.
+    email us at <a href="mailto:<%=ConfigurationManager.AppSettings["helpdesk"].ToString()%>"> <%=ConfigurationManager.AppSettings["helpdesk"].ToString()%></a>.
     
      <!--you must be a <a href="#solutions" onclick="javascript:register('teachers')">registered SkyServer teacher</a>.</p>
 
