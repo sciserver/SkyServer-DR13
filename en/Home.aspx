@@ -272,7 +272,7 @@
 						</tr>
 -->
 						<tr height="20">
-							<td nowrap class="menulink"><a class="menulink" href="credits/">&nbsp;&nbsp;Credits</a></td>
+							<td nowrap class="menulink"><a class="menulink" href="<%=ConfigurationManager.AppSettings["creditsUrl"]%>">&nbsp;&nbsp;Credits&nbsp</a><img src="images/offsite.png" /></td>
 					    </tr>
 
 						<tr height="20">
