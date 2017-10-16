@@ -59,32 +59,32 @@
             </tr>
             <tr>
               <td width="46%">358</td>
-              <td width="54%"><a href="../../../get/specByPF.aspx?P=100990598277758976&F=504&submit1=Get+Spectrum" target="tools">
+              <td width="54%"><a href="../../../get/specByPF.ashx?P=403072197150664704&F=504&submit1=Get+Spectrum" target="tools">
               504</a></td>
             </tr>
             <tr>
               <td width="46%">350</td>
-              <td width="54%"><a href="../../../get/specByPF.aspx?P=98738253003227136&F=73&submit1=Get+Spectrum" target="tools">
+              <td width="54%"><a href="../../../get/specByPF.ashx?P=394064995765217280&F=73&submit1=Get+Spectrum" target="tools">
               73</a></td>
             </tr>
             <tr>
               <td width="46%">390</td>
-              <td width="54%"><a href="../../../get/specByPF.aspx?P=109998149719818240&F=537&submit1=Get+Spectrum" target="tools">
+              <td width="54%"><a href="../../../get/specByPF.ashx?P=439100994136074240&F=537&submit1=Get+Spectrum" target="tools">
               537</a></td>
             </tr>
             <tr>
               <td width="46%">309</td>
-              <td width="54%"><a href="../../../get/specByPF.aspx?P=87199080333180928&F=556&submit1=Get+Spectrum" target="tools">
+              <td width="54%"><a href="../../../get/specByPF.ashx?P=347903099165239296&F=556&submit1=Get+Spectrum" target="tools">
               556</a></td>
             </tr>
             <tr>
               <td width="46%">385</td>
-              <td width="54%"><a href="../../../get/specByPF.aspx?P=108590676052017152&F=492&submit1=Get+Spectrum" target="tools">
+              <td width="54%"><a href="../../../get/specByPF.ashx?P=433471494048212992&F=492&submit1=Get+Spectrum" target="tools">
               492</a></td>
             </tr>
             <tr>
               <td width="46%">286</td>
-              <td width="54%"><a href="../../../get/specByPF.aspx?P=80725177343672320&F=183&submit1=Get+Spectrum" target="tools">
+              <td width="54%"><a href="../../../get/specByPF.ashx?P=322007406894671872&F=183&submit1=Get+Spectrum" target="tools">
               183</a></td>
             </tr>
           </table>
