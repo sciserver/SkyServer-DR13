@@ -34,7 +34,7 @@ namespace SkyServer.Help
             gutter += "30.4,Projects,/help/docs/introduction.aspx#proj;";
 
             gutter += "10,FAQ," + globals.SdssUrl + "help/;";
-            gutter += "4,Glossary," + globals.SdssUrl + "glossary.php;";
+            gutter += "4,Glossary," + globals.SdssUrl + "help/glossary/;";
 
             gutter += "33,Cooking with Sloan,/help/cooking/;";
             gutter += "33.1,General,/help/cooking/general/;";
