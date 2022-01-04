@@ -46,10 +46,26 @@
 
 	<div id="public">
 
-        <%=MessageOfTheDay%>
-        
+        <div class="migrationAlert">
+
+            <p>Within the next few weeks, we will roll out a new collaborative science framework called 
+                <a href="<%=globals.SciServerLink%>" target="_blank">SciServer&nbsp;<img src="images/new_window_cyan.png" alt=" (new window)" /></a>. 
+                SciServer will integrate the current SkyServer and CasJobs systems, as well as add several new features. The main feature is 
+                a Single Sign-On system across all SciServer applications. SkyServer will still support anonymous 
+                access, but if you log in with your new SciServer account, you can save queries and results to 
+                your MyDB personal database in CasJobs. You can also seamlessly access other SciServer services.</p>
+                
+                <p>For more information 
+                on all upcoming new features, please see our 
+                    <a href="<%=globals.SciServerLink%>building-blocks/updates/" target="_blank">New Features
+                        <img src="images/new_window_cyan.png" alt=" (new window)" /></a> section on the SciServer website.</p>
+
+        </div>
+
+
 		<table border="0" cellpadding="0" cellspacing="2" width="668">
 			<tr><td colspan=5 class="midbodytext" style="color=#ffff00"><b>
+			<!-- motd.inc" -->
 			</b></td></tr>
 			<tr>
 				<td colspan="5" class="smallbodytext">&nbsp;</td>
@@ -98,9 +114,7 @@
 						<tr height="20">
 							<td nowrap class="menulink">
 							  <a class="menulink" href="tools/chart/navi.aspx">
-							    &nbsp;&nbsp;Navigate&nbsp;&nbsp;&nbsp;|
-<a class="menulink" href="tools/chart/chart.aspx">
-							    &nbsp;&nbsp;Finding Chart&nbsp;&nbsp;&nbsp;
+							    &nbsp;&nbsp;Navigate&nbsp;&nbsp;&nbsp;
 							  </a>
 							</td>
 						</tr>
@@ -108,10 +122,9 @@
 							<td nowrap class="menulink">
 							  <a class="menulink" href="tools/quicklook/quickobj.aspx">
 							    &nbsp;&nbsp;Quick Look</a>&nbsp;&nbsp;|
-							    <a class="menulink" href="tools/explore/obj.aspx">&nbsp;&nbsp;Explore&nbsp;&nbsp;&nbsp;</a>
+							    <a class="menulink" href="tools/explore/obj.aspx">&nbsp;Explore&nbsp;&nbsp;&nbsp;</a>
 							</td>
 						</tr>
-<!--
 						<tr height="20">
 							<td nowrap class="menulink">
 							  <a class="menulink" href="tools/chart/chart.aspx">
@@ -119,7 +132,6 @@
 							  </a>
 							</td>
 						</tr>
--->
 						<tr height="20">
 							<td nowrap class="menulink">
 							  <a class="menulink" href="tools/chart/list.aspx">
@@ -163,16 +175,8 @@
 							   <a class="menulink" href="tools/crossid/crossid.aspx">
 							     &nbsp;&nbsp;Cross-ID&nbsp;&nbsp;&nbsp;
 							   </a>
-                            </td>
-                        </tr>
-<% if( Boolean.Parse(ConfigurationManager.AppSettings["DoShowCrossMatch"].ToLower() )  ) {  %>						
-                        <tr height="20">
-							<td nowrap class="menulink">
-                                <a class="menulink" href="tools/crossmatch/crossmatch.aspx">
-							     &nbsp;&nbsp;SkyQuery CrossMatch <i><em><strong><sup>NEW!</sup></strong> </em></i>  </a>
 							 </td>
-						</tr>
-<% } %>
+						</tr>						
 						<tr height="20">
 							<td nowrap class="menulink">
 							   <a class="menulink" href="<%=globals.CasJobs%>">
@@ -202,14 +206,12 @@
 						<tr height="20">
 							<td nowrap class="menulink"><a class="menulink" href="proj/">&nbsp;&nbsp;Lesson Plans&nbsp;&nbsp;</a></td>
 						</tr>
-<!--
 						<tr height="20">
 							<td nowrap class="menulink"><a class="menulink" href="proj/basic/">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Middle School&nbsp;&nbsp;</a></td>
 						</tr>
 						<tr height="20">
 							<td nowrap class="menulink"><a class="menulink" href="proj/advanced/">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; High School&nbsp;&nbsp;</a></td>
 						</tr>
--->
 						<tr height="20">
 							<td nowrap class="menulink"><a class="menulink" href="proj/advanced/">&nbsp;&nbsp;College Lab Activities&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
 						</tr>
@@ -246,16 +248,13 @@
 							</td>
 						</tr>
 						<tr height="20">
-							<td nowrap class="menulink"><a class="menulink" target="offsite" href="<%=globals.SdssUrlBase%>">&nbsp;&nbsp;sdss.org &nbsp;</a><img src="images/new_window.png" />&nbsp;&nbsp;</td>
+							<td nowrap class="menulink"><a class="menulink" target="offsite" href="<%=globals.SdssUrlBase%>">&nbsp;&nbsp;sdss3.org &nbsp;</a><img src="images/new_window.png" />&nbsp;&nbsp;</td>
 						</tr>
 						<tr height="20">
 							<td nowrap class="menulink"><a class="menulink" target="offsite" href="<%=globals.SdssUrlBase%>dr<%=globals.ReleaseNumber%>/"> &nbsp;&nbsp;Data Release <%=globals.ReleaseNumber%> &nbsp;</a><img src="images/new_window.png" />&nbsp;&nbsp;</td>
 						</tr>
 						<tr height="20">
-							<td nowrap class="menulink"><a class="menulink" target="offsite"  href="<%=globals.SdssUrlBase%>/surveys/">&nbsp;&nbsp;Surveys&nbsp;</a><img src="images/new_window.png" />|<a class="menulink" target="offsite"  href="<%=globals.SdssUrlBase%>/instruments/">&nbsp;Instruments&nbsp;&nbsp;</a><img src="images/new_window.png" /></td>
-						</tr>												
-						<tr height="20">
-							<td nowrap class="menulink"><a class="menulink" href="<%=globals.SdssUrlBase%>science/">&nbsp;&nbsp;SDSS Science &nbsp;</a><img src="images/offsite.png" />&nbsp;&nbsp;</td>
+							<td nowrap class="menulink"><a class="menulink" href="<%=globals.SdssUrlBase%>science/">&nbsp;&nbsp;SDSS-III Science &nbsp;</a><img src="images/offsite.png" />&nbsp;&nbsp;</td>
 						</tr>
 						<tr height="20">
 							<td nowrap class="menulink"><a class="menulink" target="offsite" href="<%=globals.DasUrl %>">&nbsp;&nbsp;Science Archive Server&nbsp;</a><img src="images/new_window.png" />&nbsp;&nbsp;</td>
@@ -264,15 +263,16 @@
 							<td nowrap class="menulink"><a class="menulink" href="astro/">&nbsp;&nbsp;About Astronomy&nbsp;&nbsp;&nbsp;</a></td>
 						</tr>
 						<tr height="20">
+							<td nowrap class="menulink"><a class="menulink" href="sdss/">&nbsp;&nbsp;About the SDSS&nbsp;&nbsp;&nbsp;</a></td>
+						</tr>												
+						<tr height="20">
 							<td nowrap class="menulink"><a class="menulink" href="skyserver/">&nbsp;&nbsp;About SkyServer&nbsp;</a></td>
 						</tr>
-<!--
 						<tr height="20">
 							<td nowrap class="menulink"><a class="menulink" href="http://www.usvao.org/">&nbsp;&nbsp;VAO&nbsp;</a><img src="images/offsite.png" />&nbsp;&nbsp;</td>
 						</tr>
--->
 						<tr height="20">
-							<td nowrap class="menulink"><a class="menulink" href="<%=ConfigurationManager.AppSettings["creditsUrl"]%>">&nbsp;&nbsp;Credits&nbsp</a><img src="images/offsite.png" /></td>
+							<td nowrap class="menulink"><a class="menulink" href="credits/">&nbsp;&nbsp;Credits</a></td>
 					    </tr>
 
 						<tr height="20">
@@ -293,18 +293,12 @@
 							</td>
 						</tr>
 						<tr height="20">
-							<td nowrap class="menulink"><a class="menulink" target="offsite" href="<%=globals.SdssUrl%>help/glossary/">&nbsp;&nbsp;Glossary &nbsp;</a><img src="images/new_window.png" />	
+							<td nowrap class="menulink"><a class="menulink" target="offsite" href="<%=globals.SdssUrl%>help/glossary/">&nbsp;&nbsp;Glossary &nbsp;</a><img src="images/new_window.png" />						
 							&nbsp;&nbsp;</td>
 						</tr>
-						<tr height="20">
-							<td nowrap class="menulink"><a class="menulink" target="offsite" href="<%=globals.SdssUrl%>/algorithms">&nbsp;&nbsp;Algorithms &nbsp;</a><img src="images/new_window.png" />						
-							&nbsp;&nbsp;</td>
-						</tr>
-<!--
 						<tr height="20">
 							<td nowrap class="menulink"><a class="menulink" href="tools/started/">&nbsp;&nbsp;Tool User Guides&nbsp;&nbsp;&nbsp;</a></td>
 						</tr>
--->
 						<tr height="20">
 							<td nowrap class="menulink"><a class="menulink" href="help/cooking/">&nbsp;&nbsp;Cooking with Sloan&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
 						</tr>
@@ -320,11 +314,9 @@
 						<tr height="20">
 							<td nowrap class="menulink"><a class="menulink" href="help/docs/realquery.aspx">&nbsp;&nbsp;Sample SQL Queries&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
 						</tr>
-<!--
 						<tr height="20">
 							<td nowrap class="menulink"><a class="menulink" href="sdss/pubs/">&nbsp;&nbsp;Data Release Papers&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
 						</tr>
--->
 
 						<tr height="20">
 							<td nowrap>&nbsp;</td>
