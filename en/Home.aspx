@@ -46,7 +46,7 @@
 
 	<div id="public">
 
-        <div class="migrationAlert">
+        <!--<div class="migrationAlert">
 
             <p>Within the next few weeks, we will roll out a new collaborative science framework called 
                 <a href="<%=globals.SciServerLink%>" target="_blank">SciServer&nbsp;<img src="images/new_window_cyan.png" alt=" (new window)" /></a>. 
@@ -60,7 +60,7 @@
                     <a href="<%=globals.SciServerLink%>building-blocks/updates/" target="_blank">New Features
                         <img src="images/new_window_cyan.png" alt=" (new window)" /></a> section on the SciServer website.</p>
 
-        </div>
+        </div>-->
 
 
 		<table border="0" cellpadding="0" cellspacing="2" width="668">
