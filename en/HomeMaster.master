@@ -61,10 +61,10 @@
             <img alt="" src="<%= imgpath %>imageright2.png" />
         </td>
         <td width="400px">
-            <!--<asp:ContentPlaceHolder ID="Content1"  runat="server">
+            <asp:ContentPlaceHolder ID="Content1"  runat="server">
                     <%@ Register TagPrefix="login" TagName="loginParam" Src="Loginfloat.ascx"  %>
                     <login:loginParam ID="loginParams" runat="server"/>
-                </asp:ContentPlaceHolder>  -->
+                </asp:ContentPlaceHolder>  
 
             <%--<form id="form1" runat="server">        
                   
