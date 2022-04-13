@@ -36,13 +36,13 @@
         #temptext  {position: absolute; top: 650px; left: 245px; z-index:1;}
     </style>
 
-    <script type="text/javascript">var wsGetJpegurl = "<%= globals.WSGetJpegUrl %>";</script>
-    <script type="text/javascript">var wsGetImage64 = "<%= globals.WSGetImage64 %>";</script>
+    <script type="text/javascript">var wsGetJpegurl = "<%= globals.WSGetJpegUrl + "?TaskName=Skyserver.Chart.Navi&"%>";</script>
+    <script type="text/javascript">var wsGetImage64 = "<%= globals.WSGetImage64 + "?TaskName=Skyserver.Chart.Navi&"%>";</script>
     <script type="text/javascript">var release = "<%= globals.Release %>";</script>
     <!--For icon and header-->
     <script id="Script1" type="text/javascript" language='javascript' src='../STARTBall/STARTBall.js'></script>    
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.js"></script>    
-    <script type="text/javascript"  src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.js"></script>    
+    <script type="text/javascript"  src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
     
     <script type="text/javascript"  src="./javascript/control.js"></script>    
     <script type="text/javascript"  src="./javascript/hammer.js"></script>
@@ -82,7 +82,7 @@
     }
 
     
-    function callNameResolver() {
+    function callNameResolverOLD() {
          $.ajax({
              type: "GET",            
              url : "http://mast.stsci.edu/portal/Mashup/Mashup.asmx/invoke?",
@@ -101,7 +101,7 @@
                          dec = dec1;
                          $('#ra').val(ra1);
                          $('#dec').val(dec1);
-                         //resubmit();
+                         resubmit();
                      });
                  }
              },
@@ -111,7 +111,35 @@
                  }
              }
          });
-     }
+    }
+
+
+    function callNameResolver() {
+        var name = document.getElementById('objid').value;
+        $.ajax({
+            type: "GET",
+            url: "../Resolver.ashx?name=" + name,
+            success: function (response) {
+                document.getElementById('getImageId').disabled = false;
+                if (response.indexOf("Error:") == 0) {
+                    alert(response);
+                }
+                else {
+                    var s = response.split('\n');
+                    //$('#searchName').val(s[0].substring(6));
+                    $('#ra').val(s[1].substring(4));
+                    $('#dec').val(s[2].substring(5));
+                    resubmit();
+                }
+            },
+            error: function () {
+                alert("Error: Could not resolve name.");
+            }
+        });
+    }
+
+
+
 
     $(document).ready(function() {
         var br = $.browser;
@@ -148,24 +176,23 @@
 </head>
 
 <body onload="init();">
-     <!--  <div id="headerAlert">
-            <a href="<%=globals.SciServerLink%>updates/" class="imgwithlink" target="_blank">
-                <img src="../../images/sciserver_logo_usermsg.png" alt="logo" width="190" />
-            </a>
-            <p><a href="<%=globals.SciServerLink%>updates/" target="_blank">Coming soon!<img src="../../images/new_window_cyan.png" alt=" (new window)" style="max-width:95%;margin:2%" /></a></p>
-        </div>    -->
-
+    <%--<asp:ContentPlaceHolder ID="Content1"  runat="server">--%>
+                    <%@ Register TagPrefix="login" TagName="loginParam" Src="../../Loginfloat.ascx"  %>
+                    <login:loginParam ID="loginParams" runat="server"/>
+                <%--</asp:ContentPlaceHolder>--%>
     <form id="form1" runat="server">
     <div>
     
+
+
     </div>
     </form>
         <div id="toc">
         <table width="<%=tabwidth%>" border="0" cellspacing="0" cellpadding="2" bgcolor=black>
 	    <tr>
-		    <td width="59"><a href="<%= url%>" TARGET="_top">
-		    <img src="images/sdss3_logo.gif" border="0"></a></td>
-		    <td class='title' align="left" width="<%= (tabwidth-59)%>">&nbsp;&nbsp;<%= globals.Release%></td>
+		    <td width="40"><a href="<%= url%>" TARGET="_top">
+		    <img src="images/sdssIVlogo.png" border="0" height="50"></a></td>
+		    <td class='title' align="left" width="<%= (tabwidth-40)%>">&nbsp;&nbsp;<%= globals.Release%></td>
 	    </tr>
         </table>
         <table border="0" cellspacing="0" cellpadding="0" >
@@ -205,17 +232,17 @@
 <table width="160" bgColor="lightblue" border="1" cellspacing=1 cellpadding=1 valign="middle">
     <tr><td colspan="2" align="middle" bgcolor="skyblue">Parameters</td></tr>
     <%
-        drawFormBox("name","objid",objid,"setobj();","<input type='button' value='Resolve' id='resolve' name='resolve'  >","Right ascension as decimal degrees or HH:MM:SS");
-        drawFormBox("ra","ra",""+ra,"setra();","deg","Right ascension as decimal degrees or HH:MM:SS");
-        drawFormBox("dec","dec",""+dec,"setdec();","deg","Declination as decimal degrees or DD:MM:SS"); 
+        drawFormBox("name","objid",objid,"setobj();","<input type='button' value='Resolve' id='resolve' name='resolve'  >","Name of object to be resolved.");
+        drawFormBox("ra","ra",""+ra,"setra();","deg","Right ascension as decimal degrees or HH:MM:SS. Value is wrapped around the sphere.");
+        drawFormBox("dec", "dec", "" + dec, "setdec();", "deg", "Declination as decimal degrees or DD:MM:SS. Value is wrapped around the sphere."); 
         drawFormBox("opt","opt",opt,"setoptstr(1);","","String of drawing options (checkboxes below)"); 
     %>
 </table>
             <table width="<%=tabwidth%>" cellspacing=4 cellpadding=0 border=0>
 	            <tr><td align=middle ONMOUSEOVER="this.T_WIDTH='140';return escape('Get an image of the sky at the specified coordinates')">
-	            <a href="javascript:void(0);" onclick="return resubmit();" id="getImageId"><img 
+	            <a href="javascript:void(0);" onClick="return resubmit();" id="getImageId"><img 
 			            src="images/get_image2.jpg" ALT="Submit" 
-			            border="0" WIDTH="112" HEIGHT="40" id="getImage" onclick="return resubmit();"></a>
+			            border="0" WIDTH="112" HEIGHT="40" id="getImage"></a>
 	            </td>
 	            <td align=middle ONMOUSEOVER="this.T_WIDTH='140';return escape('Open a new window with a printable image')">
 	            <a href="javascript:void(0);" onClick="return popup();"><img 
@@ -288,6 +315,14 @@
     
     <%--<tr><td align=middle bgcolor="skyblue">Imaging options</td></tr>	    
 	<tr><td bgColor="lightblue" ONMOUSEOVER="this.T_TEMP='2000';this.T_WIDTH='140';return escape('Gets TwoMass Images')"><INPUT type="checkbox" onclick="setopt(this,'5')" name="2MASS" id="Checkbox2"> TwoMass</td></tr>--%>
+    <tr>
+        <td>
+            <div id="poweredby">
+                <b>Powered by</b><br />
+                <img src="../../images/sciserver_logo_inverted_vertical.png" alt="SciServer" align="middle" />
+            </div>
+        </td>
+    </tr>
 </table>
 </div>
 <input type="hidden" value="512"   name="size" id="size">

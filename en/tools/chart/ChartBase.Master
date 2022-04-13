@@ -53,26 +53,22 @@
     </asp:ContentPlaceHolder>
 </head>
 <body>
-   <!--<asp:ContentPlaceHolder ID="Content1"  runat="server">
-        <div id="headerAlert">
-            <a href="<%=globals.SciServerLink%>updates/" class="imgwithlink" target="_blank">
-                <img src="../../images/sciserver_logo_usermsg.png" alt="logo" width="190" />
-            </a>
-            <p><a href="<%=globals.SciServerLink%>updates/" target="_blank">Coming soon!<img src="../../images/new_window_cyan.png" alt=" (new window)" style="max-width:95%;margin:2%" /></a></p>
-        </div>    
-   </asp:ContentPlaceHolder> -->
+    <asp:ContentPlaceHolder ID="Content1"  runat="server">
+                    <%@ Register TagPrefix="login" TagName="loginParam" Src="../../Loginfloat.ascx"  %>
+                    <login:loginParam ID="loginParams" runat="server"/>
+                </asp:ContentPlaceHolder> 
     <script type="text/javascript">
         var branchname = "<%=name%>";
     </script>
     <form id="getjpeg" runat="server" action="image.aspx" method="post">
+
     <div id="toc">
         
         <table width="<%=tabwidth%>" border="0" cellspacing="0" cellpadding="2" bgcolor=black>
 	    <tr>
-		    <td><a href="<%= url%>" TARGET="_top">
-		    <img src="images/sdss3_logo.gif" border="0" width="40" height="50"></a></td>
-		    <td class='title' align="left" width="<%= (tabwidth-40)%>">&nbsp;&nbsp;<%= globals.Release%><br />
-		    </td>
+		    <td width="40"><a href="<%= url%>" TARGET="_top">
+		    <img src="images/sdssIVlogo.png" border="0" height="50"></a></td>
+		    <td class='title' align="left" width="<%= (tabwidth-40)%>">&nbsp;&nbsp;<%= globals.Release%></td>
 	    </tr>
         </table>
         <table border="0" cellspacing="0" cellpadding="0" >
@@ -116,8 +112,8 @@
 				    <td colspan="2" align="middle" bgcolor="skyblue">Parameters</td>
 			    </tr>
                 <%
-	                drawFormBox("ra","ra",ra+"","setra();","deg","R.A. in decimal degrees,<br> HH MM SS, or HH:MM:SS"); 
-	                drawFormBox("dec","dec",dec+"","setdec();","deg","Declination in decimal degrees,<br> DD MM SS, or DD:MM:SS"); 
+                    drawFormBox("ra", "ra", ra + "", "setra();", "deg", "R.A. in decimal degrees,<br> HH MM SS, or HH:MM:SS. Value is wrapped around the sphere.");
+                    drawFormBox("dec", "dec", dec + "", "setdec();", "deg", "Declination in decimal degrees,<br> DD MM SS, or DD:MM:SS. Value is wrapped around the sphere."); 
 	                drawFormBox("scale","scale",qscale+"","setscale(0)","''/pix","Chart scale in arcsec per pixel"); 
 	                drawFormBox("width","width",width+"","setwidth();","pix","Chart width in pixels"); 
 	                drawFormBox("height","height",height+"","setheight();","pix","Chart height in pixels"); 
@@ -200,13 +196,21 @@
 	<tr><td bgColor="lightblue" ONMOUSEOVER="this.T_TEMP='2000';this.T_WIDTH='140';return escape('Shows masks (pink) around bright objects and data artifacts')"><INPUT type="checkbox" onclick="setopt(this,'M')" name="Masks" id="Masks">SDSS Masks</td></tr>
 	<tr><td bgColor="lightblue" ONMOUSEOVER="this.T_TEMP='2000';this.T_WIDTH='140';return escape('Shows plates (lavender) used to collect spectra')"><INPUT type="checkbox" onclick="setopt(this,'Q')" name="Plates" id="Plates">SDSS Plates</td></tr>		
 
-           </table>
+    <tr>
+        <td>
+            <div id="poweredby">
+                <b>Powered by</b><br />
+                <img src="../../images/sciserver_logo_inverted_vertical.png" alt="SciServer" align="middle" />
+            </div>
+        </td>
+    </tr>
+    </table>
+
     </div>
         <div id="content">               
             <asp:ContentPlaceHolder ID="FCContent" runat="server">
             </asp:ContentPlaceHolder>
         </div>
-
 
     </form>
     <script type="text/javascript">init('<%=def%>');</script>
